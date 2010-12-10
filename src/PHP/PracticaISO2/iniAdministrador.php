@@ -50,12 +50,12 @@
             <p><br /></p>
             <p>
             <div id="formulario">
-                <form  action="" method="post" id="AltaProyecto">
+                <form  action="iniAdministrador1-1.php" method="post" id="AltaProyecto">
                     <div class="tituloFormulario">
                         <h2>Alta Proyecto</h2>
                     </div>
                     <div class="infoFormulario">
-		A trav&eacute;s de esta pantalla el administrador podr&aacute; crear un nuevo proyecto y asignar el correspondiente responsable, marcar los objetivos del mismo,  modificar el n&uacute;mero de proyectos en los que una persona puede estar implicado y cargar los datos iniciales del proyecto.
+		A trav&eacute;s de esta pantalla el administrador podr&aacute; crear un nuevo proyecto, asignar el correspondiente responsable y marcar los objetivos del mismo.
                     </div>
                     <div class="filaFormulario">
                         <div class="etiquetaCampo">
@@ -95,21 +95,6 @@
                             <textarea id="textarea_objetivos" name="comunicacion" rows="5" cols="50"></textarea>
                         </div>
                     </div>
-                    <div class="tituloFormulario">
-                        <h2>Configurar proyecto</h2>
-                    </div>
-                    <div class="filaFormulario">
-                        <div class="etiquetaCampo">
-                            <label for="numProyectos">N&uacute;mero m&aacute;ximo de proyectos:</label>
-                        </div>
-                        <div class="campo">
-                            <input name="numProyectos" type="text" class="validate" value="3" />
-                        </div>
-                    </div>
-                    <div class="tituloFormulario">
-                        <h2>Tablas iniciales</h2>
-                    </div>
-
                     <div class="boton">
                         <input name="guardar" value="Crear" type="submit" class="submit"/>
                     </div>
