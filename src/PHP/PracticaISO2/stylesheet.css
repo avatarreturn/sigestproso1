@@ -105,7 +105,7 @@ margin-right:201px;
 
 }
 
-.centercontentleft {float:left; width:40%; height:200px; background-color:#fff; text-align:left;
+.centercontentleft {float:left; width:auto; height:auto; background-color:#fff; text-align:left;
 border:dashed 2px #ccc; margin: 4px 10px 5px 10px; padding:6px; font-size:1.1em; color:#666666;}
 
 .centercontentright {float:right; width:30%; height:100px; background-color:#fff; text-align:left;
