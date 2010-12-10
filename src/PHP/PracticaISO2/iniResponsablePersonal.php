@@ -57,105 +57,142 @@
                     <div class="infoFormulario">
 		A trav&eacute;s de esta pantalla el Responsable de Personal podr&aacute; registrar un nuevo usuario y asignarle una categor&iacute;a dentro de la empresa.
                     </div>
+                    <br>
                     <table>
                         <tr>
+                            <td>
+                                <label for="Nombre">Nombre:</label>
+                            </td>
+                            <td>
+                                <label for="Apellidos">Apellidos:</label>
+                            </td>
+                        </tr>
+                        <tr>
                             <td><div class="filaFormulario">
-                                    <div class="etiquetaCampo">
-                                        <br>
-                                        <label for="responsable">Nombre:</label>
-                                    </div>
                                     <div class="campo">
                                         <input name="nombre" type="text" class="validate" />
                                     </div>
                                 </div></td>
-                                <td>
-                                    <div class="filaFormulario">
-                                            <div class="etiquetaCampo">
-                                                <br>
-                                                <label for="nombre">Apellidos:</label>
-                                            </div>
-                                            <div class="campo">
-                                                <input name="apellidos" type="text" class="validate" />
-                                            </div>
-                                        </div>
-                                </td>
+                            <td>
+                                <div class="filaFormulario">
+                                    <div class="campo">
+                                        <input name="apellidos" type="text" class="validate" />
+                                    </div>
+                                </div>
+                            </td>
                         </tr>
                     </table>
 
-                    <div class="filaFormulario">
-                        <div class="etiquetaCampo">
-                            <br>
-                            <label for="objetivos">Fecha de nacimiento:</label>
-                        </div>
-                        <table>
-                            <tr>
-                                <td>
-                                    
-                                </td>
-                                <td>
-                                </td>
-                                <td>
-                                </td>
-                            </tr>
-                        </table>
-<!--                        <div class="campo">
-                            <textarea id="textarea_objetivos" name="comunicacion" rows="5" cols="50"></textarea>
-                        </div>-->
-                    </div>
-                    <div class="tituloFormulario">
-                        <h2>Configurar proyecto</h2>
-                    </div>
-                    <div class="filaFormulario">
-                        <div class="etiquetaCampo">
-                            <label for="numProyectos">N&uacute;mero m&aacute;ximo de proyectos:</label>
-                        </div>
-                        <div class="campo">
-                            <input name="numProyectos" type="text" class="validate" value="3" />
-                        </div>
-                    </div>
-                    <div class="tituloFormulario">
-                        <h2>Tablas iniciales</h2>
-                    </div>
-
-                    <div class="boton">
-                        <input name="guardar" value="Crear" type="submit" class="submit"/>
-                    </div>
-                </form>
+                    <table>
+                        <tr>
+                            <td>
+                                <label for="objetivos">Fecha de nacimiento:</label>
+                            </td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <td>
+                                <div>
+                                    <?php
+                                    echo '<select name="dias" size="1">';
+                                    echo '<option>D&iacute;a</option>';
+                                    for ($i = 1; $i <= 31; $i++) {
+                                        echo '<option value="1">' . $i . '</option>';
+                                    }
+                                    echo '</select>';
+                                    ?>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <select size="1">
+                                        <option value="Mes">Mes</option>
+                                        <option value="Enero">Enero</option>
+                                        <option value="Febrero">Febrero</option>
+                                        <option value="Marzo">Marzo</option>
+                                        <option value="Abril">Abril</option>
+                                        <option value="Mayo">Mayo</option>
+                                        <option value="Junio">Junio</option>
+                                        <option value="Julio">Julio</option>
+                                        <option value="Agosto">Agosto</option>
+                                        <option value="Septiembre">Septiembre</option>
+                                        <option value="Octubre">Octubre</option>
+                                        <option value="Nomviembre">Noviembre</option>
+                                        <option value="Diciembre">Diciembre</option>
+                                    </select>
+                                </div>
+                            </td>
+                            <td
+                                <div>
+                                        <?php
+                                        echo '<select name="dias" size="1">';
+                                        echo '<option>A&ntilde;o</option>';
+                                        $fecha = getdate();
+                                        $anio = $fecha[year] - 18;
+                                        for ($i = 1950; $i <= $anio; $i++) {
+                                            echo '<option value="1">' . $i . '</option>';
+                                        }
+                                        ?>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
             </div>
-        </p>
+            <div class="tituloFormulario">
+                <h2>Configurar proyecto</h2>
+            </div>
+            <div class="filaFormulario">
+                <div class="etiquetaCampo">
+                    <label for="Nick">Nombre de usuario:</label>
+                </div>
+                <div class="campo">
+                    <input name="Nick" type="text" class="validate" />
+                </div>
+            </div>
+            <div class="tituloFormulario">
+                <h2>Tablas iniciales</h2>
+            </div>
 
+            <div class="boton">
+                <input name="guardar" value="Crear" type="submit" class="submit"/>
+            </div>
+        </form>
+    </div>
+</p>
+
+</div>
+
+
+<!-- end content -->
+<!-- start footer -->
+
+<div id="footer">&copy; 2006 Design by <a href="http://www.studio7designs.com">Studio7designs.com</a> | <a href="http://www.arbutusphotography.com">ArbutusPhotography.com</a> | <a href="http://www.opensourcetemplates.org">Opensourcetemplates.org</a>
+
+
+    <!-- start left boxes -->
+
+    <div class="centercontentleftb">
+        <div class="centercontentleftimg">Sample Box for Products</div>
+        <div class="centercontentrightimg">Sample Box for Products</div>
     </div>
 
+    <!-- endleft boxes -->
 
-    <!-- end content -->
-    <!-- start footer -->
+    <!-- start right boxes -->
 
-    <div id="footer">&copy; 2006 Design by <a href="http://www.studio7designs.com">Studio7designs.com</a> | <a href="http://www.arbutusphotography.com">ArbutusPhotography.com</a> | <a href="http://www.opensourcetemplates.org">Opensourcetemplates.org</a>
-
-
-        <!-- start left boxes -->
-
-        <div class="centercontentleftb">
-            <div class="centercontentleftimg">Sample Box for Products</div>
-            <div class="centercontentrightimg">Sample Box for Products</div>
-        </div>
-
-        <!-- endleft boxes -->
-
-        <!-- start right boxes -->
-
-        <div class="centercontentrightb">
-            <div class="centercontentleftimg">Sample Box for Products</div>
-            <div class="centercontentrightimg">Sample Box for Products</div>
-        </div>
-
-        <!-- end right boxes -->
-
-        <!-- end bottom boxes -->
-
+    <div class="centercontentrightb">
+        <div class="centercontentleftimg">Sample Box for Products</div>
+        <div class="centercontentrightimg">Sample Box for Products</div>
     </div>
 
-    <!-- end footer -->
+    <!-- end right boxes -->
+
+    <!-- end bottom boxes -->
+
+</div>
+
+<!-- end footer -->
 
 
 
