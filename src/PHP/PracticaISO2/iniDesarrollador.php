@@ -18,25 +18,144 @@
 
 
 <link rel="stylesheet" type="text/css" href="stylesheet.css" media="screen, projection, tv " />
-<link href="Utiles/jquery-ui.css" rel="stylesheet" type="text/css"/>
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
 <script src="Utiles/jquery.min.js"></script>
 <script src="Utiles/jquery-ui.min.js"></script>
 <script src="Utiles/jquery.ui.datepicker-es.js"></script>
 
 
+<?php
+
+        include_once('Persistencia/conexion.php');
+        $conexion = new conexion();
+        $result = mysql_query('SELECT nacimiento, fallecimento FROM mascotas');
+        $totEmp = mysql_num_rows($result);
+
+        if ($totEmp >0) {
+            $fechasF1= array();
+            $fechasFFin = array();
+            $fechasFFinVal = array();
+            while ($rowEmp = mysql_fetch_assoc($result)) {
+
+                // Extraer las dos fechas
+                // Generar las fechas de por medio e ir metiendolas en un array
+                if (in_array($rowEmp['nacimiento'], $fechasF1)) {
+                }else{  $fechasF1[] = $rowEmp['nacimiento'];}
+                $fechaInicio = $rowEmp['nacimiento'];
+                while ( $fechaInicio != $rowEmp['fallecimento']) {
+                $can_dias = 1;
+                $fec_vencimi= date("Y-m-d", strtotime("$fechaInicio + $can_dias days"));
+                $fechaInicio = $fec_vencimi;
+//                $unix = strtotime($fechaInicio);
+//                echo date('n-j-y', $unix);
+                if(in_array($fec_vencimi, $fechasF1)){}
+                else{  $fechasF1[] = $fec_vencimi; }
+                }
+            }
+            // cambio de formato
+               for($i=0;$i<count($fechasF1);$i++){
+                $fechasFFin[]=date("n-j-Y",strtotime($fechasF1[$i]));
+                $fechasFFinVal[]=date("Y-m-d",strtotime($fechasF1[$i]));
+               }
+                //----------- cambio de formato
+//                $nAnyo= strpos($rowEmp['nacimiento'], "-");
+//                $resultado= substr($rowEmp['nacimiento'], $nAnyo+1 ) . "-" . substr($rowEmp['nacimiento'], 0,$nAnyo );
+//                //echo "\"" .$resultado . "\"";
+//                $fechas = $fechas . "\"" .$resultado . "\",";
+//                //---------
+               //print_r($fechasFFin);
+        }
+        $conexion->cerrarConexion();
+       // echo "FECHAS =" . $fechas."++";
+        $fechas = "";
+        $fechasVal = "";
+        for($i=0;$i<count($fechasFFin);$i++){
+                $fechas = $fechas . "\"" . $fechasFFin[$i] ."\",";
+                $fechasVal = $fechasVal . "\"" . $fechasFFinVal[$i] ."\",";
+               }
+
+
+        // Prueba de suma de fechas Funciona!
+//        $can_dias = 1;
+//        $fec_emision= "2010-12-01";
+//        $fec_vencimi= date("Y-m-d", strtotime("$fec_emision + $can_dias days"));
+//        echo "FECHA +1 = ". $fec_vencimi;
+        ?>
+
+
 <script>
+var disabledDays = [<?php echo $fechas;?>];
+var disabledDaysVal = [<?php echo $fechasVal;?>];
+
+//***********************************
+
+/* create an array of days which need to be disabled */
+//var disabledDays = ["2-21-2010","1-4-2011"];
+
+/* utility functions */
+function nationalDays(date) {
+	var m = date.getMonth(), d = date.getDate(), y = date.getFullYear();
+	//console.log('Checking (raw): ' + m + '-' + d + '-' + y);
+	for (i = 0; i < disabledDays.length; i++) {
+		if($.inArray((m+1) + '-' + d + '-' + y,disabledDays) != -1 || new Date() > date) {
+			//console.log('bad:  ' + (m+1) + '-' + d + '-' + y + ' / ' + disabledDays[i]);
+			return [false];
+		}
+	}
+	//console.log('good:  ' + (m+1) + '-' + d + '-' + y);
+	return [true];
+}
+function noWeekendsOrHolidays(date) {
+	var noWeekend = jQuery.datepicker.noWeekends(date);
+	return noWeekend[0] ? nationalDays(date) : noWeekend;
+}
+
+/* create datepicker */
 jQuery(document).ready(function() {
 	jQuery('#datepicker').datepicker({
 		dateFormat: 'yy-mm-dd',
 		constrainInput: true,
-                numberOfMonths: 2
-		//beforeShowDay: noWeekendsOrHolidays
+                numberOfMonths: 2,
+		beforeShowDay: noWeekendsOrHolidays
 //                onSelect: function(dateText, inst) {
 //                alert(dateText)
 //            }
 	});
 });
 
+function validar(){
+    var FechaIni = new Date();
+    FechaIni.setTime(Date.parse(($('#datepicker').val())));
+    var FechaFin = new Date();
+    FechaFin.setTime(Date.parse(($('#datepicker').val())));
+    var week = parseInt(($('#Weeks').val())) * 7;
+    FechaFin.setDate(FechaFin.getDate() + week);
+    var curr_date = FechaFin.getDate();
+    var curr_month = FechaFin.getMonth();
+    curr_month = curr_month + 1;
+    var curr_year = FechaFin.getFullYear();
+    //alert(curr_date + '/'+ curr_month + '/'+ curr_year);
+    //*** Validamos
+    var Bandera = 0;
+    var Fini = FechaIni.getTime();
+    var Ffin = FechaFin.getTime();
+    //alert(Fini +"--"+Ffin);
+    for (i=0;i<disabledDays.length;i++){
+        var FechaVal = new Date();
+        FechaVal.setTime(Date.parse(disabledDaysVal[i]));
+        //alert(disabledDaysVal[i]);
+        var Fval = FechaVal.getTime();
+        if (Fval > Fini &&  Fval<Ffin){
+            Bandera = 1;
+            alert("Las fechas no respetan los horarios de las actividades ya marcadas");
+            break;
+        }
+    }
+    if(Bandera == 0){
+        alert("Fechas Correctas");
+    }
+    //alert("Fecha de fin: "+FechaFin.getDate()+"-"+FechaFin.getMonth()+"-"+FechaFin.getFullYear());
+}
 </script>
 </head>
 
@@ -134,12 +253,13 @@ jQuery(document).ready(function() {
         <div><h3>Condiciones:</h3>
 
             <p><img src= "images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;El periodo m&aacute;ximo de vacaciones ser&aacute; de 4 semanas.</p>
-            <p><img src= "images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;El periodo seleccionado ser&aacute; de 1, 2, 3 &oacute; 4 semanas completas.</p>
             <p><img src= "images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;El periodo seleccionado no interferir&aacute; en ningun momento con la realizaci&oacute;n de ninguna
             actividad previamente fijada.</p>
-
+            <br/>
+            <p style="padding-left:5px;"><small><img src= "images/LeyendaDLibre.jpg" alt="#" border="0" style="width: auto; height: auto;"/>&nbsp;&nbsp;D&iacute;as libres</small><br/>
+            <small><img src= "images/LeyendaDOcupado.jpg" alt="#" border="0" style="width: auto; height: auto;"/>&nbsp;&nbsp;Fines de semana, fiestas nacionales y dias con actividades programadas</small></p>
         </div>
-        <p><br/><br/><br/> Se come el footer al menu! </p>
+        
         </div>
 
 </div>
