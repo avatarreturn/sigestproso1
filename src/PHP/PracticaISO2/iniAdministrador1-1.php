@@ -48,9 +48,9 @@
         <div id="centercontent">
             <h1>SIGESTPROSO</h1>
             <p><br /></p>
-            <p>PROYECTO CREADO SATISFACTORIAMENTE</p>
+            <h2>PROYECTO CREADO SATISFACTORIAMENTE</h2>
             <br>
-            <a href="iniAdministrador.php">Volver a la p&aacute;gina anterior</a>
+            <a href="iniAdministrador.php">Crear otro proyecto</a>
         </div>
 
 
