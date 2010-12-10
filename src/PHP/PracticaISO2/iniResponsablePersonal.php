@@ -1,164 +1,161 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 
-<head>
+    <head>
 
-<title>Nautica08</title>
+        <title>Nautica08</title>
 
-<meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
-<meta name="description" content="studio7designs" />
-<meta name="keywords" content="#" />
-<meta name="googlebot" content="index, follow" />
-<meta name="language" content="en-us, english" />
-<meta name="classification" content="#" />
-<meta name="author" content="www.studio7designs.com" />
-<meta name="copyright" content="#" />
-<meta name="location" content="#" />
-<meta name="zipcode" content="#" />
-
-
-<link rel="stylesheet" type="text/css" href="stylesheet.css" media="screen, projection, tv " />
-
-</head>
-
-<body>
-
-<!-- start top menu and blog title-->
-
-<div id="blogtitle">
-		<div id="small">Responsable de Personal</div>
-		<div id="small2"><a href="logout.php">Cerrar sesi&oacute;n</a></div>
-</div>
-
-		<div id="topmenu">
+        <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
+        <meta name="description" content="studio7designs" />
+        <meta name="keywords" content="#" />
+        <meta name="googlebot" content="index, follow" />
+        <meta name="language" content="en-us, english" />
+        <meta name="classification" content="#" />
+        <meta name="author" content="www.studio7designs.com" />
+        <meta name="copyright" content="#" />
+        <meta name="location" content="#" />
+        <meta name="zipcode" content="#" />
 
 
-		<ul class="BLUE">
-		<li><a href="iniResponsablePersonal.php" title="Crear trabajadores"><span>Crear trabajadores</span></a></li>
-		<li><a href="iniResponsablePersonal2.php" title="Obtener informes"><span>Obtener informes</span></a></li>
-		</ul>
-</div>
+        <link rel="stylesheet" type="text/css" href="stylesheet.css" media="screen, projection, tv " />
 
-<!-- end top menu and blog title-->
+    </head>
 
-<!-- start left box-->
+    <body>
 
-<div id="leftcontent">
-	<img style="margin-top:-9px; margin-left:-12px;" src="images/top2.jpg" alt="" />
+        <!-- start top menu and blog title-->
 
-	<h3 align="left">Main Menu</h3>
+        <div id="blogtitle">
+            <div id="small">Responsable de Personal</div>
+            <div id="small2"><a href="logout.php">Cerrar sesi&oacute;n</a></div>
+        </div>
 
-
-	<div align="left">
-		<ul class="BLUE">
-			<li><a href="#">Sample Link</a></li>
-			<li><a href="#">Sample Link</a></li>
-			<li><a href="#">Sample Link</a></li>
-			<li><a href="#">Sample Link</a></li>
-			<li><a href="#">Sample Link</a></li>
-		</ul>
-	</div>
-
-	<h3 align="left">Sub menu</h3>
-	<div align="left">
-		<ul class="BLUE">
-			<li><a href="#">Sample Link</a></li>
-			<li><a href="#">Sample Link</a></li>
-			<li><a href="#">Sample Link</a></li>
-			<li><a href="#">Sample Link</a></li>
-			<li><a href="#">Sample Link</a></li>
-		</ul>
-
-	<p>Nullam non metus. Duis in metus vitae elit luctus convallis. Ut sagittis. Nam tempor. Nam vehicula adipiscing augue. Vestibulum pretium lacinia erat. Duis ut enim. In hendrerit vulputate lectus. Donec ipsum magna, tempor ornare, fringilla sit amet, placerat</p>
-
-	</div>
-
-	<!-- You have to modify the "padding-top: when you change the content of this div to keep the footer image looking aligned -->
-
-	<img style="padding-top:2px; margin-left:-12px; margin-bottom:-4px;" src="images/specs_bottom.jpg" alt="" />
+        <div id="topmenu">
 
 
+            <ul class="BLUE">
+                <li><a href="iniResponsablePersonal.php" title="Crear trabajadores"><span>Crear trabajadores</span></a></li>
+                <li><a href="iniResponsablePersonal2.php" title="Obtener informes"><span>Obtener informes</span></a></li>
+            </ul>
+        </div>
 
-</div>
+        <!-- end top menu and blog title-->
 
-<!-- end left box-->
+        <!-- start content -->
 
-<!-- start content -->
-
-<div id="centercontent">
-
-
-	<h1>Nautica 08 </h1>
-	<p><a href="http://www.studio7designs.com"><img src= "images/logo.jpg" alt="#" border="0" style="width: 300px; height: 65px;"/></a><br /></p>
-
-	<div class="centercontentleft">Sample Box for Products</div><p><a href="#">Lorem ipsum</a> dolor sit amet, consectetuer adipiscing elit. Ut elit pede, vestibulum in, tempor a, nonummy eget, mauris. Aliquam erat volutpat. Nulla facilisi. In hac habitasse platea dictumst. Nullam porttitor orci feugiat odio. Nam vestibulum interdum lectus. Etiam eros. Donec imperdiet lorem a tortor. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut at mi ut enim luctus commodo. Fusce a purus. Morbi eget odio. Sed convallis eleifend felis. Integer fermentum consectetuer est. Sed vitae nisi ac pede scelerisque feugiat. Etiam mollis urna non lacus tincidunt cursus. Aliquam erat volutpat. Nam tempus.</p>
+        <div id="centercontent">
 
 
-	<p><img style="width: 200px; height: 299px; float: right; padding:9px;" alt="#" src="images/sample.jpg" hspace="5" vspace="5" />
+            <h1>SIGESTPROSO </h1>
+            <p><br /></p>
+            <p>
+            <div id="formulario">
+                <form  action="" method="post" id="AltaProyecto">
+                    <div class="tituloFormulario">
+                        <h2>Registro de nuevo usuario</h2>
+                    </div>
+                    <div class="infoFormulario">
+		A trav&eacute;s de esta pantalla el Responsable de Personal podr&aacute; registrar un nuevo usuario y asignarle una categor&iacute;a dentro de la empresa.
+                    </div>
+                    <table>
+                        <tr>
+                            <td><div class="filaFormulario">
+                                    <div class="etiquetaCampo">
+                                        <br>
+                                        <label for="responsable">Nombre:</label>
+                                    </div>
+                                    <div class="campo">
+                                        <input name="nombre" type="text" class="validate" />
+                                    </div>
+                                </div></td>
+                                <td>
+                                    <div class="filaFormulario">
+                                            <div class="etiquetaCampo">
+                                                <br>
+                                                <label for="nombre">Apellidos:</label>
+                                            </div>
+                                            <div class="campo">
+                                                <input name="apellidos" type="text" class="validate" />
+                                            </div>
+                                        </div>
+                                </td>
+                        </tr>
+                    </table>
+
+                    <div class="filaFormulario">
+                        <div class="etiquetaCampo">
+                            <br>
+                            <label for="objetivos">Fecha de nacimiento:</label>
+                        </div>
+                        <table>
+                            <tr>
+                                <td>
+                                    
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                            </tr>
+                        </table>
+<!--                        <div class="campo">
+                            <textarea id="textarea_objetivos" name="comunicacion" rows="5" cols="50"></textarea>
+                        </div>-->
+                    </div>
+                    <div class="tituloFormulario">
+                        <h2>Configurar proyecto</h2>
+                    </div>
+                    <div class="filaFormulario">
+                        <div class="etiquetaCampo">
+                            <label for="numProyectos">N&uacute;mero m&aacute;ximo de proyectos:</label>
+                        </div>
+                        <div class="campo">
+                            <input name="numProyectos" type="text" class="validate" value="3" />
+                        </div>
+                    </div>
+                    <div class="tituloFormulario">
+                        <h2>Tablas iniciales</h2>
+                    </div>
+
+                    <div class="boton">
+                        <input name="guardar" value="Crear" type="submit" class="submit"/>
+                    </div>
+                </form>
+            </div>
+        </p>
+
+    </div>
 
 
-	Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Morbi vestibulum, tortor a sagittis facilisis, sapien ante sollicitudin urna, eu hendrerit sem massa et arcu. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec tincidunt nisi in odio. Aenean semper, nisi ut lobortis tristique, odio elit venenatis nisl, semper condimentum metus eros vel tortor. Pellentesque at nulla. Sed metus nisi, malesuada pharetra, malesuada vel, dictum eget, eros. Cras sed metus. Aenean facilisis nunc nec sem. Nulla facilisi. Sed placerat diam ut libero. Vestibulum fringilla. Nam tincidunt. Nam metus metus, rutrum eu, sagittis id, venenatis in, velit. Sed tempor blandit ipsum. Phasellus nisi massa, pretium in, gravida ac, hendrerit vitae, massa. Nulla facilisi.</p>
+    <!-- end content -->
+    <!-- start footer -->
+
+    <div id="footer">&copy; 2006 Design by <a href="http://www.studio7designs.com">Studio7designs.com</a> | <a href="http://www.arbutusphotography.com">ArbutusPhotography.com</a> | <a href="http://www.opensourcetemplates.org">Opensourcetemplates.org</a>
 
 
-	<p><a href="http://www.opensourcetemplates.org">Nullam non metus.</a> Duis in metus vitae elit luctus convallis. Ut sagittis. Nam tempor. Nam vehicula adipiscing augue. Vestibulum pretium lacinia erat. Duis ut enim. In hendrerit vulputate lectus. Donec ipsum magna, tempor ornare, fringilla sit amet, placerat vel, purus. Pellentesque tempus est a dolor. Quisque neque nulla, interdum eu, blandit ut, tempus quis, ligula. Cras ac purus. Sed quis urna. Nulla facilisi. Nam ornare sem consequat augue. Ut dapibus diam sit amet dolor adipiscing dictum. Praesent tristique eros vel mauris. Maecenas lacus velit, sodales consectetuer, molestie et, faucibus in, odio. Vivamus libero velit, sodales a, feugiat vel, tempor vitae, libero. Duis aliquam ipsum.</p>
+        <!-- start left boxes -->
 
-	<img style="width: 153px; height: 59px; float: left; padding:9px;" src="images/n8g.jpg" alt="Nautica08" />
+        <div class="centercontentleftb">
+            <div class="centercontentleftimg">Sample Box for Products</div>
+            <div class="centercontentrightimg">Sample Box for Products</div>
+        </div>
 
-	<p>Duis sagittis est ac turpis. Nam ac quam. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Pellentesque malesuada massa. Ut gravida volutpat felis. Aliquam massa leo, commodo a, placerat in, volutpat ut, turpis. Phasellus in turpis. Fusce turpis diam, ullamcorper id, tincidunt at, fringilla eu, lacus. Maecenas in mauris vel ipsum blandit euismod. Aliquam consequat egestas lectus. Mauris a est. Sed sit amet neque. In in urna.
+        <!-- endleft boxes -->
 
-	Maecenas nonummy accumsan tortor. In hac habitasse platea dictumst. Fusce suscipit mollis neque. Maecenas turpis dolor, rhoncus eu, ullamcorper eu, tincidunt sed, leo. Quisque molestie. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer pellentesque convallis mauris. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed euismod, turpis ac congue facilisis, mi nisl consequat felis, ut egestas nisl velit in justo. Fusce eu tortor faucibus diam dictum adipiscing. In nisl. Nam lacus orci, scelerisque at, pulvinar in, commodo ut, arcu. Aliquam porttitor. Nullam aliquet risus id erat. Pellentesque leo nisl, hendrerit at, ornare in, volutpat in, ante. Nulla pretium velit sit amet nisi. Nam eu magna. Aenean viverra auctor neque. <a href="#">Pellentesque elit.</a></p>
+        <!-- start right boxes -->
 
-</div>
+        <div class="centercontentrightb">
+            <div class="centercontentleftimg">Sample Box for Products</div>
+            <div class="centercontentrightimg">Sample Box for Products</div>
+        </div>
 
+        <!-- end right boxes -->
 
-<!-- end content -->
+        <!-- end bottom boxes -->
 
-<!-- start right box -->
+    </div>
 
-<div id="rightcontent">
-	<img style="margin-top:-9px; margin-left: -5px;" src="images/top2.jpg" alt="" />
-
-	<img style="width: 153px; height: 59px; float: left; padding:9px;" src="images/n8g.jpg" alt="Nautica08" />
-
-	<p><a href="#">Pick a location:</a><br />
-	sit amet, consectetuer adipiscing elit, sed diam nonummy nibh   euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad   minim veniam, quis nostrud exercitation ulliam corper</p>
-	<p> Pick a location:<br />
-	sit amet, consectetuer adipiscing elit, sed diam nonummy nibh   euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad   minim veniam, quis nostrud exercitation ulliam corper</p>
-	<p> Pick a location:<br />
-	sit amet, consectetuer adipiscing elit, sed diam nonummy nibh   euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad   minim veniam, quis nostrud exercitation ulliam corper</p>
-
-	<img style="padding-top:5px; margin-left:-5px; margin-bottom:-4px;" src="images/specs_bottom.jpg" alt="" />
-</div>
-
-<!-- end right box -->
-<!-- start footer -->
-
-<div id="footer">&copy; 2006 Design by <a href="http://www.studio7designs.com">Studio7designs.com</a> | <a href="http://www.arbutusphotography.com">ArbutusPhotography.com</a> | <a href="http://www.opensourcetemplates.org">Opensourcetemplates.org</a>
-
-
-<!-- start left boxes -->
-
-	<div class="centercontentleftb">
-		<div class="centercontentleftimg">Sample Box for Products</div>
-			<div class="centercontentrightimg">Sample Box for Products</div>
-	</div>
-
-	<!-- endleft boxes -->
-
-	<!-- start right boxes -->
-
-	<div class="centercontentrightb">
-			<div class="centercontentleftimg">Sample Box for Products</div>
-		<div class="centercontentrightimg">Sample Box for Products</div>
-	</div>
-
-		<!-- end right boxes -->
-
-<!-- end bottom boxes -->
-
-</div>
-
-<!-- end footer -->
+    <!-- end footer -->
 
 
 
