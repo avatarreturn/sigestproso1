@@ -50,7 +50,7 @@
             <p><br /></p>
             <p>
             <div id="formulario">
-                <form  action="" method="post" id="AltaProyecto">
+                <form  action="crearUsuario.php" method="post">
                     <div class="tituloFormulario">
                         <h2>Registro de nuevo usuario</h2>
                     </div>
@@ -137,25 +137,72 @@
                                 </div>
                             </td>
                         </tr>
+                        <tr>
+                            <td>
+                                <br>
+                                <label for="Categoría">Categoría:</label>
+                            </td>
+                            <td>
+                                <br>
+                                <select size="1">
+                                    <option value="Escoja">Escoja categoría</option>
+                                    <option value="jefeProyecto">Jefe de proyecto</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                </select>
+                            </td>
+                        </tr>
+
                     </table>
             </div>
-            <div class="tituloFormulario">
-                <h2>Configurar proyecto</h2>
-            </div>
-            <div class="filaFormulario">
-                <div class="etiquetaCampo">
-                    <label for="Nick">Nombre de usuario:</label>
-                </div>
-                <div class="campo">
-                    <input name="Nick" type="text" class="validate" />
-                </div>
-            </div>
-            <div class="tituloFormulario">
-                <h2>Tablas iniciales</h2>
-            </div>
 
+            <div class="filaFormulario">
+                <table>
+                    <tr>
+                        <td>
+                            <div class="etiquetaCampo">
+                                <label for="nick">Nombre de usuario:</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="campo">
+                                <input name="nick" type="text" class="validate" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="etiquetaCampo">
+                                <label for="Nick">Contraseña:</label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="etiquetaCampo">
+                                <label for="Nick">Repita contraseña:</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="campo">
+                                <input name="password" type="text" class="validate" />
+                            </div>
+                        </td>
+                        <td>
+                            <div class="campo">
+                                <input name="repassword" type="text" class="validate" />
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <br>
             <div class="boton">
-                <input name="guardar" value="Crear" type="submit" class="submit"/>
+                <input name="Guardar" value="Crear" type="submit" class="submit"/>
+                <input name="Limpiar" value="Limpiar" type="reset" class="submit"/>
             </div>
         </form>
     </div>
