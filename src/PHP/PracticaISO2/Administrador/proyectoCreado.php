@@ -17,7 +17,7 @@
         <meta name="zipcode" content="#" />
 
 
-        <link rel="stylesheet" type="text/css" href="stylesheet.css" media="screen, projection, tv " />
+        <link rel="stylesheet" type="text/css" href="../stylesheet.css" media="screen, projection, tv " />
 
     </head>
 
@@ -27,15 +27,15 @@
 
         <div id="blogtitle">
             <div id="small">Administrador</div>
-            <div id="small2"><a href="logout.php">Cerrar sesi&oacute;n</a></div>
+            <div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
         </div>
 
         <div id="topmenu">
 
 
             <ul class="BLUE">
-                <li><a href="iniAdministrador.php" title="Principal"><span>Crear proyecto</span></a></li>
-                <li><a href="iniAdministrador2.php" title="Principal"><span>Cargar datos</span></a></li>
+                <li><a href="crearProyecto.php" title="Principal"><span>Crear proyecto</span></a></li>
+                <li><a href="cargarDatos.php" title="Principal"><span>Cargar datos</span></a></li>
             </ul>
         </div>
 

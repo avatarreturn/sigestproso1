@@ -17,7 +17,7 @@
         <meta name="zipcode" content="#" />
 
 
-        <link rel="stylesheet" type="text/css" href="stylesheet.css" media="screen, projection, tv " />
+        <link rel="stylesheet" type="text/css" href="../stylesheet.css" media="screen, projection, tv " />
 
     </head>
 
@@ -27,15 +27,15 @@
 
         <div id="blogtitle">
             <div id="small">Administrador</div>
-            <div id="small2"><a href="logout.php">Cerrar sesi&oacute;n</a></div>
+            <div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
         </div>
 
         <div id="topmenu">
 
 
             <ul class="BLUE">
-                <li><a href="iniAdministrador.php" title="Principal"><span>Crear proyecto</span></a></li>
-                <li><a href="iniAdministrador2.php" title="Principal"><span>Cargar datos</span></a></li>
+                <li><a href="crearProyecto.php" title="Principal"><span>Crear proyecto</span></a></li>
+                <li><a href="cargarDatos.php" title="Principal"><span>Cargar datos</span></a></li>
             </ul>
         </div>
 
@@ -50,7 +50,7 @@
             <p><br /></p>
             <p>
             <div id="formulario">
-                <form  action="iniAdministrador1-1.php" method="post" id="AltaProyecto">
+                <form  action="proyectoCreado.php" method="post" id="AltaProyecto">
                     <div class="tituloFormulario">
                         <h2>Alta Proyecto</h2>
                     </div>
@@ -64,7 +64,7 @@
                         </div>
                         <div class="campo">
                             <?php
-                            include_once('Persistencia/conexion.php');
+                            include_once('../Persistencia/conexion.php');
                             $conexion = new conexion();
                             $result = mysql_query('SELECT usuario FROM usuarios WHERE descripcion="jefeProyecto"');
                             echo '<SELECT NAME="Colores" size="1">';
@@ -80,7 +80,7 @@
                     <div class="filaFormulario">
                         <div class="etiquetaCampo">
                             <br>
-                            <label for="nombre">Nombre del Proyecto:</label>
+                            <label for="nombre">Nombre del Proyecto MOSTRAR LA FECHA DE INICIO:</label>
                         </div>
                         <div class="campo">
                             <input name="nombre" type="text" class="validate" />
@@ -89,7 +89,7 @@
                     <div class="filaFormulario">
                         <div class="etiquetaCampo">
                             <br>
-                            <label for="objetivos">Objetivos del Proyecto:</label>
+                            <label for="objetivos">Descripci&oacute;n del Proyecto:</label>
                         </div>
                         <div class="campo">
                             <textarea id="textarea_objetivos" name="comunicacion" rows="5" cols="50"></textarea>

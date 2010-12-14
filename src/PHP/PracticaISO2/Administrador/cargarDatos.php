@@ -17,7 +17,7 @@
         <meta name="zipcode" content="#" />
 
 
-        <link rel="stylesheet" type="text/css" href="stylesheet.css" media="screen, projection, tv " />
+        <link rel="stylesheet" type="text/css" href="../stylesheet.css" media="screen, projection, tv " />
 
     </head>
 
@@ -27,15 +27,15 @@
 
         <div id="blogtitle">
             <div id="small">Administrador</div>
-            <div id="small2"><a href="logout.php">Cerrar sesi&oacute;n</a></div>
+            <div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
         </div>
 
         <div id="topmenu">
 
 
             <ul class="BLUE">
-                <li><a href="iniAdministrador.php" title="Principal"><span>Crear proyecto</span></a></li>
-                <li><a href="iniAdministrador2.php" title="Principal"><span>Cargar datos</span></a></li>
+                <li><a href="crearProyecto.php" title="Principal"><span>Crear proyecto</span></a></li>
+                <li><a href="cargarDatos.php" title="Principal"><span>Cargar datos</span></a></li>
             </ul>
         </div>
 
@@ -50,51 +50,41 @@
             <p><br /></p>
             <p>
             <div id="formulario">
-                <form  action="iniAdministrador1-1.php" method="post" id="AltaProyecto">
+                <form  action="" method="post" id="AltaProyecto">
                     <div class="tituloFormulario">
-                        <h2>Alta Proyecto</h2>
+                        <h2>Configurar proyecto</h2>
                     </div>
                     <div class="infoFormulario">
-		A trav&eacute;s de esta pantalla el administrador podr&aacute; crear un nuevo proyecto, asignar el correspondiente responsable y marcar los objetivos del mismo.
+		A trav&eacute;s de esta pantalla el administrador podr&aacute; modificar el n&uacute;mero de proyectos en los que una persona puede estar implicado y cargar los datos iniciales del proyecto.
                     </div>
                     <div class="filaFormulario">
                         <div class="etiquetaCampo">
                             <br>
-                            <label for="responsable">Responsable:</label>
+                            <label for="numProyectos">N&uacute;mero m&aacute;ximo de proyectos:</label>
                         </div>
                         <div class="campo">
-                            <?php
-                            include_once('Persistencia/conexion.php');
-                            $conexion = new conexion();
-                            $result = mysql_query('SELECT usuario FROM usuarios WHERE descripcion="jefeProyecto"');
-                            echo '<SELECT NAME="Colores" size="1">';
-                            echo '<option>Seleccione un Jefe de Proyecto</option>';
-                            while ($rowEmp = mysql_fetch_assoc($result)) {
-                                echo '<option value="valor">' . $rowEmp['usuario'] . '</option>';
-                            }
-                            echo '</SELECT>';
-                            $conexion->cerrarConexion();
-                            ?>
+                            <input name="numProyectos" type="text" class="validate" value="3" />
                         </div>
                     </div>
                     <div class="filaFormulario">
                         <div class="etiquetaCampo">
                             <br>
-                            <label for="nombre">Nombre del Proyecto:</label>
+                            <label for="relacionRoles">Relaci&oacute;n de categor&iacute;as y roles:</label>
                         </div>
                         <div class="campo">
-                            <input name="nombre" type="text" class="validate" />
+                            <select name="relacionRoles" size="1">
+                                <option>Seleccione una relaci&oacute;n</option>
+                                <option value="valor">Jefe de proyecto(1)</option>
+                                <option value="valor">Analista(2)</option>
+                                <option value="valor">Diseñador(3)</option>
+                                <option value="valor">Analista-programador(3)</option>
+                                <option value="valor">Responsable de equipo de pruebas(3)</option>
+                                <option value="valor">Programador(4)</option>
+                                <option value="valor">Probador(4)</option>
+                            </select>
                         </div>
                     </div>
-                    <div class="filaFormulario">
-                        <div class="etiquetaCampo">
-                            <br>
-                            <label for="objetivos">Objetivos del Proyecto:</label>
-                        </div>
-                        <div class="campo">
-                            <textarea id="textarea_objetivos" name="comunicacion" rows="5" cols="50"></textarea>
-                        </div>
-                    </div>
+                    
                     <div class="boton">
                         <input name="guardar" value="Crear" type="submit" class="submit"/>
                     </div>

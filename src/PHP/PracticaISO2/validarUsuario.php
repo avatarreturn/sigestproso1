@@ -18,7 +18,7 @@ if (trim($_POST['usuario']) != "" && trim($_POST['password']) != "") {
             if ($row['descripcion'] == "administrador") {
                 //administrador
                 echo'<script type="text/javascript">
-            document.location.href="iniAdministrador.php";
+            document.location.href="Administrador/crearProyecto.php";
             </script>';
             } else {
                 if ($row['descripcion'] == "jefeProyecto") {
@@ -35,7 +35,7 @@ if (trim($_POST['usuario']) != "" && trim($_POST['password']) != "") {
                     } else {
                         //responsable de personal
                         echo'<script type="text/javascript">
-                    document.location.href="iniResponsablePersonal.php";
+                    document.location.href="ResponsablePersonal/iniResponsablePersonal.php";
                     </script>';
                     }
                 }
