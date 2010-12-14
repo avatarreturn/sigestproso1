@@ -55,6 +55,7 @@
                     document.nuevo_usuario.password.focus()
                     return 0;
                 }
+                document.nuevo_usuario.submit();
             }
         </script>
 
