@@ -80,10 +80,21 @@
                     <div class="filaFormulario">
                         <div class="etiquetaCampo">
                             <br>
-                            <label for="nombre">Nombre del Proyecto MOSTRAR LA FECHA DE INICIO:</label>
+                            <label for="nombre">Nombre del Proyecto:</label>
                         </div>
                         <div class="campo">
                             <input name="nombre" type="text" class="validate" />
+                        </div>
+                    </div>
+                    <div class="filaFormulario">
+                        <div class="etiquetaCampo">
+                            <br>
+                            <label for="fecha">Fecha de inicio:</label>
+                        </div>
+                        <div class="campo">
+                            <?php
+                                echo '<input name="fecha" type="text" value="'. date('d-m-Y') .'" class="validate" DISABLED/>';
+                            ?>
                         </div>
                     </div>
                     <div class="filaFormulario">
