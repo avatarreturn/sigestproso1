@@ -22,6 +22,41 @@
     </head>
 
     <body>
+        <!--   script para validar los campos     -->
+        <script language="javascript" type="text/javascript">
+            function valida_envia(){
+
+//           comprobamos que no esta vacio el campo de nombre de usuario
+                if (document.nuevo_usuario.nick.value.length==0){
+                    alert("Tiene que escribir un nombre de usuario")
+                    document.nuevo_usuario.nick.focus()
+                    return 0;
+                }
+
+//           comprobamos que no esta vacio el campo contraseña
+                if (document.nuevo_usuario.password.value.length==0){
+                    alert("Tiene que escribir una contraseña")
+                    document.nuevo_usuario.password.focus()
+                    return 0;
+                }
+
+//           comprobamos que no esta vacio el campo repetir contraseña
+                if (document.nuevo_usuario.repassword.value.length==0){
+                    alert("Introduzca la misma contrasña en ambos campos")
+                    document.nuevo_usuario.repassword.focus()
+                    return 0;
+                }
+
+//           comprobamos que las dos contraseñas introducidas son iguales
+                if (document.nuevo_usuario.repassword.value!=document.nuevo_usuario.password.value){
+                    alert("Introduzca la misma contrasña en ambos campos")
+                    document.nuevo_usuario.password.value=""
+                    document.nuevo_usuario.repassword.value=""
+                    document.nuevo_usuario.password.focus()
+                    return 0;
+                }
+            }
+        </script>
 
         <!-- start top menu and blog title-->
 
@@ -50,7 +85,8 @@
             <p><br /></p>
             <p>
             <div id="formulario">
-                <form  action="crearUsuario.php" method="post">
+                <!--                <form  action="crearUsuario.php" method="post">-->
+                <form name="nuevo_usuario">
                     <div class="tituloFormulario">
                         <h2>Registro de nuevo usuario</h2>
                     </div>
@@ -140,16 +176,16 @@
                         <tr>
                             <td>
                                 <br>
-                                <label for="Categoría">Categoría:</label>
+                                <label for="Categoría">Categor&iacute;a:</label>
                             </td>
                             <td>
                                 <br>
-                                <select size="1">
+                                <select size="1" name="categoria">
                                     <option value="Escoja">Escoja categoría</option>
                                     <option value="jefeProyecto">Jefe de proyecto</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
+                                    <option value="administrador">Administrador</option>
+                                    <option value="desarrollador">Desarrollador</option>
+                                    <option value="responsablePersonal">Responsable de personal</option>
                                 </select>
                             </td>
                         </tr>
@@ -176,24 +212,24 @@
                     <tr>
                         <td>
                             <div class="etiquetaCampo">
-                                <label for="Nick">Contraseña:</label>
+                                <label for="repassword">Contrase&ntilde;a:</label>
                             </div>
                         </td>
                         <td>
                             <div class="etiquetaCampo">
-                                <label for="Nick">Repita contraseña:</label>
+                                <label for="repassword">Repita contrase&ntilde;a:</label>
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <div class="campo">
-                                <input name="password" type="text" class="validate" />
+                                <input name="password" type="password" class="validate" />
                             </div>
                         </td>
                         <td>
                             <div class="campo">
-                                <input name="repassword" type="text" class="validate" />
+                                <input name="repassword" type="password" class="validate" />
                             </div>
                         </td>
                     </tr>
@@ -201,7 +237,7 @@
             </div>
             <br>
             <div class="boton">
-                <input name="Guardar" value="Crear" type="submit" class="submit"/>
+                <input name="Guardar" value="Crear" type="button" class="submit" onclick="valida_envia()" />
                 <input name="Limpiar" value="Limpiar" type="reset" class="submit"/>
             </div>
         </form>
