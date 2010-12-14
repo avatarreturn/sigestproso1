@@ -22,7 +22,41 @@
     </head>
 
     <body>
+        <script language="javascript" type="text/javascript">
+            function valida_envia(){
 
+//                //comprobamos que no esta vacio el campo de nombre de usuario
+//                if (document.nuevo_proyecto.nick.value.length==0){
+//                    alert("Tiene que escribir un nombre de usuario")
+//                    document.nuevo_proyecto.nick.focus()
+//                    return 0;
+//                }
+//
+//                //comprobamos que no esta vacio el campo contraseña
+//                if (document.nuevo_proyecto.password.value.length==0){
+//                    alert("Tiene que escribir una contraseña")
+//                    document.nuevo_proyecto.password.focus()
+//                    return 0;
+//                }
+//
+//                //comprobamos que no esta vacio el campo repetir contraseña
+//                if (document.nuevo_proyecto.repassword.value.length==0){
+//                    alert("Introduzca la misma contraseña en ambos campos")
+//                    document.nuevo_proyecto.repassword.focus()
+//                    return 0;
+//                }
+//
+//                //comprobamos que las dos contraseñas introducidas son iguales
+//                if (document.nuevo_usuario.repassword.value!=document.nuevo_usuario.password.value){
+//                    alert("Introduzca la misma contraseña en ambos campos")
+//                    document.nuevo_proyecto.password.value=""
+//                    document.nuevo_proyecto.repassword.value=""
+//                    document.nuevo_proyecto.password.focus()
+//                    return 0;
+//                }
+                document.nuevo_proyecto.submit();
+            }
+        </script>
         <!-- start top menu and blog title-->
 
         <div id="blogtitle">
@@ -50,7 +84,7 @@
             <p><br /></p>
             <p>
             <div id="formulario">
-                <form  action="proyectoCreado.php" method="post" id="AltaProyecto">
+                <form  action="proyectoCreado.php" method="POST" name="nuevo_proyecto">
                     <div class="tituloFormulario">
                         <h2>Alta Proyecto</h2>
                     </div>
@@ -93,7 +127,7 @@
                         </div>
                         <div class="campo">
                             <?php
-                                echo '<input NAME="fecha" type="text" value="'. date('d-m-Y') .'" class="validate" DISABLED/>';
+                            echo '<input NAME="fecha" type="text" value="' . date('d-m-Y') . '" class="validate" DISABLED/>';
                             ?>
                         </div>
                     </div>
@@ -107,7 +141,8 @@
                         </div>
                     </div>
                     <div class="boton">
-                        <input name="crear" value="Crear" type="submit" class="submit"/>
+                        <input name="crear" value="Crear" type="button" class="submit" onclick="valida_envia()"/>
+                        <input name="Limpiar" value="Limpiar" type="reset" class="submit"/>
                     </div>
                 </form>
             </div>
