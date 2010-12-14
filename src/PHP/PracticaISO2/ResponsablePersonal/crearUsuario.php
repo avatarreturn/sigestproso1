@@ -1,9 +1,12 @@
 <?php
 
-session_start();
+//session_start();
+include_once ('../Persistencia/conexion.php');
+
 //datos para establecer la conexion con la base de mysql.
-$conexion = mysql_connect('localhost', 'grupo01', '0F9RLuM8') or die('ERROR EN LA CONEXION: ' . mysql_error());
-mysql_select_db('grupo01') or die('ERROR AL ESCOJER LA BD: ' . mysql_error());
+//$conexion = mysql_connect('localhost', 'grupo01', '0F9RLuM8') or die('ERROR EN LA CONEXION: ' . mysql_error());
+$conexion = new conexion();
+//mysql_select_db('grupo01') or die('ERROR AL ESCOJER LA BD: ' . mysql_error());
 $usuario = $_POST['nick'];
 $contrasena = $_POST['password'];
 $categoria = $_POST['categoria'];
@@ -45,5 +48,6 @@ if ($existe) {
             </script>';
     }
 }
-mysql_close();
+$conexion->cerrarConexion();
+//mysql_close();
 ?>

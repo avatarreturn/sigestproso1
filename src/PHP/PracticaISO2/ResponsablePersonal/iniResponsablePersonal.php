@@ -17,7 +17,7 @@
         <meta name="zipcode" content="#" />
 
 
-        <link rel="stylesheet" type="text/css" href="stylesheet.css" media="screen, projection, tv " />
+        <link rel="stylesheet" type="text/css" href="../stylesheet.css" media="screen, projection, tv " />
 
     </head>
 
@@ -87,7 +87,7 @@
             <p>
             <div id="formulario">
                 <!--                <form  action="crearUsuario.php" method="post">-->
-                <form name="nuevo_usuario">
+                <form action="crearUsuario.php" method="POST" name="nuevo_usuario">
                     <div class="tituloFormulario">
                         <h2>Registro de nuevo usuario</h2>
                     </div>
