@@ -67,7 +67,7 @@
                             include_once('../Persistencia/conexion.php');
                             $conexion = new conexion();
                             $result = mysql_query('SELECT usuario FROM usuarios WHERE descripcion="jefeProyecto"');
-                            echo '<SELECT NAME="Colores" size="1">';
+                            echo '<SELECT NAME="jefesProyecto" size="1">';
                             echo '<option>Seleccione un Jefe de Proyecto</option>';
                             while ($rowEmp = mysql_fetch_assoc($result)) {
                                 echo '<option value="valor">' . $rowEmp['usuario'] . '</option>';
@@ -93,7 +93,7 @@
                         </div>
                         <div class="campo">
                             <?php
-                                echo '<input name="fecha" type="text" value="'. date('d-m-Y') .'" class="validate" DISABLED/>';
+                                echo '<input NAME="fecha" type="text" value="'. date('d-m-Y') .'" class="validate" DISABLED/>';
                             ?>
                         </div>
                     </div>
@@ -103,11 +103,11 @@
                             <label for="objetivos">Descripci&oacute;n del Proyecto:</label>
                         </div>
                         <div class="campo">
-                            <textarea id="textarea_objetivos" name="comunicacion" rows="5" cols="50"></textarea>
+                            <textarea id="textarea_objetivos" name="descripcion" rows="5" cols="50"></textarea>
                         </div>
                     </div>
                     <div class="boton">
-                        <input name="guardar" value="Crear" type="submit" class="submit"/>
+                        <input name="crear" value="Crear" type="submit" class="submit"/>
                     </div>
                 </form>
             </div>

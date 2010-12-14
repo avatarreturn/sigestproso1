@@ -1,93 +1,24 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
+<?php
 
-    <head>
+include_once ('../Persistencia/conexion.php');
 
-        <title>Nautica08</title>
+//crear la conexion
+$conexion = new conexion();
 
-        <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
-        <meta name="description" content="studio7designs" />
-        <meta name="keywords" content="#" />
-        <meta name="googlebot" content="index, follow" />
-        <meta name="language" content="en-us, english" />
-        <meta name="classification" content="#" />
-        <meta name="author" content="www.studio7designs.com" />
-        <meta name="copyright" content="#" />
-        <meta name="location" content="#" />
-        <meta name="zipcode" content="#" />
+//datos recibidos del form
+$jefeProyecto = $_POST['jefesProyecto'];
+$nombre = $_POST['nombre'];
+$fecha = date('d-m-Y');
+$descripcion = $_POST['descripcion'];
 
+//insertar en la base de datos A LA ESPERA DE LA TABLA DE PATRICIA
+//$result = mysql_query("INSERT INTO `grupo01`.`proyectos` (`id`, `usuario`, `password`, `descripcion`, `fecha`) VALUES (NULL, '" . $usuario . "' , '" . $contrasena . "', '" . $categoria . "', '".$fecha."');");
 
-        <link rel="stylesheet" type="text/css" href="../stylesheet.css" media="screen, projection, tv " />
+echo'<script type="text/javascript">
+        alert("Nuevo proyecto creado con exito");
+        document.location.href="crearProyecto.php";
+    </script>';
 
-    </head>
-
-    <body>
-
-        <!-- start top menu and blog title-->
-
-        <div id="blogtitle">
-            <div id="small">Administrador</div>
-            <div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
-        </div>
-
-        <div id="topmenu">
-
-
-            <ul class="BLUE">
-                <li><a href="crearProyecto.php" title="Principal"><span>Crear proyecto</span></a></li>
-                <li><a href="cargarDatos.php" title="Principal"><span>Cargar datos</span></a></li>
-            </ul>
-        </div>
-
-        <!-- end top menu and blog title-->
-
-        <!-- start left box--><!-- end left box-->
-
-        <!-- start content -->
-
-        <div id="centercontent">
-            <h1>SIGESTPROSO</h1>
-            <p><br /></p>
-            <h2>PROYECTO CREADO SATISFACTORIAMENTE</h2>
-            <br>
-            <a href="iniAdministrador.php">Crear otro proyecto</a>
-        </div>
-
-
-        <!-- end content -->
-
-        <!-- start right box --><!-- end right box -->
-        <!-- start footer -->
-
-        <div id="footer">&copy; 2006 Design by <a href="http://www.studio7designs.com">Studio7designs.com</a> | <a href="http://www.arbutusphotography.com">ArbutusPhotography.com</a> | <a href="http://www.opensourcetemplates.org">Opensourcetemplates.org</a>
-
-
-            <!-- start left boxes -->
-
-            <div class="centercontentleftb">
-                <div class="centercontentleftimg">Sample Box for Products</div>
-                <div class="centercontentrightimg">Sample Box for Products</div>
-            </div>
-
-            <!-- endleft boxes -->
-
-            <!-- start right boxes -->
-
-            <div class="centercontentrightb">
-                <div class="centercontentleftimg">Sample Box for Products</div>
-                <div class="centercontentrightimg">Sample Box for Products</div>
-            </div>
-
-            <!-- end right boxes -->
-
-            <!-- end bottom boxes -->
-
-        </div>
-
-        <!-- end footer -->
-
-
-
-
-    </body>
-</html>
+//cierre de la conexion
+$conexion->cerrarConexion();
+?>
