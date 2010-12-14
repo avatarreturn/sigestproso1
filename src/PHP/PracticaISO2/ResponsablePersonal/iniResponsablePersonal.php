@@ -26,30 +26,30 @@
         <script language="javascript" type="text/javascript">
             function valida_envia(){
 
-//           comprobamos que no esta vacio el campo de nombre de usuario
+                //           comprobamos que no esta vacio el campo de nombre de usuario
                 if (document.nuevo_usuario.nick.value.length==0){
                     alert("Tiene que escribir un nombre de usuario")
                     document.nuevo_usuario.nick.focus()
                     return 0;
                 }
 
-//           comprobamos que no esta vacio el campo contraseña
+                //           comprobamos que no esta vacio el campo contraseña
                 if (document.nuevo_usuario.password.value.length==0){
                     alert("Tiene que escribir una contraseña")
                     document.nuevo_usuario.password.focus()
                     return 0;
                 }
 
-//           comprobamos que no esta vacio el campo repetir contraseña
+                //           comprobamos que no esta vacio el campo repetir contraseña
                 if (document.nuevo_usuario.repassword.value.length==0){
-                    alert("Introduzca la misma contrasña en ambos campos")
+                    alert("Introduzca la misma contraseña en ambos campos")
                     document.nuevo_usuario.repassword.focus()
                     return 0;
                 }
 
-//           comprobamos que las dos contraseñas introducidas son iguales
+                //           comprobamos que las dos contraseñas introducidas son iguales
                 if (document.nuevo_usuario.repassword.value!=document.nuevo_usuario.password.value){
-                    alert("Introduzca la misma contrasña en ambos campos")
+                    alert("Introduzca la misma contraseña en ambos campos")
                     document.nuevo_usuario.password.value=""
                     document.nuevo_usuario.repassword.value=""
                     document.nuevo_usuario.password.focus()
@@ -192,94 +192,92 @@
                         </tr>
 
                     </table>
+
+                    <div class="filaFormulario">
+                        <table>
+                            <tr>
+                                <td>
+                                    <div class="etiquetaCampo">
+                                        <label for="nick">Nombre de usuario:</label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="campo">
+                                        <input name="nick" type="text" class="validate" />
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="etiquetaCampo">
+                                        <label for="repassword">Contrase&ntilde;a:</label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="etiquetaCampo">
+                                        <label for="repassword">Repita contrase&ntilde;a:</label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="campo">
+                                        <input name="password" type="password" class="validate" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="campo">
+                                        <input name="repassword" type="password" class="validate" />
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <br>
+                    <div class="boton">
+                        <input name="Guardar" value="Crear" type="button" class="submit" onclick="valida_envia()" />
+                        <input name="Limpiar" value="Limpiar" type="reset" class="submit"/>
+                    </div>
+                </form>
             </div>
 
-            <div class="filaFormulario">
-                <table>
-                    <tr>
-                        <td>
-                            <div class="etiquetaCampo">
-                                <label for="nick">Nombre de usuario:</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="campo">
-                                <input name="nick" type="text" class="validate" />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="etiquetaCampo">
-                                <label for="repassword">Contrase&ntilde;a:</label>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="etiquetaCampo">
-                                <label for="repassword">Repita contrase&ntilde;a:</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="campo">
-                                <input name="password" type="password" class="validate" />
-                            </div>
-                        </td>
-                        <td>
-                            <div class="campo">
-                                <input name="repassword" type="password" class="validate" />
-                            </div>
-                        </td>
-                    </tr>
-                </table>
+        </div>
+
+
+        <!-- end content -->
+        <!-- start footer -->
+
+        <div id="footer">&copy; 2006 Design by <a href="http://www.studio7designs.com">Studio7designs.com</a> | <a href="http://www.arbutusphotography.com">ArbutusPhotography.com</a> | <a href="http://www.opensourcetemplates.org">Opensourcetemplates.org</a>
+
+
+            <!-- start left boxes -->
+
+            <div class="centercontentleftb">
+                <div class="centercontentleftimg">Sample Box for Products</div>
+                <div class="centercontentrightimg">Sample Box for Products</div>
             </div>
-            <br>
-            <div class="boton">
-                <input name="Guardar" value="Crear" type="button" class="submit" onclick="valida_envia()" />
-                <input name="Limpiar" value="Limpiar" type="reset" class="submit"/>
+
+            <!-- endleft boxes -->
+
+            <!-- start right boxes -->
+
+            <div class="centercontentrightb">
+                <div class="centercontentleftimg">Sample Box for Products</div>
+                <div class="centercontentrightimg">Sample Box for Products</div>
             </div>
-        </form>
-    </div>
-</p>
 
-</div>
+            <!-- end right boxes -->
 
+            <!-- end bottom boxes -->
 
-<!-- end content -->
-<!-- start footer -->
+        </div>
 
-<div id="footer">&copy; 2006 Design by <a href="http://www.studio7designs.com">Studio7designs.com</a> | <a href="http://www.arbutusphotography.com">ArbutusPhotography.com</a> | <a href="http://www.opensourcetemplates.org">Opensourcetemplates.org</a>
-
-
-    <!-- start left boxes -->
-
-    <div class="centercontentleftb">
-        <div class="centercontentleftimg">Sample Box for Products</div>
-        <div class="centercontentrightimg">Sample Box for Products</div>
-    </div>
-
-    <!-- endleft boxes -->
-
-    <!-- start right boxes -->
-
-    <div class="centercontentrightb">
-        <div class="centercontentleftimg">Sample Box for Products</div>
-        <div class="centercontentrightimg">Sample Box for Products</div>
-    </div>
-
-    <!-- end right boxes -->
-
-    <!-- end bottom boxes -->
-
-</div>
-
-<!-- end footer -->
+        <!-- end footer -->
 
 
 
 
-</body>
+    </body>
 </html>
