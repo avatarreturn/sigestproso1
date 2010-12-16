@@ -190,8 +190,8 @@ function validar(){
 
 	<div align="left">
 		<ul class="BLUE">
-			<li><a href="#">Sample Link</a></li>
-			<li><a href="#">Sample Link</a></li>
+			<li><a href="#">Selecionar proyecto</a></li>
+			<li><a href="#">Escoger vacaciones</a></li>
 		</ul>
 	</div>
 
