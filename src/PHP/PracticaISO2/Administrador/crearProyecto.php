@@ -54,7 +54,10 @@
 //                    document.nuevo_proyecto.password.focus()
 //                    return 0;
 //                }
-                document.nuevo_proyecto.submit();
+                if (confirm("Se creará el nuevo usuario")){
+                  document.nuevo_proyecto.submit();
+                }
+
             }
         </script>
         <!-- start top menu and blog title-->
@@ -143,6 +146,10 @@
                     <div class="boton">
                         <input name="crear" value="Crear" type="button" class="submit" onclick="valida_envia()"/>
                         <input name="Limpiar" value="Limpiar" type="reset" class="submit"/>
+                        <?php
+                            if($_GET["creadoProyecto"])
+                                    echo "<label style=\"color: red\";>El proyecto se ha creado con exito</label>";
+                        ?>
                     </div>
                 </form>
             </div>

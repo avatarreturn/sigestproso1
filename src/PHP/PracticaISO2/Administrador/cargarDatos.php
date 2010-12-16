@@ -60,7 +60,7 @@
                     <div class="filaFormulario">
                         <div class="etiquetaCampo">
                             <br>
-                            <label for="numProyectos">N&uacute;mero m&aacute;ximo de proyectos:</label>
+                            <label for="numProyectos">N&uacute;mero m&aacute;ximo de proyectos: añadir máximo de categoríasn y para elegir la categoría q te muestre un desplegable hasta la categoría máxima</label>
                         </div>
                         <div class="campo">
                             <input name="numProyectos" type="text" class="validate" value="3" />
@@ -84,7 +84,7 @@
                             </select>
                         </div>
                     </div>
-                    
+
                     <div class="boton">
                         <input name="guardar" value="Crear" type="submit" class="submit"/>
                     </div>

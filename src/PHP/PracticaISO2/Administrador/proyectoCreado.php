@@ -15,8 +15,7 @@ $descripcion = $_POST['descripcion'];
 //$result = mysql_query("INSERT INTO `grupo01`.`proyectos` (`id`, `usuario`, `password`, `descripcion`, `fecha`) VALUES (NULL, '" . $usuario . "' , '" . $contrasena . "', '" . $categoria . "', '".$fecha."');");
 
 echo'<script type="text/javascript">
-        alert("Nuevo proyecto creado con exito");
-        document.location.href="crearProyecto.php";
+        document.location.href="crearProyecto.php?creadoProyecto=true";
     </script>';
 
 //cierre de la conexion
