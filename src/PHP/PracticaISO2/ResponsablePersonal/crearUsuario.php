@@ -11,11 +11,14 @@ $usuario = $_POST['nick'];
 $contrasena = $_POST['password'];
 $categoria = $_POST['categoria'];
 $recontrasena = $_POST['repassword'];
+$nombre = $_POST['nombre'];
+$apellidos = $_POST['apellidos'];
+$dni = $_POST['dni'];
+$fechanac = $_POST['anio']."-".$_POST['mes']."-".$_POST['dias'];
 $date = getdate();
-$fecha = $date['year']."-".$date["mon"]."-".$date[mday];
+$fecha = $date['year'] . "-" . $date["mon"] . "-" . $date[mday];
 
 $result = mysql_query('SELECT usuario FROM usuarios;');
-//$row = mysql_fetch_array($result);
 $existe = true;
 while ($row = mysql_fetch_array($result)) {
     if ($row['usuario'] == $usuario) {
@@ -27,27 +30,26 @@ while ($row = mysql_fetch_array($result)) {
     }
 }
 
-if ($existe) {
-    if ($contrasena == $recontrasena) {
-        if ($contrasena != "") {
-            $result = mysql_query("INSERT INTO `grupo01`.`usuarios` (`id`, `usuario`, `password`, `descripcion`, `fecha`) VALUES (NULL, '" . $usuario . "' , '" . $contrasena . "', '" . $categoria . "', '".$fecha."');");
-            echo'<script type="text/javascript">
-                alert("Nuevo usuario introducido con exito");
-            document.location.href="iniResponsablePersonal.php";
-            </script>';
-        } else {
-            echo'<script type="text/javascript">
-            alert("Debe introducir una contraseña");
-            document.location.href="iniResponsablePersonal.php";
-            </script>';
-        }
-    } else {
+    $result = mysql_query('SELECT dni FROM trabajador;');
+$existet = true;
+while ($row = mysql_fetch_array($result)) {
+    if ($row['dni'] == $dni) {
+        $existet = false;
         echo'<script type="text/javascript">
-            alert("Los dos campos de contraseña deben ser iguales");
+            alert("Ya existe otro trabajador con este DNI");
             document.location.href="iniResponsablePersonal.php";
             </script>';
     }
+
+}
+
+if ($existe && $existet) {
+    $result = mysql_query("INSERT INTO `grupo01`.`usuarios` (`id`, `usuario`, `password`, `descripcion`, `fecha`) VALUES (NULL, '" . $usuario . "' , '" . $contrasena . "', '" . $categoria . "', '" . $fecha . "');");
+    $result = mysql_query("INSERT INTO `grupo01`.`trabajador` (`dni`, `nombre`, `apellidos`, `fechaNacimiento`, `categoria`) VALUES ('".$dni."', '" . $nombre . "' , '" . $apellidos . "', '" . $fechanac . "', '" . $categoria . "');");
+    echo'<script type="text/javascript">
+                alert("Nuevo usuario introducido con exito");
+            document.location.href="iniResponsablePersonal.php?creadoUsuario=true";
+            </script>';
 }
 $conexion->cerrarConexion();
-//mysql_close();
 ?>
