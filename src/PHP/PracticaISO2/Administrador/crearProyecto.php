@@ -15,51 +15,35 @@
         <meta name="copyright" content="#" />
         <meta name="location" content="#" />
         <meta name="zipcode" content="#" />
-
-
         <link rel="stylesheet" type="text/css" href="../stylesheet.css" media="screen, projection, tv " />
 
-    </head>
-
-    <body>
         <script language="javascript" type="text/javascript">
             function valida_envia(){
 
-//                //comprobamos que no esta vacio el campo de nombre de usuario
-//                if (document.nuevo_proyecto.nick.value.length==0){
-//                    alert("Tiene que escribir un nombre de usuario")
-//                    document.nuevo_proyecto.nick.focus()
-//                    return 0;
-//                }
-//
-//                //comprobamos que no esta vacio el campo contraseña
-//                if (document.nuevo_proyecto.password.value.length==0){
-//                    alert("Tiene que escribir una contraseña")
-//                    document.nuevo_proyecto.password.focus()
-//                    return 0;
-//                }
-//
-//                //comprobamos que no esta vacio el campo repetir contraseña
-//                if (document.nuevo_proyecto.repassword.value.length==0){
-//                    alert("Introduzca la misma contraseña en ambos campos")
-//                    document.nuevo_proyecto.repassword.focus()
-//                    return 0;
-//                }
-//
-//                //comprobamos que las dos contraseñas introducidas son iguales
-//                if (document.nuevo_usuario.repassword.value!=document.nuevo_usuario.password.value){
-//                    alert("Introduzca la misma contraseña en ambos campos")
-//                    document.nuevo_proyecto.password.value=""
-//                    document.nuevo_proyecto.repassword.value=""
-//                    document.nuevo_proyecto.password.focus()
-//                    return 0;
-//                }
-                if (confirm("Se creará el nuevo usuario")){
-                  document.nuevo_proyecto.submit();
+                //comprobamos que no esta vacio el campo nombre
+                if (document.nuevo_proyecto.nombre.value.length==0){
+                    alert("Tiene que escribir un nombre para el proyecto.")
+                    document.nuevo_proyecto.nombre.focus()
+                    return 0;
+                }
+
+                //comprobamos que no esta vacio el campo de jefe de proyecto
+                if (document.nuevo_proyecto.jefesProyecto.value=="Seleccione un Jefe de Proyecto"){
+                    alert("Tiene que seleccionar un Jefe de Proyecto.")
+                    document.nuevo_proyecto.jefesProyecto.focus()
+                    return 0;
+                }
+
+                if (confirm("Se creará el nuevo proyecto.")){
+                    document.nuevo_proyecto.submit();
                 }
 
             }
         </script>
+
+    </head>
+
+    <body>
         <!-- start top menu and blog title-->
 
         <div id="blogtitle">
@@ -97,6 +81,15 @@
                     <div class="filaFormulario">
                         <div class="etiquetaCampo">
                             <br>
+                            <label for="nombre">Nombre del Proyecto:</label>
+                        </div>
+                        <div class="campo">
+                            <input name="nombre" type="text" class="validate" />
+                        </div>
+                    </div>
+                    <div class="filaFormulario">
+                        <div class="etiquetaCampo">
+                            <br>
                             <label for="responsable">Responsable:</label>
                         </div>
                         <div class="campo">
@@ -112,15 +105,6 @@
                             echo '</SELECT>';
                             $conexion->cerrarConexion();
                             ?>
-                        </div>
-                    </div>
-                    <div class="filaFormulario">
-                        <div class="etiquetaCampo">
-                            <br>
-                            <label for="nombre">Nombre del Proyecto:</label>
-                        </div>
-                        <div class="campo">
-                            <input name="nombre" type="text" class="validate" />
                         </div>
                     </div>
                     <div class="filaFormulario">
@@ -147,8 +131,8 @@
                         <input name="crear" value="Crear" type="button" class="submit" onclick="valida_envia()"/>
                         <input name="Limpiar" value="Limpiar" type="reset" class="submit"/>
                         <?php
-                            if($_GET["creadoProyecto"])
-                                    echo "<label style=\"color: red\";>El proyecto se ha creado con exito</label>";
+                            if ($_GET["creadoProyecto"])
+                                echo "<label style=\"color: red\";>El proyecto se ha creado con exito</label>";
                         ?>
                     </div>
                 </form>

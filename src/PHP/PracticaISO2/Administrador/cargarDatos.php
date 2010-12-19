@@ -16,8 +16,43 @@
         <meta name="location" content="#" />
         <meta name="zipcode" content="#" />
 
-
         <link rel="stylesheet" type="text/css" href="../stylesheet.css" media="screen, projection, tv " />
+
+        <script type="text/javascript"  language = "javascript">
+
+            //array de objetos javascript
+            function Objeto(cod,tex){
+                this.cod=cod;
+                this.tex=tex;
+            }
+
+
+            function pintaOptions(){
+                //select donde se incluiran las opciones
+                var select = document.getElementById('categoria');
+                
+                //array con los elementos a guardar
+                var numMax = document.getElementById('numMaxCategoria').value;
+                var array_options = new Array();
+                for (i=1;i<=numMax;i++)
+                {
+                    array_options[i]=new Objeto(i,i);
+                }
+                var grupo_anterior="";
+                var grupo;
+                var opcion;
+                for (var i in array_options){
+                    if(grupo_anterior!=array_options[i].grupo){
+                        grupo= document.createElement('OPTGROUP');
+                        grupo.label= array_options[i].grupo;
+                        grupo_anterior = array_options[i].grupo;
+                        select.appendChild(grupo);}
+                    opcion = document.createElement("OPTION");
+                    opcion.setAttribute("value",array_options[i].cod);
+                    opcion.innerHTML = array_options[i].tex;
+                    select.appendChild(opcion);  }
+            }
+        </script>
 
     </head>
 
@@ -50,7 +85,7 @@
             <p><br /></p>
             <p>
             <div id="formulario">
-                <form  action="" method="post" id="AltaProyecto">
+                <form  action="" method="post" name="carga_datos">
                     <div class="tituloFormulario">
                         <h2>Configurar proyecto</h2>
                     </div>
@@ -60,7 +95,7 @@
                     <div class="filaFormulario">
                         <div class="etiquetaCampo">
                             <br>
-                            <label for="numProyectos">N&uacute;mero m&aacute;ximo de proyectos: añadir máximo de categoríasn y para elegir la categoría q te muestre un desplegable hasta la categoría máxima</label>
+                            <label for="numProyectos">N&uacute;mero m&aacute;ximo de proyectos:</label>
                         </div>
                         <div class="campo">
                             <input name="numProyectos" type="text" class="validate" value="3" />
@@ -69,24 +104,37 @@
                     <div class="filaFormulario">
                         <div class="etiquetaCampo">
                             <br>
-                            <label for="relacionRoles">Relaci&oacute;n de categor&iacute;as y roles:</label>
+                            <label for="numMaxCategoria">N&uacute;mero m&aacute;ximo de categor&iacute;as:</label>
                         </div>
                         <div class="campo">
-                            <select name="relacionRoles" size="1">
-                                <option>Seleccione una relaci&oacute;n</option>
-                                <option value="valor">Jefe de proyecto(1)</option>
-                                <option value="valor">Analista(2)</option>
-                                <option value="valor">Diseñador(3)</option>
-                                <option value="valor">Analista-programador(3)</option>
-                                <option value="valor">Responsable de equipo de pruebas(3)</option>
-                                <option value="valor">Programador(4)</option>
-                                <option value="valor">Probador(4)</option>
-                            </select>
+                            <table>
+                                <tr>
+                                    <td><input id="numMaxCategoria" name="numMaxCategoria" type="text" class="validate"/></td>
+                                    <td><button>Actualizar</button></td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
-
-                    <div class="boton">
-                        <input name="guardar" value="Crear" type="submit" class="submit"/>
+                    <div id="targetDiv" class="filaFormulario" >
+                        <div class="etiquetaCampo">
+                            <br>
+                            <label for="relacionRoles">Relaci&oacute;n de categor&iacute;as y roles:</label>
+                        </div>
+                        <div id="tabla" class="campo">
+                            <table>
+                                <tr>
+                                    <td><input name="rol" type="text" class="validate" value="Escriba un rol:"/></td>
+                                    <td>
+                                        <select id="categoria">    <script type="" >pintaOptions();</script></select></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><button>A&ntilde;adir categor&iacute;a</button></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
                 </form>
             </div>
