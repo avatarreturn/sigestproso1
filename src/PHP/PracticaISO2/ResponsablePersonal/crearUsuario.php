@@ -1,6 +1,5 @@
 <?php
 
-//session_start();
 include_once ('../Persistencia/conexion.php');
 
 //datos para establecer la conexion con la base de mysql.
