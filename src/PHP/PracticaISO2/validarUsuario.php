@@ -2,42 +2,40 @@
 
 session_start();
 //datos para establecer la conexion con la base de mysql.
-$conexion = mysql_connect('localhost', 'grupo01', '0F9RLuM8') or die('ERROR EN LA CONEXION: ' . mysql_error());
-mysql_select_db('grupo01') or die('ERROR AL ESCOJER LA BD: ' . mysql_error());
+include_once('Persistencia/conexion.php');
+$conexion = new conexion();
 
 if (trim($_POST['usuario']) != "" && trim($_POST['password']) != "") {
     $usuario = $_POST['usuario'];
     $password = $_POST['password'];
-    $result = mysql_query('SELECT password, descripcion FROM usuarios WHERE usuario=\'' . $usuario . '\'');
+    $result = mysql_query('SELECT u.password, u.tipoUsuario, t.dni FROM usuario u, trabajador t WHERE (login=\'' . $usuario . '\') and (u.login=t.Usuario_login)');
     if ($row = mysql_fetch_array($result)) {
         //hay resultados, el usuario existe
         if ($row['password'] == $password) {
             //el usuario es valido
-            $_SESSION['k_username'] = $row['usuario'];
 
-            if ($row['descripcion'] == "administrador") {
+            //QUIEN UTILIZA ESTO?
+            //
+            $_SESSION['k_username'] = $row['tipoUsuario'];
+            //
+            $_SESSION['dni'] = $row['dni'];
+            $tipoUsuario=$row['tipoUsuario'];
+            if ($tipoUsuario == "A") {
                 //administrador
                 echo'<script type="text/javascript">
-            document.location.href="Administrador/crearProyecto.php";
-            </script>';
-            } else {
-                if ($row['descripcion'] == "jefeProyecto") {
-                    //jefe proyecto
-                    echo'<script type="text/javascript">
-                document.location.href="iniJefeProyecto.php";
+                document.location.href="Administrador/crearProyecto.php";
                 </script>';
-                } else {
-                    if ($row['descripcion'] == "desarrollador") {
-                        //jefe desarrollador
-                        echo'<script type="text/javascript">
-                    document.location.href="iniDesarrollador.php";
-                    </script>';
-                    } else {
-                        //responsable de personal
-                        echo'<script type="text/javascript">
+            } else {
+                if ($tipoUsuario == "R") {
+                    //responsable personal
+                    echo'<script type="text/javascript">
                     document.location.href="ResponsablePersonal/iniResponsablePersonal.php";
                     </script>';
-                    }
+                } else {
+                    //jefe proyecto-desarrollador
+                    echo'<script type="text/javascript">
+                    document.location.href="Comun/selecProyecto.php";
+                    </script>';
                 }
             }
         } else {
@@ -52,6 +50,5 @@ if (trim($_POST['usuario']) != "" && trim($_POST['password']) != "") {
 } else {
     echo 'Debe especificar un usuario y password';
 }
-
-mysql_close();
+$conexion->cerrarConexion();
 ?>
