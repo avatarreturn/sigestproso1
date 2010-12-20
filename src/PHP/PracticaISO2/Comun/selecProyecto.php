@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<?php session_start(); ?>
 <html>
 
 <head>
@@ -20,9 +21,9 @@
 <link rel="stylesheet" type="text/css" href="../stylesheet.css" media="screen, projection, tv " />
 
 
-<?php
+<?php 
         //BORRAR
-        $dniLogueado ="71162776";
+        $dniLogueado = $_SESSION['dni'];
         include_once('../Persistencia/conexion.php');
         $conexion = new conexion();
         $result = mysql_query("SELECT nombre, descripcion, jefeProyecto, idProyecto FROM Proyecto WHERE\n"
