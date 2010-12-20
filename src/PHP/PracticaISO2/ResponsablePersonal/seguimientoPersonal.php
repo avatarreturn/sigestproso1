@@ -18,7 +18,7 @@
 
 
         <link rel="stylesheet" type="text/css" href="../stylesheet.css" media="screen, projection, tv " />
-
+        <link rel="stylesheet" type="text/css" href="estiloTablas.css" />
     </head>
 
     <body>
@@ -105,198 +105,214 @@
 		A trav&eacute;s de esta pantalla el Responsable de Personal podr&aacute; saber en qu&eacute; proyectos participa cada desarrollador, con qu&eacute; porcentaje de participaci&oacute;n, as&iacute; como las fechas de comienzo y fin de dicha participaci&oacute;n.
                     </div>
                     <br>
+                    <table class="tablaVariable">
+                        <thead>
+                            <tr><th>DNI</th><th>Nombre</th><th>Apellidos</th></tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            include_once ('../Persistencia/conexion.php');
+                            $conexion = new conexion();
+                            $result = mysql_query('SELECT dni, nombre, apellidos FROM trabajador;');
+                            while ($row = mysql_fetch_array($result)) {
+                                echo "<tr><td>" . $row['dni'] . "</td><td>" . $row['nombre'] . "</td><td>" . $row['apellidos'] . "</td></tr>";
+                            }
+                            $conexion->cerrarConexion();
+                            ?>
+                        </tbody>
+                    </table>
 <!--                    <table>
-                        <tr>
-                            <td>
-                                <label for="Nombre">Nombre:</label>
-                            </td>
-                            <td>
-                                <label for="Apellidos">Apellidos:</label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><div class="filaFormulario">
-                                    <div class="campo">
-                                        <input name="nombre" type="text" class="validate" />
-                                    </div>
-                                </div></td>
-                            <td>
-                                <div class="filaFormulario">
-                                    <div class="campo">
-                                        <input name="apellidos" type="text" class="validate" />
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-
-                    <table>
-                        <tr>
-                            <td>
-                                <label for="objetivos">Fecha de nacimiento:</label>
-                            </td>
-                        </tr>
-                    </table>
-                    <table>
-                        <tr>
-                            <td>
-                                <div>
-                                    <?php
-                                    echo '<select name="dias" size="1">';
-                                    echo '<option>D&iacute;a</option>';
-                                    for ($i = 1; $i <= 31; $i++) {
-                                        echo '<option value="1">' . $i . '</option>';
-                                    }
-                                    echo '</select>';
-                                    ?>
-                                </div>
-                            </td>
-                            <td>
-                                <div>
-                                    <select size="1">
-                                        <option value="Mes">Mes</option>
-                                        <option value="Enero">Enero</option>
-                                        <option value="Febrero">Febrero</option>
-                                        <option value="Marzo">Marzo</option>
-                                        <option value="Abril">Abril</option>
-                                        <option value="Mayo">Mayo</option>
-                                        <option value="Junio">Junio</option>
-                                        <option value="Julio">Julio</option>
-                                        <option value="Agosto">Agosto</option>
-                                        <option value="Septiembre">Septiembre</option>
-                                        <option value="Octubre">Octubre</option>
-                                        <option value="Nomviembre">Noviembre</option>
-                                        <option value="Diciembre">Diciembre</option>
-                                    </select>
-                                </div>
-                            </td>
-                            <td
-                                <div>
-                                        <?php
-                                        echo '<select name="dias" size="1">';
-                                        echo '<option>A&ntilde;o</option>';
-                                        $fecha = getdate();
-                                        $anio = $fecha[year] - 18;
-                                        for ($i = 1950; $i <= $anio; $i++) {
-                                            echo '<option value="1">' . $i . '</option>';
-                                        }
-                                        ?>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <br>
-                                <label for="dni">DNI</label>
-                            </td>
-                            <td>
-                                <br>
-                                <input name="dni" type="text" class="campo">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <br>
-                                <label for="Categoría">Categor&iacute;a:</label>
-                            </td>
-                            <td>
-                                <br>
-                                <select size="1" name="categoria">
-                                    <option value="">Escoja categoría</option>
-                                    <option value="jefeProyecto">Jefe de proyecto</option>
-                                    <option value="administrador">Administrador</option>
-                                    <option value="desarrollador">Desarrollador</option>
-                                    <option value="responsablePersonal">Responsable de personal</option>
-                                </select>
-                            </td>
-                        </tr>
-
-                    </table>
-            </div>
-
-            <div class="filaFormulario">
-                <table>
                     <tr>
                         <td>
-                            <div class="etiquetaCampo">
-                                <label for="nick">Nombre de usuario:</label>
-                            </div>
+                            <label for="Nombre">Nombre:</label>
+                        </td>
+                        <td>
+                            <label for="Apellidos">Apellidos:</label>
                         </td>
                     </tr>
                     <tr>
+                        <td><div class="filaFormulario">
+                                <div class="campo">
+                                    <input name="nombre" type="text" class="validate" />
+                                </div>
+                            </div></td>
                         <td>
-                            <div class="campo">
-                                <input name="nick" type="text" class="validate" />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="etiquetaCampo">
-                                <label for="repassword">Contrase&ntilde;a:</label>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="etiquetaCampo">
-                                <label for="repassword">Repita contrase&ntilde;a:</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="campo">
-                                <input name="password" type="password" class="validate" />
-                            </div>
-                        </td>
-                        <td>
-                            <div class="campo">
-                                <input name="repassword" type="password" class="validate" />
+                            <div class="filaFormulario">
+                                <div class="campo">
+                                    <input name="apellidos" type="text" class="validate" />
+                                </div>
                             </div>
                         </td>
                     </tr>
                 </table>
+
+                <table>
+                    <tr>
+                        <td>
+                            <label for="objetivos">Fecha de nacimiento:</label>
+                        </td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td>
+                            <div>
+                    <?php
+                            echo '<select name="dias" size="1">';
+                            echo '<option>D&iacute;a</option>';
+                            for ($i = 1; $i <= 31; $i++) {
+                                echo '<option value="1">' . $i . '</option>';
+                            }
+                            echo '</select>';
+                    ?>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <select size="1">
+                                            <option value="Mes">Mes</option>
+                                            <option value="Enero">Enero</option>
+                                            <option value="Febrero">Febrero</option>
+                                            <option value="Marzo">Marzo</option>
+                                            <option value="Abril">Abril</option>
+                                            <option value="Mayo">Mayo</option>
+                                            <option value="Junio">Junio</option>
+                                            <option value="Julio">Julio</option>
+                                            <option value="Agosto">Agosto</option>
+                                            <option value="Septiembre">Septiembre</option>
+                                            <option value="Octubre">Octubre</option>
+                                            <option value="Nomviembre">Noviembre</option>
+                                            <option value="Diciembre">Diciembre</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td
+                                    <div>
+                    <?php
+                            echo '<select name="dias" size="1">';
+                            echo '<option>A&ntilde;o</option>';
+                            $fecha = getdate();
+                            $anio = $fecha[year] - 18;
+                            for ($i = 1950; $i <= $anio; $i++) {
+                                echo '<option value="1">' . $i . '</option>';
+                            }
+                    ?>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <br>
+                            <label for="dni">DNI</label>
+                        </td>
+                        <td>
+                            <br>
+                            <input name="dni" type="text" class="campo">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <br>
+                            <label for="Categoría">Categor&iacute;a:</label>
+                        </td>
+                        <td>
+                            <br>
+                            <select size="1" name="categoria">
+                                <option value="">Escoja categoría</option>
+                                <option value="jefeProyecto">Jefe de proyecto</option>
+                                <option value="administrador">Administrador</option>
+                                <option value="desarrollador">Desarrollador</option>
+                                <option value="responsablePersonal">Responsable de personal</option>
+                            </select>
+                        </td>
+                    </tr>
+
+                </table>
+        </div>
+
+        <div class="filaFormulario">
+            <table>
+                <tr>
+                    <td>
+                        <div class="etiquetaCampo">
+                            <label for="nick">Nombre de usuario:</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="campo">
+                            <input name="nick" type="text" class="validate" />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="etiquetaCampo">
+                            <label for="repassword">Contrase&ntilde;a:</label>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="etiquetaCampo">
+                            <label for="repassword">Repita contrase&ntilde;a:</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="campo">
+                            <input name="password" type="password" class="validate" />
+                        </div>
+                    </td>
+                    <td>
+                        <div class="campo">
+                            <input name="repassword" type="password" class="validate" />
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <br>
+        <div class="boton">
+            <input name="Guardar" value="Crear" type="button" class="submit" onclick="valida_envia()" />
+            <input name="Limpiar" value="Limpiar" type="reset" class="submit"/>
+        </div>-->
+                </form>
             </div>
-            <br>
-            <div class="boton">
-                <input name="Guardar" value="Crear" type="button" class="submit" onclick="valida_envia()" />
-                <input name="Limpiar" value="Limpiar" type="reset" class="submit"/>
-            </div>-->
-        </form>
-    </div>
-</p>
+        </p>
 
-</div>
-
-
-<!-- end content -->
-<!-- start footer -->
-
-<div id="footer">&copy; 2006 Design by <a href="http://www.studio7designs.com">Studio7designs.com</a> | <a href="http://www.arbutusphotography.com">ArbutusPhotography.com</a> | <a href="http://www.opensourcetemplates.org">Opensourcetemplates.org</a>
-
-
-    <!-- start left boxes -->
-
-    <div class="centercontentleftb">
-        <div class="centercontentleftimg">Sample Box for Products</div>
-        <div class="centercontentrightimg">Sample Box for Products</div>
     </div>
 
-    <!-- endleft boxes -->
 
-    <!-- start right boxes -->
+    <!-- end content -->
+    <!-- start footer -->
 
-    <div class="centercontentrightb">
-        <div class="centercontentleftimg">Sample Box for Products</div>
-        <div class="centercontentrightimg">Sample Box for Products</div>
+    <div id="footer">&copy; 2006 Design by <a href="http://www.studio7designs.com">Studio7designs.com</a> | <a href="http://www.arbutusphotography.com">ArbutusPhotography.com</a> | <a href="http://www.opensourcetemplates.org">Opensourcetemplates.org</a>
+
+
+        <!-- start left boxes -->
+
+        <div class="centercontentleftb">
+            <div class="centercontentleftimg">Sample Box for Products</div>
+            <div class="centercontentrightimg">Sample Box for Products</div>
+        </div>
+
+        <!-- endleft boxes -->
+
+        <!-- start right boxes -->
+
+        <div class="centercontentrightb">
+            <div class="centercontentleftimg">Sample Box for Products</div>
+            <div class="centercontentrightimg">Sample Box for Products</div>
+        </div>
+
+        <!-- end right boxes -->
+
+        <!-- end bottom boxes -->
+
     </div>
 
-    <!-- end right boxes -->
-
-    <!-- end bottom boxes -->
-
-</div>
-
-<!-- end footer -->
+    <!-- end footer -->
 
 
 

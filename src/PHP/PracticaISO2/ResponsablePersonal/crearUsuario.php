@@ -17,10 +17,10 @@ $fechanac = $_POST['anio']."-".$_POST['mes']."-".$_POST['dias'];
 $date = getdate();
 $fecha = $date['year'] . "-" . $date["mon"] . "-" . $date[mday];
 
-$result = mysql_query('SELECT usuario FROM usuarios;');
+$result = mysql_query('SELECT login FROM usuario;');
 $existe = true;
 while ($row = mysql_fetch_array($result)) {
-    if ($row['usuario'] == $usuario) {
+    if ($row['login'] == $usuario) {
         $existe = false;
         echo'<script type="text/javascript">
             alert("El usuario ya existe");
@@ -43,10 +43,9 @@ while ($row = mysql_fetch_array($result)) {
 }
 
 if ($existe && $existet) {
-    $result = mysql_query("INSERT INTO `grupo01`.`usuarios` (`id`, `usuario`, `password`, `descripcion`, `fecha`) VALUES (NULL, '" . $usuario . "' , '" . $contrasena . "', '" . $categoria . "', '" . $fecha . "');");
-    $result = mysql_query("INSERT INTO `grupo01`.`trabajador` (`dni`, `nombre`, `apellidos`, `fechaNacimiento`, `categoria`) VALUES ('".$dni."', '" . $nombre . "' , '" . $apellidos . "', '" . $fechanac . "', '" . $categoria . "');");
+    $result = mysql_query("INSERT INTO `grupo01`.`usuario` (`login`, `password`, `tipoUsuario`) VALUES ('" . $usuario . "' , '" . $contrasena . "', 'N');");
+    $result = mysql_query("INSERT INTO `grupo01`.`trabajador` (`dni`, `nombre`, `apellidos`, `fechaNac`, `categoria` , `Usuario_login`) VALUES ('".$dni."', '" . $nombre . "' , '" . $apellidos . "', '" . $fechanac . "', '" . $categoria . "', '" . $usuario . "');");
     echo'<script type="text/javascript">
-                alert("Nuevo usuario introducido con exito");
             document.location.href="iniResponsablePersonal.php?creadoUsuario=true";
             </script>';
 }

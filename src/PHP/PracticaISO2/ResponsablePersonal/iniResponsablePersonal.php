@@ -26,70 +26,70 @@
         <script language="javascript" type="text/javascript">
             function valida_envia(){
 
-        //           comprobamos que no esta vacio el campo de nombre
-        if (document.nuevo_usuario.nombre.value.length==0){
-            alert("Tiene que escribir un nombre")
-            document.nuevo_usuario.nombre.focus()
-            return 0;
-        }
+                //           comprobamos que no esta vacio el campo de nombre
+                if (document.nuevo_usuario.nombre.value.length==0){
+                    alert("Tiene que escribir un nombre")
+                    document.nuevo_usuario.nombre.focus()
+                    return 0;
+                }
 
-        //           comprobamos que no esta vacio el campo de apellidos
-        if (document.nuevo_usuario.apellidos.value.length==0){
-            alert("Tiene que escribir sus apellidos")
-            document.nuevo_usuario.apellidos.focus()
-            return 0;
-        }
+                //           comprobamos que no esta vacio el campo de apellidos
+                if (document.nuevo_usuario.apellidos.value.length==0){
+                    alert("Tiene que escribir sus apellidos")
+                    document.nuevo_usuario.apellidos.focus()
+                    return 0;
+                }
 
-        //           comprobamos que no esta vacio el campo de fecha de nacimiento
-        if (document.nuevo_usuario.dias.value=="0" || document.nuevo_usuario.mes.value=="0" || document.nuevo_usuario.anio.value=="0"){
-            alert("Tiene que elegir una fecha de nacimiento")
-            document.nuevo_usuario.dias.focus()
-            return 0;
-        }
+                //           comprobamos que no esta vacio el campo de fecha de nacimiento
+                if (document.nuevo_usuario.dias.value=="0" || document.nuevo_usuario.mes.value=="0" || document.nuevo_usuario.anio.value=="0"){
+                    alert("Tiene que elegir una fecha de nacimiento")
+                    document.nuevo_usuario.dias.focus()
+                    return 0;
+                }
 
-        //           comprobamos que no esta vacio el campo de nombre de usuario
+                //           comprobamos que no esta vacio el campo de nombre de usuario
 
-        if (document.nuevo_usuario.nick.value.length==0){
-            alert("Tiene que escribir un nombre de usuario")
-            document.nuevo_usuario.nick.focus()
-            return 0;
-        }
+                if (document.nuevo_usuario.nick.value.length==0){
+                    alert("Tiene que escribir un nombre de usuario")
+                    document.nuevo_usuario.nick.focus()
+                    return 0;
+                }
 
-        //           comprobamos que no esta vacio el campo contraseña
-        if (document.nuevo_usuario.password.value.length==0){
-            alert("Tiene que escribir una contraseña")
-            document.nuevo_usuario.password.focus()
-            return 0;
-        }
+                //           comprobamos que no esta vacio el campo contraseña
+                if (document.nuevo_usuario.password.value.length==0){
+                    alert("Tiene que escribir una contraseña")
+                    document.nuevo_usuario.password.focus()
+                    return 0;
+                }
 
-        //           comprobamos que no esta vacio el campo repetir contraseña
-        if (document.nuevo_usuario.repassword.value.length==0){
-            alert("Introduzca la misma contraseña en ambos campos")
-            document.nuevo_usuario.repassword.focus()
-            return 0;
-        }
+                //           comprobamos que no esta vacio el campo repetir contraseña
+                if (document.nuevo_usuario.repassword.value.length==0){
+                    alert("Introduzca la misma contraseña en ambos campos")
+                    document.nuevo_usuario.repassword.focus()
+                    return 0;
+                }
 
-        //           comprobamos que las dos contraseñas introducidas son iguales
-        if (document.nuevo_usuario.repassword.value!=document.nuevo_usuario.password.value){
-            alert("Introduzca la misma contraseña en ambos campos")
-            document.nuevo_usuario.password.value=""
-            document.nuevo_usuario.repassword.value=""
-            document.nuevo_usuario.password.focus()
-            return 0;
-        }
+                //           comprobamos que las dos contraseñas introducidas son iguales
+                if (document.nuevo_usuario.repassword.value!=document.nuevo_usuario.password.value){
+                    alert("Introduzca la misma contraseña en ambos campos")
+                    document.nuevo_usuario.password.value=""
+                    document.nuevo_usuario.repassword.value=""
+                    document.nuevo_usuario.password.focus()
+                    return 0;
+                }
 
-        //           comprobamos que se ha escogido una categoria
-        if (document.nuevo_usuario.categoria.value==""){
-            alert("Debe escoger una categoria para este usuario")
-            document.nuevo_usuario.categoria.focus()
-            return 0;
-        }
+                //           comprobamos que se ha escogido una categoria
+                if (document.nuevo_usuario.categoria.value==""){
+                    alert("Debe escoger una categoria para este usuario")
+                    document.nuevo_usuario.categoria.focus()
+                    return 0;
+                }
 
-        if (confirm("Se creará el nuevo usuario")){
-            document.nuevo_usuario.submit();
-        }
+                if (confirm("Se creará el nuevo usuario")){
+                    document.nuevo_usuario.submit();
+                }
                 
-    }
+            }
         </script>
 
         <!-- start top menu and blog title-->
@@ -118,7 +118,6 @@
 
             <h1>SIGESTPROSO </h1>
             <p><br /></p>
-            <p>
             <div id="formulario">
                 <!--                <form  action="crearUsuario.php" method="post">-->
                 <form action="crearUsuario.php" method="POST" name="nuevo_usuario">
@@ -287,48 +286,48 @@
 
                         <?php
                                         if ($_GET["creadoUsuario"]) {
-                                            echo "<label style=\"color: red\";>                El usuario se ha creado con exito</label>";
+                                            echo "<label style=\"color: red\";>El usuario se ha creado con exito</label>";
                                         }
                         ?>
                     </div>
                 </form>
             </div>
 
-    </div>
-
-
-    <!-- end content -->
-    <!-- start footer -->
-
-    <div id="footer">&copy; 2006 Design by <a href="http://www.studio7designs.com">Studio7designs.com</a> | <a href="http://www.arbutusphotography.com">ArbutusPhotography.com</a> | <a href="http://www.opensourcetemplates.org">Opensourcetemplates.org</a>
-
-
-        <!-- start left boxes -->
-
-        <div class="centercontentleftb">
-            <div class="centercontentleftimg">Sample Box for Products</div>
-            <div class="centercontentrightimg">Sample Box for Products</div>
         </div>
 
-        <!-- endleft boxes -->
 
-        <!-- start right boxes -->
+        <!-- end content -->
+        <!-- start footer -->
 
-        <div class="centercontentrightb">
-            <div class="centercontentleftimg">Sample Box for Products</div>
-            <div class="centercontentrightimg">Sample Box for Products</div>
+        <div id="footer">&copy; 2006 Design by <a href="http://www.studio7designs.com">Studio7designs.com</a> | <a href="http://www.arbutusphotography.com">ArbutusPhotography.com</a> | <a href="http://www.opensourcetemplates.org">Opensourcetemplates.org</a>
+
+
+            <!-- start left boxes -->
+
+            <div class="centercontentleftb">
+                <div class="centercontentleftimg">Sample Box for Products</div>
+                <div class="centercontentrightimg">Sample Box for Products</div>
+            </div>
+
+            <!-- endleft boxes -->
+
+            <!-- start right boxes -->
+
+            <div class="centercontentrightb">
+                <div class="centercontentleftimg">Sample Box for Products</div>
+                <div class="centercontentrightimg">Sample Box for Products</div>
+            </div>
+
+            <!-- end right boxes -->
+
+            <!-- end bottom boxes -->
+
         </div>
 
-        <!-- end right boxes -->
-
-        <!-- end bottom boxes -->
-
-    </div>
-
-    <!-- end footer -->
+        <!-- end footer -->
 
 
 
 
-</body>
+    </body>
 </html>
