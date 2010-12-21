@@ -87,6 +87,11 @@ function ocultarR(x){
            document.getElementById(x).style.display="none"
        }
     }
+
+    function prueba(){
+        alert("hola")
+        alert(document.getElementById("prueba1").value)
+    }
 </script>
 </head>
 
@@ -159,7 +164,7 @@ function ocultarR(x){
             <TABLE cellspacing="12" cellpadding="0">
                 <TR>
                     <TD><img src= "../images/iTarea2.png" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;Tarea 1</TD>
-                   <TD><input type="text" id="" size="2" maxlength="2"> </TD>
+                   <TD><input type="text" onkeydown="prueba()" id="prueba1" size="2" maxlength="2"> </TD>
                    <TD><small>Horas</small></TD>
                 </TR>
                 <TR>
@@ -169,7 +174,7 @@ function ocultarR(x){
                 </TR>
             </TABLE>
 
-            <center><input type="button" value="Enviar" name="Enviar" onclick="alert('SENT')"/></center>
+            <center><input type="button" value="Enviar" name="Enviar" onkeyup="alert('SENT')"/></center>
          
             
         </div>
