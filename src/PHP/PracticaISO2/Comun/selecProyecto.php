@@ -39,7 +39,8 @@
             $cont = 0;
             while ($rowEmp = mysql_fetch_assoc($result)) {
                 if($rowEmp['jefeProyecto'] == $dniLogueado){
-                    $jefeProy = "<a href='#'><img src= '../images/iJefeProyecto.gif' alt='#' border='0' "
+                    $jefeProy = "<a href='../JefeProyecto/iniJefeProyecto.php?idP=".$rowEmp['idProyecto']
+                    ."'><img src= '../images/iJefeProyecto.gif' alt='#' border='0' "
                     . "style='width: auto; height: auto;'/>&nbsp;&nbsp;".$rowEmp['nombre']."</a> - "
                     . $rowEmp['descripcion']."<br/>";
                 }else{
