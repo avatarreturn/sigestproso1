@@ -28,26 +28,26 @@
     function prueba(){
 
        if (window.XMLHttpRequest)
-  {// code for IE7+, Firefox, Chrome, Opera, Safari
-  xmlhttp=new XMLHttpRequest();
-  }
-else
-  {// code for IE6, IE5
-  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-  }
-xmlhttp.onreadystatechange=function()
-  {
-  if (xmlhttp.readyState==4 && xmlhttp.status==200)
-    {
+      {// code for IE7+, Firefox, Chrome, Opera, Safari
+      xmlhttp=new XMLHttpRequest();
+      }
+    else
+      {// code for IE6, IE5
+      xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+      }
+    xmlhttp.onreadystatechange=function()
+      {
+      if (xmlhttp.readyState==4 && xmlhttp.status==200)
+        {
 
-    // AKI SE METE EL CONTENIDO K CAMBIARA AL EJECUTAR LA FUNCION.
-    // estamos cambiando el contenido del DIV cuyo ID = aqui, por el resultado de la clase pruebaAJax2.php
-    document.getElementById("aqui").innerHTML=xmlhttp.responseText;
-    }
-  }
-  // aki se modifica el nombre de la clase, nada mas
-xmlhttp.open("GET","pruebaAjax2.php",true);
-xmlhttp.send();
+        // AKI SE METE EL CONTENIDO K CAMBIARA AL EJECUTAR LA FUNCION.
+        // estamos cambiando el contenido del DIV cuyo ID = aqui, por el resultado de la clase pruebaAJax2.php
+        document.getElementById("aqui").innerHTML=xmlhttp.responseText;
+        }
+      }
+      // aki se modifica el nombre de la clase, nada mas
+    xmlhttp.open("GET","pruebaAjax2.php",true);
+    xmlhttp.send();
 
 
 

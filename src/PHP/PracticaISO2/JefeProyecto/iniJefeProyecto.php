@@ -30,7 +30,24 @@
 
 
 <link rel="stylesheet" type="text/css" href="../stylesheet.css" media="screen, projection, tv " />
-
+<script type="TEXT/JAVASCRIPT">
+    function Anadir(){
+         if (window.XMLHttpRequest){
+      xmlhttp=new XMLHttpRequest();
+      }
+    else{
+      xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+      }
+    xmlhttp.onreadystatechange=function(){
+      if (xmlhttp.readyState==4 && xmlhttp.status==200)
+        {
+        document.getElementById("SelPersonal").innerHTML=xmlhttp.responseText;
+        }
+      }
+    xmlhttp.open("GET","insertarTrab_Proy.php",true);
+    xmlhttp.send();
+    }
+</script>
 </head>
 
 <body>
@@ -97,6 +114,13 @@
 <p><br /></p>
 
 	<p><a href="#"><?php echo $nombreP ?></a> - <?php echo $descripcionP ?></p>
+        <div id="personalDentro"class="centercontentleft" style="width:auto;">
+            Jefe de proyecto: Paco <br/>
+            Desarrolladores:<br/>
+            - PEPE
+
+
+        </div>
         <?php
         $result2 = mysql_query(
                 "SELECT nombre, dni, apellidos FROM Trabajador WHERE\n"
@@ -119,7 +143,7 @@
         $totEmp2 = mysql_num_rows($result2);
 
         if ($totEmp2 >0) {
-            $personal = "<select>";
+            $personal = "<select id='SelPersonal'>";
             while ($rowEmp2 = mysql_fetch_assoc($result2)) {
                 $personal = $personal . "<option value='".$rowEmp2['dni']."'>". $rowEmp2['nombre']." ".$rowEmp2['apellidos']."</option>";
             }
@@ -128,6 +152,7 @@
 
         echo $personal;
         ?>
+        <input type="button" value="A&ntilde;adir" onclick="Anadir()">
 
 </div>
 
