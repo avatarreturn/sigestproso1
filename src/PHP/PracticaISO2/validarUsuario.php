@@ -14,10 +14,6 @@ if (trim($_POST['usuario']) != "" && trim($_POST['password']) != "") {
         if ($row['password'] == $password) {
             //el usuario es valido
 
-            //QUIEN UTILIZA ESTO?
-            //
-            $_SESSION['k_username'] = $row['tipoUsuario'];
-            //
             $_SESSION['dni'] = $row['dni'];
             $tipoUsuario=$row['tipoUsuario'];
             if ($tipoUsuario == "A") {
