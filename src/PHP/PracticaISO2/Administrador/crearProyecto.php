@@ -96,7 +96,9 @@
                             <?php
                             include_once('../Persistencia/conexion.php');
                             $conexion = new conexion();
-                            $result = mysql_query('SELECT usuario FROM usuarios WHERE descripcion="jefeProyecto"');
+                            //
+                            //select nombre, apellidos from trabajador where dni not in (select jefeProyecto from proyecto where fechaFin is NULL);
+                            $result = mysql_query('select nombre, apellidos from trabajador where (categoria like "1") and dni not in (select jefeProyecto from proyecto where fechaFin is NULL)');
                             echo '<SELECT NAME="jefesProyecto" size="1">';
                             echo '<option>Seleccione un Jefe de Proyecto</option>';
                             while ($rowEmp = mysql_fetch_assoc($result)) {
@@ -104,17 +106,6 @@
                             }
                             echo '</SELECT>';
                             $conexion->cerrarConexion();
-                            ?>
-                        </div>
-                    </div>
-                    <div class="filaFormulario">
-                        <div class="etiquetaCampo">
-                            <br>
-                            <label for="fecha">Fecha de inicio:</label>
-                        </div>
-                        <div class="campo">
-                            <?php
-                            echo '<input NAME="fecha" type="text" value="' . date('d-m-Y') . '" class="validate" DISABLED/>';
                             ?>
                         </div>
                     </div>
