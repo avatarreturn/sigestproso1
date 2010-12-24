@@ -79,9 +79,6 @@
             function pintaOptions(maximo){
                 //limite del select
                 limiteCategoria=maximo;
-                //                var select = document.createElement('select');
-                //                select.setAttribute("id", "selectCategorias");
-                //                select.size = 1;
                 var select = document.getElementById("selectCategorias");
                 var option = document.createElement('option');
                 for (var t, i = 1; i <= limiteCategoria; ++i) {
