@@ -96,13 +96,12 @@
                             <?php
                             include_once('../Persistencia/conexion.php');
                             $conexion = new conexion();
-                            //
                             //select nombre, apellidos from trabajador where dni not in (select jefeProyecto from proyecto where fechaFin is NULL);
                             $result = mysql_query('select nombre, apellidos from trabajador where (categoria like "1") and dni not in (select jefeProyecto from proyecto where fechaFin is NULL)');
                             echo '<SELECT NAME="jefesProyecto" size="1">';
                             echo '<option>Seleccione un Jefe de Proyecto</option>';
                             while ($rowEmp = mysql_fetch_assoc($result)) {
-                                echo '<option value="valor">' . $rowEmp['usuario'] . '</option>';
+                                echo '<option value="'. $rowEmp['usuario'] .'">' . $rowEmp['usuario'] . '</option>';
                             }
                             echo '</SELECT>';
                             $conexion->cerrarConexion();
@@ -137,27 +136,6 @@
         <!-- start footer -->
 
         <div id="footer">&copy; 2006 Design by <a href="http://www.studio7designs.com">Studio7designs.com</a> | <a href="http://www.arbutusphotography.com">ArbutusPhotography.com</a> | <a href="http://www.opensourcetemplates.org">Opensourcetemplates.org</a>
-
-
-            <!-- start left boxes -->
-
-            <div class="centercontentleftb">
-                <div class="centercontentleftimg">Sample Box for Products</div>
-                <div class="centercontentrightimg">Sample Box for Products</div>
-            </div>
-
-            <!-- endleft boxes -->
-
-            <!-- start right boxes -->
-
-            <div class="centercontentrightb">
-                <div class="centercontentleftimg">Sample Box for Products</div>
-                <div class="centercontentrightimg">Sample Box for Products</div>
-            </div>
-
-            <!-- end right boxes -->
-
-            <!-- end bottom boxes -->
 
         </div>
 

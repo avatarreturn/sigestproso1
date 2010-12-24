@@ -1,21 +1,28 @@
 <div class="etiquetaCampo">
     <br>
-    <label for="relacionRoles">Relaci&oacute;n de categor&iacute;as y roles:</label>
+    <label>Introduzca la relaci&oacute;n de categor&iacute;as y roles:</label>
 </div>
 <div id="tabla" class="campo">
     <table>
         <tr>
             <td><input name="rol" type="text" class="validate" value="Escriba un rol:"/></td>
-            <td><select name="categoria" size="1">
-                    <option>Seleccione una categor&iacute;a:</option>
-
-                </select></td>
-            <td></td>
+            <td>
+                <select id="prueba">    <script>pintaOptions();</script></select>
+            </td>
+            <td><input type = "button" value = "A&ntilde;adir categor&iacute;a" onclick = "mostrar()"></td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td>
+                <div class="etiquetaCampo">
+                    <br>
+                    <label>Relaciones de categor&iacute;as y roles ya introducidas:</label>
+                </div>
+            </td>
         </tr>
         <tr>
-            <td><button>A&ntilde;adir categor&iacute;a</button></td>
-            <td></td>
-            <td></td>
+            <td><textarea id="textarea_roles" name="rolescreados" rows="5" cols="30"></textarea></td>
         </tr>
     </table>
 </div>
