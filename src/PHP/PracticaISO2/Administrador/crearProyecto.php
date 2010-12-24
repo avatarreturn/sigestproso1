@@ -122,7 +122,7 @@
                         <input name="Limpiar" value="Limpiar" type="reset" class="submit"/>
                         <?php
                             if ($_GET["creadoProyecto"])
-                                echo "<label style=\"color: red\";>El proyecto se ha creado con exito</label>";
+                                echo "<label style=\"color: red\";><font size=\"2\">El proyecto se ha creado con exito</font></label>";
                         ?>
                     </div>
                 </form>
