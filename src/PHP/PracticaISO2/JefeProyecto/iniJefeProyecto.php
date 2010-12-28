@@ -51,6 +51,7 @@
         document.getElementById("datosP").innerHTML="";
         document.getElementById("listadoPer").innerHTML=document.getElementById("listadoPer").innerHTML + "<br/>&nbsp;&nbsp; <i>" +data[1] +"</i>";
         document.getElementById("listadoPer").style.display="inline";
+        document.getElementById("leftcontent").style.display="inline";
 
         }
       }
@@ -97,7 +98,7 @@
 		<div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
 </div>
 
-		<div id="topmenu">
+<!--		<div id="topmenu">
 
 
 		<ul class="BLUE">
@@ -108,39 +109,23 @@
 		<li><a href="#" title="Links"><span>Contact</span></a></li>
 		<li><a href="#" title="Links"><span>RSS Feeds</span></a></li>
 		</ul>
-</div>
+</div>-->
 
 <!-- end top menu and blog title-->
 
 <!-- start left box-->
 
-<div id="leftcontent">
+<div id="leftcontent" style="display:none">
 	<img style="margin-top:-9px; margin-left:-12px;" src="../images/top2.jpg" alt="" />
-
-	<h3 align="left">Main Menu</h3>
-
-
-	<div align="left">
-		<ul class="BLUE">
-			<li><a href="#">Sample Link</a></li>
-			<li><a href="#">Sample Link</a></li>
-			<li><a href="#">Sample Link</a></li>
-			<li><a href="#">Sample Link</a></li>
-			<li><a href="#">Sample Link</a></li>
-		</ul>
-	</div>
-
-	<p>Nullam non metus. Duis in metus vitae elit luctus convallis. Ut sagittis. Nam tempor. Nam vehicula adipiscing augue. Vestibulum pretium lacinia erat. Duis ut enim. In hendrerit vulputate lectus. Donec ipsum magna, tempor ornare, fringilla sit amet, placerat</p>
-
-	</div>
+        <h4 style="padding-right: 10px; ">Una vez haya* terminado de asignar trabajadores, continue con la definici&oacute;n del proyecto.</h4>
+        <h3 style="color:black;">Definir el plan de fases<br/></h3>
+	<input type="button" value="Continuar" onclick="javascript:location.href = 'defFases.php'"/>
 
 	<!-- You have to modify the "padding-top: when you change the content of this div to keep the footer image looking aligned -->
 
 	<img style="padding-top:2px; margin-left:-12px; margin-bottom:-4px;" src="../images/specs_bottom.jpg" alt="" />
 
-
-
-
+</div>
 <!-- end left box-->
 
 <!-- start content -->
@@ -171,7 +156,17 @@
                 . "SELECT dni FROM Trabajador WHERE\n"
                 . "dni not in\n"
                 . "(SELECT Trabajador_dni FROM TrabajadorProyecto\n"
-                . "GROUP BY Trabajador_dni))"
+                . "GROUP BY Trabajador_dni))\n"
+                . "and \n"
+                . "dni not in \n"
+                . "(SELECT distinct t.Trabajador_dni FROM TrabajadorProyecto t WHERE\n"
+                . "100 <= \n"
+                . "(SELECT SUM(porcentaje) as \"porcentaje\" FROM TrabajadorProyecto p WHERE\n"
+                . "t.Trabajador_dni = p.Trabajador_dni\n"
+                . "AND\n"
+                . "Proyecto_idProyecto in \n"
+                . "(SELECT idProyecto FROM Proyecto WHERE\n"
+                . "fechaFin is NULL)))\n"
                 . "and \n"
                 . "dni not in \n"
                 . "(SELECT Trabajador_dni FROM TrabajadorProyecto WHERE\n"
@@ -194,8 +189,10 @@
         <div id="datosP"></div>
 
         
+                
+        </div>
 
-</div>
+
 
 
 <!-- end content -->
