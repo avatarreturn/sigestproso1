@@ -25,13 +25,18 @@
 
 <title><?php echo $nombreP ?></title>
 
-<meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
-
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />  
 
 
 <link rel="stylesheet" type="text/css" href="../stylesheet.css" media="screen, projection, tv " />
 <script type="TEXT/JAVASCRIPT">
-    function Anadir(){
+    function Anadir(x){
+        if(document.getElementById("RolPersonal").value=="-1"
+            || document.getElementById("porcentaje").value== ""
+            || document.getElementById("porcentaje").value > x
+            || document.getElementById("porcentaje").value < 1){
+            alert("Escoja un rol y/o escoja  correctamente su participacion")
+        }else{
          if (window.XMLHttpRequest){
       xmlhttp=new XMLHttpRequest();
       }
@@ -41,12 +46,45 @@
     xmlhttp.onreadystatechange=function(){
       if (xmlhttp.readyState==4 && xmlhttp.status==200)
         {
-        document.getElementById("SelPersonal").innerHTML=xmlhttp.responseText;
+        var data = xmlhttp.responseText.split ( "[BRK]" );
+        document.getElementById("SelecPers").innerHTML=data[0];
+        document.getElementById("datosP").innerHTML="";
+        document.getElementById("listadoPer").innerHTML=document.getElementById("listadoPer").innerHTML + "<br/>&nbsp;&nbsp; <i>" +data[1] +"</i>";
+        document.getElementById("listadoPer").style.display="inline";
+
         }
       }
-    xmlhttp.open("GET","insertarTrab_Proy.php",true);
+    xmlhttp.open("GET","insertarTrab_Proy.php?dni="+
+        document.getElementById("SelPersonal").value
+    + "&porcentaje=" + document.getElementById("porcentaje").value
+        + "&rol=" +document.getElementById("RolPersonal").value,true);
     xmlhttp.send();
-    }
+    }}
+
+
+// DATOS POR CADA TRABAJADOR
+        function datosPersonal(){
+        if(document.getElementById("SelPersonal").value=="-1"){
+            alert("Escoja un empleado")
+        }else{
+         if (window.XMLHttpRequest){
+      xmlhttp=new XMLHttpRequest();
+      }
+    else{
+      xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+      }
+    xmlhttp.onreadystatechange=function(){
+      if (xmlhttp.readyState==4 && xmlhttp.status==200)
+        {
+        document.getElementById("datosP").innerHTML=xmlhttp.responseText;
+        }
+      }
+    xmlhttp.open("GET","DatosTrabajador.php?dni="+
+        document.getElementById("SelPersonal").value,true);
+    xmlhttp.send();
+    }}
+
+
 </script>
 </head>
 
@@ -113,14 +151,15 @@
 	<h1>SIGESTPROSO</h1>
 <p><br /></p>
 
-	<p><a href="#"><?php echo $nombreP ?></a> - <?php echo $descripcionP ?></p>
-        <div id="personalDentro"class="centercontentleft" style="width:auto;">
-            Jefe de proyecto: Paco <br/>
-            Desarrolladores:<br/>
-            - PEPE
-
-
+	<p><a href="#"><?php echo $nombreP ?></a> - <?php echo $descripcionP ?></p><br/>
+        <div id="personalDentro" class="centercontentleft" style="width:300px; height:auto; float:right">
+            <b>Jefe de proyecto:</b><br/>
+            &nbsp;&nbsp; <i>JEFE SESSION ID</i><br/>            
+            <span id="listadoPer" style="display:none"><b>Trabajadores asignados:</b></span>
+            <br/>
         </div>
+        <p>Seleccione el personal deseado para el proyecto</p>
+        <div id="SelecPers">
         <?php
         $result2 = mysql_query(
                 "SELECT nombre, dni, apellidos FROM Trabajador WHERE\n"
@@ -141,9 +180,8 @@
                 );
 
         $totEmp2 = mysql_num_rows($result2);
-
+        $personal = "<select id='SelPersonal' onchange='datosPersonal()'><option value='-1'>- Empleado -</option>";
         if ($totEmp2 >0) {
-            $personal = "<select id='SelPersonal'>";
             while ($rowEmp2 = mysql_fetch_assoc($result2)) {
                 $personal = $personal . "<option value='".$rowEmp2['dni']."'>". $rowEmp2['nombre']." ".$rowEmp2['apellidos']."</option>";
             }
@@ -152,7 +190,10 @@
 
         echo $personal;
         ?>
-        <input type="button" value="A&ntilde;adir" onclick="Anadir()">
+            </div>
+        <div id="datosP"></div>
+
+        
 
 </div>
 
@@ -161,46 +202,13 @@
 
 <!-- start right box -->
 
-<div id="rightcontent">
-	<img style="margin-top:-9px; margin-left: -5px;" src="../images/top2.jpg" alt="" />
 
-	<img style="width: 153px; height: 59px; float: left; padding:9px;" src="../images/n8g.jpg" alt="Nautica08" />
-
-	<p><a href="#">Pick a location:</a><br />
-	sit amet, consectetuer adipiscing elit, sed diam nonummy nibh   euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad   minim veniam, quis nostrud exercitation ulliam corper</p>
-	<p> Pick a location:<br />
-	sit amet, consectetuer adipiscing elit, sed diam nonummy nibh   euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad   minim veniam, quis nostrud exercitation ulliam corper</p>
-	<p> Pick a location:<br />
-	sit amet, consectetuer adipiscing elit, sed diam nonummy nibh   euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad   minim veniam, quis nostrud exercitation ulliam corper</p>
-
-	<img style="padding-top:5px; margin-left:-5px; margin-bottom:-4px;" src="../images/specs_bottom.jpg" alt="" />
-</div>
 
 <!-- end right box -->
 <!-- start footer -->
 
 <div id="footer">&copy; 2006 Design by <a href="http://www.studio7designs.com">Studio7designs.com</a> | <a href="http://www.arbutusphotography.com">ArbutusPhotography.com</a> | <a href="http://www.opensourcetemplates.org">Opensourcetemplates.org</a>
 
-
-<!-- start left boxes -->
-
-	<div class="centercontentleftb">
-		<div class="centercontentleftimg">Sample Box for Products</div>
-			<div class="centercontentrightimg">Sample Box for Products</div>
-	</div>
-
-	<!-- endleft boxes -->
-
-	<!-- start right boxes -->
-
-	<div class="centercontentrightb">
-			<div class="centercontentleftimg">Sample Box for Products</div>
-		<div class="centercontentrightimg">Sample Box for Products</div>
-	</div>
-
-		<!-- end right boxes -->
-
-<!-- end bottom boxes -->
 
 </div>
 
