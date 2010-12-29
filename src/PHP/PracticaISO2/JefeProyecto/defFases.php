@@ -184,7 +184,11 @@ function Anadir2(){
             || $('#datepicker4I').val()>= $('#datepicker4F').val()
         ){
             alert("Revise las fechas escogidas" + $('#datepicker4I').val())
-        }else{
+        }else if(document.getElementById("nIteraciones").value == ""
+            ||document.getElementById("nIteraciones").value < 0){
+            alert("Introduzca un numero correcto de iteraciones para la fase de inicio")
+        }
+        else{
          if (window.XMLHttpRequest){
       xmlhttp=new XMLHttpRequest();
       }
@@ -206,6 +210,7 @@ function Anadir2(){
     + "&3I=" + $('#datepicker3I').val()
     + "&3F=" + $('#datepicker3F').val()
     + "&4I=" + $('#datepicker4I').val()
+    + "&nI=" + document.getElementById("nIteraciones").value
     + "&4F=" + $('#datepicker4F').val(),true);
     xmlhttp.send();
     }}
@@ -264,6 +269,7 @@ function Anadir2(){
                 <p style="text-align: center; font-size: 22px;">Fase de <b> inicio </b></p>
             <div type="text" id="datepicker1I" style="float:left"><p style=" font-size: 16px;">Escoja fecha de inicio</p></div>
             <div type="text" id="datepicker1F" style="float:right; margin-left:100px;"><p style=" font-size: 16px;">Escoja fecha de fin</p></div>
+            
             </div>
             <div id="Felaboracion" style="display:none">
                 <p style="text-align: center; font-size: 22px;">Fase de <b> elaboraci&oacute;n </b></p>
@@ -280,7 +286,9 @@ function Anadir2(){
             <div type="text" id="datepicker4I" style="float:left"><p style=" font-size: 16px;">Escoja fecha de inicio</p></div>
             <div type="text" id="datepicker4F" style="float:right; margin-left:100px;"><p style=" font-size: 16px;">Escoja fecha de fin</p></div>
             </div>
-        </div>
+            
+        </div><p style="float:left">Indique el n&uacute;mero de <b>iteracciones</b> que habr&aacute; en la primera fase<b>(inicio)<b>&nbsp;
+                        <input type="text" id="nIteraciones" size="2" maxlength="2" /> </p>
         </div>
 
 

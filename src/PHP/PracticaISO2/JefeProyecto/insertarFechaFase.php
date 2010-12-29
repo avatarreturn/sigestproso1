@@ -8,6 +8,7 @@ $F3I = $_GET['3I'];
 $F3F = $_GET['3F'];
 $F4I = $_GET['4I'];
 $F4F = $_GET['4F'];
+$nI = $_GET['nI']; // numero de iteraciones
 $Objetivo = "Futuro óbjetivo";
 include_once('../Persistencia/conexion.php');
         $conexion = new conexion();
@@ -43,6 +44,27 @@ include_once('../Persistencia/conexion.php');
                     . $Objetivo."','"
                     . $F4I."','"
                     . $F4F."',NULL,NULL)");
+         
+         //buscamos ID de la fase
+         
+         $result5 = mysql_query("SELECT idFase FROM Fase WHERE\n"
+    . "Proyecto_idProyecto = \"".$_SESSION['proyectoEscogido']."\"\n"
+    . "AND nombre= \"Inicio\"");
+
+        $totEmp5 = mysql_num_rows($result5);
+
+        if ($totEmp5 ==1) {
+            while ($rowEmp5 = mysql_fetch_assoc($result5)) {
+                $faseID = $rowEmp5['idFase'];
+                
+            }
+        }
+         //Insertamos iteraciones en inicio
+         for ($i = 1; $i <= $nI; $i++) {
+         $result= mysql_query("INSERT INTO Iteracion VALUES(NULL,'"
+                    . $faseID."','"
+                    . $i."',NULL,NULL)");
+         }
         
 
 
