@@ -1,10 +1,10 @@
 <?php session_start();
 
-        $_SESSION['proyectoEscogido'] = $_GET['idP'];
+        $ProEscogido = $_SESSION['proyectoEscogido'];
         include_once('../Persistencia/conexion.php');
         $conexion = new conexion();
         $result = mysql_query("SELECT nombre, descripcion, jefeProyecto FROM Proyecto WHERE\n"
-         . "idProyecto = \"" .$_SESSION['proyectoEscogido']. "\"");
+         . "idProyecto = \"" .$ProEscogido. "\"");
 
         $totEmp = mysql_num_rows($result);
 
@@ -26,16 +26,164 @@
 <title><?php echo $nombreP ?></title>
 
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+<script src="../Utiles/jquery.min.js"></script>
+<script src="../Utiles/jquery-ui.min.js"></script>
+<script src="../Utiles/jquery.ui.datepicker-es.js"></script>
 
 <link rel="stylesheet" type="text/css" href="../stylesheet.css" media="screen, projection, tv " />
 <script type="TEXT/JAVASCRIPT">
-    function Anadir(x){
-        if(document.getElementById("RolPersonal").value=="-1"
-            || document.getElementById("porcentaje").value== ""
-            || document.getElementById("porcentaje").value > x
-            || document.getElementById("porcentaje").value < 1){
-            alert("Escoja un rol y/o escoja  correctamente su participacion")
+    var disabledDays = ["2-21-2010","1-4-2010"];
+
+    /* utility functions */
+function nationalDays(date) {
+	var m = date.getMonth(), d = date.getDate(), y = date.getFullYear();
+	//console.log('Checking (raw): ' + m + '-' + d + '-' + y);
+	for (i = 0; i < disabledDays.length; i++) {
+		if($.inArray((m+1) + '-' + d + '-' + y,disabledDays) != -1 || new Date() > date) {
+			//console.log('bad:  ' + (m+1) + '-' + d + '-' + y + ' / ' + disabledDays[i]);
+			return [false];
+		}
+	}
+	//console.log('good:  ' + (m+1) + '-' + d + '-' + y);
+	return [true];
+}
+function noWeekendsOrHolidays(date) {
+	var noWeekend = jQuery.datepicker.noWeekends(date);
+	return noWeekend[0] ? nationalDays(date) : noWeekend;
+}
+  /* create datepicker */
+jQuery(document).ready(function() {
+	jQuery('#datepicker1I').datepicker({
+		dateFormat: 'yy-mm-dd',
+		constrainInput: true,
+                numberOfMonths: 1,
+		beforeShowDay: noWeekendsOrHolidays
+//                onSelect: function(dateText, inst) {
+//                alert(dateText)
+//            }
+	});
+});
+
+jQuery(document).ready(function() {
+	jQuery('#datepicker1F').datepicker({
+		dateFormat: 'yy-mm-dd',
+		constrainInput: true,
+                numberOfMonths: 1,
+		beforeShowDay: noWeekendsOrHolidays
+//                onSelect: function(dateText, inst) {
+//                alert(dateText)
+//            }
+	});
+});
+
+jQuery(document).ready(function() {
+	jQuery('#datepicker2I').datepicker({
+		dateFormat: 'yy-mm-dd',
+		constrainInput: true,
+                numberOfMonths: 1,
+		beforeShowDay: noWeekendsOrHolidays
+//                onSelect: function(dateText, inst) {
+//                alert(dateText)
+//            }
+	});
+});
+
+jQuery(document).ready(function() {
+	jQuery('#datepicker2F').datepicker({
+		dateFormat: 'yy-mm-dd',
+		constrainInput: true,
+                numberOfMonths: 1,
+		beforeShowDay: noWeekendsOrHolidays
+//                onSelect: function(dateText, inst) {
+//                alert(dateText)
+//            }
+	});
+});
+
+jQuery(document).ready(function() {
+	jQuery('#datepicker3I').datepicker({
+		dateFormat: 'yy-mm-dd',
+		constrainInput: true,
+                numberOfMonths: 1,
+		beforeShowDay: noWeekendsOrHolidays
+//                onSelect: function(dateText, inst) {
+//                alert(dateText)
+//            }
+	});
+});
+
+jQuery(document).ready(function() {
+	jQuery('#datepicker3F').datepicker({
+		dateFormat: 'yy-mm-dd',
+		constrainInput: true,
+                numberOfMonths: 1,
+		beforeShowDay: noWeekendsOrHolidays
+//                onSelect: function(dateText, inst) {
+//                alert(dateText)
+//            }
+	});
+});
+jQuery(document).ready(function() {
+	jQuery('#datepicker4I').datepicker({
+		dateFormat: 'yy-mm-dd',
+		constrainInput: true,
+                numberOfMonths: 1,
+		beforeShowDay: noWeekendsOrHolidays
+//                onSelect: function(dateText, inst) {
+//                alert(dateText)
+//            }
+	});
+});
+
+jQuery(document).ready(function() {
+	jQuery('#datepicker4F').datepicker({
+		dateFormat: 'yy-mm-dd',
+		constrainInput: true,
+                numberOfMonths: 1,
+		beforeShowDay: noWeekendsOrHolidays
+//                onSelect: function(dateText, inst) {
+//                alert(dateText)
+//            }
+	});
+});
+
+
+function cambio(x){
+    if(x==1){
+        document.getElementById("Finicio").style.display= "inline";
+        document.getElementById("Felaboracion").style.display= "none";
+        document.getElementById("Fconstruccion").style.display= "none";
+        document.getElementById("Ftransicion").style.display= "none";
+    }else if(x==2){
+        document.getElementById("Finicio").style.display= "none";
+        document.getElementById("Felaboracion").style.display= "inline";
+        document.getElementById("Fconstruccion").style.display= "none";
+        document.getElementById("Ftransicion").style.display= "none";
+    }else if(x==3){
+        document.getElementById("Finicio").style.display= "none";
+        document.getElementById("Felaboracion").style.display= "none";
+        document.getElementById("Fconstruccion").style.display= "inline";
+        document.getElementById("Ftransicion").style.display= "none";
+    }else if(x==4){
+        document.getElementById("Finicio").style.display= "none";
+        document.getElementById("Felaboracion").style.display= "none";
+        document.getElementById("Fconstruccion").style.display= "none";
+        document.getElementById("Ftransicion").style.display= "inline";
+}
+}
+
+//insertar fechas
+function Anadir2(){
+        if($('#datepicker1I').val()>= $('#datepicker1F').val()
+            || $('#datepicker1F').val()> $('#datepicker2I').val()
+            || $('#datepicker2I').val()>= $('#datepicker2F').val()
+            || $('#datepicker2F').val()> $('#datepicker3I').val()
+            || $('#datepicker3I').val()>= $('#datepicker3F').val()
+            || $('#datepicker3F').val()> $('#datepicker4I').val()
+            || $('#datepicker4I').val()>= $('#datepicker4F').val()
+        ){
+            alert("Revise las fechas escogidas" + $('#datepicker4I').val())
         }else{
          if (window.XMLHttpRequest){
       xmlhttp=new XMLHttpRequest();
@@ -46,46 +194,21 @@
     xmlhttp.onreadystatechange=function(){
       if (xmlhttp.readyState==4 && xmlhttp.status==200)
         {
-        var data = xmlhttp.responseText.split ( "[BRK]" );
-        document.getElementById("SelecPers").innerHTML=data[0];
-        document.getElementById("datosP").innerHTML="";
-        document.getElementById("listadoPer").innerHTML=document.getElementById("listadoPer").innerHTML + "<br/>&nbsp;&nbsp; <i>" +data[1] +"</i>";
-        document.getElementById("listadoPer").style.display="inline";
-        document.getElementById("leftcontent").style.display="inline";
+        location.href = "planIteracion.php";
 
         }
       }
-    xmlhttp.open("GET","insertarTrab_Proy.php?dni="+
-        document.getElementById("SelPersonal").value
-    + "&porcentaje=" + document.getElementById("porcentaje").value
-        + "&rol=" +document.getElementById("RolPersonal").value,true);
+    xmlhttp.open("GET","insertarFechaFase.php?1I="+
+        $('#datepicker1I').val()
+    + "&1F=" + $('#datepicker1F').val()
+    + "&2I=" + $('#datepicker2I').val()
+    + "&2F=" + $('#datepicker2F').val()
+    + "&3I=" + $('#datepicker3I').val()
+    + "&3F=" + $('#datepicker3F').val()
+    + "&4I=" + $('#datepicker4I').val()
+    + "&4F=" + $('#datepicker4F').val(),true);
     xmlhttp.send();
     }}
-
-
-// DATOS POR CADA TRABAJADOR
-        function datosPersonal(){
-        if(document.getElementById("SelPersonal").value=="-1"){
-            alert("Escoja un empleado")
-        }else{
-         if (window.XMLHttpRequest){
-      xmlhttp=new XMLHttpRequest();
-      }
-    else{
-      xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-      }
-    xmlhttp.onreadystatechange=function(){
-      if (xmlhttp.readyState==4 && xmlhttp.status==200)
-        {
-        document.getElementById("datosP").innerHTML=xmlhttp.responseText;
-        }
-      }
-    xmlhttp.open("GET","DatosTrabajador.php?dni="+
-        document.getElementById("SelPersonal").value,true);
-    xmlhttp.send();
-    }}
-
-
 </script>
 </head>
 
@@ -98,31 +221,29 @@
 		<div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
 </div>
 
-<!--		<div id="topmenu">
+		<div id="topmenu">
 
 
 		<ul class="BLUE">
-		<li><a href="#" title="Downloads"><span>Downloads</span></a></li>
-		<li><a href="#" title="Gallery"><span>Photo Gallery</span></a></li>
-		<li><a href="#" title="Links"><span>Subscribe</span></a></li>
-		<li><a href="#" title="Links"><span>Tech Blog</span></a></li>
-		<li><a href="#" title="Links"><span>Contact</span></a></li>
-		<li><a href="#" title="Links"><span>RSS Feeds</span></a></li>
+		<li><a href="#" onclick="cambio(1)" title="Inicio"><span>Inicio</span></a></li>
+                <li><a href="#" onclick="cambio(2)" title="Elaboraci&oacute;n"><span>Elaboraci&oacute;n</span></a></li>
+                <li><a href="#" onclick="cambio(3)" title="Construcci&oacute;n"><span>Construcci&oacute;n</span></a></li>
+                <li><a href="#" onclick="cambio(4)" title="Transici&oacute;n"><span>Transici&oacute;n</span></a></li>
 		</ul>
-</div>-->
+</div>
 
 <!-- end top menu and blog title-->
 
 <!-- start left box-->
 
-<div id="leftcontent" style="display:none">
+<div id="leftcontent" style="display:inline">
 	<img style="margin-top:-9px; margin-left:-12px;" src="../images/top2.jpg" alt="" />
-        <h4 style="padding-right: 10px; ">Una vez haya* terminado de asignar trabajadores, continue con la definici&oacute;n del proyecto.</h4>
-        <h3 style="color:black;">Definir el plan de fases<br/></h3>
-	<input type="button" value="Continuar" onclick=""/>
+        <h4 style="padding-right: 10px; ">Una vez haya* terminado de asignar las fechas correspondientes a cada fase, continue con el pl&aacute;n de iteraciones.</h4>
+        <h3 style="color:black;">Definir el plan de iteraciones<br/></h3>
+	<input type="button" value="Continuar" onclick="Anadir2()"/>
 
 	<!-- You have to modify the "padding-top: when you change the content of this div to keep the footer image looking aligned -->
-
+        <p><img src= "../images/Logo2.jpg" alt="#" border="0" style="width: 180px; height: auto;"/></p>
 	<img style="padding-top:2px; margin-left:-12px; margin-bottom:-4px;" src="../images/specs_bottom.jpg" alt="" />
 
 </div>
@@ -137,62 +258,32 @@
 <p><br /></p>
 
 	<p><a href="#"><?php echo $nombreP ?></a> - <?php echo $descripcionP ?></p><br/>
-        <div id="personalDentro" class="centercontentleft" style="width:300px; height:auto; float:right">
-            <b>fasesss:</b><br/>
-            &nbsp;&nbsp; <i>JEFE SESSION ID</i><br/>
-            <span id="listadoPer" style="display:none"><b>Trabajadores asignados:</b></span>
-            <br/>
-        </div>
-        <p>Seleccione el personal deseado para el proyecto</p>
-        <div id="SelecPers">
-        <?php
-        $result2 = mysql_query(
-                "SELECT nombre, dni, apellidos FROM Trabajador WHERE\n"
-                . "dni in\n"
-                . "(SELECT Trabajador_dni FROM TrabajadorProyecto\n"
-                . "GROUP BY Trabajador_dni\n"
-                . "HAVING COUNT(*) <3\n"
-                . "UNION\n"
-                . "SELECT dni FROM Trabajador WHERE\n"
-                . "dni not in\n"
-                . "(SELECT Trabajador_dni FROM TrabajadorProyecto\n"
-                . "GROUP BY Trabajador_dni))"
-                . "and \n"
-                . "dni not in \n"
-                . "(SELECT Trabajador_dni FROM TrabajadorProyecto WHERE\n"
-                . "Proyecto_idProyecto = \"".$_SESSION['proyectoEscogido']."\")\n"
-                . "and dni <> \"".$_SESSION['dni']."\""
-                );
-
-        $totEmp2 = mysql_num_rows($result2);
-        $personal = "<select id='SelPersonal' onchange='datosPersonal()'><option value='-1'>- Empleado -</option>";
-        if ($totEmp2 >0) {
-            while ($rowEmp2 = mysql_fetch_assoc($result2)) {
-                $personal = $personal . "<option value='".$rowEmp2['dni']."'>". $rowEmp2['nombre']." ".$rowEmp2['apellidos']."</option>";
-            }
-        }
-        $personal = $personal ."</select>";
-
-        echo $personal;
-        ?>
+        
+        <div id="Fechas" class="centercontentleft" style="width:auto; height:auto;">
+            <div id="Finicio">
+                <p style="text-align: center; font-size: 22px;">Fase de <b> inicio </b></p>
+            <div type="text" id="datepicker1I" style="float:left"><p style=" font-size: 16px;">Escoja fecha de inicio</p></div>
+            <div type="text" id="datepicker1F" style="float:right; margin-left:100px;"><p style=" font-size: 16px;">Escoja fecha de fin</p></div>
             </div>
-        <div id="datosP"></div>
-
-
-
+            <div id="Felaboracion" style="display:none">
+                <p style="text-align: center; font-size: 22px;">Fase de <b> elaboraci&oacute;n </b></p>
+            <div type="text" id="datepicker2I" style="float:left"><p style=" font-size: 16px;">Escoja fecha de inicio</p></div>
+            <div type="text" id="datepicker2F" style="float:right; margin-left:100px;"><p style=" font-size: 16px;">Escoja fecha de fin</p></div>
+            </div>
+            <div id="Fconstruccion" style="display:none">
+                <p style="text-align: center; font-size: 22px;">Fase de <b> construci&oacute;n </b></p>
+            <div type="text" id="datepicker3I" style="float:left"><p style=" font-size: 16px;">Escoja fecha de inicio</p></div>
+            <div type="text" id="datepicker3F" style="float:right; margin-left:100px;"><p style=" font-size: 16px;">Escoja fecha de fin</p></div>
+            </div>
+            <div id="Ftransicion" style="display:none">
+                <p style="text-align: center; font-size: 22px;">Fase de <b> transici&oacute;n </b></p>
+            <div type="text" id="datepicker4I" style="float:left"><p style=" font-size: 16px;">Escoja fecha de inicio</p></div>
+            <div type="text" id="datepicker4F" style="float:right; margin-left:100px;"><p style=" font-size: 16px;">Escoja fecha de fin</p></div>
+            </div>
+        </div>
         </div>
 
 
-
-
-<!-- end content -->
-
-<!-- start right box -->
-
-
-
-<!-- end right box -->
-<!-- start footer -->
 
 <div id="footer">&copy; 2006 Design by <a href="http://www.studio7designs.com">Studio7designs.com</a> | <a href="http://www.arbutusphotography.com">ArbutusPhotography.com</a> | <a href="http://www.opensourcetemplates.org">Opensourcetemplates.org</a>
 

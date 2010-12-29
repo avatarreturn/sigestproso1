@@ -122,7 +122,7 @@
 	<input type="button" value="Continuar" onclick="javascript:location.href = 'defFases.php'"/>
 
 	<!-- You have to modify the "padding-top: when you change the content of this div to keep the footer image looking aligned -->
-
+        <p><img src= "../images/Logo2.jpg" alt="#" border="0" style="width: 180px; height: auto;"/></p>
 	<img style="padding-top:2px; margin-left:-12px; margin-bottom:-4px;" src="../images/specs_bottom.jpg" alt="" />
 
 </div>
