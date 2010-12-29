@@ -18,62 +18,65 @@
 
 
         <link rel="stylesheet" type="text/css" href="../stylesheet.css" media="screen, projection, tv " />
-        <link rel="stylesheet" type="text/css" href="estiloTablas.css" />
+
+        <?php
+////        //BORRAR
+////        //$dniLogueado = $_SESSION['dni'];
+        include_once ('../Persistencia/conexion.php');
+        $conexion = new conexion();
+        $result = mysql_query('SELECT t.dni, t.nombre, t.apellidos, tp.Trabajador_dni, tp.Proyecto_idProyecto, tp.porcentaje FROM trabajador t, trabajadorProyecto tp where (t.dni=tp.Trabajador_dni);');
+        $totTraProy = mysql_num_rows($result);
+        if ($totTraProy > 0) {
+            $trabajador = "";
+            $dniAnterior = "";
+            $cont = 0;
+            $cont2 = 0;
+            while ($rowEmp = mysql_fetch_assoc($result)) {
+                $cont = $cont + 1;
+                if ($rowEmp['Trabajador_dni'] == $dniAnterior) {
+                    $trabajador = $trabajador . "<a href='#'>&nbsp;&nbsp;&nbsp;&nbsp;<img src='../images/iActividad4.gif' alt='Actividad' border='0' style='width: auto; height: 12px;'>  Proyecto: "
+                            . $rowEmp['Proyecto_idProyecto'] . " Dedicacion: " . $rowEmp['porcentaje'] . "</img></a><br/> ";
+                    //$trabajador = $trabajador . "<label>Proyecto: " . $rowEmp['Proyecto_idProyecto']. " Dedicacion: ". $rowEmp['porcentaje']. "</label><br/>";// . "</div><br/>";
+                } else {
+                    if ($cont != 0) {
+                        $trabajador = $trabajador . "</div><br/>";
+                    }
+                    $trabajador = $trabajador . "<a href='#' onclick=\"ocultarR('oculto" . $cont . "')\"><img src= '../images/iJefeProyecto.gif' alt='#' border='0' "
+                            . "style='width: auto; height: auto;'/>&nbsp;&nbsp;" . $rowEmp['nombre'] . " " . $rowEmp['apellidos'] . " " . $rowEmp['dni'] . "</a> - "
+                            . "<div id=\"oculto" . $cont . "\" style=\"display:none\"><br/><a href='#'>&nbsp;&nbsp;&nbsp;&nbsp;<img src='../images/iActividad4.gif' alt='Actividad' border='0' style='width: auto; height: 12px;'>"
+                            . "  Proyecto: " . $rowEmp['Proyecto_idProyecto'] . " Dedicacion: " . $rowEmp['porcentaje'] . "</img></a><br/> ";
+                }
+
+                $dniAnterior = $rowEmp['dni'];
+            }
+            if ($trabajador != "") {
+                $trabajador = $trabajador . "</div><br/>";
+            }
+        }
+//        $conexion->cerrarConexion();
+        ?>
+        <!--pasar dos parametros a la funcion, uno el primer elemento a ocultar y otro el numero de elementos consecutivos a ocultar-->
+        <script>
+            function ocultarR(x){
+                
+                if(document.getElementById(x).style.display=="none"){
+                    document.getElementById(x).style.display="inline";
+                }else{
+                    document.getElementById(x).style.display="none"
+                }
+                
+            }
+        </script>
+
     </head>
 
     <body>
-        <!--   script para validar los campos     -->
-<!--        <script language="javascript" type="text/javascript">
-            function valida_envia(){
-
-
-                //           comprobamos que no esta vacio el campo de nombre de usuario
-                if (document.nuevo_usuario.nick.value.length==0){
-                    alert("Tiene que escribir un nombre de usuario")
-                    document.nuevo_usuario.nick.focus()
-                    return 0;
-                }
-
-                //           comprobamos que no esta vacio el campo contraseña
-                if (document.nuevo_usuario.password.value.length==0){
-                    alert("Tiene que escribir una contraseña")
-                    document.nuevo_usuario.password.focus()
-                    return 0;
-                }
-
-                //           comprobamos que no esta vacio el campo repetir contraseña
-                if (document.nuevo_usuario.repassword.value.length==0){
-                    alert("Introduzca la misma contrasña en ambos campos")
-                    document.nuevo_usuario.repassword.focus()
-                    return 0;
-                }
-
-                //           comprobamos que las dos contraseñas introducidas son iguales
-                if (document.nuevo_usuario.repassword.value!=document.nuevo_usuario.password.value){
-                    alert("Introduzca la misma contrasña en ambos campos")
-                    document.nuevo_usuario.password.value=""
-                    document.nuevo_usuario.repassword.value=""
-                    document.nuevo_usuario.password.focus()
-                    return 0;
-                }
-
-                //           comprobamos que se ha escogido una categoria
-                if (document.nuevo_usuario.categoria.value==""){
-                    alert("Debe escoger una categoria para este usuario")
-                    document.nuevo_usuario.categoria.focus()
-                    return 0;
-                }
-
-                document.nuevo_usuario.submit();
-
-            }
-        </script>-->
 
         <!-- start top menu and blog title-->
 
         <div id="blogtitle">
             <div id="small">Responsable de Personal</div>
-            <div id="small2"><a href="logout.php">Cerrar sesi&oacute;n</a></div>
+            <div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
         </div>
 
         <div id="topmenu">
@@ -95,228 +98,59 @@
 
             <h1>SIGESTPROSO </h1>
             <p><br /></p>
-            <p>
             <div id="formulario">
-                <form action="" method="POST" name="obtenerInformes">
+                <!--                <form  action="crearUsuario.php" method="post">-->
+                <form method="POST" name="nuevo_usuario">
                     <div class="tituloFormulario">
                         <h2>Seguimiento del personal</h2>
                     </div>
                     <div class="infoFormulario">
-		A trav&eacute;s de esta pantalla el Responsable de Personal podr&aacute; saber en qu&eacute; proyectos participa cada desarrollador, con qu&eacute; porcentaje de participaci&oacute;n, as&iacute; como las fechas de comienzo y fin de dicha participaci&oacute;n.
+		A trav&eacute;s de esta pantalla el Responsable de Personal podr&aacute; ver la situaci&oacute;n de cada trabajador dentro de la empresa.
                     </div>
                     <br>
-                    <table class="tablaVariable">
-                        <thead>
-                            <tr><th>DNI</th><th>Nombre</th><th>Apellidos</th></tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            include_once ('../Persistencia/conexion.php');
-                            $conexion = new conexion();
-                            $result = mysql_query('SELECT dni, nombre, apellidos FROM trabajador;');
-                            while ($row = mysql_fetch_array($result)) {
-                                echo "<tr><td>" . $row['dni'] . "</td><td>" . $row['nombre'] . "</td><td>" . $row['apellidos'] . "</td></tr>";
-                            }
-                            $conexion->cerrarConexion();
-                            ?>
-                        </tbody>
-                    </table>
-<!--                    <table>
-                    <tr>
-                        <td>
-                            <label for="Nombre">Nombre:</label>
-                        </td>
-                        <td>
-                            <label for="Apellidos">Apellidos:</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><div class="filaFormulario">
-                                <div class="campo">
-                                    <input name="nombre" type="text" class="validate" />
-                                </div>
-                            </div></td>
-                        <td>
-                            <div class="filaFormulario">
-                                <div class="campo">
-                                    <input name="apellidos" type="text" class="validate" />
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-
-                <table>
-                    <tr>
-                        <td>
-                            <label for="objetivos">Fecha de nacimiento:</label>
-                        </td>
-                    </tr>
-                </table>
-                <table>
-                    <tr>
-                        <td>
-                            <div>
-                    <?php
-                            echo '<select name="dias" size="1">';
-                            echo '<option>D&iacute;a</option>';
-                            for ($i = 1; $i <= 31; $i++) {
-                                echo '<option value="1">' . $i . '</option>';
-                            }
-                            echo '</select>';
-                    ?>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div>
-                                        <select size="1">
-                                            <option value="Mes">Mes</option>
-                                            <option value="Enero">Enero</option>
-                                            <option value="Febrero">Febrero</option>
-                                            <option value="Marzo">Marzo</option>
-                                            <option value="Abril">Abril</option>
-                                            <option value="Mayo">Mayo</option>
-                                            <option value="Junio">Junio</option>
-                                            <option value="Julio">Julio</option>
-                                            <option value="Agosto">Agosto</option>
-                                            <option value="Septiembre">Septiembre</option>
-                                            <option value="Octubre">Octubre</option>
-                                            <option value="Nomviembre">Noviembre</option>
-                                            <option value="Diciembre">Diciembre</option>
-                                        </select>
-                                    </div>
-                                </td>
-                                <td
-                                    <div>
-                    <?php
-                            echo '<select name="dias" size="1">';
-                            echo '<option>A&ntilde;o</option>';
-                            $fecha = getdate();
-                            $anio = $fecha[year] - 18;
-                            for ($i = 1950; $i <= $anio; $i++) {
-                                echo '<option value="1">' . $i . '</option>';
-                            }
-                    ?>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <br>
-                            <label for="dni">DNI</label>
-                        </td>
-                        <td>
-                            <br>
-                            <input name="dni" type="text" class="campo">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <br>
-                            <label for="Categoría">Categor&iacute;a:</label>
-                        </td>
-                        <td>
-                            <br>
-                            <select size="1" name="categoria">
-                                <option value="">Escoja categoría</option>
-                                <option value="jefeProyecto">Jefe de proyecto</option>
-                                <option value="administrador">Administrador</option>
-                                <option value="desarrollador">Desarrollador</option>
-                                <option value="responsablePersonal">Responsable de personal</option>
-                            </select>
-                        </td>
-                    </tr>
-
-                </table>
-        </div>
-
-        <div class="filaFormulario">
-            <table>
-                <tr>
-                    <td>
-                        <div class="etiquetaCampo">
-                            <label for="nick">Nombre de usuario:</label>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="campo">
-                            <input name="nick" type="text" class="validate" />
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="etiquetaCampo">
-                            <label for="repassword">Contrase&ntilde;a:</label>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="etiquetaCampo">
-                            <label for="repassword">Repita contrase&ntilde;a:</label>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="campo">
-                            <input name="password" type="password" class="validate" />
-                        </div>
-                    </td>
-                    <td>
-                        <div class="campo">
-                            <input name="repassword" type="password" class="validate" />
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <br>
-        <div class="boton">
-            <input name="Guardar" value="Crear" type="button" class="submit" onclick="valida_envia()" />
-            <input name="Limpiar" value="Limpiar" type="reset" class="submit"/>
-        </div>-->
+                    <div>
+                        <?php
+                        echo $trabajador;
+                        ?>
+                    </div>
                 </form>
             </div>
-        </p>
 
-    </div>
-
-
-    <!-- end content -->
-    <!-- start footer -->
-
-    <div id="footer">&copy; 2006 Design by <a href="http://www.studio7designs.com">Studio7designs.com</a> | <a href="http://www.arbutusphotography.com">ArbutusPhotography.com</a> | <a href="http://www.opensourcetemplates.org">Opensourcetemplates.org</a>
-
-
-        <!-- start left boxes -->
-
-        <div class="centercontentleftb">
-            <div class="centercontentleftimg">Sample Box for Products</div>
-            <div class="centercontentrightimg">Sample Box for Products</div>
         </div>
 
-        <!-- endleft boxes -->
 
-        <!-- start right boxes -->
+        <!-- end content -->
+        <!-- start footer -->
 
-        <div class="centercontentrightb">
-            <div class="centercontentleftimg">Sample Box for Products</div>
-            <div class="centercontentrightimg">Sample Box for Products</div>
+        <div id="footer">&copy; 2006 Design by <a href="http://www.studio7designs.com">Studio7designs.com</a> | <a href="http://www.arbutusphotography.com">ArbutusPhotography.com</a> | <a href="http://www.opensourcetemplates.org">Opensourcetemplates.org</a>
+
+
+            <!-- start left boxes -->
+
+            <div class="centercontentleftb">
+                <div class="centercontentleftimg">Sample Box for Products</div>
+                <div class="centercontentrightimg">Sample Box for Products</div>
+            </div>
+
+            <!-- endleft boxes -->
+
+            <!-- start right boxes -->
+
+            <div class="centercontentrightb">
+                <div class="centercontentleftimg">Sample Box for Products</div>
+                <div class="centercontentrightimg">Sample Box for Products</div>
+            </div>
+
+            <!-- end right boxes -->
+
+            <!-- end bottom boxes -->
+
         </div>
 
-        <!-- end right boxes -->
-
-        <!-- end bottom boxes -->
-
-    </div>
-
-    <!-- end footer -->
+        <!-- end footer -->
 
 
 
 
-</body>
+    </body>
 </html>
-

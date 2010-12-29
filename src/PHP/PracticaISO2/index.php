@@ -13,4 +13,4 @@
         <td align="center"><input type="reset" value="Limpiar" /></td>
     </tr>
 </table>
-</form>
+    </form>
