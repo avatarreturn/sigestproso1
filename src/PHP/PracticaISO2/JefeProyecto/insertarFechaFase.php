@@ -1,6 +1,5 @@
 <?php session_start();
 
-$F1I = $_GET['1I'];
 $F1F = $_GET['1F'];
 $F2I = $_GET['2I'];
 $F2F = $_GET['2F'];
@@ -10,6 +9,7 @@ $F4I = $_GET['4I'];
 $F4F = $_GET['4F'];
 $nI = $_GET['nI']; // numero de iteraciones
 $Objetivo = "Futuro óbjetivo";
+$time = date("Y-m-d");
 include_once('../Persistencia/conexion.php');
         $conexion = new conexion();
 
@@ -18,8 +18,8 @@ include_once('../Persistencia/conexion.php');
                     . $_SESSION['proyectoEscogido']."','"
                     . "Inicio','"
                     . utf8_decode($Objetivo)."','"
-                    . $F1I."','"
-                    . $F1F."',NULL,NULL)");
+                    . $time."','"
+                    . $F1F."','".$time ."',NULL)");
 
          //Insertamos fechas en fase de inicio
          $result2= mysql_query("INSERT INTO Fase VALUES(NULL,'"
@@ -61,15 +61,23 @@ include_once('../Persistencia/conexion.php');
         }
          //Insertamos iteraciones en inicio
          for ($i = 1; $i <= $nI; $i++) {
+
+         if($i == 1){
+             $result= mysql_query("INSERT INTO Iteracion VALUES(NULL,'"
+                    . $faseID."','"
+                    . $i."','".$time ."',NULL)");
+         }else{
          $result= mysql_query("INSERT INTO Iteracion VALUES(NULL,'"
                     . $faseID."','"
                     . $i."',NULL,NULL)");
-         }
+         }}
         
 
+         $result6= mysql_query("UPDATE Proyecto SET fechaInicio = '"
+             . $time. "' WHERE idProyecto ='"
+                 . $_SESSION['proyectoEscogido'] ."'");
 
-
-            echo  utf8_encode("OK");
+//            echo  ($time);
         $conexion->cerrarConexion();
 
 ?>

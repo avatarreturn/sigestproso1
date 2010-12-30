@@ -30,7 +30,34 @@
 <script src="../Utiles/jquery.min.js"></script>
 <script src="../Utiles/jquery-ui.min.js"></script>
 <script src="../Utiles/jquery.ui.datepicker-es.js"></script>
-
+<style type="text/css">
+#datepicker1I .ui-datepicker  {
+    background: #DFC4A4;
+}
+#datepicker1F .ui-datepicker  {
+    background: #DFC4A4;
+}
+#datepicker3I .ui-datepicker  {
+    background: #B0DFA4;
+    border: 1px solid #555;
+    color: #EEE;
+}
+#datepicker3F .ui-datepicker  {
+    background: #B0DFA4;
+    border: 1px solid #555;
+    color: #EEE;
+}
+#datepicker4I .ui-datepicker  {
+    background: #333;
+    border: 1px solid #555;
+    color: #EEE;
+}
+#datepicker4F .ui-datepicker  {
+    background: #333;
+    border: 1px solid #555;
+    color: #EEE;
+}
+</style>
 <link rel="stylesheet" type="text/css" href="../stylesheet.css" media="screen, projection, tv " />
 <script type="TEXT/JAVASCRIPT">
     var disabledDays = ["2-21-2010","1-4-2010"];
@@ -54,16 +81,9 @@ function noWeekendsOrHolidays(date) {
 }
   /* create datepicker */
 jQuery(document).ready(function() {
-	jQuery('#datepicker1I').datepicker({
-		dateFormat: 'yy-mm-dd',
-		constrainInput: true,
-                numberOfMonths: 1,
-		beforeShowDay: noWeekendsOrHolidays
-//                onSelect: function(dateText, inst) {
-//                alert(dateText)
-//            }
-	});
+	jQuery('#datepicker1I').datepicker({disabled: true});
 });
+
 
 jQuery(document).ready(function() {
 	jQuery('#datepicker1F').datepicker({
@@ -243,7 +263,7 @@ function Anadir2(){
 
 <div id="leftcontent" style="display:inline">
 	<img style="margin-top:-9px; margin-left:-12px;" src="../images/top2.jpg" alt="" />
-        <h4 style="padding-right: 10px; ">Una vez haya* terminado de asignar las fechas correspondientes a cada fase, continue con el pl&aacute;n de iteraciones.</h4>
+        <h4 style="padding-right: 10px; ">Una vez haya terminado de asignar las fechas correspondientes a cada fase, continue con el pl&aacute;n de iteraciones.</h4>
         <h3 style="color:black;">Definir el plan de iteraciones<br/></h3>
 	<input type="button" value="Continuar" onclick="Anadir2()"/>
 
@@ -267,13 +287,13 @@ function Anadir2(){
         <div id="Fechas" class="centercontentleft" style="width:auto; height:auto;">
             <div id="Finicio">
                 <p style="text-align: center; font-size: 22px;">Fase de <b> inicio </b></p>
-            <div type="text" id="datepicker1I" style="float:left"><p style=" font-size: 16px;">Escoja fecha de inicio</p></div>
-            <div type="text" id="datepicker1F" style="float:right; margin-left:100px;"><p style=" font-size: 16px;">Escoja fecha de fin</p></div>
+            <div type="text" id="datepicker1I"  style="float:left"><p style=" font-size: 16px;">Escoja fecha de inicio</p></div>
+            <div type="text" id="datepicker1F" style=" float:right; margin-left:100px;"><p style=" font-size: 16px;">Escoja fecha de fin</p></div>
             
             </div>
             <div id="Felaboracion" style="display:none">
                 <p style="text-align: center; font-size: 22px;">Fase de <b> elaboraci&oacute;n </b></p>
-            <div type="text" id="datepicker2I" style="float:left"><p style=" font-size: 16px;">Escoja fecha de inicio</p></div>
+            <div type="text" id="datepicker2I" style="float:left;"><p style=" font-size: 16px;">Escoja fecha de inicio</p></div>
             <div type="text" id="datepicker2F" style="float:right; margin-left:100px;"><p style=" font-size: 16px;">Escoja fecha de fin</p></div>
             </div>
             <div id="Fconstruccion" style="display:none">
