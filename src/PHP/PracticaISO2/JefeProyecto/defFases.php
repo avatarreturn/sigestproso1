@@ -18,7 +18,7 @@
 
 
 
-?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "Http://www.w3.org/TR/html4/strict.dtd">
 <html>
 
 <head>
@@ -245,7 +245,7 @@ function Anadir2(){
 		<div id="small">Jefe de Proyecto</div>
 		<div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
 </div>
-
+<div id="page">
 		<div id="topmenu">
 
 
@@ -263,7 +263,7 @@ function Anadir2(){
 
 <div id="leftcontent" style="display:inline">
 	<img style="margin-top:-9px; margin-left:-12px;" src="../images/top2.jpg" alt="" />
-        <h4 style="padding-right: 10px; ">Una vez haya terminado de asignar las fechas correspondientes a cada fase, continue con el pl&aacute;n de iteraciones.</h4>
+        <h4 style="padding-right: 10px; ">Una vez haya terminado de asignar las fechas correspondientes a cada fase, contin&uacute;e con el plan de iteraciones.</h4>
         <h3 style="color:black;">Definir el plan de iteraciones<br/></h3>
 	<input type="button" value="Continuar" onclick="Anadir2()"/>
 
@@ -307,11 +307,11 @@ function Anadir2(){
             <div type="text" id="datepicker4F" style="float:right; margin-left:100px;"><p style=" font-size: 16px;">Escoja fecha de fin</p></div>
             </div>
             
-        </div><p style="float:left">Indique el n&uacute;mero de <b>iteracciones</b> que habr&aacute; en la primera fase<b>(inicio)<b>&nbsp;
+        </div><p style="float:left">Indique el n&uacute;mero de <b>iteraciones</b> que habr&aacute; en la primera fase <b>(inicio)</b>&nbsp;
                         <input type="text" id="nIteraciones" size="2" maxlength="2" /> </p>
         </div>
 
-
+</div>
 
 <div id="footer">&copy; 2006 Design by <a href="http://www.studio7designs.com">Studio7designs.com</a> | <a href="http://www.arbutusphotography.com">ArbutusPhotography.com</a> | <a href="http://www.opensourcetemplates.org">Opensourcetemplates.org</a>
 

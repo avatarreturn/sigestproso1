@@ -2,7 +2,7 @@
 
 
 body{
-background:#ffffff url('images/bg.jpg') top center repeat-x;
+background:#E1DFDF url('images/bg.jpg') top center repeat-x;
 margin:10px 10px 0px 10px;
 padding:0px;
 color:#999999;
@@ -57,12 +57,21 @@ font-size: 1.1em;
 	background-repeat:repeat-y;
 }
 
+#page {
+        height: 550px;
+	width: 1000px;
+	margin: 0 auto;
+        position: relative;
+	background-color:  #fff;
+        border-left: solid black;
+        border-right: solid black;
+
+}
+
 #leftcontent {
-position: absolute;
-left:10px;
-top:50px;
+float: left;
 width:200px;
-margin-top: 116px;
+margin-top: 120px;
 background-image:url("images/strips_onside.jpg");
 background-repeat:repeat-y;
 font-size:1.0em;
@@ -79,18 +88,15 @@ padding-top: 8px;
 
 
 #centercontent {
+float: right;
 margin-top: 37px;
 background:#fff;
-margin-left: 199px;
-margin-right:199px;
+padding-top: 20px;
+padding-right: 40px;
+width: 740px;
 color:#000;
 voice-family: "\"}\"";
 voice-family: inherit;
-margin-left: 201px;
-margin-right:201px;
-padding:20px;
-height: 500px;
-overflow: auto;
 
 }
 
@@ -100,12 +106,12 @@ overflow: auto;
 
 #centercontent a:hover, a:active{ color:#FF6666;}
 
-
+/*
 html>body #centercontent {
 margin-left: 201px;
 margin-right:201px;
 
-}
+}*/
 
 .centercontentleft {float:left; width:auto; height:auto; background-color:#fff; text-align:left;
 border:dashed 2px #ccc; margin: 4px 10px 5px 10px; padding:6px; font-size:1.1em; color:#666666;}
@@ -218,7 +224,7 @@ position:static;
 #topmenu {
 position: absolute;
 top: 45px;
-left: 240px;
+left: 370px;
 width: 600px;
 font-size:100%;
 margin: 0 0 50px 0;;
@@ -270,17 +276,15 @@ background-position:100% -42px;
 /* ~~~~~~~~~ BEGIN FOOTER ~~~~~~~~~ */
 
 #footer{
-    margin-top:10px;
 height:auto;
+width:auto;
+left: 0px;
+right: 0px;
+bottom: 0px;
 background:#000 url('images/bg.jpg') top center repeat-x;
 text-align: center;
 padding-top: 8px;
-clear: both;
-float: none;
-margin-left: -10px;
-margin-right: -10px;
-margin-bottom: -20px;
-
+position:absolute;
 }
 
 #footer a, a:link {

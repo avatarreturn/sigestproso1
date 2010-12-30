@@ -1,6 +1,5 @@
 <?php session_start(); ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "Http://www.w3.org/TR/html4/strict.dtd">
 <html>
 
 <head>
@@ -117,8 +116,8 @@ function ocultarR(x){
 
 <!-- end top menu and blog title-->
 
-<!-- start left box-->
-
+<!-- ABRIMOS BLOQUE CENTRAL-->
+<div id="page">
 <div id="leftcontent">
 	<img style="margin-top:-9px; margin-left:-12px;" src="../images/top2.jpg" alt="" />
 
@@ -132,13 +131,7 @@ function ocultarR(x){
 		</ul>
 	</div>
 
-<!--	<h3 align="left">Sub menu</h3>
-	<div align="left">
-		<ul class="BLUE">
-			<li><a href="#">Sample Link</a></li>
-			<li><a href="#">Sample Link</a></li>
-		</ul>
-        </div>-->
+
         <p><img src= "../images/Logo2.jpg" alt="#" border="0" style="width: 180px; height: auto;"/></p>
 
 
@@ -178,6 +171,8 @@ function ocultarR(x){
         </div>
 
 </div>
+</div>
+<!--FIN del bloque central-->
 
 
 <div id="footer">&copy; 2006 Design by <a href="http://www.studio7designs.com">Studio7designs.com</a> | <a href="http://www.arbutusphotography.com">ArbutusPhotography.com</a> | <a href="http://www.opensourcetemplates.org">Opensourcetemplates.org</a>

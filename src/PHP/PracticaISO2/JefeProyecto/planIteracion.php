@@ -213,10 +213,11 @@
     }}
 
 
-// DATOS POR CADA TRABAJADOR
-        function datosPersonal(){
-        if(document.getElementById("SelPersonal").value=="-1"){
-            alert("Escoja un empleado")
+// Añadimos iteraciones en la fase siguiente si no tiene
+        function insIterFNext(){
+        if(document.getElementById("NIterFNext").value==""
+            || document.getElementById("NIterFNext").value < 0){
+            alert("El numero introducido no es valido")
         }else{
          if (window.XMLHttpRequest){
       xmlhttp=new XMLHttpRequest();
@@ -226,12 +227,13 @@
       }
     xmlhttp.onreadystatechange=function(){
       if (xmlhttp.readyState==4 && xmlhttp.status==200)
-        {
-        document.getElementById("datosP").innerHTML=xmlhttp.responseText;
+        {alert(xmlhttp.responseText);
+        location.href = "planIteracion.php"
         }
       }
-    xmlhttp.open("GET","DatosTrabajador.php?dni="+
-        document.getElementById("SelPersonal").value,true);
+    xmlhttp.open("GET","insertarIteraciones.php?FaseNext="
+        + "<?php echo $idFNext?>"
+        + "&numIt=" +document.getElementById("NIterFNext").value,true);
     xmlhttp.send();
     }}
 
@@ -265,12 +267,17 @@
 
 <!-- start left box-->
 
-<div id="leftcontent" style="display:none">
+<div id="leftcontent" style="display:inline">
 	<img style="margin-top:-9px; margin-left:-12px;" src="../images/top2.jpg" alt="" />
-        <h4 style="padding-right: 10px; ">Una vez haya* terminado de asignar trabajadores, continue con la definici&oacute;n del proyecto.</h4>
-        <h3 style="color:black;">Definir el plan de fases<br/></h3>
-	<input type="button" value="Continuar" onclick="javascript:location.href = 'defFases.php'"/>
+        <h3 align="left">Men&uacute;</h3>
 
+
+	<div align="left">
+		<ul class="BLUE">
+                    <li><a href="planIteracion.php">Planificar iteracci&oacute;n</a></li>
+			<li><a href="selecVacaciones.php">Escoger vacaciones</a></li>
+		</ul>
+	</div>
 	<!-- You have to modify the "padding-top: when you change the content of this div to keep the footer image looking aligned -->
         <p><img src= "../images/Logo2.jpg" alt="#" border="0" style="width: 180px; height: auto;"/></p>
 	<img style="padding-top:2px; margin-left:-12px; margin-bottom:-4px;" src="../images/specs_bottom.jpg" alt="" />
@@ -290,11 +297,11 @@
         <div id="personalDentro" class="centercontentleft" style="width:auto; height:auto; font-size: 15px; float: right">
             <b>Fase actual:</b>
             &nbsp; <i><?php echo $nombreFAct?></i>
-            <br/>&nbsp;&nbsp;<small> Fechas estimadas(<?php echo $festIFAct ."&nbsp;&nbsp;al&nbsp;&nbsp;". $festFFAct?>)</small><br/>
+            <br/>&nbsp;&nbsp;<small> Duraci&oacute;n estimada (<?php echo $festIFAct ."&nbsp;&nbsp;al&nbsp;&nbsp;". $festFFAct?>)</small><br/>
             <span id="listadoPer" style="display:inline"><br/><b>Iteracion actual:</b> <?php 
             if($faseCero == 1){
                 echo "<small>No hay iteraciones en esta fase</small>";
-            }else{echo $numeroIAct;} ?></span>
+            }else{echo $numeroIAct. " de ". $iteracionMax;} ?></span>
             <br/>
         </div>
         <?php if($casiFinP == 1){
@@ -311,10 +318,11 @@
         <?php
                 }}else{
                 if($FNextVacia == 1){// si cambiamos de fase Y no ai iteraciones creadas
-                    echo "<p>La siguiente iteracci&oacute;n pertenece a la fase siguiente<b>(".$faseNext.")</b></p>"
+                    echo "<p>La siguiente iteracci&oacute;n pertenece a la fase siguiente <b>(".$faseNext.")</b></p>"
                         . "<p style='color:red'>A&uacute;n no ha escogido el n&uacute;mero de iteraciones del que constar&aacute; la fase siguiente</p>"
                         . "<p>Especifique el n&uacute;mero de iteraciones de la fase <b>".$faseNext."</b>"
                         . "  <input type='text' id='NIterFNext' size='2' maxlength='2'/>"
+                        . "<br/><input type='button' value='Confirmar' onclick='insIterFNext()'/>"
                         . "</p>";
                 }else{
 

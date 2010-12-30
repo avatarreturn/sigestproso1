@@ -18,7 +18,7 @@
 
 
 
-?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "Http://www.w3.org/TR/html4/strict.dtd">
 <html>
 
 <head>
@@ -114,10 +114,10 @@
 <!-- end top menu and blog title-->
 
 <!-- start left box-->
-
+<div id="page">
 <div id="leftcontent" style="display:none">
 	<img style="margin-top:-9px; margin-left:-12px;" src="../images/top2.jpg" alt="" />
-        <h4 style="padding-right: 10px; ">Una vez haya terminado de asignar trabajadores, continue con la definici&oacute;n del proyecto.</h4>
+        <h4 style="padding-right: 10px; ">Una vez haya terminado de asignar trabajadores, contin&uacute;e con la definici&oacute;n del proyecto.</h4>
         <h3 style="color:black;">Definir el plan de fases<br/></h3>
 	<input type="button" value="Continuar" onclick="javascript:location.href = 'defFases.php'"/>
 
@@ -191,7 +191,7 @@
         
                 
         </div>
-
+</div>
 
 
 
