@@ -1,4 +1,9 @@
 <?php session_start();
+
+if($_GET['idP'] == ""){
+}
+else{$_SESSION['proyectoEscogido'] = $_GET['idP'];
+}
         include_once('../Persistencia/conexion.php');
         $conexion = new conexion();
         $result = mysql_query("SELECT nombre, descripcion, jefeProyecto FROM Proyecto WHERE\n"
@@ -12,6 +17,19 @@
                 $descripcionP = $rowEmp['descripcion'];
             }
         }
+
+        //sacamos la lista de roles disponibles
+        $result3 = mysql_query(
+                "SELECT nombre, idRol FROM Rol WHERE categoria > 1");
+
+        $totEmp3 = mysql_num_rows($result3);
+
+        if ($totEmp3 >0) {
+            $rolesDisponibles = "<select id='RolActividad'><option value='-1'>- Escoja un rol -</option>";
+            while ($rowEmp3 = mysql_fetch_assoc($result3)) {
+                $rolesDisponibles = $rolesDisponibles . "<option value='".$rowEmp3['idRol']."'>". $rowEmp3['nombre']."</option>";}
+        }
+        $rolesDisponibles = $rolesDisponibles ."</select>";
 
         //buscamos la Fase actual de este proyecto
 
@@ -54,6 +72,29 @@
         }else  if ($totEmp3 ==0) {
             $faseCero=1;
         }else{$faseCero=0;}
+
+
+
+
+        // miramos si es la primera iteracion del proyecto
+        if($numeroIAct == 1 && $nombreFAct == "Inicio"){
+        $result5 = mysql_query("SELECT nombre FROM Actividad WHERE\n"
+            . "Iteracion_idIteracion = \"".$idIAct. "\"");
+
+
+        $totEmp5 = mysql_num_rows($result5);
+
+        if ($totEmp5 >0) {
+             $PrimIter = 0;
+        } else{
+             $PrimIter = 1;
+        }
+        
+           
+        }else{
+            $PrimIter= 0;
+        }
+
 
         // Calculamos si es la iteracion actual es la ultima de esta fase
 
@@ -168,7 +209,7 @@
 
 
 
-?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "Http://www.w3.org/TR/html4/strict.dtd">
 <html>
 
 <head>
@@ -180,12 +221,12 @@
 
 <link rel="stylesheet" type="text/css" href="../stylesheet.css" media="screen, projection, tv " />
 <script type="TEXT/JAVASCRIPT">
-    function Anadir(x){
-        if(document.getElementById("RolPersonal").value=="-1"
-            || document.getElementById("porcentaje").value== ""
-            || document.getElementById("porcentaje").value > x
-            || document.getElementById("porcentaje").value < 1){
-            alert("Escoja un rol y/o escoja  correctamente su participacion")
+    function anadir(x){
+        if(document.getElementById("actividad").value==""
+            || document.getElementById("RolActividad").value== "-1"
+            || document.getElementById("durEstimada").value <= 0
+           ){
+            alert("Escoja un rol y/o escoja correctamente el nombre de la actividad y su duracion")
         }else{
          if (window.XMLHttpRequest){
       xmlhttp=new XMLHttpRequest();
@@ -196,19 +237,22 @@
     xmlhttp.onreadystatechange=function(){
       if (xmlhttp.readyState==4 && xmlhttp.status==200)
         {
-        var data = xmlhttp.responseText.split ( "[BRK]" );
-        document.getElementById("SelecPers").innerHTML=data[0];
-        document.getElementById("datosP").innerHTML="";
-        document.getElementById("listadoPer").innerHTML=document.getElementById("listadoPer").innerHTML + "<br/>&nbsp;&nbsp; <i>" +data[1] +"</i>";
-        document.getElementById("listadoPer").style.display="inline";
-        document.getElementById("leftcontent").style.display="inline";
+//        var data = xmlhttp.responseText.split ( "[BRK]" );
+//        document.getElementById("SelecPers").innerHTML=data[0];
+            document.getElementById("actividad").value="";
+            document.getElementById("durEstimada").value="";
+            document.getElementById("actividadesAsig").innerHTML=xmlhttp.responseText;
+            document.getElementById("actividadesAsig").style.display="inline";
+            document.getElementById("RolActividad").value="-1";
 
         }
       }
-    xmlhttp.open("GET","insertarTrab_Proy.php?dni="+
-        document.getElementById("SelPersonal").value
-    + "&porcentaje=" + document.getElementById("porcentaje").value
-        + "&rol=" +document.getElementById("RolPersonal").value,true);
+    xmlhttp.open("GET","insertarActividad.php?INext="+
+        "<?php echo $idINext;?>"
+    + "&nombreA=" + document.getElementById("actividad").value
+    + "&duracion=" + document.getElementById("durEstimada").value
+    + "&primeraI=" + x
+        + "&rolA=" +document.getElementById("RolActividad").value,true);
     xmlhttp.send();
     }}
 
@@ -227,7 +271,7 @@
       }
     xmlhttp.onreadystatechange=function(){
       if (xmlhttp.readyState==4 && xmlhttp.status==200)
-        {alert(xmlhttp.responseText);
+        {
         location.href = "planIteracion.php"
         }
       }
@@ -266,7 +310,7 @@
 <!-- end top menu and blog title-->
 
 <!-- start left box-->
-
+<div id="page">
 <div id="leftcontent" style="display:inline">
 	<img style="margin-top:-9px; margin-left:-12px;" src="../images/top2.jpg" alt="" />
         <h3 align="left">Men&uacute;</h3>
@@ -275,7 +319,7 @@
 	<div align="left">
 		<ul class="BLUE">
                     <li><a href="planIteracion.php">Planificar iteracci&oacute;n</a></li>
-			<li><a href="selecVacaciones.php">Escoger vacaciones</a></li>
+			<li><a href="../Comun/selecVacaciones.php">Escoger vacaciones</a></li>
 		</ul>
 	</div>
 	<!-- You have to modify the "padding-top: when you change the content of this div to keep the footer image looking aligned -->
@@ -303,17 +347,33 @@
                 echo "<small>No hay iteraciones en esta fase</small>";
             }else{echo $numeroIAct. " de ". $iteracionMax;} ?></span>
             <br/>
+            <p id="actividadesAsig" style="color: black; display:none"></p>
         </div>
         <?php if($casiFinP == 1){
             //Estamos en la ultima Iteracion de TOODO el proyecot
             echo "<p>La iteracci&oacute;n actual es la <b>&uacute;ltima del proyecto</b>, no puede seguir planificando";
-        }else{
+        }else {
+            if ($PrimIter == 1){ // esla primera iteracion del proyecto
+                echo "<p style='color:black'>Se dispone a planificar la primera iteraci&oacute;n <b>(" . $numeroIAct . ")</b> del proyecto</p>";
+        echo "<p>Nombre de la actividad <input type='text' id='actividad'/><br/><br/>";
+        echo "Asocie un rol a la actividad<br/> " .$rolesDisponibles . "<br/>";
+        echo "Indique una duraci&oacute;n estimada a la actividad <input type='text' id='durEstimada' size='5' maxlength='5'/><small> Horas Hombre</small><br/>";
+        echo "<br/><input style='margin-left:200px;' type='button' value='A&ntilde;adir' onclick=\"anadir('" . $idIAct. "')\"/>";
+        echo "</p>";
+            }else{
                 if($numeroIAct < $iteracionMax && faseCero == 0){
             if($planificado == 1){ echo "<p style=\"color:red;\"> Ya ha planificado la siguiente iteracci&oacute;n, no podr&aacute;
                 planificar mas iteracciones hasta que haya finalizado la iteracci&oacute;n actual</p>" .$LActividades; }else {  ?>
-            }
+            
+                <?php
+        echo "<p style='color:black'>Se dispone a planificar la iteraci&oacute;n <b>" . $numeroINext . "</b> de esta misma fase</p>";
+        echo "<p>Nombre de la actividad <input type='text' id='actividad'/><br/><br/>";
+        echo "Asocie un rol a la actividad<br/> " .$rolesDisponibles . "<br/>";
+        echo "Indique una duraci&oacute;n estimada a la actividad <input type='text' id='durEstimada' size='5' maxlength='5'/><small> Horas Hombre</small><br/>";
+        echo "<br/><input style='margin-left:200px;' type='button' value='A&ntilde;adir' onclick=\"anadir('-1')\"/>";
 
-           PLANIFICACION NORMAL!!!
+        echo "</p>"
+        ?>
 
         <?php
                 }}else{
@@ -331,25 +391,16 @@
                     . " planificar mas iteracciones hasta que haya finalizado la iteracci&oacute;n actual</p>" .$LActividades;
                 }else{
 
-            echo "CAMBIO DE FASE Pero NO ESTAN PLANIFICADAS las siguientes, aunk si estan definidas-- FASECERO = --" . $faseCero ."--";
-        }}}
+            echo "<ps tyle='color:black'>Se dispone a planificar la iteraci&oacute;n <b>1</b> de la fase <b>".$faseNext."</b></p>";
+        }}}}
         }//Fin casiFin
 
         ?>
         
         </div>
+</div>
 
 
-
-
-<!-- end content -->
-
-<!-- start right box -->
-
-
-
-<!-- end right box -->
-<!-- start footer -->
 
 <div id="footer">&copy; 2006 Design by <a href="http://www.studio7designs.com">Studio7designs.com</a> | <a href="http://www.arbutusphotography.com">ArbutusPhotography.com</a> | <a href="http://www.opensourcetemplates.org">Opensourcetemplates.org</a>
 

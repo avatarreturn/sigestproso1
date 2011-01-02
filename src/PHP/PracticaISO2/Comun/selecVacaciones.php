@@ -1,4 +1,5 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<?php session_start(); ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "Http://www.w3.org/TR/html4/strict.dtd">
 <html>
 
 <head>
@@ -25,10 +26,13 @@
 
 
 <?php
-
+// calcular fecha fin por Inicio + duracion/8 hora diarias por hombre y porcentaje¿¿
         include_once('../Persistencia/conexion.php');
         $conexion = new conexion();
-        $result = mysql_query('SELECT nacimiento, fallecimento FROM mascotas');
+        $result = mysql_query("SELECT fechaInicio, duracion FROM Actividad WHERE\n"
+    . "idActividad in \n"
+    . "(SELECT Actividad_idActividad FROM TrabajadorActividad\n"
+    . "WHERE Trabajador_dni = \"". $_SESSION['dni']."\")");
         $totEmp = mysql_num_rows($result);
 
         if ($totEmp >0) {
@@ -39,10 +43,10 @@
 
                 // Extraer las dos fechas
                 // Generar las fechas de por medio e ir metiendolas en un array
-                if (in_array($rowEmp['nacimiento'], $fechasF1)) {
-                }else{  $fechasF1[] = $rowEmp['nacimiento'];}
-                $fechaInicio = $rowEmp['nacimiento'];
-                while ( $fechaInicio != $rowEmp['fallecimento']) {
+                if (in_array($rowEmp['fechaInicio'], $fechasF1)) {
+                }else{  $fechasF1[] = $rowEmp['fechaInicio'];}
+                $fechaInicio = $rowEmp['fechaInicio'];
+                while ( $fechaInicio != $rowEmp['fechaFin']) {
                 $can_dias = 1;
                 $fec_vencimi= date("Y-m-d", strtotime("$fechaInicio + $can_dias days"));
                 $fechaInicio = $fec_vencimi;
@@ -186,7 +190,7 @@ function validar(){
 <!-- end top menu and blog title-->
 
 <!-- start left box-->
-
+<div id="page">
 <div id="leftcontent">
 	<img style="margin-top:-9px; margin-left:-12px;" src="../images/top2.jpg" alt="" />
 
@@ -268,7 +272,7 @@ function validar(){
         </div>
 
 </div>
-
+</div>
 
 <div id="footer">&copy; 2006 Design by <a href="http://www.studio7designs.com">Studio7designs.com</a> | <a href="http://www.arbutusphotography.com">ArbutusPhotography.com</a> | <a href="http://www.opensourcetemplates.org">Opensourcetemplates.org</a>
 

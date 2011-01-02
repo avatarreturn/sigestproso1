@@ -51,12 +51,15 @@ include_once('../Persistencia/conexion.php');
 
 //        
         $personal = $personal ."</select>";
-        
-        
+
+        $result3 = mysql_query("SELECT nombre FROM Rol WHERE idRol='".$rol."'");
+        while ($rowEmp3 = mysql_fetch_assoc($result3)) {
+               $nombreRol = $rowEmp3['nombre'];
+            }
 
         $result3 = mysql_query("SELECT nombre, apellidos FROM Trabajador WHERE dni='".$dniInsertar."'");
         while ($rowEmp3 = mysql_fetch_assoc($result3)) {
-               $personal = $personal ."[BRK]". $rowEmp3['nombre']." ".$rowEmp3['apellidos'];
+               $personal = $personal ."[BRK]". $rowEmp3['nombre']." ".$rowEmp3['apellidos']." (".$nombreRol . ")";
             }
             echo  utf8_encode($personal);
         $conexion->cerrarConexion();

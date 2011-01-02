@@ -2,8 +2,8 @@
 
 
 body{
-background:#E1DFDF url('images/bg.jpg') top center repeat-x;
-margin:10px 10px 0px 10px;
+background:#E1DFDF;
+margin:0px 10px 0px 10px;
 padding:0px;
 color:#999999;
 font-family:"Trebuchet MS",arial,sans-serif;
@@ -12,22 +12,24 @@ font-size:70.5%;
 }
 
 #blogtitle{
-width:100%;	
+background:#E1DFDF url('images/bg.jpg') top center repeat-x;
+height: 23px;
+padding-top: 8px;
+width:1006px;
 margin:0px auto;
-padding:0 0 5px 0;
 font-size:1.1em;
 line-height:1.2em;
 
 }
 
 #small{
-positon:relative;
-padding-left: 5px;
+
+padding-left: 10px;
 
 }
 
 #small2{
-positon:relative;
+padding-right: 10px;
 float:right;
 margin-top: -15px;
 
@@ -58,14 +60,15 @@ font-size: 1.1em;
 }
 
 #page {
-        height: 550px;
+/*        height: auto;*/
 	width: 1000px;
 	margin: 0 auto;
         position: relative;
 	background-color:  #fff;
         border-left: solid black;
         border-right: solid black;
-
+        display:table;
+        padding-bottom: 20px;
 }
 
 #leftcontent {
@@ -92,8 +95,8 @@ float: right;
 margin-top: 37px;
 background:#fff;
 padding-top: 20px;
-padding-right: 40px;
-width: 740px;
+padding-right: 20px;
+width: 760px;
 color:#000;
 voice-family: "\"}\"";
 voice-family: inherit;
@@ -276,15 +279,12 @@ background-position:100% -42px;
 /* ~~~~~~~~~ BEGIN FOOTER ~~~~~~~~~ */
 
 #footer{
-height:auto;
-width:auto;
-left: 0px;
-right: 0px;
-bottom: 0px;
+width: 1006px;
+margin: 0 auto;
+position: relative;
 background:#000 url('images/bg.jpg') top center repeat-x;
 text-align: center;
 padding-top: 8px;
-position:absolute;
 }
 
 #footer a, a:link {

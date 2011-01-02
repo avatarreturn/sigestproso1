@@ -1,5 +1,5 @@
 <?php session_start(); ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "Http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 
 <head>
@@ -26,7 +26,7 @@
         $dniLogueado = $_SESSION['dni'];
         include_once('../Persistencia/conexion.php');
         $conexion = new conexion();
-        $result = mysql_query("SELECT nombre, descripcion, jefeProyecto, idProyecto FROM Proyecto WHERE\n"
+        $result = mysql_query("SELECT nombre, descripcion, jefeProyecto, idProyecto, fechaInicio FROM Proyecto WHERE\n"
     . "jefeProyecto = \"".$dniLogueado."\" or idProyecto in \n"
     . "(SELECT Proyecto_idProyecto FROM TrabajadorProyecto WHERE \n"
     . "Trabajador_dni = \"".$dniLogueado."\")");
@@ -38,10 +38,18 @@
             $cont = 0;
             while ($rowEmp = mysql_fetch_assoc($result)) {
                 if($rowEmp['jefeProyecto'] == $dniLogueado){
+                    if($rowEmp['fechaInicio'] == ""){
                     $jefeProy = "<a href='../JefeProyecto/iniJefeProyecto.php?idP=".$rowEmp['idProyecto']
                     ."'><img src= '../images/iJefeProyecto.gif' alt='#' border='0' "
                     . "style='width: auto; height: auto;'/>&nbsp;&nbsp;".$rowEmp['nombre']."</a> - "
                     . $rowEmp['descripcion']."<br/>";
+                    }else{
+                        $jefeProy = "<a href='../JefeProyecto/planIteracion.php?idP=".$rowEmp['idProyecto']
+                    ."'><img src= '../images/iJefeProyecto.gif' alt='#' border='0' "
+                    . "style='width: auto; height: auto;'/>&nbsp;&nbsp;".$rowEmp['nombre']."</a> - "
+                    . $rowEmp['descripcion']."<br/>";
+
+                    }
                 }else{
                     $cont = $cont+1;
                     $desarrProy = $desarrProy ."&nbsp;&nbsp;<a href=\"#\" onclick=\"ocultarR('oculto".$cont."')\"><img src= '../images/iProyecto.png' alt='#' border='0'"
@@ -100,7 +108,7 @@ function ocultarR(x){
 <!-- start top menu and blog title-->
 
 <div id="blogtitle">
-		<div id="small">Proyecto</div>
+    <div id="small">Selecci&oacute;n de proyecto</div>
 		<div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
 </div>
 <!--
