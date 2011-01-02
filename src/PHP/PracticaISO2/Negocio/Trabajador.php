@@ -3,14 +3,14 @@
 // Descripcion: Clase que representa la entidad trabajador del dominio del problema y ofrece las operaciones correspondientes para su manejo
 
 //Clases del negocio
-include_once('Vacaciones.php');
-include_once('Actividad.php');
-include_once('Usuario.php');
+//include_once('Vacaciones.php');
+//include_once('Actividad.php');
+//include_once('Usuario.php');
 
 //Inclusi�n de operaciones de la clase de persistencia
 include_once('Persistencia/PTrabajador.php');
 
-class Trabajador {
+class Trabajador extends Usuario {
 
 	private $idTrabajador;
 	private $categoria;
@@ -23,7 +23,6 @@ class Trabajador {
 		$this->categoria = $in_categoria;
 		$this->usuario =$in_usuario;
 		$this->vacaciones = array();
-	
 	}
 
 	////////////////////////////////////////
