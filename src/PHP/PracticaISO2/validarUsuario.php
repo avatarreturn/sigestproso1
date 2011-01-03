@@ -19,12 +19,10 @@ $numMaxProyectos = $row2[0];
 if ($numMaxProyectos == null) {
     //ya se ha introducido el numero maximo de proyectos
     session_start();
-    $loginAnterior = $_POST['login'];
-    $passwordAnterior = $_POST['password'];
 
-    if (trim($loginAnterior) != "" && trim($passwordAnterior) != "") {
-        $loginIntroducido = $loginAnterior;
-        $passwordIntroducido = $passwordAnterior;
+    if (trim( $_POST['login']) != "" && trim($_POST['password']) != "") {
+        $loginIntroducido = $_POST['login'];
+        $passwordIntroducido = $_POST['password'];
 
         //$usuarioSinComprobar=Usuario::ExisteUsuario($loginIntroducido,$passwordIntroducido);
 
