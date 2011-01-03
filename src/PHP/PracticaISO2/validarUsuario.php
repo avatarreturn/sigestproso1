@@ -33,9 +33,9 @@ if ($numMaxProyectos == null) {
         if ($row = mysql_fetch_array($result)) {
             //hay resultados, el usuario existe
             $usuarioExistente = Usuario::getUsuario($row['login']);
-            $_SESSION['login'] = $usuarioExistente->login;
-            $_SESSION['password'] = $usuarioExistente->password;
-            $_SESSION['tipoUsuario'] = $usuarioExistente->tipoUsuario;
+            $_SESSION['login'] = $usuarioExistente->getLogin();
+            $_SESSION['password'] = $usuarioExistente->getPassword();
+            $_SESSION['tipoUsuario'] = $usuarioExistente->getTipo();
 
             if ($row['password'] == $passwordIntroducido) {
                 //el usuario es valido, se trata de un trabajador
