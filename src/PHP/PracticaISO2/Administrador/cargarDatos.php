@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 
     <head>
@@ -88,7 +88,7 @@
                     o2.appendChild(t);
                     select.appendChild(o2);
                 }
-//                document.getElementById("divParaSelect").appendChild(select);
+                //                document.getElementById("divParaSelect").appendChild(select);
             }
             
             //repinta el select de categorias al ser pulsado el boton "Actualizar"
@@ -136,73 +136,86 @@
 
         <!-- end top menu and blog title-->
 
-        <!-- start left box--><!-- end left box-->
+        <!-- start left box-->
+        <div id="page">
+            <div id="leftcontent" style="display:none">
+                <img style="margin-top:-9px; margin-left:-12px;" src="../images/top2.jpg" alt="" />
+                <h4 style="padding-right: 10px; ">Una vez haya terminado de asignar trabajadores, contin&uacute;e con la definici&oacute;n del proyecto.</h4>
+                <h3 style="color:black;">Definir el plan de fases<br/></h3>
+                <input type="button" value="Continuar" onclick="javascript:location.href = 'defFases.php'"/>
 
-        <!-- start content -->
+                <!-- You have to modify the "padding-top: when you change the content of this div to keep the footer image looking aligned -->
+                <p><img src= "../images/Logo2.jpg" alt="#" border="0" style="width: 180px; height: auto;"/></p>
+                <img style="padding-top:2px; margin-left:-12px; margin-bottom:-4px;" src="../images/specs_bottom.jpg" alt="" />
 
-        <div id="centercontent">
-            <h1>SIGESTPROSO</h1>
-            <p><br /></p>
-            <p>
-            <div id="formulario">
-                <form  action="datosCargados.php" method="post" name="carga_datos">
-                    <div class="tituloFormulario">
-                        <h2>Configurar proyecto</h2>
-                    </div>
-                    <div class="infoFormulario">
+            </div>
+            <!-- end left box-->
+
+            <!-- start content -->
+
+            <div id="centercontent">
+                <h1>SIGESTPROSO</h1>
+                <p><br /></p>
+                <p>
+                <div id="formulario">
+                    <form  action="datosCargados.php" method="post" name="carga_datos">
+                        <div class="tituloFormulario">
+                            <h2>Configurar proyecto</h2>
+                        </div>
+                        <div class="infoFormulario">
 		A trav&eacute;s de esta pantalla el administrador podr&aacute; cargar los datos iniciales del proyecto.
-                    </div>
-                    <div class="filaFormulario">
-                        <div class="etiquetaCampo">
-                            <br>
-                            <label for="numMaxCategoria">N&uacute;mero m&aacute;ximo de categor&iacute;as:</label>
                         </div>
-                        <div class="campo">
-                            <table>
-                                <tr>
-                                    <td><input id="numMaxCategoria" name="numMaxCategoria" type="text" class="validate" value="5" onchange="modificaMaxCategoria(document.carga_datos.numMaxCategoria.value)"/></td>
-                                </tr>
-                            </table>
+                        <div class="filaFormulario">
+                            <div class="etiquetaCampo">
+                                <br>
+                                <label for="numMaxCategoria">N&uacute;mero m&aacute;ximo de categor&iacute;as:</label>
+                            </div>
+                            <div class="campo">
+                                <table>
+                                    <tr>
+                                        <td><input id="numMaxCategoria" name="numMaxCategoria" type="text" class="validate" value="5" onchange="modificaMaxCategoria(document.carga_datos.numMaxCategoria.value)"/></td>
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
-                    </div>
-                    <div id="targetDiv" class="filaFormulario" >
-                        <div class="etiquetaCampo">
-                            <br>
-                            <label>Introduzca la relaci&oacute;n de categor&iacute;as y roles:</label>
+                        <div id="targetDiv" class="filaFormulario" >
+                            <div class="etiquetaCampo">
+                                <br>
+                                <label>Introduzca la relaci&oacute;n de categor&iacute;as y roles:</label>
+                            </div>
+                            <div id="tabla" class="campo">
+                                <table>
+                                    <tr>
+                                        <td><input id="rol" name="rol" type="text" class="validate" value="Escriba un rol:"/></td>
+                                        <td>
+                                            <div id="divParaSelect"><select id="selectCategorias" name="selectCategorias" size="1"><script type="text/javascript">pintaOptions(document.carga_datos.numMaxCategoria.value);</script></select></div>
+                                        </td>
+                                        <td><input name="crear" type = "button" value = "A&ntilde;adir" onclick="valida_envia()"></td>
+                                        <td>
+                                            <?php
+                                            if ($_GET["creadoProyecto"])
+                                                echo "<label style=\"color: red\";><font size=\"2\">La relación ha sido añadida con éxito</font></label>";
+                                            ?>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
-                        <div id="tabla" class="campo">
-                            <table>
-                                <tr>
-                                    <td><input id="rol" name="rol" type="text" class="validate" value="Escriba un rol:"/></td>
-                                    <td>
-                                        <div id="divParaSelect"><select id="selectCategorias" name="selectCategorias" size="1"><script type="text/javascript">pintaOptions(document.carga_datos.numMaxCategoria.value);</script></select></div>
-                                    </td>
-                                    <td><input name="crear" type = "button" value = "A&ntilde;adir" onclick="valida_envia()"></td>
-                                    <td>
-                                        <?php
-                                        if ($_GET["creadoProyecto"])
-                                            echo "<label style=\"color: red\";><font size=\"2\">La relación ha sido añadida con éxito</font></label>";
-                                        ?>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
 
+            <!-- end content -->
 
-        <!-- end content -->
+            <!-- start right box --><!-- end right box -->
+            <!-- start footer -->
 
-        <!-- start right box --><!-- end right box -->
-        <!-- start footer -->
+            <div id="footer">&copy; 2006 Design by <a href="http://www.studio7designs.com">Studio7designs.com</a> | <a href="http://www.arbutusphotography.com">ArbutusPhotography.com</a> | <a href="http://www.opensourcetemplates.org">Opensourcetemplates.org</a>
 
-        <div id="footer">&copy; 2006 Design by <a href="http://www.studio7designs.com">Studio7designs.com</a> | <a href="http://www.arbutusphotography.com">ArbutusPhotography.com</a> | <a href="http://www.opensourcetemplates.org">Opensourcetemplates.org</a>
+            </div>
 
-        </div>
-
-        <!-- end footer -->
+            <!-- end footer -->
 
     </body>
 </html>

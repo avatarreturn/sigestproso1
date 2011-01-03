@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 
     <head>
@@ -28,6 +28,7 @@
                 }
 
                 //comprobamos que no esta vacio el campo de jefe de proyecto
+                //if ((document.nuevo_proyecto.jefesProyecto.value=="Seleccione un Jefe de Proyecto")&&(document.nuevo_proyecto.jefesProyecto.value.length==0)){
                 if (document.nuevo_proyecto.jefesProyecto.value=="Seleccione un Jefe de Proyecto"){
                     alert("Tiene que seleccionar un Jefe de Proyecto.")
                     document.nuevo_proyecto.jefesProyecto.focus()
@@ -62,84 +63,96 @@
 
         <!-- end top menu and blog title-->
 
-        <!-- start left box--><!-- end left box-->
+        <!-- start left box-->
+        <div id="page">
+            <div id="leftcontent" style="display:none">
+                <img style="margin-top:-9px; margin-left:-12px;" src="../images/top2.jpg" alt="" />
+                <h4 style="padding-right: 10px; ">Una vez haya terminado de asignar trabajadores, contin&uacute;e con la definici&oacute;n del proyecto.</h4>
+                <h3 style="color:black;">Definir el plan de fases<br/></h3>
+                <input type="button" value="Continuar" onclick="javascript:location.href = 'defFases.php'"/>
 
-        <!-- start content -->
+                <!-- You have to modify the "padding-top: when you change the content of this div to keep the footer image looking aligned -->
+                <p><img src= "../images/Logo2.jpg" alt="#" border="0" style="width: 180px; height: auto;"/></p>
+                <img style="padding-top:2px; margin-left:-12px; margin-bottom:-4px;" src="../images/specs_bottom.jpg" alt="" />
 
-        <div id="centercontent">
-            <h1>SIGESTPROSO</h1>
-            <p><br /></p>
-            <p>
-            <div id="formulario">
-                <form  action="proyectoCreado.php" method="POST" name="nuevo_proyecto">
-                    <div class="tituloFormulario">
-                        <h2>Alta Proyecto</h2>
-                    </div>
-                    <div class="infoFormulario">
+            </div>
+            <!-- end left box-->
+
+            <!-- start content -->
+
+            <div id="centercontent">
+                <h1>SIGESTPROSO</h1>
+                <p><br /></p>
+                <p>
+                <div id="formulario">
+                    <form  action="proyectoCreado.php" method="POST" name="nuevo_proyecto">
+                        <div class="tituloFormulario">
+                            <h2>Alta Proyecto</h2>
+                        </div>
+                        <div class="infoFormulario">
 		A trav&eacute;s de esta pantalla el administrador podr&aacute; crear un nuevo proyecto, asignar el correspondiente responsable y marcar los objetivos del mismo.
-                    </div>
-                    <div class="filaFormulario">
-                        <div class="etiquetaCampo">
-                            <br>
-                            <label for="nombre">Nombre del Proyecto:</label>
                         </div>
-                        <div class="campo">
-                            <input name="nombre" type="text" class="validate" />
+                        <div class="filaFormulario">
+                            <div class="etiquetaCampo">
+                                <br>
+                                <label for="nombre">Nombre del Proyecto:</label>
+                            </div>
+                            <div class="campo">
+                                <input name="nombre" type="text" class="validate" />
+                            </div>
                         </div>
-                    </div>
-                    <div class="filaFormulario">
-                        <div class="etiquetaCampo">
-                            <br>
-                            <label for="responsable">Responsable:</label>
+                        <div class="filaFormulario">
+                            <div class="etiquetaCampo">
+                                <br>
+                                <label for="responsable">Responsable:</label>
+                            </div>
+                            <div class="campo">
+                                <?php
+                                include_once('../Persistencia/conexion.php');
+                                $conexion = new conexion();
+                                //select nombre, apellidos from trabajador where dni not in (select jefeProyecto from proyecto where fechaFin is NULL);
+                                $result = mysql_query('select nombre, apellidos from trabajador where (categoria like "1") and dni not in (select jefeProyecto from proyecto where fechaFin is NULL)');
+                                echo '<SELECT NAME="jefesProyecto" size="1">';
+                                echo '<option>Seleccione un Jefe de Proyecto</option>';
+                                while ($rowEmp = mysql_fetch_assoc($result)) {
+                                    echo '<option value="' . $rowEmp['usuario'] . '">' . $rowEmp['usuario'] . '</option>';
+                                }
+                                echo '</SELECT>';
+                                $conexion->cerrarConexion();
+                                ?>
+                            </div>
                         </div>
-                        <div class="campo">
+                        <div class="filaFormulario">
+                            <div class="etiquetaCampo">
+                                <br>
+                                <label for="objetivos">Descripci&oacute;n del Proyecto:</label>
+                            </div>
+                            <div class="campo">
+                                <textarea id="textarea_objetivos" name="descripcion" rows="5" cols="50"></textarea>
+                            </div>
+                        </div>
+                        <div class="boton">
+                            <input name="crear" value="Crear" type="button" class="submit" onclick="valida_envia()"/>
+                            <input name="Limpiar" value="Limpiar" type="reset" class="submit"/>
                             <?php
-                            include_once('../Persistencia/conexion.php');
-                            $conexion = new conexion();
-                            //select nombre, apellidos from trabajador where dni not in (select jefeProyecto from proyecto where fechaFin is NULL);
-                            $result = mysql_query('select nombre, apellidos from trabajador where (categoria like "1") and dni not in (select jefeProyecto from proyecto where fechaFin is NULL)');
-                            echo '<SELECT NAME="jefesProyecto" size="1">';
-                            echo '<option>Seleccione un Jefe de Proyecto</option>';
-                            while ($rowEmp = mysql_fetch_assoc($result)) {
-                                echo '<option value="'. $rowEmp['usuario'] .'">' . $rowEmp['usuario'] . '</option>';
-                            }
-                            echo '</SELECT>';
-                            $conexion->cerrarConexion();
+                                if ($_GET["creadoProyecto"])
+                                    echo "<label style=\"color: red\";><font size=\"2\">El proyecto se ha creado con exito</font></label>";
                             ?>
                         </div>
-                    </div>
-                    <div class="filaFormulario">
-                        <div class="etiquetaCampo">
-                            <br>
-                            <label for="objetivos">Descripci&oacute;n del Proyecto:</label>
-                        </div>
-                        <div class="campo">
-                            <textarea id="textarea_objetivos" name="descripcion" rows="5" cols="50"></textarea>
-                        </div>
-                    </div>
-                    <div class="boton">
-                        <input name="crear" value="Crear" type="button" class="submit" onclick="valida_envia()"/>
-                        <input name="Limpiar" value="Limpiar" type="reset" class="submit"/>
-                        <?php
-                            if ($_GET["creadoProyecto"])
-                                echo "<label style=\"color: red\";><font size=\"2\">El proyecto se ha creado con exito</font></label>";
-                        ?>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
+            <!-- end content -->
 
+            <!-- start right box --><!-- end right box -->
+            <!-- start footer -->
 
-        <!-- end content -->
+            <div id="footer">&copy; 2006 Design by <a href="http://www.studio7designs.com">Studio7designs.com</a> | <a href="http://www.arbutusphotography.com">ArbutusPhotography.com</a> | <a href="http://www.opensourcetemplates.org">Opensourcetemplates.org</a>
 
-        <!-- start right box --><!-- end right box -->
-        <!-- start footer -->
+            </div>
 
-        <div id="footer">&copy; 2006 Design by <a href="http://www.studio7designs.com">Studio7designs.com</a> | <a href="http://www.arbutusphotography.com">ArbutusPhotography.com</a> | <a href="http://www.opensourcetemplates.org">Opensourcetemplates.org</a>
-
-        </div>
-
-        <!-- end footer -->
+            <!-- end footer -->
 
 
 
