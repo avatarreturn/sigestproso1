@@ -221,7 +221,14 @@ else{$_SESSION['proyectoEscogido'] = $_GET['idP'];
 
 <link rel="stylesheet" type="text/css" href="../stylesheet.css" media="screen, projection, tv " />
 <script type="TEXT/JAVASCRIPT">
+    var contador = -1;
     function anadir(x){
+        var predec = "";
+        for (i=0;i<=contador;i++) {
+            if(eval("document.formulario.OP"+i+".checked") == true){
+                predec = predec + (eval("document.formulario.OP"+i+".value")) + "[BRK]";
+            }
+        }
         if(document.getElementById("actividad").value==""
             || document.getElementById("RolActividad").value== "-1"
             || document.getElementById("durEstimada").value <= 0
@@ -237,20 +244,24 @@ else{$_SESSION['proyectoEscogido'] = $_GET['idP'];
     xmlhttp.onreadystatechange=function(){
       if (xmlhttp.readyState==4 && xmlhttp.status==200)
         {
-//        var data = xmlhttp.responseText.split ( "[BRK]" );
+          var data = xmlhttp.responseText.split ( "[BRK]" );
 //        document.getElementById("SelecPers").innerHTML=data[0];
             document.getElementById("actividad").value="";
             document.getElementById("durEstimada").value="";
-            document.getElementById("actividadesAsig").innerHTML=xmlhttp.responseText;
+            document.getElementById("actividadesAsig").innerHTML=data[0];
             document.getElementById("actividadesAsig").style.display="inline";
             document.getElementById("RolActividad").value="-1";
-
+            document.getElementById("terminar").style.display="inline";
+            document.getElementById("predecesoras").innerHTML= data[1];
+            document.getElementById("predecesoras").style.display="table";
+            contador = contador +1 ;
         }
       }
     xmlhttp.open("GET","insertarActividad.php?INext="+
         "<?php echo $idINext;?>"
     + "&nombreA=" + document.getElementById("actividad").value
     + "&duracion=" + document.getElementById("durEstimada").value
+    + "&predec=" + predec
     + "&primeraI=" + x
         + "&rolA=" +document.getElementById("RolActividad").value,true);
     xmlhttp.send();
@@ -286,7 +297,7 @@ else{$_SESSION['proyectoEscogido'] = $_GET['idP'];
 </head>
 
 <body>
-
+<form name="formulario" action="" enctype="text/plain">
 <!-- start top menu and blog title-->
 
 <div id="blogtitle">
@@ -358,7 +369,9 @@ else{$_SESSION['proyectoEscogido'] = $_GET['idP'];
         echo "<p>Nombre de la actividad <input type='text' id='actividad'/><br/><br/>";
         echo "Asocie un rol a la actividad<br/> " .$rolesDisponibles . "<br/>";
         echo "Indique una duraci&oacute;n estimada a la actividad <input type='text' id='durEstimada' size='5' maxlength='5'/><small> Horas Hombre</small><br/>";
+        echo "<br><span id='predecesoras' sytle='display:none; border: solid black;'></span>";
         echo "<br/><input style='margin-left:200px;' type='button' value='A&ntilde;adir' onclick=\"anadir('" . $idIAct. "')\"/>";
+        echo "<input style='margin-left:20px; display:none;' id='terminar' type='button' value='Terminar' onclick=\"javascript:location.href = 'planIteracion.php'\"/>";
         echo "</p>";
             }else{
                 if($numeroIAct < $iteracionMax && faseCero == 0){
@@ -370,8 +383,9 @@ else{$_SESSION['proyectoEscogido'] = $_GET['idP'];
         echo "<p>Nombre de la actividad <input type='text' id='actividad'/><br/><br/>";
         echo "Asocie un rol a la actividad<br/> " .$rolesDisponibles . "<br/>";
         echo "Indique una duraci&oacute;n estimada a la actividad <input type='text' id='durEstimada' size='5' maxlength='5'/><small> Horas Hombre</small><br/>";
+        echo "<br><div id='predecesoras' sytle='display:none; border: solid black;'></div>";
         echo "<br/><input style='margin-left:200px;' type='button' value='A&ntilde;adir' onclick=\"anadir('-1')\"/>";
-
+        echo "<input style='margin-left:20px; display:none;' id='terminar' type='button' value='Terminar' onclick=\"javascript:location.href = 'planIteracion.php'\"/>";
         echo "</p>"
         ?>
 
@@ -391,8 +405,13 @@ else{$_SESSION['proyectoEscogido'] = $_GET['idP'];
                     . " planificar mas iteracciones hasta que haya finalizado la iteracci&oacute;n actual</p>" .$LActividades;
                 }else{
 
-            echo "<ps tyle='color:black'>Se dispone a planificar la iteraci&oacute;n <b>1</b> de la fase <b>".$faseNext."</b></p>";
-        }}}}
+        echo "<p style='color:black'>Se dispone a planificar la primera iteraci&oacute;n <b>(1)</b> de la fase siguiente (".$faseNext.")</p>";
+        echo "<p>Nombre de la actividad <input type='text' id='actividad'/><br/><br/>";
+        echo "Asocie un rol a la actividad<br/> " .$rolesDisponibles . "<br/>";
+        echo "Indique una duraci&oacute;n estimada a la actividad <input type='text' id='durEstimada' size='5' maxlength='5'/><small> Horas Hombre</small><br/>";
+        echo "<br/><input style='margin-left:200px;' type='button' value='A&ntilde;adir' onclick=\"anadir('" . $idIFNext. "')\"/>";
+        echo "<input style='margin-left:20px; display:none;' id='terminar' type='button' value='Terminar' onclick=\"javascript:location.href = 'planIteracion.php'\"/>";
+        echo "</p>";        }}}}
         }//Fin casiFin
 
         ?>
@@ -411,6 +430,6 @@ else{$_SESSION['proyectoEscogido'] = $_GET['idP'];
 <?php $conexion->cerrarConexion(); ?>
 
 
-
+</form>
 </body>
 </html>

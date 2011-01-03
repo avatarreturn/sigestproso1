@@ -32,28 +32,7 @@
 <script src="../Utiles/jquery.ui.datepicker-es.js"></script>
 <style type="text/css">
 #datepicker1I .ui-datepicker  {
-    background: #DFC4A4;
-}
-#datepicker1F .ui-datepicker  {
-    background: #DFC4A4;
-}
-#datepicker3I .ui-datepicker  {
     background: #B0DFA4;
-    border: 1px solid #555;
-    color: #EEE;
-}
-#datepicker3F .ui-datepicker  {
-    background: #B0DFA4;
-    border: 1px solid #555;
-    color: #EEE;
-}
-#datepicker4I .ui-datepicker  {
-    background: #333;
-    border: 1px solid #555;
-    color: #EEE;
-}
-#datepicker4F .ui-datepicker  {
-    background: #333;
     border: 1px solid #555;
     color: #EEE;
 }
@@ -81,12 +60,7 @@ function noWeekendsOrHolidays(date) {
 }
   /* create datepicker */
 jQuery(document).ready(function() {
-	jQuery('#datepicker1I').datepicker({disabled: true});
-});
-
-
-jQuery(document).ready(function() {
-	jQuery('#datepicker1F').datepicker({
+	jQuery('#datepicker1I').datepicker({
 		dateFormat: 'yy-mm-dd',
 		constrainInput: true,
                 numberOfMonths: 1,
@@ -96,6 +70,7 @@ jQuery(document).ready(function() {
 //            }
 	});
 });
+
 
 jQuery(document).ready(function() {
 	jQuery('#datepicker2I').datepicker({
@@ -109,17 +84,7 @@ jQuery(document).ready(function() {
 	});
 });
 
-jQuery(document).ready(function() {
-	jQuery('#datepicker2F').datepicker({
-		dateFormat: 'yy-mm-dd',
-		constrainInput: true,
-                numberOfMonths: 1,
-		beforeShowDay: noWeekendsOrHolidays
-//                onSelect: function(dateText, inst) {
-//                alert(dateText)
-//            }
-	});
-});
+
 
 jQuery(document).ready(function() {
 	jQuery('#datepicker3I').datepicker({
@@ -133,17 +98,6 @@ jQuery(document).ready(function() {
 	});
 });
 
-jQuery(document).ready(function() {
-	jQuery('#datepicker3F').datepicker({
-		dateFormat: 'yy-mm-dd',
-		constrainInput: true,
-                numberOfMonths: 1,
-		beforeShowDay: noWeekendsOrHolidays
-//                onSelect: function(dateText, inst) {
-//                alert(dateText)
-//            }
-	});
-});
 jQuery(document).ready(function() {
 	jQuery('#datepicker4I').datepicker({
 		dateFormat: 'yy-mm-dd',
@@ -160,8 +114,8 @@ jQuery(document).ready(function() {
 	jQuery('#datepicker4F').datepicker({
 		dateFormat: 'yy-mm-dd',
 		constrainInput: true,
-                numberOfMonths: 1,
-		beforeShowDay: noWeekendsOrHolidays
+                numberOfMonths: 1
+//		beforeShowDay: noWeekendsOrHolidays
 //                onSelect: function(dateText, inst) {
 //                alert(dateText)
 //            }
@@ -195,15 +149,34 @@ function cambio(x){
 
 //insertar fechas
 function Anadir2(){
-        if($('#datepicker1I').val()>= $('#datepicker1F').val()
-            || $('#datepicker1F').val()> $('#datepicker2I').val()
-            || $('#datepicker2I').val()>= $('#datepicker2F').val()
-            || $('#datepicker2F').val()> $('#datepicker3I').val()
-            || $('#datepicker3I').val()>= $('#datepicker3F').val()
-            || $('#datepicker3F').val()> $('#datepicker4I').val()
+    var FechaIni = new Date();
+    FechaIni.setTime($.datepicker.parseDate('yy-mm-dd',$('#datepicker1I').val()));
+    
+    var FechaIni2 = new Date();
+    FechaIni2.setTime($.datepicker.parseDate('yy-mm-dd',$('#datepicker2I').val()));
+    var FechaIni3 = new Date();
+    FechaIni3.setTime($.datepicker.parseDate('yy-mm-dd',$('#datepicker3I').val()));
+    var FechaIni4 = new Date();
+    FechaIni4.setTime($.datepicker.parseDate('yy-mm-dd',$('#datepicker4I').val()));
+    var FechaFin = new Date();
+    FechaFin.setTime($.datepicker.parseDate('yy-mm-dd',$('#datepicker4F').val()));
+        if(FechaIni.getDay()!= 1){
+            alert("La fase de inicio no comienza en Lunes" + FechaIni.getDay() );
+        }else if(FechaIni2.getDay()!= 1){
+            alert("La fase de elaboracion no comienza en Lunes");
+        }else if(FechaIni3.getDay()!= 1){
+            alert("La fase de construccion no comienza en Lunes");
+        }else if(FechaIni4.getDay()!= 1){
+            alert("La fase de transicion no comienza en Lunes");
+        }else if(FechaFin.getDay()!= 0){
+            alert("La fase de transicion no acaba en Domingo" );
+        } else{
+        if($('#datepicker1I').val()>= $('#datepicker2I').val()
+            || $('#datepicker2I').val()>= $('#datepicker3I').val()
+            || $('#datepicker3I').val()>= $('#datepicker4I').val()
             || $('#datepicker4I').val()>= $('#datepicker4F').val()
         ){
-            alert("Revise las fechas escogidas" + $('#datepicker4I').val())
+            alert("Revise el orden cronologico de las fechas escogidas")
         }else if(document.getElementById("nIteraciones").value == ""
             ||document.getElementById("nIteraciones").value < 0){
             alert("Introduzca un numero correcto de iteraciones para la fase de inicio")
@@ -218,22 +191,19 @@ function Anadir2(){
     xmlhttp.onreadystatechange=function(){
       if (xmlhttp.readyState==4 && xmlhttp.status==200)
         {
-        location.href = "planIteracion.php";
+            location.href = "planIteracion.php";
 
         }
       }
     xmlhttp.open("GET","insertarFechaFase.php?1I="+
         $('#datepicker1I').val()
-    + "&1F=" + $('#datepicker1F').val()
     + "&2I=" + $('#datepicker2I').val()
-    + "&2F=" + $('#datepicker2F').val()
     + "&3I=" + $('#datepicker3I').val()
-    + "&3F=" + $('#datepicker3F').val()
     + "&4I=" + $('#datepicker4I').val()
     + "&nI=" + document.getElementById("nIteraciones").value
     + "&4F=" + $('#datepicker4F').val(),true);
     xmlhttp.send();
-    }}
+    }}}
 </script>
 </head>
 
@@ -288,23 +258,40 @@ function Anadir2(){
             <div id="Finicio">
                 <p style="text-align: center; font-size: 22px;">Fase de <b> inicio </b></p>
             <div type="text" id="datepicker1I"  style="float:left"><p style=" font-size: 16px;">Escoja fecha de inicio</p></div>
-            <div type="text" id="datepicker1F" style=" float:right; margin-left:100px;"><p style=" font-size: 16px;">Escoja fecha de fin</p></div>
-            
+            <div style="margin-left:290px;"><h3>Condiciones:</h3>
+            <p><img src= "../images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;Todas las fases deben empezar en <b>Lunes</b></p>
+            <p><img src= "../images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;Las fases deben seguir un orden cronol&oacute;gico<br/>&nbsp;&nbsp;&nbsp;&nbsp; (Inicio->Elaboraci&oacute;n->Construcci&oacute;n->Transici&oacute;n)</p>
+            <p><img src= "../images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;La fecha de inicio de la fase de Incio, se considerar&aacute; la fecha de inicio del proyecto</p>
+            <p><img src= "../images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;La fecha de fin de una fase ser&aacute; el d&iacute;a anterior a la fecha de inicio de la fase siguiente</p>
+           </div>
             </div>
             <div id="Felaboracion" style="display:none">
                 <p style="text-align: center; font-size: 22px;">Fase de <b> elaboraci&oacute;n </b></p>
             <div type="text" id="datepicker2I" style="float:left;"><p style=" font-size: 16px;">Escoja fecha de inicio</p></div>
-            <div type="text" id="datepicker2F" style="float:right; margin-left:100px;"><p style=" font-size: 16px;">Escoja fecha de fin</p></div>
-            </div>
+            <div style="margin-left:290px;"><h3>Condiciones:</h3>
+            <p><img src= "../images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;Todas las fases deben empezar en <b>Lunes</b></p>
+            <p><img src= "../images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;Las fases deben seguir un orden cronol&oacute;gico<br/>&nbsp;&nbsp;&nbsp;&nbsp; (Inicio->Elaboraci&oacute;n->Construcci&oacute;n->Transici&oacute;n)</p>
+            <p><img src= "../images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;La fecha de fin de una fase ser&aacute; el d&iacute;a anterior a la fecha de inicio de la fase siguiente</p>
+           </div>            </div>
             <div id="Fconstruccion" style="display:none">
                 <p style="text-align: center; font-size: 22px;">Fase de <b> construci&oacute;n </b></p>
             <div type="text" id="datepicker3I" style="float:left"><p style=" font-size: 16px;">Escoja fecha de inicio</p></div>
-            <div type="text" id="datepicker3F" style="float:right; margin-left:100px;"><p style=" font-size: 16px;">Escoja fecha de fin</p></div>
-            </div>
+            <div style="margin-left:290px;"><h3>Condiciones:</h3>
+            <p><img src= "../images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;Todas las fases deben empezar en <b>Lunes</b></p>
+            <p><img src= "../images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;Las fases deben seguir un orden cronol&oacute;gico<br/>&nbsp;&nbsp;&nbsp;&nbsp; (Inicio->Elaboraci&oacute;n->Construcci&oacute;n->Transici&oacute;n)</p>
+            <p><img src= "../images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;La fecha de fin de una fase ser&aacute; el d&iacute;a anterior a la fecha de inicio de la fase siguiente</p>
+           </div>            </div>
             <div id="Ftransicion" style="display:none">
                 <p style="text-align: center; font-size: 22px;">Fase de <b> transici&oacute;n </b></p>
             <div type="text" id="datepicker4I" style="float:left"><p style=" font-size: 16px;">Escoja fecha de inicio</p></div>
             <div type="text" id="datepicker4F" style="float:right; margin-left:100px;"><p style=" font-size: 16px;">Escoja fecha de fin</p></div>
+            <br/><br/><br/>
+            <div style="clear:both;"><h3><br/>Condiciones:</h3>
+            <p><img src= "../images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;Todas las fases deben empezar en <b>Lunes</b> y acabar en <b>Domingo</b></p>
+            <p><img src= "../images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;Las fases deben seguir un orden cronol&oacute;gico<br/>&nbsp;&nbsp;&nbsp;&nbsp; (Inicio->Elaboraci&oacute;n->Construcci&oacute;n->Transici&oacute;n)</p>
+            <p><img src= "../images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;La fecha de fin de la fase de Transici&oacute;n, se considerar&aacute; la <b>fecha estimada de fin del proyecto</b></p>
+            <p><img src= "../images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;La fecha de fin de una fase ser&aacute; el d&iacute;a anterior a la fecha de inicio de la fase siguiente</p>
+           </div>
             </div>
             
         </div><p style="float:left">Indique el n&uacute;mero de <b>iteraciones</b> que habr&aacute; en la primera fase <b>(inicio)</b>&nbsp;

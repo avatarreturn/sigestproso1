@@ -11,6 +11,11 @@ include_once('../Persistencia/conexion.php');
                     . $FaseNext."','"
                     . $i."',NULL,NULL)");
          }
-echo $FaseNext ."--". $numIt;
+
+
+
+
+
+//echo $FaseNext ."--". $numIt;
 $conexion->cerrarConexion();
 ?>

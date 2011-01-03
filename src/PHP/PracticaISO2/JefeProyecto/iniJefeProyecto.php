@@ -51,7 +51,8 @@
         document.getElementById("datosP").innerHTML="";
         document.getElementById("listadoPer").innerHTML=document.getElementById("listadoPer").innerHTML + "<br/>&nbsp;&nbsp; <i>" +data[1] +"</i>";
         document.getElementById("listadoPer").style.display="inline";
-        document.getElementById("leftcontent").style.display="inline";
+        document.getElementById("leftcontentIn1").style.display="none";
+        document.getElementById("leftcontentIn").style.display="inline";
 
         }
       }
@@ -115,12 +116,16 @@
 
 <!-- start left box-->
 <div id="page">
-<div id="leftcontent" style="display:none">
+<div id="leftcontent" >
 	<img style="margin-top:-9px; margin-left:-12px;" src="../images/top2.jpg" alt="" />
-        <h4 style="padding-right: 10px; ">Una vez haya terminado de asignar trabajadores, contin&uacute;e con la definici&oacute;n del proyecto.</h4>
+        <span id="leftcontentIn1">
+        <h4 style="padding-right: 10px; ">Asigne al menos un trabajador para continuar con el plan de fases</h4>
+        </span>
+        <span id="leftcontentIn" style="display: none;">
+        <h4 style="padding-right: 10px;  ">Una vez haya terminado de asignar trabajadores, contin&uacute;e con la definici&oacute;n del proyecto.</h4>
         <h3 style="color:black;">Definir el plan de fases<br/></h3>
-	<input type="button" value="Continuar" onclick="javascript:location.href = 'defFases.php'"/>
-
+        <input type="button" value="Continuar" onclick="javascript:location.href = 'defFases.php'"/>
+        </span>
 	<!-- You have to modify the "padding-top: when you change the content of this div to keep the footer image looking aligned -->
         <p><img src= "../images/Logo2.jpg" alt="#" border="0" style="width: 180px; height: auto;"/></p>
 	<img style="padding-top:2px; margin-left:-12px; margin-bottom:-4px;" src="../images/specs_bottom.jpg" alt="" />
@@ -139,7 +144,7 @@
 	<p><a href="#"><?php echo $nombreP ?></a> - <?php echo $descripcionP ?></p><br/>
         <div id="personalDentro" class="centercontentleft" style="width:300px; height:auto; float:right">
             <b>Jefe de proyecto:</b><br/>
-            &nbsp;&nbsp; <i>JEFE SESSION ID</i><br/>            
+            &nbsp;&nbsp; <i><?php echo $_SESSION['nombre'] ." ". $_SESSION['apellidos']?></i><br/>
             <span id="listadoPer" style="display:none"><b>Trabajadores asignados:</b></span>
             <br/>
         </div>
