@@ -21,18 +21,8 @@ include_once('../Persistencia/conexion.php');
                     . $duracion ."',NULL,NULL,'"
                     . utf8_decode($rol) ."')");
 
-     
-         $result2 = mysql_query("SELECT nombre FROM Actividad WHERE\n"
-            . "Iteracion_idIteracion = \"".$IterNext. "\"");
-
-            $IdGenerado = mysql_insert_id();
-
-        $totEmp2 = mysql_num_rows($result2);
-        if ($totEmp2 >0) {
-            $actividades= "<br/><b>Actividades asignadas:</b><br/>";
-            while ($rowEmp2 = mysql_fetch_assoc($result2)) {
-                $actividades = $actividades . "&nbsp; <i>".$rowEmp2['nombre']."</i><br/>"; }
-        }
+     $IdGenerado = mysql_insert_id();
+         
 
 
         // Insertamos predecesoras
@@ -45,6 +35,38 @@ include_once('../Persistencia/conexion.php');
                     . $IdAcPred[$i]. "')");
             $i++;
         }
+
+
+        // mostramos la lista de las ya asignadas
+        $result2 = mysql_query("SELECT nombre, idActividad FROM Actividad WHERE\n"
+            . "Iteracion_idIteracion = \"".$IterNext. "\"");
+
+
+
+        $totEmp2 = mysql_num_rows($result2);
+        if ($totEmp2 >0) {
+            $actividades= "<br/><b>Actividades asignadas:</b><br/>";
+            while ($rowEmp2 = mysql_fetch_assoc($result2)) {
+
+                $result5 = mysql_query("SELECT nombre FROM Actividad WHERE"
+                        ." idActividad in(SELECT Actividad_idActividadP FROM ActividadPredecesora WHERE\n"
+            . "Actividad_idActividad = \"".$rowEmp2['idActividad']. "\")");
+
+                $totEmp5 = mysql_num_rows($result5);
+        if ($totEmp5 >0) {// si tiene predecesoras
+                    $actividades = $actividades . "&nbsp; <i>".$rowEmp2['nombre']."</i><br/>";
+                    while ($rowEmp5 = mysql_fetch_assoc($result5)) {
+                        $actividades = $actividades . "&nbsp;&nbsp;&nbsp; <tt style='color:grey'>-".$rowEmp5['nombre']."</tt><br/>";
+                    }
+                }
+                else{
+                    $actividades = $actividades . "&nbsp; <i>".$rowEmp2['nombre']."</i><br/>";
+                }
+        }
+        }
+
+
+
 
 
         // sacamos las predecesoras
