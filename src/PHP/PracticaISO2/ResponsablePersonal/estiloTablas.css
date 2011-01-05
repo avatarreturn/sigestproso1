@@ -1,0 +1,21 @@
+/* 
+    Document   : estiloTablas
+    Created on : 20-dic-2010, 16:24:27
+    Author     : Mario
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+root { 
+    display: block;
+}
+
+table.tablaVariable{
+    width: 500px;
+	text-align:left;
+}

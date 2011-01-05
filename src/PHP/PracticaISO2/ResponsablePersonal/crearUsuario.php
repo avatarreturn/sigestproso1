@@ -43,7 +43,7 @@ while ($row = mysql_fetch_array($result)) {
 }
 
 if ($existe && $existet) {
-    $result = mysql_query("INSERT INTO `grupo01`.`usuario` (`login`, `password`, `tipoUsuario`) VALUES ('" . $usuario . "' , '" . $contrasena . "', 'N');");
+    $result = mysql_query("INSERT INTO `grupo01`.`usuario` (`login`, `password`, `tipoUsuario`) VALUES ('" . $usuario . "' , '" . $contrasena . "', 'T');");
     $result = mysql_query("INSERT INTO `grupo01`.`trabajador` (`dni`, `nombre`, `apellidos`, `fechaNac`, `categoria` , `Usuario_login`) VALUES ('".$dni."', '" . $nombre . "' , '" . $apellidos . "', '" . $fechanac . "', '" . $categoria . "', '" . $usuario . "');");
     echo'<script type="text/javascript">
             document.location.href="iniResponsablePersonal.php?creadoUsuario=true";
