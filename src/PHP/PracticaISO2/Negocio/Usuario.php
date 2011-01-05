@@ -104,15 +104,6 @@ class Usuario {
         }
     }
 
-    //Funcion que comprueba si existe un usuario a partir de los datos introducidos por pantalla
-    static public function ExisteUsuario($login, $password) {
-        $datos = mysql_query('SELECT * FROM usuario WHERE login=\' ' . $login . ' \' and password=\' ' . $password . ' \'');
-        if ($datos)
-            return true;
-        else
-            return false;
-    }
-
 //    //Funcion que devuelve el objeto usuario si este existe, si este no existe devulve null
 //    static public function ExisteUsuario($login) {
 //        $datos = PUsuario::GetUsuario($login);

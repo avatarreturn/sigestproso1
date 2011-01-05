@@ -1,4 +1,4 @@
-<form action="modificarNumMaxProyecto.php" method="post">
+<form action="NumMaxProyectoModificado.php" method="post">
     <div class="infoFormulario">
         Introduzca el n&uacute;mero m&aacute;ximo de proyectos en los que puede estar involucrado un trabajador:
     </div>

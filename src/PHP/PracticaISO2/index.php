@@ -1,16 +1,26 @@
-<form action="validarUsuario.php" method="post">
-    <table align="center" valign="middle" frame="box" border="2">
-        <tr>
-            <td align="center">Introduzca su login:</td>
-            <td><input type="text" name="login" size="20" maxlength="20" /></td>
-        </tr>
-        <tr>
-            <td align="center">Introduzca su password:</td>
-            <td><input type="password" name="password" size="20" maxlength="20" /></td>
-        </tr>
-        <tr>
-            <td align="center"><input type="submit" value="Enviar" /></td>
-            <td align="center"><input type="reset" value="Limpiar" /></td>
-        </tr>
-    </table>
-</form>
+<?php
+include_once('Persistencia/conexion.php');
+
+session_start();
+
+//se crea la conexion
+$conexion = new conexion();
+//se realiza la consulta
+$consulta = mysql_query('SELECT numMaxProyectos FROM configuracion');
+$row2 = mysql_fetch_array($consulta);
+$numMaxProyectos = $row2[0];
+
+
+if ($numMaxProyectos != null) {
+    //ya se ha introducido el numero maximo de proyectos
+    $_SESSION['numMaxProyectos'] = $numMaxProyectos;
+    echo'<script type="text/javascript">
+    document.location.href="logearse.php";
+    </script>';
+} else {
+    //no se ha introducido el numero maximo de proyectos
+    echo'<script type="text/javascript">
+    document.location.href="insertarNumMaxProyectos.php";
+    </script>';
+}
+?>

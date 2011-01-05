@@ -9,7 +9,7 @@
 //Inclusi�n de operaciones de la clase de persistencia
 //include_once('Persistencia/PTrabajador.php');
 
-class Trabajador {
+class Trabajador extends Usuario {
 
     private $dni;
     private $nombre;

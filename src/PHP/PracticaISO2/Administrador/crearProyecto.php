@@ -52,19 +52,21 @@
             <div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
         </div>
 
-        <div id="topmenu">
-
-
-            <ul class="BLUE">
-                <li><a href="crearProyecto.php" title="Principal"><span>Crear proyecto</span></a></li>
-                <li><a href="cargarDatos.php" title="Principal"><span>Cargar datos</span></a></li>
-            </ul>
-        </div>
-
-        <!-- end top menu and blog title-->
-
-        <!-- start left box-->
         <div id="page">
+
+
+            <div id="topmenu">
+
+
+                <ul class="BLUE">
+                    <li><a href="crearProyecto.php" title="Principal"><span>Crear proyecto</span></a></li>
+                    <li><a href="cargarDatos.php" title="Principal"><span>Cargar datos</span></a></li>
+                </ul>
+            </div>
+
+            <!-- end top menu and blog title-->
+
+            <!-- start left box-->
             <div id="leftcontent" style="display:none">
                 <img style="margin-top:-9px; margin-left:-12px;" src="../images/top2.jpg" alt="" />
                 <h4 style="padding-right: 10px; ">Una vez haya terminado de asignar trabajadores, contin&uacute;e con la definici&oacute;n del proyecto.</h4>
@@ -143,16 +145,16 @@
                 </div>
             </div>
         </div>
-            <!-- end content -->
+        <!-- end content -->
 
-            <!-- start right box --><!-- end right box -->
-            <!-- start footer -->
+        <!-- start right box --><!-- end right box -->
+        <!-- start footer -->
 
-            <div id="footer">&copy; 2006 Design by <a href="http://www.studio7designs.com">Studio7designs.com</a> | <a href="http://www.arbutusphotography.com">ArbutusPhotography.com</a> | <a href="http://www.opensourcetemplates.org">Opensourcetemplates.org</a>
+        <div id="footer">&copy; 2006 Design by <a href="http://www.studio7designs.com">Studio7designs.com</a> | <a href="http://www.arbutusphotography.com">ArbutusPhotography.com</a> | <a href="http://www.opensourcetemplates.org">Opensourcetemplates.org</a>
 
-            </div>
+        </div>
 
-            <!-- end footer -->
+        <!-- end footer -->
 
 
 
