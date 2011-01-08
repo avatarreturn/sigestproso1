@@ -37,6 +37,20 @@
             $jefeProy = "";
             $cont = 0;
             while ($rowEmp = mysql_fetch_assoc($result)) {
+                // comprobacion de robustez si fechaI = Null & tiene trabajadores, se borran
+                if($rowEmp['fechaInicio'] == ""){
+                        $result5 = mysql_query("SELECT Trabajador_dni FROM TrabajadorProyecto WHERE\n"
+                        . "Proyecto_idProyecto = \"".$rowEmp['idProyecto']."\"");
+
+                        $totEmp5 = mysql_num_rows($result5);
+
+                        if ($totEmp5 >0) {
+                        for ($i = 1; $i <= $totEmp5; $i++) {
+                        $result6 = mysql_query("DELETE FROM trabajadorproyecto WHERE Proyecto_idProyecto = \"".$rowEmp['idProyecto']."\"");
+                        }
+                        }
+                }
+
                 if($rowEmp['jefeProyecto'] == $dniLogueado){
                     if($rowEmp['fechaInicio'] == ""){
                     $jefeProy = "<a href='../JefeProyecto/iniJefeProyecto.php?idP=".$rowEmp['idProyecto']
@@ -59,6 +73,8 @@
                     $sql = "SELECT nombre, idActividad FROM actividad WHERE\n"
                     . "fechaFin is NULL\n"
                     . "AND\n"
+                    . "fechaInicio is NOT NULL\n"
+                    . "AND\n"
                     . "idActividad in \n"
                     . "(SELECT Actividad_idActividad FROM TrabajadorActividad WHERE\n"
                     . "Trabajador_dni = \""
@@ -77,7 +93,7 @@
                      if ($totEmp2 >0) {
                     while ($rowEmp2 = mysql_fetch_assoc($result2)) {
                        $desarrProy = $desarrProy
-                        . "&nbsp;&nbsp;<a href='#'>&nbsp;&nbsp;&nbsp;&nbsp;<img src= '../images/iActividad4.gif' alt='Actividad' border='0'"
+                        . "&nbsp;&nbsp;<a href='../Desarrollador/tareas.php?idAct=".$rowEmp2['idActividad']."'>&nbsp;&nbsp;&nbsp;&nbsp;<img src= '../images/iActividad4.gif' alt='Actividad' border='0'"
                         . "style='width: auto; height: 12px;'/>"
                         . "&nbsp;".$rowEmp2['nombre']
                         . "</a><br/>";

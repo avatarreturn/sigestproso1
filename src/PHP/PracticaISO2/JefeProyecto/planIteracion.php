@@ -141,7 +141,8 @@ else{$_SESSION['proyectoEscogido'] = $_GET['idP'];
                 $planificado = 1;
                 $LActividades = "<p><b>Listado de actividades planificadas:</b> <br/>";
                 while ($rowEmp5 = mysql_fetch_assoc($result5)) {
-                    $LActividades = $LActividades . $rowEmp5['nombre'] . "<br/>";
+                    $LActividades = $LActividades . "&nbsp;&nbsp;<img src= '../images/iActividad4.gif' alt='Actividad' border='0'"
+                        . "style='width: auto; height: 12px;'/>&nbsp;" . $rowEmp5['nombre'] . "<br/>";
                 }
                 $LActividades = $LActividades ."</p>";
         }else{
@@ -192,7 +193,8 @@ else{$_SESSION['proyectoEscogido'] = $_GET['idP'];
                 $planificado = 1;
                 $LActividades = "<p><b>Listado de actividades planificadas:</b> <br/>";
                 while ($rowEmp5 = mysql_fetch_assoc($result5)) {
-                    $LActividades = $LActividades . $rowEmp5['nombre'] . "<br/>";
+                    $LActividades = $LActividades . "&nbsp;&nbsp;<img src= '../images/iActividad4.gif' alt='Actividad' border='0'"
+                        . "style='width: auto; height: 12px;'/>&nbsp;" . $rowEmp5['nombre'] . "<br/>";
                 }
                 $LActividades = $LActividades ."</p>";
         }else{
@@ -203,7 +205,7 @@ else{$_SESSION['proyectoEscogido'] = $_GET['idP'];
 
          }
 
-        }// Fin estamos en la Iteraccion maxima
+        }// Fin estamos en la iteracion maxima
         }// Fin de FinProyecto= 0
 
 
@@ -329,7 +331,7 @@ else{$_SESSION['proyectoEscogido'] = $_GET['idP'];
 
 	<div align="left">
 		<ul class="BLUE">
-                    <li><a href="planIteracion.php">Planificar iteracci&oacute;n</a></li>
+                    <li><a href="planIteracion.php">Planificar iteraci&oacute;n</a></li>
 			<li><a href="../Comun/selecVacaciones.php">Escoger vacaciones</a></li>
 		</ul>
 	</div>
@@ -362,7 +364,7 @@ else{$_SESSION['proyectoEscogido'] = $_GET['idP'];
         </div>
         <?php if($casiFinP == 1){
             //Estamos en la ultima Iteracion de TOODO el proyecot
-            echo "<p>La iteracci&oacute;n actual es la <b>&uacute;ltima del proyecto</b>, no puede seguir planificando";
+            echo "<p>La iteraci&oacute;n actual es la <b>&uacute;ltima del proyecto</b>, no puede seguir planificando";
         }else {
             if ($PrimIter == 1){ // esla primera iteracion del proyecto
                 echo "<p style='color:black'>Se dispone a planificar la primera iteraci&oacute;n <b>(" . $numeroIAct . ")</b> del proyecto</p>";
@@ -375,8 +377,8 @@ else{$_SESSION['proyectoEscogido'] = $_GET['idP'];
         echo "</p>";
             }else{
                 if($numeroIAct < $iteracionMax && faseCero == 0){
-            if($planificado == 1){ echo "<p style=\"color:red;\"> Ya ha planificado la siguiente iteracci&oacute;n, no podr&aacute;
-                planificar mas iteracciones hasta que haya finalizado la iteracci&oacute;n actual</p>" .$LActividades; }else {  ?>
+            if($planificado == 1){ echo "<p style=\"color:red;\"> Ya ha planificado la siguiente iteraci&oacute;n, no podr&aacute;
+                planificar mas iteraciones hasta que haya finalizado la iteraci&oacute;n actual</p>" .$LActividades; }else {  ?>
             
                 <?php
         echo "<p style='color:black'>Se dispone a planificar la iteraci&oacute;n <b>" . $numeroINext . "</b> de esta misma fase</p>";
@@ -392,7 +394,7 @@ else{$_SESSION['proyectoEscogido'] = $_GET['idP'];
         <?php
                 }}else{
                 if($FNextVacia == 1){// si cambiamos de fase Y no ai iteraciones creadas
-                    echo "<p>La siguiente iteracci&oacute;n pertenece a la fase siguiente <b>(".$faseNext.")</b></p>"
+                    echo "<p>La siguiente iteraci&oacute;n pertenece a la fase siguiente <b>(".$faseNext.")</b></p>"
                         . "<p style='color:red'>A&uacute;n no ha escogido el n&uacute;mero de iteraciones del que constar&aacute; la fase siguiente</p>"
                         . "<p>Especifique el n&uacute;mero de iteraciones de la fase <b>".$faseNext."</b>"
                         . "  <input type='text' id='NIterFNext' size='2' maxlength='2'/>"
@@ -401,14 +403,15 @@ else{$_SESSION['proyectoEscogido'] = $_GET['idP'];
                 }else{
 
                 if($planificado==1){
-                    echo "<p style=\"color:red;\"> Ya ha planificado la siguiente iteracci&oacute;n, no podr&aacute;"
-                    . " planificar mas iteracciones hasta que haya finalizado la iteracci&oacute;n actual</p>" .$LActividades;
+                    echo "<p style=\"color:red;\"> Ya ha planificado la siguiente iteraci&oacute;n, no podr&aacute;"
+                    . " planificar mas iteraciones hasta que haya finalizado la iteraci&oacute;n actual</p>" .$LActividades;
                 }else{
 
         echo "<p style='color:black'>Se dispone a planificar la primera iteraci&oacute;n <b>(1)</b> de la fase siguiente (".$faseNext.")</p>";
         echo "<p>Nombre de la actividad <input type='text' id='actividad'/><br/><br/>";
         echo "Asocie un rol a la actividad<br/> " .$rolesDisponibles . "<br/>";
         echo "Indique una duraci&oacute;n estimada a la actividad <input type='text' id='durEstimada' size='5' maxlength='5'/><small> Horas Hombre</small><br/>";
+        echo "<br><div id='predecesoras' sytle='display:none; border: solid black;'></div>";
         echo "<br/><input style='margin-left:200px;' type='button' value='A&ntilde;adir' onclick=\"anadir('" . $idIFNext. "')\"/>";
         echo "<input style='margin-left:20px; display:none;' id='terminar' type='button' value='Terminar' onclick=\"javascript:location.href = 'planIteracion.php'\"/>";
         echo "</p>";        }}}}

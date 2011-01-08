@@ -95,7 +95,7 @@
 <!-- start top menu and blog title-->
 
 <div id="blogtitle">
-		<div id="small">Jefe de Proyecto</div>
+    <div id="small">Jefe de Proyecto -  Asignaci&oacute;n de personal</div>
 		<div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
 </div>
 
@@ -117,7 +117,8 @@
 <!-- start left box-->
 <div id="page">
 <div id="leftcontent" >
-	<img style="margin-top:-9px; margin-left:-12px;" src="../images/top2.jpg" alt="" />
+
+        <p><img src= "../images/info_icon.jpg" alt="#" border="0" style="width: 100px;  height: auto; display: block; margin: auto;"/></p>
         <span id="leftcontentIn1">
         <h4 style="padding-right: 10px; ">Asigne al menos un trabajador para continuar con el plan de fases</h4>
         </span>
@@ -127,8 +128,6 @@
         <input type="button" value="Continuar" onclick="javascript:location.href = 'defFases.php'"/>
         </span>
 	<!-- You have to modify the "padding-top: when you change the content of this div to keep the footer image looking aligned -->
-        <p><img src= "../images/Logo2.jpg" alt="#" border="0" style="width: 180px; height: auto;"/></p>
-	<img style="padding-top:2px; margin-left:-12px; margin-bottom:-4px;" src="../images/specs_bottom.jpg" alt="" />
 
 </div>
 <!-- end left box-->
@@ -146,6 +145,7 @@
             <b>Jefe de proyecto:</b><br/>
             &nbsp;&nbsp; <i><?php echo $_SESSION['nombre'] ." ". $_SESSION['apellidos']?></i><br/>
             <span id="listadoPer" style="display:none"><b>Trabajadores asignados:</b></span>
+            <span ><br/><br/><small>*Si durante el proceso de definici&oacute;n del proyecto, introduce alg&uacute;n dato erroneo, cierre sesi&oacute;n y vuelva a empezar.</small></span>
             <br/>
         </div>
         <p>Seleccione el personal deseado para el proyecto</p>

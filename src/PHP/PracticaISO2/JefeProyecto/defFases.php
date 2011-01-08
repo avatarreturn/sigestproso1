@@ -44,7 +44,7 @@
     /* utility functions */
 function nationalDays(date) {
 	var m = date.getMonth(), d = date.getDate(), y = date.getFullYear();
-	//console.log('Checking (raw): ' + m + '-' + d + '-' + y);
+	//console.log('Chforecking (raw): ' + m + '-' + d + '-' + y);
 	for (i = 0; i < disabledDays.length; i++) {
 		if($.inArray((m+1) + '-' + d + '-' + y,disabledDays) != -1 || new Date() > date) {
 			//console.log('bad:  ' + (m+1) + '-' + d + '-' + y + ' / ' + disabledDays[i]);
@@ -161,7 +161,7 @@ function Anadir2(){
     var FechaFin = new Date();
     FechaFin.setTime($.datepicker.parseDate('yy-mm-dd',$('#datepicker4F').val()));
         if(FechaIni.getDay()!= 1){
-            alert("La fase de inicio no comienza en Lunes" + FechaIni.getDay() );
+            alert("La fase de inicio no comienza en Lunes");
         }else if(FechaIni2.getDay()!= 1){
             alert("La fase de elaboracion no comienza en Lunes");
         }else if(FechaIni3.getDay()!= 1){
@@ -212,7 +212,7 @@ function Anadir2(){
 <!-- start top menu and blog title-->
 
 <div id="blogtitle">
-		<div id="small">Jefe de Proyecto</div>
+    <div id="small">Jefe de Proyecto - Definici&oacute;n de fases</div>
 		<div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
 </div>
 <div id="page">
@@ -232,15 +232,12 @@ function Anadir2(){
 <!-- start left box-->
 
 <div id="leftcontent" style="display:inline">
-	<img style="margin-top:-9px; margin-left:-12px;" src="../images/top2.jpg" alt="" />
+        <p><img src= "../images/info_icon.jpg" alt="#" border="0" style="width: 100px;  height: auto; display: block; margin: auto;"/></p>
         <h4 style="padding-right: 10px; ">Una vez haya terminado de asignar las fechas correspondientes a cada fase, contin&uacute;e con el plan de iteraciones.</h4>
         <h3 style="color:black;">Definir el plan de iteraciones<br/></h3>
 	<input type="button" value="Continuar" onclick="Anadir2()"/>
 
-	<!-- You have to modify the "padding-top: when you change the content of this div to keep the footer image looking aligned -->
-        <p><img src= "../images/Logo2.jpg" alt="#" border="0" style="width: 180px; height: auto;"/></p>
-	<img style="padding-top:2px; margin-left:-12px; margin-bottom:-4px;" src="../images/specs_bottom.jpg" alt="" />
-
+	
 </div>
 <!-- end left box-->
 
