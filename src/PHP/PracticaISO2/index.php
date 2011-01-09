@@ -14,8 +14,11 @@ $numMaxProyectos = $row2[0];
 if ($numMaxProyectos != null) {
     //ya se ha introducido el numero maximo de proyectos
     $_SESSION['numMaxProyectos'] = $numMaxProyectos;
+//    echo'<script type="text/javascript">
+//    document.location.href="logearse.php";
+//    </script>';
     echo'<script type="text/javascript">
-    document.location.href="logearse.php";
+    document.location.href="login.php";
     </script>';
 } else {
     //no se ha introducido el numero maximo de proyectos

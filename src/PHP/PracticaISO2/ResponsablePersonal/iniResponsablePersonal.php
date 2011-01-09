@@ -1,7 +1,7 @@
 <?php
 session_start();
-$login = $_SESSION['login'];
-if ($login != "personal") {
+$login = $_SESSION['tipoUsuario'];
+if ($login != "R") {
     header("location: ../index.php");
 }
 ?>
@@ -10,7 +10,7 @@ if ($login != "personal") {
 
     <head>
 
-        <title>Nautica08</title>
+        <title>[SIGESTPROSO] Seguimiento Integrado de la GESTi&oacute;n Temporal de PROyectos de Software</title>
 
         <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
         <meta name="description" content="studio7designs" />
@@ -259,10 +259,16 @@ if ($login != "personal") {
                                     <br>
                                     <select size="1" name="categoria">
                                         <option value="">Escoja categoría</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
+                                        <?php
+                                            include_once ('../Persistencia/conexion.php');
+                                            $conexion = new conexion();
+                                            $result = mysql_query('SELECT `categoriaMaxima`  FROM `configuracion`');
+                                            $row = mysql_fetch_array($result);
+                                            $catMax=(int)$row["categoriaMaxima"];
+                                            for ($i=1; $i<=$catMax;$i++){
+                                                echo "<option value=\"".$i."\">".$i."</option>";
+                                            }
+                                        ?>
                                     </select>
                                 </td>
                             </tr>
@@ -335,26 +341,6 @@ if ($login != "personal") {
 
         <div id="footer">&copy; 2006 Design by <a href="http://www.studio7designs.com">Studio7designs.com</a> | <a href="http://www.arbutusphotography.com">ArbutusPhotography.com</a> | <a href="http://www.opensourcetemplates.org">Opensourcetemplates.org</a>
 
-
-            <!-- start left boxes -->
-
-            <div class="centercontentleftb">
-                <div class="centercontentleftimg">Sample Box for Products</div>
-                <div class="centercontentrightimg">Sample Box for Products</div>
-            </div>
-
-            <!-- endleft boxes -->
-
-            <!-- start right boxes -->
-
-            <div class="centercontentrightb">
-                <div class="centercontentleftimg">Sample Box for Products</div>
-                <div class="centercontentrightimg">Sample Box for Products</div>
-            </div>
-
-            <!-- end right boxes -->
-
-            <!-- end bottom boxes -->
 
         </div>
 

@@ -1,0 +1,261 @@
+/*
+*/
+
+h1,h2,h3,h4,h5,h6,form,body,html,p,blockquote,fieldset,input {
+	margin:0;
+	padding:0; }
+a img,:link img,:visited img {
+	border:none; }
+
+/* =Global
+--------------------*/
+body {
+        padding: 0;
+	margin: 0;
+        /*background: #ffffff url(login_files/main-bg.gif);*/
+        /*background: #E4EFF4;*/
+        background: #E1DFDF;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 62.5%;
+	color: #000000; }
+
+h1, h2, h3, h4, h5 { font-family: Arial, Helvetica, sans-serif; }
+
+a:link, a:visited{
+	color: #2976C2;
+	outline: none;
+	font-weight: bold;
+        text-decoration: none;
+}
+
+a:hover{
+	color: #2976C2;
+	text-decoration: underline;
+}
+
+a:active {outline: none;}
+
+
+/* =Sitewrapper
+--------------------*/
+#sitewrapper {
+	width: 990px;
+	margin: 0 auto; }
+
+/* =Sitewrapper -> Content -> Main Content Div
+--------------------*/
+.main { }
+.main.left {
+	width: 615px; }
+.main.right {
+	width: 615px; }
+
+.main h1 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	padding-bottom: 7px;
+	border-bottom: 1px solid #A7A7A7;
+	margin-bottom: 10px;
+}
+
+.main h2 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	margin: 30px 0 5px 0;
+	clear: left;
+}
+
+.main p {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 150%;
+	margin: 0 0 7px 0;
+}
+
+/* =Sitewrapper -> Content -> Fieldsets
+--------------------*/
+fieldset {
+	border: none;
+	padding-left: 15px;
+	margin: 15px 0 0 0;
+	position: inherit;
+	/*background: transparent url("login_files/bg_fieldset.gif") repeat-y  0 0;*/
+}
+
+fieldset p { clear: left; }
+
+fieldset p label {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	display: block;
+}
+
+fieldset p span {
+	display: block;
+	background: #E9E9E9;
+	width: 460px;
+	padding: 4px;
+}
+
+fieldset p span input {
+	border: 1px solid #A7A7A7;
+	padding: 4px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	font-weight: bold;
+}
+
+fieldset p span input { width: 450px; }
+
+
+/* =Sitewrapper -> Header
+--------------------*/
+#sitewrapper #header {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 40px;
+    font-weight: bold;
+    color: #b8ce83;
+    width: 990px;
+    padding-top: 40px;
+}
+
+/*
+#sitewrapper #header a#logo {
+    height: 51px;
+    width: 135px;
+    float: left;
+    position: relative;
+    top: -10px;
+    background: transparent url(login_files/patrac.jpg) no-repeat 0 0;
+    text-indent: -5000px; }
+*/
+
+/* =Sitewrapper -> Content
+--------------------*/
+#sitewrapper #content {
+    clear: both;
+    background: #FFFFFF;
+    z-index: 100;
+    position: relative;
+    border: 1px solid #A7A7A7;
+}
+
+#sitewrapper #content #main {
+    clear: both;
+    background: #FFFFFF;
+    z-index: 100;
+    position: relative;
+    border: 8px solid #F3F3F3 !important;
+    border: 7px solid #F3F3F3; /* Hack for IE, need to fix. Has to do with an extra 1px of whitespace between #content and #main. */
+    padding: 20px;
+    background: #ffffff url(images/project-plan-printout.jpg);
+/*    background: #ffffff url(images/laptop_work.jpg);*/
+/*    background: #ffffff url(images/acueducto.jpg);*/
+}
+
+/* =Login
+--------------------*/
+body#login div.inner,
+body#login #user-password,
+body#login #remember-password,
+body#login #remember-password input,
+body#login #forgot-password input,
+body#login #sign-in {
+    position: relative;
+}
+
+body#login #sitewrapper { width: 485px; margin: 0 auto;  }
+
+body#login #sitewrapper #header { width: 485px; }
+
+body#login #sitewrapper h1 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	padding-bottom: 7px;
+	border-bottom: 1px solid #A7A7A7;
+	margin-bottom: 10px;
+}
+
+body#login #sitewrapper fieldset#user-email {font-size: 12px; }
+
+body#login #sitewrapper fieldset#user-email p { }
+
+body#login #sitewrapper fieldset#user-email p span {
+    width: 200px;
+    margin-top: 5px;
+}
+
+body#login #sitewrapper fieldset#user-email p span input {
+    width: 190px; /* 385 px */
+}
+
+body#login #sitewrapper fieldset#user-password {
+    border-bottom: 20px; /* solid #FFFFFF*/
+}
+
+body#login #sitewrapper fieldset#user-password p {width: 400px; }
+
+body#login #sitewrapper fieldset#user-password p span {
+	width: 200px;
+	margin-top: 5px;
+}
+
+body#login #sitewrapper fieldset#user-password p span input {
+	width: 190px;
+}
+body#login #sitewrapper fieldset#user-password p strong {
+	font-weight: normal;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	margin: 29px 10px 0 0;
+	float: right;
+}
+
+body#login #sitewrapper fieldset#user-password p strong a { }
+
+body#login #sitewrapper fieldset#user-email p strong {
+	font-weight: normal;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	margin: 29px 10px 0 0;
+	float: right;
+}
+
+body#login #sitewrapper fieldset#user-email p strong a { }
+
+body#login #sitewrapper fieldset#entrar strong {
+	font-weight: bold;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	margin: 19px 10px 0 0;
+	float: right;
+}
+
+#footer {
+    position:absolute;
+    bottom:1.5%;
+    text-align: center;
+    height:auto;
+    z-index: 4;
+    left:1%;
+    width:95%;
+}
+#footer p {
+
+	margin: 0;
+	padding: 25px 0 0 0;
+	text-align: left;
+	font-size: smaller;
+}
+
+#footer a {
+}
+
+#footer .link {
+	float: right;
+}
+
+#copyright {
+	float: right;
+        margin-right: 0px;
+}

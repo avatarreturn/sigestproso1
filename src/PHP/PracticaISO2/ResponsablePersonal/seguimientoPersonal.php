@@ -1,7 +1,7 @@
 <?php
 session_start();
-$login = $_SESSION['login'];
-if ($login != "personal") {
+$login = $_SESSION['tipoUsuario'];
+if ($login != "R") {
     header("location: ../index.php");
 }
 ?>
@@ -10,7 +10,7 @@ if ($login != "personal") {
 
     <head>
 
-        <title>Nautica08</title>
+        <title>[SIGESTPROSO] Seguimiento Integrado de la GESTi&oacute;n Temporal de PROyectos de Software</title>
 
         <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
         <meta name="description" content="studio7designs" />
@@ -43,18 +43,17 @@ if ($login != "personal") {
             while ($rowEmp = mysql_fetch_assoc($result)) {
                 $cont = $cont + 1;
                 if ($rowEmp['Trabajador_dni'] == $dniAnterior) {
-                    $trabajador = $trabajador . "<br/><a href='#'><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;<img src='../images/iActividad4.gif' alt='Actividad' border='0' style='width: auto; height: 12px;'>"
+                    $trabajador = $trabajador . "<a href='#'><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;<img src='../images/iActividad4.gif' alt='Actividad' border='0' style='width: auto; height: 12px;'>"
                             . "</img><label> Proyecto: " . $rowEmp['nombre_proy'] . "</label></td><td><label>&nbsp;&nbsp;&nbsp;&nbsp;Dedicación: " . $rowEmp['porcentaje'] . "</label></td></a></tr>";
-                    //. $rowEmp['nombre_proy'] . "&nbsp;&nbsp;&nbsp;&nbsp; Dedicacion: " . $rowEmp['porcentaje'] . "</img></a>";
                 } else {
+
                     if ($cont != 0) {
-                        $trabajador = $trabajador . "</table></div><br/>";
+                        $trabajador = $trabajador . "</table></div>";
                     }
-                    $trabajador = $trabajador . "<br/><a href='#' onclick=\"ocultarR('oculto" . $cont . "')\"><img src= '../images/iJefeProyecto.gif' alt='#' border='0' "
+                    $trabajador = $trabajador . "<a href='#' onclick=\"ocultarR('oculto" . $cont . "')\"><br/><img src= '../images/iJefeProyecto.gif' alt='#' border='0' "
                             . "style='width: auto; height: auto;'/>&nbsp;&nbsp;" . utf8_encode($rowEmp['nombre']) . " " . utf8_encode($rowEmp['apellidos']) . "     " . $rowEmp['dni'] . "</a>"
-                            . "<div id=\"oculto" . $cont . "\" style=\"display:none\"><br/><a href='#'><table><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;<img src='../images/iActividad4.gif' alt='Actividad' border='0' style='width: auto; height: 12px;'>"
+                            . "<div id=\"oculto" . $cont . "\" style=\"display:none\"><a href='#'><table><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;<img src='../images/iActividad4.gif' alt='Actividad' border='0' style='width: auto; height: 12px;'>"
                             . "</img><label> Proyecto: " . $rowEmp['nombre_proy'] . "</label></td><td><label>&nbsp;&nbsp;&nbsp;&nbsp;Dedicación: " . $rowEmp['porcentaje'] . "</label></td></a></tr>";
-                    //. "  Proyecto: " . $rowEmp['nombre_proy'] . "&nbsp;&nbsp;&nbsp;&nbsp; Dedicacion: " . $rowEmp['porcentaje'] . "</img></a></tr> ";
                 }
 
                 $dniAnterior = $rowEmp['dni'];
@@ -159,27 +158,7 @@ if ($login != "personal") {
 
         <div id="footer">&copy; 2006 Design by <a href="http://www.studio7designs.com">Studio7designs.com</a> | <a href="http://www.arbutusphotography.com">ArbutusPhotography.com</a> | <a href="http://www.opensourcetemplates.org">Opensourcetemplates.org</a>
 
-
-            <!-- start left boxes -->
-
-            <div class="centercontentleftb">
-                <div class="centercontentleftimg">Sample Box for Products</div>
-                <div class="centercontentrightimg">Sample Box for Products</div>
-            </div>
-
-            <!-- endleft boxes -->
-
-            <!-- start right boxes -->
-
-            <div class="centercontentrightb">
-                <div class="centercontentleftimg">Sample Box for Products</div>
-                <div class="centercontentrightimg">Sample Box for Products</div>
-            </div>
-
-            <!-- end right boxes -->
-
-            <!-- end bottom boxes -->
-
+          
         </div>
 
         <!-- end footer -->
