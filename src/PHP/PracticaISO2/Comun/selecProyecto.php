@@ -184,7 +184,7 @@ function ocultarR(x){
 	<p><a href="#"><img src= "../images/logo.jpg" alt="#" border="0" style="width: auto; height: 65px;"/></a><br/></p>
         <div id="selProyecto">
         <h2 style="text-align: center">Seleccione el proyecto sobre el que desea trabajar</h2>
-        <div class="centercontentleft" style="width:500px;">
+        <div class="centercontentleft" style="width:auto;">
             <?php
             if($jefeProy == ""){}else{
             echo "<span>Como Jefe de Proyecto:<br/>" .$jefeProy . "</span><br/>";
@@ -193,6 +193,7 @@ function ocultarR(x){
             echo "<span>Como Desarrollador:<br/>" .$desarrProy . "</span>";
             }
             ?>
+            <br/><br/>
          
             
         </div>
