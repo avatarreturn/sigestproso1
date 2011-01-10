@@ -85,15 +85,15 @@
 
             $idInformeActual = $rowEmp2['idInformeTareas'];
             if($rowEmp2['estado']=="Pendiente"){
-                $estadoInf= "<p> Ya ha enviado el informe de tareas correspondiente a esta semana.<br/>"
+                $estadoInf= "<p style='color:red'> Ya ha enviado el informe de tareas correspondiente a esta semana.<br/>"
                             . "El estado actual del informe es: <b>Pendiente de revisi&oacute;n</b> (puede actualizarlo si lo desea)</p>";
                 $pendiente=1;
                 $cambiar=1;
             }else if($rowEmp2['estado']=="Aceptado"){
-                $estadoInf= "<p> Ya ha completado el informe de tareas correspondiente a esta semana.<br/>"
+                $estadoInf= "<p style='color:red'> Ya ha completado el informe de tareas correspondiente a esta semana.<br/>"
                             . "El estado actual del informe es: <b>Aceptado</b></p>";
             }else{
-                $estadoInf= "<p> Ya ha completado el informe de tareas correspondiente a esta semana.<br/>"
+                $estadoInf= "<p style='color:red'> Ya ha completado el informe de tareas correspondiente a esta semana.<br/>"
                             . "El estado actual del informe es: <b>Cancelado</b><br/>"
                             . "<tt style='color:red'>Revise el informe y vuelva a enviarlo</tt></p>";
                 $cancelado= 1;

@@ -31,6 +31,22 @@ else{$_SESSION['proyectoEscogido'] = $_GET['idP'];
         }
         $rolesDisponibles = $rolesDisponibles ."</select>";
 
+        //sacamos la lista de trabajadores disponibles
+        $result3 = mysql_query(
+                "SELECT t.nombre as name, t.apellidos as app, p.Trabajador_dni as dni FROM TrabajadorProyecto p, Trabajador t WHERE "
+                . "p.Proyecto_idProyecto = '".$_SESSION['proyectoEscogido']."' AND "
+                . "t.dni = p.Trabajador_dni");
+
+        $totEmp3 = mysql_num_rows($result3);
+
+        if ($totEmp3 >0) {
+            $TrabajadoresDisponibles = "<select id='TrabajadorActividad' onchange='selTrab()'><option value='-1'>- Escoja un Trabajador -</option>";
+            while ($rowEmp3 = mysql_fetch_assoc($result3)) {
+                $TrabajadoresDisponibles = $TrabajadoresDisponibles . "<option value='".$rowEmp3['dni']."'>". $rowEmp3['name']." ". $rowEmp3['app']."</option>";}
+        }
+        $TrabajadoresDisponibles = $TrabajadoresDisponibles ."</select>";
+
+
         //buscamos la Fase actual de este proyecto
 
         $result2 = mysql_query("SELECT * FROM Fase WHERE\n"
@@ -219,7 +235,10 @@ else{$_SESSION['proyectoEscogido'] = $_GET['idP'];
 <title><?php echo $nombreP ?></title>
 
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+<script src="../Utiles/jquery.min.js"></script>
+<script src="../Utiles/jquery-ui.min.js"></script>
+<script src="../Utiles/jquery.ui.datepicker-es.js"></script>
 
 <link rel="stylesheet" type="text/css" href="../stylesheet.css" media="screen, projection, tv " />
 <script type="TEXT/JAVASCRIPT">
@@ -293,8 +312,78 @@ else{$_SESSION['proyectoEscogido'] = $_GET['idP'];
         + "&numIt=" +document.getElementById("NIterFNext").value,true);
     xmlhttp.send();
     }}
+ //DIalogo JQuery
+ $(document).ready(function() {
+    $("#dialog").dialog({
+        autoOpen: false,
+    buttons: { "Cancelar": function() { $(this).dialog("close"); },
+               "Asignar": function() {prueba()}},
+           draggable: false,
+           resizable: false,
+           zIndex: 500,
+           width: 455
+});
+  });
 
+function prueba(){
+   alert("Asignado");
+   }
 
+var disabledDays = [];
+ function selTrab(){
+  if (window.XMLHttpRequest){
+      xmlhttp=new XMLHttpRequest();
+      }
+    else{
+      xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+      }
+    xmlhttp.onreadystatechange=function(){
+        if(xmlhttp.readyState==1){
+            //Sucede cuando se esta cargando la pagina
+            //document.getElementById("TrabAct").innerHTML = "<p><center>Cargando datos...<center><img src='../images/enviando.gif' alt='Cargando' width='150px'/></p>";//<-- Aca puede ir una precarga
+        }else if (xmlhttp.readyState==4 && xmlhttp.status==200)
+        {
+//            alert(xmlhttp.responseText);
+             disabledDays = eval(xmlhttp.responseText);
+            $("#dialog").dialog("open");
+            jQuery('#datepicker').datepicker( "refresh" );
+        }
+      }
+      xmlhttp.open("GET","cargarVacaciones.php?id=" + document.getElementById("TrabajadorActividad").value,true);
+    xmlhttp.send();
+ 
+ }
+
+/* utility functions */
+function nationalDays(date) {
+	var m = date.getMonth(), d = date.getDate(), y = date.getFullYear();
+	//console.log('Checking (raw): ' + m + '-' + d + '-' + y);
+	for (i = 0; i < disabledDays.length; i++) {
+		if($.inArray((m+1) + '-' + d + '-' + y,disabledDays) != -1 || new Date() > date) {
+			//console.log('bad:  ' + (m+1) + '-' + d + '-' + y + ' / ' + disabledDays[i]);
+			return [false];
+		}
+	}
+	//console.log('good:  ' + (m+1) + '-' + d + '-' + y);
+	return [true];
+}
+
+function noWeekendsOrHolidays(date) {
+	var noWeekend = jQuery.datepicker.noWeekends(date);
+	return noWeekend[0] ? nationalDays(date) : noWeekend;
+}
+
+jQuery("#dialog").ready(function() {
+	jQuery('#datepicker').datepicker({
+		dateFormat: 'yy-mm-dd',
+		constrainInput: true,
+                numberOfMonths: 2,
+		beforeShowDay: noWeekendsOrHolidays
+//                onSelect: function(dateText, inst) {
+//                alert(dateText)
+//            }
+	});
+});
 </script>
 </head>
 
@@ -370,6 +459,7 @@ else{$_SESSION['proyectoEscogido'] = $_GET['idP'];
                 echo "<p style='color:black'>Se dispone a planificar la primera iteraci&oacute;n <b>(" . $numeroIAct . ")</b> del proyecto</p>";
         echo "<p>Nombre de la actividad <input type='text' id='actividad'/><br/><br/>";
         echo "Asocie un rol a la actividad<br/> " .$rolesDisponibles . "<br/>";
+        echo "<br/><div id='TrabAct'>Asigne uno o varios trabajadores a la actividad<br/> " .$TrabajadoresDisponibles . "</div><br/>";
         echo "Indique una duraci&oacute;n estimada a la actividad <input type='text' id='durEstimada' size='5' maxlength='5'/><small> Horas Hombre</small><br/>";
         echo "<br><span id='predecesoras' sytle='display:none; border: solid black;'></span>";
         echo "<br/><input style='margin-left:200px;' type='button' value='A&ntilde;adir' onclick=\"anadir('" . $idIAct. "')\"/>";
@@ -384,6 +474,7 @@ else{$_SESSION['proyectoEscogido'] = $_GET['idP'];
         echo "<p style='color:black'>Se dispone a planificar la iteraci&oacute;n <b>" . $numeroINext . "</b> de esta misma fase</p>";
         echo "<p>Nombre de la actividad <input type='text' id='actividad'/><br/><br/>";
         echo "Asocie un rol a la actividad<br/> " .$rolesDisponibles . "<br/>";
+        echo "Asocie uno o varios trabajadores a la actividad<br/> " .$TrabajadoresDisponibles . "<br/>";
         echo "Indique una duraci&oacute;n estimada a la actividad <input type='text' id='durEstimada' size='5' maxlength='5'/><small> Horas Hombre</small><br/>";
         echo "<br><div id='predecesoras' sytle='display:none; border: solid black;'></div>";
         echo "<br/><input style='margin-left:200px;' type='button' value='A&ntilde;adir' onclick=\"anadir('-1')\"/>";
@@ -410,6 +501,7 @@ else{$_SESSION['proyectoEscogido'] = $_GET['idP'];
         echo "<p style='color:black'>Se dispone a planificar la primera iteraci&oacute;n <b>(1)</b> de la fase siguiente (".$faseNext.")</p>";
         echo "<p>Nombre de la actividad <input type='text' id='actividad'/><br/><br/>";
         echo "Asocie un rol a la actividad<br/> " .$rolesDisponibles . "<br/>";
+        echo "Asocie uno o varios trabajadores a la actividad<br/> " .$TrabajadoresDisponibles . "<br/>";
         echo "Indique una duraci&oacute;n estimada a la actividad <input type='text' id='durEstimada' size='5' maxlength='5'/><small> Horas Hombre</small><br/>";
         echo "<br><div id='predecesoras' sytle='display:none; border: solid black;'></div>";
         echo "<br/><input style='margin-left:200px;' type='button' value='A&ntilde;adir' onclick=\"anadir('" . $idIFNext. "')\"/>";
@@ -418,7 +510,11 @@ else{$_SESSION['proyectoEscogido'] = $_GET['idP'];
         }//Fin casiFin
 
         ?>
-        
+        <div id="dialog" title="Calendario de vacaciones">
+           <center><span id="nomVacas" style="padding-bottom:10px; padding-top:5px; display:block;">Javier Garcia Tomillo</span></center>
+            <div type="text" id="datepicker"></div>
+        <br/><br/><center>&#191;Desea asignar este trabajador a esta actividad&#63;</center>
+        </div>
         </div>
 </div>
 

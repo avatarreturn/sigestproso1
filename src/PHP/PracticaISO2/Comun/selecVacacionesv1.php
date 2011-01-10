@@ -35,7 +35,7 @@ if ($login != "T") {
 // calcular fecha fin por Inicio + duracion/8 hora diarias por hombre y porcentaje¿¿
         include_once('../Persistencia/conexion.php');
         $conexion = new conexion();
-        $result = mysql_query("SELECT fechaInicio, duracionEstimada, idActividad FROM Actividad WHERE\n"
+        $result = mysql_query("SELECT fechaInicio, duracionEstimada FROM Actividad WHERE\n"
                             . "fechaFin is NULL \n"
                             . "AND \n"
                             . "idActividad in \n"
@@ -49,82 +49,33 @@ if ($login != "T") {
             $fechasFFinVal = array();
             while ($rowEmp = mysql_fetch_assoc($result)) {
 
-                // si tiene fecha de inicio
-                if($rowEmp['fechaInicio']!= ""){
-                    // Extraer las dos fechas
+                // Extraer las dos fechas
                 // Generar las fechas de por medio e ir metiendolas en un array
                 if (in_array($rowEmp['fechaInicio'], $fechasF1)) {
                 }else{  $fechasF1[] = $rowEmp['fechaInicio'];}
                 $fechaInicio = $rowEmp['fechaInicio'];
-                $diasHH = round($rowEmp['duracionEstimada'] / 40) * 7;
-//                echo "duracion estimada en dias =" . $diasHH;
-                $fechaFin= date("Y-m-d", strtotime("$fechaInicio + $diasHH days"));
-                    while ( $fechaInicio != $fechaFin) {
-                    $can_dias = 1;
-                    $fec_vencimi= date("Y-m-d", strtotime("$fechaInicio + $can_dias days"));
-                    $fechaInicio = $fec_vencimi;
-                    if(in_array($fec_vencimi, $fechasF1)){}
-                    else{  $fechasF1[] = $fec_vencimi; }
-                    }
-                }else{// no tiene fecha de inicio
-                    //comprobamos si tiene predecesora
-                    $result2 = mysql_query("SELECT * FROM ActividadPredecesora WHERE Actividad_idActividad='".$rowEmp['idActividad']."'");
-                    $totEmp2 = mysql_num_rows($result2);
-
-        if ($totEmp2 ==1) { // solo tiene una predecesora
-            // 3 casos, que tenga fecha de inicio, que no la tenga por tener mas de 2 niveles de precedencia, o que sea de otra iteracion
-            while ($rowEmp2 = mysql_fetch_assoc($result2)) {
-                $fechaInicioPredecesora ="";
-                while ( $fechaInicioPredecesora == "") {
-                    
-                
-                $result3 = mysql_query("SELECT fechaInicio, duracionEstimada FROM Actividad WHERE\n"
-                            . "idActividad='".$rowEmp2['Actividad_idActividadP']. "'");
-                $totEmp3 = mysql_num_rows($result3);
-                if ($totEmp3 ==1) { 
-                    while ($rowEmp3 = mysql_fetch_assoc($result3)) { 
-                        if($rowEmp3['fechaInicio'] == ""){// No tiene fecha de inciio
-                            // tela..................
-                        }else{ // tiene fecha de inicio
-                            // sacar una fecha de inicio estimada y sumarle duracion de la actividad en cuestion
-                           
-                            $fechaInicioPredecesora = $rowEmp3['fechaInicio'];
-                            $diasHHPred = round($rowEmp3['duracionEstimada'] / 40) * 7;
-                            $diasHH = round($rowEmp['duracionEstimada'] / 40) * 7;
-                            $fechaInicio= date("Y-m-d", strtotime("$fechaInicioPredecesora + $diasHHPred days"));
-                            $fechaFin = date("Y-m-d", strtotime("$fechaInicio + $diasHH days"));;
-                            while ( $fechaInicio != $fechaFin) {
-                                $can_dias = 1;
-                                $fec_vencimi= date("Y-m-d", strtotime("$fechaInicio + $can_dias days"));
-                                $fechaInicio = $fec_vencimi;
-                                if(in_array($fec_vencimi, $fechasF1)){}
-                                else{  $fechasF1[] = $fec_vencimi; }
-                                }
-                        }
-                    }
+                while ( $fechaInicio != $rowEmp['fechaFin']) {
+                $can_dias = 1;
+                $fec_vencimi= date("Y-m-d", strtotime("$fechaInicio + $can_dias days"));
+                $fechaInicio = $fec_vencimi;
+//                $unix = strtotime($fechaInicio);
+//                echo date('n-j-y', $unix);
+                if(in_array($fec_vencimi, $fechasF1)){}
+                else{  $fechasF1[] = $fec_vencimi; }
                 }
-                }
-
-            }
-
-        }else if ($totEmp2 >1){ // tiene mas de una predecesora
-
-        }else if ($totEmp2 <1){ // no tiene predecesora, ni fechaI, es de otra iteracion
-            //Tela.....
-
-        }
-
-
-
-
             }
             // cambio de formato
                for($i=0;$i<count($fechasF1);$i++){
                 $fechasFFin[]=date("n-j-Y",strtotime($fechasF1[$i]));
                 $fechasFFinVal[]=date("Y-m-d",strtotime($fechasF1[$i]));
                }
-     
-        }
+                //----------- cambio de formato
+//                $nAnyo= strpos($rowEmp['nacimiento'], "-");
+//                $resultado= substr($rowEmp['nacimiento'], $nAnyo+1 ) . "-" . substr($rowEmp['nacimiento'], 0,$nAnyo );
+//                //echo "\"" .$resultado . "\"";
+//                $fechas = $fechas . "\"" .$resultado . "\",";
+//                //---------
+               //print_r($fechasFFin);
         }
         $conexion->cerrarConexion();
        // echo "FECHAS =" . $fechas."++";
@@ -193,7 +144,7 @@ function validar(){
     if(FechaIni.getDay()== 1){
 
 
-    FechaFin.setDate(FechaFin.getDate() + (week-1));
+    FechaFin.setDate(FechaFin.getDate() + week);
     var curr_date = FechaFin.getDate();
     var curr_month = FechaFin.getMonth();
     curr_month = curr_month + 1;
