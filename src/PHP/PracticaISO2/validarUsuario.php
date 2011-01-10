@@ -41,7 +41,7 @@ if (trim($_POST['login']) != "" && trim($_POST['password']) != "") {
                     </script>';
                 } else {
                     //JEFE PROYECTO - DESARROLLADOR
-                    $datos = mysql_query("SELECT dni FROM trabajador WHERE (Usuario_login= '" . $_SESSION['login'] . "')");
+                    $datos = mysql_query("SELECT dni FROM Trabajador WHERE (Usuario_login= '" . $_SESSION['login'] . "')");
                     while ($resultado = mysql_fetch_array($datos)) {
                         $dniObtenido = $resultado[0];
                     }

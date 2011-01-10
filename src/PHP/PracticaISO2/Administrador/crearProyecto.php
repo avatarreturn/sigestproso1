@@ -115,7 +115,7 @@ if ($login != "A") {
                                 <?php
                                 include_once('../Persistencia/conexion.php');
                                 $conexion = new conexion();
-                                $result = mysql_query('select nombre, apellidos, dni from trabajador where (categoria like "1") and dni not in (select jefeProyecto from proyecto where fechaFin is NULL)');
+                                $result = mysql_query('SELECT nombre, apellidos, dni FROM Trabajador WHERE (categoria like "1") and dni not in (SELECT jefeProyecto FROM Proyecto WHERE fechaFin is NULL)');
                                 //$result = mysql_query("select nombre, apellidos, dni from trabajador");
                                 echo '<SELECT NAME="jefeProyecto" size="1">';
                                 echo '<option>Seleccione un Jefe de Proyecto</option>';

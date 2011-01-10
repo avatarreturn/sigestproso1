@@ -17,8 +17,7 @@
 
     <body id="login" >
 
-          <div id="sitewrapper">
-            <!--              <div id="header">SIGESTPROSO</div>-->
+        <div id="sitewrapper">
             <br/><br/><br/><br/>
             <img id="sign-in" name="boton_login" src="images/sigestproso.jpg" alt="Sigestproso"/>
             <br/><br/><br/><br/>
@@ -30,8 +29,6 @@
                         <div id="email">
                             <fieldset id="user-email">
                                 <p>
-<!--                                    <strong><a href="#" <%-- onclick="forgot_password(); return false;"--%>>&iquest;Olvid&oacute; la contrase&ntilde;a?</a></strong>-->
-
                                     <label><b>Usuario</b><span><input name="login" tabindex="1" id="login" type="text" /></span></label>
                                 </p>
                             </fieldset>
@@ -61,7 +58,6 @@
         <div id="footer">
             <br/><br/>
             <div class="copyright">P&aacute;gina web optimizada para ver con el navegador Google Chrome.</div>
-            <!--            <div class="copyright">Copyright © PATRAC</div>-->
         </div><!-- /sitewrapper -->
     </body>
 </html>
