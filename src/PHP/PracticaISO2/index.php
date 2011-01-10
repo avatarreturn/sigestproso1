@@ -7,7 +7,7 @@ session_start();
 //se crea la conexion
 $conexion = new conexion();
 //se realiza la consulta
-$consulta = mysql_query('SELECT numMaxProyectos FROM configuracion');
+$consulta = mysql_query('SELECT numMaxProyectos FROM Configuracion');
 $row2 = mysql_fetch_array($consulta);
 $numMaxProyectos = $row2[0];
 
