@@ -15,7 +15,7 @@ if (trim($_POST['login']) != "" && trim($_POST['password']) != "") {
 
     //comprobar login y tipo de usuario
     //el dni solo si es trabajador, no para administrador y responsable de personal
-    $result = mysql_query("SELECT login FROM usuario WHERE (login= '" . $loginIntroducido . "')");
+    $result = mysql_query("SELECT login FROM Usuario WHERE (login= '" . $loginIntroducido . "')");
 
     if ($row = mysql_fetch_array($result)) {
         //hay resultados, el usuario existe

@@ -61,6 +61,8 @@ if ($login != "R") {
             if ($trabajador != "") {
                 $trabajador = $trabajador . "</table></div>";
             }
+        }else{
+            $trabajador = "<a href='#'><img src= '../images/iJefeProyecto.gif' alt='#' border='0' style='width: auto; height: auto;'/>NO EXISTE NIGUN TRABAJADOR ASIGNADO A NINGUN PROYECTO</a>";
         }
         $conexion->cerrarConexion();
         ?>
