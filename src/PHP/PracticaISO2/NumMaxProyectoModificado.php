@@ -20,6 +20,6 @@ $_SESSION['numMaxProyectos'] = $numMaxProyectos;
 
 //redireccion a la pagina de validacion de usuario
 echo'<script type="text/javascript">
-    document.location.href="logearse.php";
+    document.location.href="login.php";
     </script>';
 ?>

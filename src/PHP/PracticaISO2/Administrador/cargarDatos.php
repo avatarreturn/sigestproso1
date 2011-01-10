@@ -26,61 +26,6 @@ if ($login != "A") {
         <link rel="stylesheet" type="text/css" href="../stylesheet.css" media="screen, projection, tv " />
 
         <script type="text/javascript" language="javascript">
-            //            //variables utilizadas en la funcion que llama al servidor
-            //            //corresponden al estado de la respuesta del servidor
-            //            var READY_STATE_UNINITIALIZED=0; //No inicializado (objeto creado, pero no se ha invocado el método open)
-            //            var READY_STATE_LOADING=1; //Cargando (objeto creado, pero no se ha invocado el método send)
-            //            var READY_STATE_LOADED=2; //Cargado (se ha invocado el método send, pero el servidor aún no ha respondido)
-            //            var READY_STATE_INTERACTIVE=3; //Interactivo (se han recibido algunos datos, aunque no se puede emplear la propiedad responseText)
-            //            var READY_STATE_COMPLETE=4; //Completo (se han recibido todos los datos de la respuesta del servidor)
-            //
-            //            //variable global para todas las funciones que almacena el objeto XMLHttRequest
-            //            var peticion_http;
-            //            var limiteCategoria;
-            //            var indiceTabla=0;
-            //
-            //            /*
-            //             * @param url: la url del contenido que se va a cargar
-            //             * @param metodo: el metodo utilizado para la peticion HTTP
-            //             * @param funcion: referencia a la funcion que procesa la respuesta del servidor
-            //             */
-            //            function cargaContenido(url) {
-            //                //se inicializa el objeto XMLHttpRequest
-            //                peticion_http = inicializa_xhr();
-            //                if(peticion_http) {
-            //                    //realiza la peticion al servidor
-            //                    peticion_http.open("GET", url, true);
-            //                    //se establece la funcion que procesa la respuesa del servidor, sin parentesis
-            //                    //en este caso sera: muestraContenido
-            //                    peticion_http.onreadystatechange = muestraContenido;
-            //                    //la peticion se envia al servidor, sin datos
-            //                    peticion_http.send(null);
-            //                }
-            //            }
-            //
-            //            //funcion que inicializa el objeto XMLHttpRequest
-            //            function inicializa_xhr() {
-            //                if(window.XMLHttpRequest) {
-            //                    return new XMLHttpRequest();
-            //                }
-            //                else if(window.ActiveXObject) {
-            //                    return new ActiveXObject("Microsoft.XMLHTTP");
-            //                }
-            //            }
-            //
-            //            //comprobar que la peticion ha sido correcta
-            //            function muestraContenido() {
-            //                var obj = document.getElementById('targetDiv');
-            //                if(peticion_http.readyState == READY_STATE_COMPLETE) {
-            //                    //status==200: respuesta correcta
-            //                    //status==404: no encontrado
-            //                    //status==500: error del servidor
-            //                    if(peticion_http.status == 200) {
-            //                        //responseText contiene el valor respuesta del servidor en forma de string
-            //                        obj.innerHTML = peticion_http.responseText;
-            //                    }
-            //                }
-            //            }
 
             //crea el select de categorias
             function pintaOptions(maximo){
@@ -135,24 +80,23 @@ if ($login != "A") {
         <div id="page">
             <div id="topmenu">
 
-
-                <ul class="BLUE">
-                    <li><a href="crearProyecto.php" title="Principal"><span>Crear proyecto</span></a></li>
-                    <li><a href="cargarDatos.php" title="Principal"><span>Cargar datos</span></a></li>
-                </ul>
             </div>
 
             <!-- end top menu and blog title-->
 
             <!-- start left box-->
 
-            <div id="leftcontent" style="display:none">
+            <div id="leftcontent" style="display:inline">
                 <img style="margin-top:-9px; margin-left:-12px;" src="../images/top2.jpg" alt="" />
-                <h4 style="padding-right: 10px; ">Una vez haya terminado de asignar trabajadores, contin&uacute;e con la definici&oacute;n del proyecto.</h4>
-                <h3 style="color:black;">Definir el plan de fases<br/></h3>
-                <input type="button" value="Continuar" onclick="javascript:location.href = 'defFases.php'"/>
+                <h3 align="left">Main Menu</h3>
 
-                <!-- You have to modify the "padding-top: when you change the content of this div to keep the footer image looking aligned -->
+                <div align="left">
+                    <ul class="BLUE">
+                        <li><a href="crearProyecto.php">Crear proyecto</a></li>
+                        <li><a href="cargarDatos.php">Cargar datos</a></li>
+                    </ul>
+                </div>
+
                 <p><img src= "../images/Logo2.jpg" alt="#" border="0" style="width: 180px; height: auto;"/></p>
                 <img style="padding-top:2px; margin-left:-12px; margin-bottom:-4px;" src="../images/specs_bottom.jpg" alt="" />
 

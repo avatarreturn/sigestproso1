@@ -35,10 +35,9 @@ if ($login != "A") {
                 }
 
                 //comprobamos que no esta vacio el campo de jefe de proyecto
-                //if ((document.nuevo_proyecto.jefesProyecto.value=="Seleccione un Jefe de Proyecto")&&(document.nuevo_proyecto.jefesProyecto.value.length==0)){
-                if (document.nuevo_proyecto.jefesProyecto.value=="Seleccione un Jefe de Proyecto"){
+                if (document.nuevo_proyecto.jefeProyecto.value=="Seleccione un Jefe de Proyecto"){
                     alert("Tiene que seleccionar un Jefe de Proyecto.")
-                    document.nuevo_proyecto.jefesProyecto.focus()
+                    document.nuevo_proyecto.jefeProyecto.focus()
                     return 0;
                 }
 
@@ -61,26 +60,23 @@ if ($login != "A") {
 
         <div id="page">
 
-
             <div id="topmenu">
 
-
-                <ul class="BLUE">
-                    <li><a href="crearProyecto.php" title="Principal"><span>Crear proyecto</span></a></li>
-                    <li><a href="cargarDatos.php" title="Principal"><span>Cargar datos</span></a></li>
-                </ul>
             </div>
-
             <!-- end top menu and blog title-->
 
             <!-- start left box-->
-            <div id="leftcontent" style="display:none">
+            <div id="leftcontent" style="display:inline">
                 <img style="margin-top:-9px; margin-left:-12px;" src="../images/top2.jpg" alt="" />
-                <h4 style="padding-right: 10px; ">Una vez haya terminado de asignar trabajadores, contin&uacute;e con la definici&oacute;n del proyecto.</h4>
-                <h3 style="color:black;">Definir el plan de fases<br/></h3>
-                <input type="button" value="Continuar" onclick="javascript:location.href = 'defFases.php'"/>
+                <h3 align="left">Main Menu</h3>
 
-                <!-- You have to modify the "padding-top: when you change the content of this div to keep the footer image looking aligned -->
+                <div align="left">
+                    <ul class="BLUE">
+                        <li><a href="crearProyecto.php">Crear proyecto</a></li>
+                        <li><a href="cargarDatos.php">Cargar datos</a></li>
+                    </ul>
+                </div>
+   
                 <p><img src= "../images/Logo2.jpg" alt="#" border="0" style="width: 180px; height: auto;"/></p>
                 <img style="padding-top:2px; margin-left:-12px; margin-bottom:-4px;" src="../images/specs_bottom.jpg" alt="" />
 
@@ -119,12 +115,12 @@ if ($login != "A") {
                                 <?php
                                 include_once('../Persistencia/conexion.php');
                                 $conexion = new conexion();
-                                //select nombre, apellidos from trabajador where dni not in (select jefeProyecto from proyecto where fechaFin is NULL);
-                                $result = mysql_query('select nombre, apellidos from trabajador where (categoria like "1") and dni not in (select jefeProyecto from proyecto where fechaFin is NULL)');
-                                echo '<SELECT NAME="jefesProyecto" size="1">';
+                                $result = mysql_query('select nombre, apellidos, dni from trabajador where (categoria like "1") and dni not in (select jefeProyecto from proyecto where fechaFin is NULL)');
+                                //$result = mysql_query("select nombre, apellidos, dni from trabajador");
+                                echo '<SELECT NAME="jefeProyecto" size="1">';
                                 echo '<option>Seleccione un Jefe de Proyecto</option>';
                                 while ($rowEmp = mysql_fetch_assoc($result)) {
-                                    echo '<option value="' . $rowEmp['usuario'] . '">' . $rowEmp['usuario'] . '</option>';
+                                    echo '<option value="' . $rowEmp['dni'] . '">' . $rowEmp['nombre'] . ' ' . $rowEmp['apellidos'] . '</option>';
                                 }
                                 echo '</SELECT>';
                                 $conexion->cerrarConexion();
