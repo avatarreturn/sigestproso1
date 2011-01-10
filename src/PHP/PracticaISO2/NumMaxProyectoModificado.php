@@ -10,7 +10,7 @@ $conexion = new conexion();
 $numMaxProyectos = $_POST['numMaxProyect'];
 
 //insertar en la base de datos
-mysql_query("INSERT INTO configuracion (idConfiguracion, numMaxProyectos, categoriaMaxima) VALUES ('NULL', '".$numMaxProyectos."' , 'NULL')");
+mysql_query("INSERT INTO Configuracion (idConfiguracion, numMaxProyectos, categoriaMaxima) VALUES ('NULL', '".$numMaxProyectos."' , 'NULL')");
 
 //cierre de la conexion
 $conexion->cerrarConexion();
