@@ -93,7 +93,7 @@ class Usuario {
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Funcion que crea un usuario a partir de los datos de la base de datos
     static public function getUsuario($parametroLogin) {
-        $datos = mysql_query('SELECT * FROM usuario WHERE (login=\'' . $parametroLogin . '\')') or die(mysql_error());
+        $datos = mysql_query('SELECT * FROM Usuario WHERE (login=\'' . $parametroLogin . '\')') or die(mysql_error());
         $totalrows=mysql_num_rows($datos);
         if($totalrows>0){
             while($rowEmp=  mysql_fetch_assoc($datos)){

@@ -81,7 +81,7 @@ class Trabajador extends Usuario {
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Funcion que crea un trabajador a partir de los datos de la base de datos
     static public function getTrabajador($parametroDni) {
-        $datos = mysql_query('SELECT * FROM trabajador WHERE (dni=\'' . $parametroDni . '\')') or die(mysql_error());
+        $datos = mysql_query('SELECT * FROM Trabajador WHERE (dni=\'' . $parametroDni . '\')') or die(mysql_error());
         $totalrows=mysql_num_rows($datos);
         if($totalrows>0){
             while($rowEmp=  mysql_fetch_assoc($datos)){
