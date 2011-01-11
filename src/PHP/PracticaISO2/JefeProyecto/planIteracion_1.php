@@ -18,8 +18,6 @@ else{$_SESSION['proyectoEscogido'] = $_GET['idP'];
             }
         }
 
-        // variable de sesion reiniciada para meter trabajadores asignadas
-        $_SESSION['trabActividad'] = array();
         //sacamos la lista de roles disponibles
         $result3 = mysql_query(
                 "SELECT nombre, idRol FROM Rol WHERE categoria > 1");
@@ -27,13 +25,26 @@ else{$_SESSION['proyectoEscogido'] = $_GET['idP'];
         $totEmp3 = mysql_num_rows($result3);
 
         if ($totEmp3 >0) {
-            $rolesDisponibles = "<select id='RolActividad' onchange='trabajRol()'><option value='-1'>- Escoja un rol -</option>";
+            $rolesDisponibles = "<select id='RolActividad'><option value='-1'>- Escoja un rol -</option>";
             while ($rowEmp3 = mysql_fetch_assoc($result3)) {
                 $rolesDisponibles = $rolesDisponibles . "<option value='".$rowEmp3['idRol']."'>". $rowEmp3['nombre']."</option>";}
         }
         $rolesDisponibles = $rolesDisponibles ."</select>";
 
-        
+        //sacamos la lista de trabajadores disponibles
+        $result3 = mysql_query(
+                "SELECT t.nombre as name, t.apellidos as app, p.Trabajador_dni as dni FROM TrabajadorProyecto p, Trabajador t WHERE "
+                . "p.Proyecto_idProyecto = '".$_SESSION['proyectoEscogido']."' AND "
+                . "t.dni = p.Trabajador_dni");
+
+        $totEmp3 = mysql_num_rows($result3);
+
+        if ($totEmp3 >0) {
+            $TrabajadoresDisponibles = "<select id='TrabajadorActividad' onchange='selTrab()'><option value='-1'>- Escoja un Trabajador -</option>";
+            while ($rowEmp3 = mysql_fetch_assoc($result3)) {
+                $TrabajadoresDisponibles = $TrabajadoresDisponibles . "<option value='".$rowEmp3['dni']."'>". $rowEmp3['name']." ". $rowEmp3['app']."</option>";}
+        }
+        $TrabajadoresDisponibles = $TrabajadoresDisponibles ."</select>";
 
 
         //buscamos la Fase actual de este proyecto
@@ -260,12 +271,10 @@ else{$_SESSION['proyectoEscogido'] = $_GET['idP'];
             document.getElementById("durEstimada").value="";
             document.getElementById("actividadesAsig").innerHTML=data[0];
             document.getElementById("actividadesAsig").style.display="inline";
-            document.getElementById("TrabAct").style.display="none";
-            document.getElementById("predecesoras").style.display="none";
-            document.getElementById('RolActividad').disabled=false;
             document.getElementById("RolActividad").value="-1";
             document.getElementById("terminar").style.display="inline";
             document.getElementById("predecesoras").innerHTML= data[1];
+            document.getElementById("predecesoras").style.display="table";
             contador = contador +1 ;
         }
       }
@@ -280,54 +289,6 @@ else{$_SESSION['proyectoEscogido'] = $_GET['idP'];
     }}
 
 
-// segun el ROl sacamos unos trabajadores u otros
- function trabajRol(){
- if(document.getElementById("RolActividad").value == -1){
-     Alert("Seleccione un rol valido")
- }else{
-  if (window.XMLHttpRequest){
-      xmlhttp=new XMLHttpRequest();
-      }
-    else{
-      xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-      }
-    xmlhttp.onreadystatechange=function(){
-        if(xmlhttp.readyState==1){
-            //Sucede cuando se esta cargando la pagina
-            document.getElementById("botonAnadir").innerHTML = "<p><center>Cargando datos...<center><img src='../images/enviando.gif' alt='Cargando' width='150px'/></p>";//<-- Aca puede ir una precarga
-        }else if (xmlhttp.readyState==4 && xmlhttp.status==200)
-        {
-//            alert(xmlhttp.responseText);
-                        document.getElementById("TrabAct").innerHTML = xmlhttp.responseText;
-                         document.getElementById("TrabAct").style.display="inline";
-                         document.getElementById("predecesoras").style.display="table";
-                         document.getElementById("botonAnadir").innerHTML =
-        "<br/><input style='margin-left:200px;' type='button' value='A&ntilde;adir' onclick=\"anadir('" + 
-        "<?php if ($PrimIter == 1){
-             echo $idIAct;
-        }else{
-                if($numeroIAct < $iteracionMax && faseCero == 0){
-            if($planificado == 1){}else{
-                echo "-1";
-            }}else{
-                if($FNextVacia == 1){
-                }else{
-
-                if($planificado==1){
-                }else{
-            echo  $idIFNext;
-                }}}}       
-        ?>"
-        + "')\"/>" +
-       "<input style='margin-left:20px;' id='terminar' type='button' value='Terminar' onclick=\"javascript:location.href = 'planIteracion.php'\"/>";
-
-
-        }
-      }
-      xmlhttp.open("GET","cargarTrabRol.php?id=" + document.getElementById("RolActividad").value,true);
-    xmlhttp.send();
- }
- }
 // Añadimos iteraciones en la fase siguiente si no tiene
         function insIterFNext(){
         if(document.getElementById("NIterFNext").value==""
@@ -355,8 +316,8 @@ else{$_SESSION['proyectoEscogido'] = $_GET['idP'];
  $(document).ready(function() {
     $("#dialog").dialog({
         autoOpen: false,
-    buttons: { "Cancelar": function() {cerrarD()},
-               "Asignar": function() {asignarTrab()}},
+    buttons: { "Cancelar": function() { $(this).dialog("close"); },
+               "Asignar": function() {prueba()}},
            draggable: false,
            resizable: false,
            zIndex: 500,
@@ -364,32 +325,8 @@ else{$_SESSION['proyectoEscogido'] = $_GET['idP'];
 });
   });
 
-function asignarTrab(){
-   if (window.XMLHttpRequest){
-      xmlhttp=new XMLHttpRequest();
-      }
-    else{
-      xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-      }
-    xmlhttp.onreadystatechange=function(){
-        if(xmlhttp.readyState==1){
-            //Sucede cuando se esta cargando la pagina
-            //document.getElementById("TrabAct").innerHTML = "<p><center>Cargando datos...<center><img src='../images/enviando.gif' alt='Cargando' width='150px'/></p>";//<-- Aca puede ir una precarga
-        }else if (xmlhttp.readyState==4 && xmlhttp.status==200)
-        {
-//            alert(xmlhttp.responseText);
-//            var data = xmlhttp.responseText.split ( "[BRK]" );
-            document.getElementById("TrabAct").innerHTML = xmlhttp.responseText;
-            document.getElementById('RolActividad').disabled=true;
-            document.getElementById("the_lights").style.display="none";
-    $("#the_lights").fadeTo("slow",0);
-    document.getElementById("the_lights").style.display="none";
-    $("#dialog").dialog("close");
-
-        }
-      }
-      xmlhttp.open("GET","insertarTrabActividad.php?id=" + document.getElementById("TrabajadorActividad").value,true);
-    xmlhttp.send();
+function prueba(){
+   alert("Asignado");
    }
 
 var disabledDays = [];
@@ -403,37 +340,13 @@ var disabledDays = [];
     xmlhttp.onreadystatechange=function(){
         if(xmlhttp.readyState==1){
             //Sucede cuando se esta cargando la pagina
-            document.getElementById("botonAnadir").innerHTML = "<p><center>Cargando datos...<center><img src='../images/enviando.gif' alt='Cargando' width='150px'/></p>";//<-- Aca puede ir una precarga
+            //document.getElementById("TrabAct").innerHTML = "<p><center>Cargando datos...<center><img src='../images/enviando.gif' alt='Cargando' width='150px'/></p>";//<-- Aca puede ir una precarga
         }else if (xmlhttp.readyState==4 && xmlhttp.status==200)
         {
 //            alert(xmlhttp.responseText);
-document.getElementById("botonAnadir").innerHTML =
-        "<br/><input style='margin-left:200px;' type='button' value='A&ntilde;adir' onclick=\"anadir('" +
-        "<?php if ($PrimIter == 1){
-             echo $idIAct;
-        }else{
-                if($numeroIAct < $iteracionMax && faseCero == 0){
-            if($planificado == 1){}else{
-                echo "-1";
-            }}else{
-                if($FNextVacia == 1){
-                }else{
-
-                if($planificado==1){
-                }else{
-            echo  $idIFNext;
-                }}}}
-        ?>"
-        + "')\"/>" +
-       "<input style='margin-left:20px;' id='terminar' type='button' value='Terminar' onclick=\"javascript:location.href = 'planIteracion.php'\"/>";
-            var data = xmlhttp.responseText.split ( "[BRK]" );
-             disabledDays = eval(data[0]);
-             document.getElementById("nomVacas").innerHTML = data[1];
-             document.getElementById("the_lights").style.display="block";
-            $("#the_lights").fadeTo("slow",0.2);
-                        jQuery('#datepicker').datepicker( "refresh" );
+             disabledDays = eval(xmlhttp.responseText);
             $("#dialog").dialog("open");
-
+            jQuery('#datepicker').datepicker( "refresh" );
         }
       }
       xmlhttp.open("GET","cargarVacaciones.php?id=" + document.getElementById("TrabajadorActividad").value,true);
@@ -471,34 +384,7 @@ jQuery("#dialog").ready(function() {
 //            }
 	});
 });
-function cerrarD(){
-    document.getElementById("the_lights").style.display="none";
-    $("#the_lights").fadeTo("slow",0);
-    document.getElementById("the_lights").style.display="none";
-    $("#dialog").dialog("close");
-
-}
-//$("#dialog").ready(function(){
-//  $("#the_lights").fadeTo(1,0);
-////  $("#turnon").click(function () {
-////  });
-//});
-
 </script>
-<style>
-#the_lights{
-    background-color: #000;
-    display: none;
-    height: 100%;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
-  }
-  #standout{
-    z-index: 1000;
-  }
-</style>
 </head>
 
 <body>
@@ -573,21 +459,19 @@ function cerrarD(){
                 echo "<p style='color:black'>Se dispone a planificar la primera iteraci&oacute;n <b>(" . $numeroIAct . ")</b> del proyecto</p>";
         echo "<p>Nombre de la actividad <input type='text' id='actividad'/><br/><br/>";
         echo "Asocie un rol a la actividad<br/> " .$rolesDisponibles . "<br/>";
-        echo "</p>";
-        echo "<br/><div id='TrabAct' style='display:none'></div>";
+        echo "<br/><div id='TrabAct'>Asigne uno o varios trabajadores a la actividad<br/> " .$TrabajadoresDisponibles . "</div><br/>";
+        echo "Indique una duraci&oacute;n estimada a la actividad <input type='text' id='durEstimada' size='5' maxlength='5'/><small> Horas Hombre</small><br/>";
         echo "<br><span id='predecesoras' sytle='display:none; border: solid black;'></span>";
-        echo "<div id='botonAnadir'>";
         echo "<br/><input style='margin-left:200px;' type='button' value='A&ntilde;adir' onclick=\"anadir('" . $idIAct. "')\"/>";
         echo "<input style='margin-left:20px; display:none;' id='terminar' type='button' value='Terminar' onclick=\"javascript:location.href = 'planIteracion.php'\"/>";
-        echo "</div>";
-
+        echo "</p>";
             }else{
                 if($numeroIAct < $iteracionMax && faseCero == 0){
             if($planificado == 1){ echo "<p style=\"color:red;\"> Ya ha planificado la siguiente iteraci&oacute;n, no podr&aacute;
                 planificar mas iteraciones hasta que haya finalizado la iteraci&oacute;n actual</p>" .$LActividades; }else {  ?>
             
                 <?php
-        echo "<p style='color:black'>Se dispone a planificar la iteraci&oacute;n <b>(" . $numeroINext . ")</b> de esta misma fase</p>";
+        echo "<p style='color:black'>Se dispone a planificar la iteraci&oacute;n <b>" . $numeroINext . "</b> de esta misma fase</p>";
         echo "<p>Nombre de la actividad <input type='text' id='actividad'/><br/><br/>";
         echo "Asocie un rol a la actividad<br/> " .$rolesDisponibles . "<br/>";
         echo "Asocie uno o varios trabajadores a la actividad<br/> " .$TrabajadoresDisponibles . "<br/>";
@@ -626,14 +510,11 @@ function cerrarD(){
         }//Fin casiFin
 
         ?>
-        <div id = "standout">
         <div id="dialog" title="Calendario de vacaciones">
            <center><span id="nomVacas" style="padding-bottom:10px; padding-top:5px; display:block;">Javier Garcia Tomillo</span></center>
             <div type="text" id="datepicker"></div>
         <br/><br/><center>&#191;Desea asignar este trabajador a esta actividad&#63;</center>
         </div>
-  </div>
-
         </div>
 </div>
 
@@ -647,7 +528,7 @@ function cerrarD(){
 <!-- end footer -->
 <?php $conexion->cerrarConexion(); ?>
 
+
 </form>
-    <div id='the_lights'></div>
 </body>
 </html>

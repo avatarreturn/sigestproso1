@@ -44,7 +44,19 @@ include_once('../Persistencia/conexion.php');
         $fechas  = $fechas . "]";
         $fechasVal = $fechasVal ."]";
 
-        echo $fechas;
+         $result = mysql_query("SELECT nombre, apellidos FROM Trabajador WHERE\n"
+            . "dni = \"".$dni. "\"");
+
+        $totEmp = mysql_num_rows($result);
+        if ($totEmp >0) {
+
+            while ($rowEmp = mysql_fetch_assoc($result)) {
+                $nombreVac = $rowEmp['nombre'] . " ". $rowEmp['apellidos'];
+            }
+        }
+
+
+        echo $fechas ."[BRK]". utf8_encode($nombreVac);
 
         $conexion->cerrarConexion();
 

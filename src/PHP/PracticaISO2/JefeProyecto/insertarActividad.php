@@ -84,7 +84,7 @@ include_once('../Persistencia/conexion.php');
             $predecesora = $predecesora . "</p>";
                
         }
-
+        $_SESSION['trabActividad'] = array();
         
             echo  utf8_encode($actividades ."[BRK]". $predecesora);
         $conexion->cerrarConexion();
