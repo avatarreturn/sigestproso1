@@ -27,15 +27,16 @@ if (trim($_POST['login']) != "" && trim($_POST['password']) != "") {
         if ($_SESSION['password'] == $passwordIntroducido) {
             //el usuario es valido, se trata de un trabajador
 
-
             if ($_SESSION['tipoUsuario'] == "A") {
                 //ADMINISTRADOR
+                $conexion->cerrarConexion();
                 echo'<script type="text/javascript">
                 document.location.href="Administrador/crearProyecto.php";
                 </script>';
             } else {
                 if ($_SESSION['tipoUsuario'] == "R") {
                     //RSPONSABLE PERSONAL
+                    $conexion->cerrarConexion();
                     echo'<script type="text/javascript">
                     document.location.href="ResponsablePersonal/iniResponsablePersonal.php";
                     </script>';
@@ -51,6 +52,7 @@ if (trim($_POST['login']) != "" && trim($_POST['password']) != "") {
                     $_SESSION['apellidos'] = $trabajadorExistente->getApellidos();
                     $_SESSION['fechaNac'] = $trabajadorExistente->getFechaNac();
                     $_SESSION['categoria'] = $trabajadorExistente->getCategoria();
+                    $conexion->cerrarConexion();
                     echo'<script type="text/javascript">
                     document.location.href="Comun/selecProyecto.php";
                     </script>';
@@ -58,15 +60,24 @@ if (trim($_POST['login']) != "" && trim($_POST['password']) != "") {
             }
         } else {
             //el usuario no es valido, no es un trabajador
-            echo 'Password incorrecto';
+            $conexion->cerrarConexion();
+            echo'<script type="text/javascript">
+            document.location.href="login.php?passwordIncorrecto=true";
+            </script>';
         }
     } else {
         //no hay resultados, el usuario no existe
-        echo 'Usuario no existente en la base de datos';
+        $conexion->cerrarConexion();
+        echo'<script type="text/javascript">
+            document.location.href="login.php?usuarioNoExistente=true";
+            </script>';
     }
+    $conexion->cerrarConexion();
     mysql_free_result($result);
 } else {
-    echo 'Debe especificar un usuario y password';
+    $conexion->cerrarConexion();
+    echo'<script type="text/javascript">
+            document.location.href="login.php?noPasswordNoLogin=true";
+            </script>';
 }
-$conexion->cerrarConexion();
 ?>
