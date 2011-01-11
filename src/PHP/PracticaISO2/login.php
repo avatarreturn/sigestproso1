@@ -23,13 +23,16 @@
             <br/><br/><br/><br/>
             <div id="content">
                 <div id="main">
-
-                    <h1>Entrar en la aplicaci&oacute;n</h1>
+                    <h1>Iniciar sesi&oacute;n</h1>
                     <form action="validarUsuario.php" method="POST" name="login_form">
                         <div id="email">
                             <fieldset id="user-email">
                                 <p>
                                     <label><b>Usuario</b><span><input name="login" tabindex="1" id="login" type="text" /></span></label>
+                                    <?php
+                                    if ($_GET["usuarioNoExistente"])
+                                        echo "<b><label style=\"color: red\";><font size=\"2\">Usuario no existente</font></label></b>";
+                                    ?>
                                 </p>
                             </fieldset>
                         </div>
@@ -37,11 +40,20 @@
                             <fieldset id="user-password">
                                 <p>
                                     <label><b>Contrase&ntilde;a</b><span><input name="password" tabindex="2" id="password"type="password" /></span></label>
+                                    <?php
+                                    if ($_GET["passwordIncorrecto"])
+                                        echo "<b><label style=\"color: red\";><font size=\"2\">Password incorrecto</font></label></b>";
+                                    ?>
                                 </p>
                             </fieldset>
                             <fieldset id="entrar">
                                 <img id="sign-in" name="boton_login" src="images/entrar.gif" alt="Entrar" tabindex="3" onclick="valida_envia()" />
-                                <strong id="resp"></strong>
+                                <strong id="resp">
+                                    <?php
+                                    if ($_GET["noPasswordNoLogin"])
+                                        echo "<label style=\"color: red\";><font size=\"2\">Debe especificar un Usuario y una Contrase&ntilde;a</font></label>";
+                                    ?>
+                                </strong>
                             </fieldset>
                         </div>
 
