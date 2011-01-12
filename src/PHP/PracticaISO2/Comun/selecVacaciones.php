@@ -35,6 +35,28 @@ if ($login != "T") {
 // calcular fecha fin por Inicio + duracion/8 hora diarias por hombre y porcentaje¿¿
         include_once('../Persistencia/conexion.php');
         $conexion = new conexion();
+
+
+        // numero de semanas ya cogidas para le trabajador
+        $result = mysql_query("SELECT fechaInicio, fechaFin, (TO_DAYS(fechaFin) - TO_DAYS(fechaInicio)) as dias FROM Vacaciones WHERE Trabajador_dni='".$_SESSION['dni']."'");
+
+        $totEmp = mysql_num_rows($result);
+
+        if ($totEmp >0) {
+            $varSemansaLibres = 4;
+            $varListadoVac  = "<p>Actualmente tiene cogidas las siguientes semanas:<br>";
+            while ($rowEmp = mysql_fetch_assoc($result)) {
+                $varSemansaLibres = $varSemansaLibres - (($rowEmp['dias']+1)/7);
+                 $varListadoVac =  $varListadoVac ."<tt>Desde ".$rowEmp['fechaInicio'] ." hasta ".$rowEmp['fechaFin'] ."</tt><br/>";
+            }
+            $varListadoVac =  $varListadoVac . "</p>";
+        }else{
+            $varSemansaLibres = 4;
+            $varListadoVac ="";
+        }
+
+        //---------------------------
+
         $result = mysql_query("SELECT fechaInicio, duracionEstimada, idActividad FROM Actividad WHERE\n"
                             . "fechaFin is NULL \n"
                             . "AND \n"
@@ -56,7 +78,8 @@ if ($login != "T") {
                 if (in_array($rowEmp['fechaInicio'], $fechasF1)) {
                 }else{  $fechasF1[] = $rowEmp['fechaInicio'];}
                 $fechaInicio = $rowEmp['fechaInicio'];
-                $diasHH = round($rowEmp['duracionEstimada'] / 40) * 7;
+                $fechaInicio= date("Y-m-d", strtotime("$fechaInicio - 1 days"));
+                $diasHH = ceil($rowEmp['duracionEstimada'] / 40) * 7;
 //                echo "duracion estimada en dias =" . $diasHH;
                 $fechaFin= date("Y-m-d", strtotime("$fechaInicio + $diasHH days"));
                     while ( $fechaInicio != $fechaFin) {
@@ -89,8 +112,9 @@ if ($login != "T") {
                             // sacar una fecha de inicio estimada y sumarle duracion de la actividad en cuestion
                            
                             $fechaInicioPredecesora = $rowEmp3['fechaInicio'];
-                            $diasHHPred = round($rowEmp3['duracionEstimada'] / 40) * 7;
-                            $diasHH = round($rowEmp['duracionEstimada'] / 40) * 7;
+                            $fechaInicioPredecesora= date("Y-m-d", strtotime("$fechaInicioPredecesora - 1 days"));
+                            $diasHHPred = ceil($rowEmp3['duracionEstimada'] / 40) * 7;
+                            $diasHH = ceil($rowEmp['duracionEstimada'] / 40) * 7;
                             $fechaInicio= date("Y-m-d", strtotime("$fechaInicioPredecesora + $diasHHPred days"));
                             $fechaFin = date("Y-m-d", strtotime("$fechaInicio + $diasHH days"));;
                             while ( $fechaInicio != $fechaFin) {
@@ -287,7 +311,7 @@ function validar(){
 
 
 	<h1>SIGESTPROSO</h1>
-	<p><a href="http://www.studio7designs.com"><img src= "../images/logo.jpg" alt="#" border="0" style="width: auto; height: 65px;"/></a><br/></p>
+	<p><a href="http://www.studio7designs.com"><img src= "../images/logo3.png" alt="#" border="2" style="width: 500px; height: 65px;"/></a><br/></p>
         <div id="vacaciones">
         <h2 style="text-align: center">Escoja su periodo vacacional</h2>
         <div class="centercontentleft">
@@ -295,9 +319,9 @@ function validar(){
             <br/>
             N&uacute;mero de semanas:
             <?php
-            $varSemansaLibres = 4;
+            
             if($varSemansaLibres == 0){
-                echo "No dispone de vacaciones actualmente";
+                echo "No dispone de mas semanas de vacaciones actualmente";
             }else if($varSemansaLibres == 1){
                 echo "<SELECT ID='Weeks' NAME='SemanasVacaciones' SIZE=1 onChange='javascript:alert();'>
                     <OPTION VALUE='1'>1</OPTION></SELECT>";
@@ -313,7 +337,17 @@ function validar(){
             }
 
             ?>
-            <center><input type="button" value="Confirmar" name="Confirmar" onclick="validar()"/></center>
+            
+            <?php
+            if($varSemansaLibres >0){
+                echo "<center><input type='button' value='Confirmar' name='Confirmar' onclick='validar()'/></center>";
+            }
+
+            if($varListadoVac == ""){
+
+            }else{
+                echo "<br>" .$varListadoVac;
+            }?>
             <br/><br/>
         </div>
         <div><h3>Condiciones:</h3>

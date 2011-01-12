@@ -232,6 +232,7 @@ else{$_SESSION['proyectoEscogido'] = $_GET['idP'];
 <link rel="stylesheet" type="text/css" href="../stylesheet.css" media="screen, projection, tv " />
 <script type="TEXT/JAVASCRIPT">
     var contador = -1;
+    var trabAsignado = 0;
     function anadir(x){
         var predec = "";
         for (i=0;i<=contador;i++) {
@@ -240,11 +241,13 @@ else{$_SESSION['proyectoEscogido'] = $_GET['idP'];
             }
         }
         if(document.getElementById("actividad").value==""
-            || document.getElementById("RolActividad").value== "-1"
-            || document.getElementById("durEstimada").value <= 0
-           ){
-            alert("Escoja un rol y/o escoja correctamente el nombre de la actividad y su duracion")
-        }else{
+            || document.getElementById("RolActividad").value== "-1"){
+            alert("Escoja un rol y/o escoja correctamente el nombre de la actividad")
+    }else if(document.getElementById("durEstimada").value <= 0){
+            alert("Escoja correctamente la duracion estimada de la actividad")
+    }else if( trabAsignado == 0){
+        alert("Escoja al menos 1 trabajador para la actividad")
+    }else{
          if (window.XMLHttpRequest){
       xmlhttp=new XMLHttpRequest();
       }
@@ -266,6 +269,7 @@ else{$_SESSION['proyectoEscogido'] = $_GET['idP'];
             document.getElementById("RolActividad").value="-1";
             document.getElementById("terminar").style.display="inline";
             document.getElementById("predecesoras").innerHTML= data[1];
+            trabAsignado = eval(data[2]);
             contador = contador +1 ;
         }
       }
@@ -275,6 +279,7 @@ else{$_SESSION['proyectoEscogido'] = $_GET['idP'];
     + "&duracion=" + document.getElementById("durEstimada").value
     + "&predec=" + predec
     + "&primeraI=" + x
+    + "&esPrimera=" + "<?php echo $PrimIter;?>"
         + "&rolA=" +document.getElementById("RolActividad").value,true);
     xmlhttp.send();
     }}
@@ -378,10 +383,11 @@ function asignarTrab(){
         }else if (xmlhttp.readyState==4 && xmlhttp.status==200)
         {
 //            alert(xmlhttp.responseText);
-//            var data = xmlhttp.responseText.split ( "[BRK]" );
-            document.getElementById("TrabAct").innerHTML = xmlhttp.responseText;
+            var data = xmlhttp.responseText.split ( "[BRK]" );
+            document.getElementById("TrabAct").innerHTML = data[0];
             document.getElementById('RolActividad').disabled=true;
             document.getElementById("the_lights").style.display="none";
+            trabAsignado = eval(data[1]);
     $("#the_lights").fadeTo("slow",0);
     document.getElementById("the_lights").style.display="none";
     $("#dialog").dialog("close");
@@ -572,6 +578,7 @@ function cerrarD(){
             if ($PrimIter == 1){ // esla primera iteracion del proyecto
                 echo "<p style='color:black'>Se dispone a planificar la primera iteraci&oacute;n <b>(" . $numeroIAct . ")</b> del proyecto</p>";
         echo "<p>Nombre de la actividad <input type='text' id='actividad'/><br/><br/>";
+        echo "Indique una duraci&oacute;n estimada a la actividad <input type='text' id='durEstimada' size='5' maxlength='5'/><small> Horas Hombre</small><br/><br/>";
         echo "Asocie un rol a la actividad<br/> " .$rolesDisponibles . "<br/>";
         echo "</p>";
         echo "<br/><div id='TrabAct' style='display:none'></div>";
@@ -589,13 +596,15 @@ function cerrarD(){
                 <?php
         echo "<p style='color:black'>Se dispone a planificar la iteraci&oacute;n <b>(" . $numeroINext . ")</b> de esta misma fase</p>";
         echo "<p>Nombre de la actividad <input type='text' id='actividad'/><br/><br/>";
+         echo "Indique una duraci&oacute;n estimada a la actividad <input type='text' id='durEstimada' size='5' maxlength='5'/><small> Horas Hombre</small><br/><br/>";
         echo "Asocie un rol a la actividad<br/> " .$rolesDisponibles . "<br/>";
-        echo "Asocie uno o varios trabajadores a la actividad<br/> " .$TrabajadoresDisponibles . "<br/>";
-        echo "Indique una duraci&oacute;n estimada a la actividad <input type='text' id='durEstimada' size='5' maxlength='5'/><small> Horas Hombre</small><br/>";
-        echo "<br><div id='predecesoras' sytle='display:none; border: solid black;'></div>";
+        echo "</p>";
+        echo "<br/><div id='TrabAct' style='display:none'></div>";
+        echo "<br><span id='predecesoras' sytle='display:none; border: solid black;'></span>";
+        echo "<div id='botonAnadir'>";
         echo "<br/><input style='margin-left:200px;' type='button' value='A&ntilde;adir' onclick=\"anadir('-1')\"/>";
         echo "<input style='margin-left:20px; display:none;' id='terminar' type='button' value='Terminar' onclick=\"javascript:location.href = 'planIteracion.php'\"/>";
-        echo "</p>"
+        echo "</div>";
         ?>
 
         <?php
@@ -616,13 +625,16 @@ function cerrarD(){
 
         echo "<p style='color:black'>Se dispone a planificar la primera iteraci&oacute;n <b>(1)</b> de la fase siguiente (".$faseNext.")</p>";
         echo "<p>Nombre de la actividad <input type='text' id='actividad'/><br/><br/>";
+         echo "Indique una duraci&oacute;n estimada a la actividad <input type='text' id='durEstimada' size='5' maxlength='5'/><small> Horas Hombre</small><br/><br/>";
         echo "Asocie un rol a la actividad<br/> " .$rolesDisponibles . "<br/>";
-        echo "Asocie uno o varios trabajadores a la actividad<br/> " .$TrabajadoresDisponibles . "<br/>";
-        echo "Indique una duraci&oacute;n estimada a la actividad <input type='text' id='durEstimada' size='5' maxlength='5'/><small> Horas Hombre</small><br/>";
-        echo "<br><div id='predecesoras' sytle='display:none; border: solid black;'></div>";
+        echo "</p>";
+        echo "<br/><div id='TrabAct' style='display:none'></div>";
+        echo "<br><span id='predecesoras' sytle='display:none; border: solid black;'></span>";
+        echo "<div id='botonAnadir'>";
         echo "<br/><input style='margin-left:200px;' type='button' value='A&ntilde;adir' onclick=\"anadir('" . $idIFNext. "')\"/>";
         echo "<input style='margin-left:20px; display:none;' id='terminar' type='button' value='Terminar' onclick=\"javascript:location.href = 'planIteracion.php'\"/>";
-        echo "</p>";        }}}}
+        echo "</div>";
+                }}}}
         }//Fin casiFin
 
         ?>

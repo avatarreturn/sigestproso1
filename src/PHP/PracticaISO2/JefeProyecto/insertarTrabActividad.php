@@ -35,10 +35,10 @@ include_once('../Persistencia/conexion.php');
         }else{
             $salida = $salida . "<span style='color:red'>No existen trabajadores asociados a este proyecto con el rol escogido</span><br/><br/>";
         }
-       $salida = $salida . "Indique una duraci&oacute;n estimada a la actividad <input type='text' id='durEstimada' size='5' maxlength='5'/><small> Horas Hombre</small></p>";
+       $salida = $salida . "</p>";
 
                 $conexion->cerrarConexion();
-        echo utf8_encode($salida);
+        echo utf8_encode($salida) . "[BRK]" . "1";
 
 
 ?>

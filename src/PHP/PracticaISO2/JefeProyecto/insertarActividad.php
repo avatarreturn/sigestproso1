@@ -6,7 +6,7 @@ $rol = $_GET['rolA'];
 $duracion= $_GET['duracion'];
 $primeraI = $_GET['primeraI'];
 $predec = $_GET['predec'];
-
+$esPrimera = $_GET['esPrimera'];
 
 if ($primeraI != -1){
     $IterNext = $primeraI;
@@ -14,6 +14,7 @@ if ($primeraI != -1){
 include_once('../Persistencia/conexion.php');
         $conexion = new conexion();
 
+        if($esPrimera==0 || $predec!= ""){
         //Insertamos la actividad en cuestion
          $result1= mysql_query("INSERT INTO Actividad VALUES(NULL,'"
                     . $IterNext."','"
@@ -22,8 +23,35 @@ include_once('../Persistencia/conexion.php');
                     . utf8_decode($rol) ."')");
 
      $IdGenerado = mysql_insert_id();
-         
+        }else if($esPrimera==1 && $predec== ""){
 
+            $result= mysql_query("SELECT fechaInicio FROM Proyecto WHERE idProyecto ='".$_SESSION['proyectoEscogido']."'");
+            $totEmp = mysql_num_rows($result);
+        if ($totEmp >0) {
+            while ($rowEmp = mysql_fetch_assoc($result)) {
+                $fechaInicioP= $rowEmp['fechaInicio'];
+
+            }}
+            $result1= mysql_query("INSERT INTO Actividad VALUES(NULL,'"
+                    . $IterNext."','"
+                    . utf8_decode($nombre). "','"
+                    . $duracion ."','".$fechaInicioP."',NULL,'"
+                    . utf8_decode($rol) ."')");
+
+     $IdGenerado = mysql_insert_id();
+
+
+
+        }
+
+
+        //************ VALIDAMOS FECHAS TRABAJAdoRES
+        // Insertamos trabajadores
+        for($i=0;$i<count($_SESSION['trabActividad']);$i++){
+        $result1= mysql_query("INSERT INTO TrabajadorActividad VALUES('"
+                    . $_SESSION['trabActividad'][$i]."','"
+                    . $IdGenerado ."')");
+        }
 
         // Insertamos predecesoras
         $IdAcPred = explode("[BRK]", $predec);
@@ -86,7 +114,7 @@ include_once('../Persistencia/conexion.php');
         }
         $_SESSION['trabActividad'] = array();
         
-            echo  utf8_encode($actividades ."[BRK]". $predecesora);
+            echo  utf8_encode($actividades ."[BRK]". $predecesora . "[BRK]" . "0");
         $conexion->cerrarConexion();
 
 ?>
