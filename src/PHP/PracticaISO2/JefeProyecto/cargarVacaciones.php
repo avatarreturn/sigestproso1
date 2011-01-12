@@ -56,7 +56,7 @@ include_once('../Persistencia/conexion.php');
         }
 
 
-        echo $fechas ."[BRK]". utf8_encode($nombreVac);
+        echo $fechas ."[BRK]". utf8_decode($nombreVac);
 
         $conexion->cerrarConexion();
 

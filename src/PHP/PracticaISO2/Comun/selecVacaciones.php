@@ -12,7 +12,7 @@ if ($login != "T") {
 
 <title>Vacaciones</title>
 
-<meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <meta name="description" content="studio7designs" />
 <meta name="keywords" content="#" />
 <meta name="googlebot" content="index, follow" />
@@ -280,7 +280,7 @@ function validar(){
 
 	<div align="left">
 		<ul class="BLUE">
-			<li><a href="selecProyecto.php">Selecionar proyecto</a></li>
+			<li><a href="selecProyecto.php">Seleccionar proyecto</a></li>
 			<li><a href="selecVacaciones.php">Escoger vacaciones</a></li>
 		</ul>
 	</div>

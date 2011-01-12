@@ -127,7 +127,7 @@
 
                     // si ya ai datos
                     if($idInformeActual == -1){
-                        $result = mysql_query("SELECT * FROM CatalogoTareas ORDER BY Descripcion");
+                        $result = mysql_query("SELECT * FROM CatalogoTareas ORDER BY descripcion");
 
         $totEmp = mysql_num_rows($result);
         $nTareas = $totEmp;
@@ -137,7 +137,7 @@
             $i = 0;
             while ($rowEmp = mysql_fetch_assoc($result)) {
                 $Tareas = $Tareas ."<TR>"
-                ."<TD><img src= '../images/iTarea2.png' alt='#' border='0' style='width: auto; height: 12px;'/>&nbsp;".$rowEmp['Descripcion']."</TD>"
+                ."<TD><img src= '../images/iTarea2.png' alt='#' border='0' style='width: auto; height: 12px;'/>&nbsp;".$rowEmp['descripcion']."</TD>"
                 ."<TD><input type='text' id='tarea".$i."' value='0' size='2' maxlength='2'> </TD>"
                 ."<TD><small>Horas</small></TD>"
                 ."</TR>";
@@ -147,7 +147,7 @@
         }
 
                     }else  {
-                    $result = mysql_query("SELECT t.horas as Horas, c.descripcion as Descripcion FROM TareaPersonal t, CatalogoTareas c WHERE\n"
+                    $result = mysql_query("SELECT t.horas as Horas, c.descripcion as descripcion FROM TareaPersonal t, CatalogoTareas c WHERE\n"
     . " t.InformeTareas_idInformeTareas = '".$idInformeActual."' \n"
     . "AND\n"
     . "t.CatalogoTareas_idTareaCatalogo = c.idTareaCatalogo\n"
@@ -161,7 +161,7 @@
             $i = 0;
             while ($rowEmp = mysql_fetch_assoc($result)) {
                 $Tareas = $Tareas ."<TR>"
-                ."<TD><img src= '../images/iTarea2.png' alt='#' border='0' style='width: auto; height: 12px;'/>&nbsp;".$rowEmp['Descripcion']."</TD>"
+                ."<TD><img src= '../images/iTarea2.png' alt='#' border='0' style='width: auto; height: 12px;'/>&nbsp;".$rowEmp['descripcion']."</TD>"
                 ."<TD><input type='text' id='tarea".$i."' value='".$rowEmp['Horas']."' size='2' maxlength='2'> </TD>"
                 ."<TD><small>Horas</small></TD>"
                 ."</TR>";
@@ -204,7 +204,7 @@
 
     <title>Formulario de tareas</title>
 
-<meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <meta name="description" content="studio7designs" />
 <meta name="keywords" content="#" />
 <meta name="googlebot" content="index, follow" />
@@ -373,9 +373,9 @@ function cambio(x){
 	<h1>SIGESTPROSO</h1>
 <p><br /></p>
 
-	<p><a href="#"><?php echo utf8_encode($nombreP) ?></a> - <?php echo utf8_encode($descripcionP) ?></p>
+	<p><a href="#"><?php echo utf8_decode($nombreP) ?></a> - <?php echo utf8_decode($descripcionP) ?></p>
         <div id="selProyecto">
-            <h2 style="text-align: center">Actividad <i style="color:blue"><?php echo utf8_encode($nombreA) ?></i></h2>
+            <h2 style="text-align: center">Actividad <i style="color:blue"><?php echo utf8_decode($nombreA) ?></i></h2>
         <div id="divTareas" class="centercontentleft" style="width:auto;">
             <div id="DTareas">
 
@@ -387,7 +387,7 @@ function cambio(x){
                     if($estadoInf== "" || $cancelado==1 || $pendiente==1){
                       echo "<p>Su m&aacute;ximo de horas esta semana para esta actividad es de <b>". $maxHoras." Horas</b> </p>" ;
                     }
-                echo utf8_encode($Tareas);
+                echo utf8_decode($Tareas);
                 ?>
                 <?php if($estadoInf== "" || $cancelado==1 || $pendiente==1){?>
             <span id="enviando" >
@@ -400,15 +400,15 @@ function cambio(x){
                 <table style="padding-left:10px;">
                     <tr>
                     <td>Nombre:</td>
-                    <td><input type="text" id="nomArt" value="<?php echo utf8_encode($nomArtefacto) ?>" size="75" /></td>
+                    <td><input type="text" id="nomArt" value="<?php echo utf8_decode($nomArtefacto) ?>" size="75" /></td>
                     </tr>
                     <tr>
                     <td>URL:</td>
-                    <td><input type="text" id="urlArt" size="75" value="<?php echo utf8_encode($desArtefacto) ?>" /></td>
+                    <td><input type="text" id="urlArt" size="75" value="<?php echo utf8_decode($desArtefacto) ?>" /></td>
                     </tr>
                 </table>
 
-                <p>Comentarios: <br> <textarea cols="70" id="commArt" rows="8"><?php echo utf8_encode($commArtefacto) ?></textarea></p>
+                <p>Comentarios: <br> <textarea cols="70" id="commArt" rows="8"><?php echo utf8_decode($commArtefacto) ?></textarea></p>
                 <span id="editando" >
             <center><input type="button" value="Editar" name="Editar" onclick="editar()"/></center>
             </span>

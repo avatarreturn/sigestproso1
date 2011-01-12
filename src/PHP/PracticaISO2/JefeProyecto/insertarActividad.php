@@ -18,9 +18,9 @@ include_once('../Persistencia/conexion.php');
         //Insertamos la actividad en cuestion
          $result1= mysql_query("INSERT INTO Actividad VALUES(NULL,'"
                     . $IterNext."','"
-                    . utf8_decode($nombre). "','"
+                    . utf8_encode($nombre). "','"
                     . $duracion ."',NULL,NULL,'"
-                    . utf8_decode($rol) ."')");
+                    . utf8_encode($rol) ."')");
 
      $IdGenerado = mysql_insert_id();
         }else if($esPrimera==1 && $predec== ""){
@@ -34,9 +34,9 @@ include_once('../Persistencia/conexion.php');
             }}
             $result1= mysql_query("INSERT INTO Actividad VALUES(NULL,'"
                     . $IterNext."','"
-                    . utf8_decode($nombre). "','"
+                    . utf8_encode($nombre). "','"
                     . $duracion ."','".$fechaInicioP."',NULL,'"
-                    . utf8_decode($rol) ."')");
+                    . utf8_encode($rol) ."')");
 
      $IdGenerado = mysql_insert_id();
 
@@ -114,7 +114,7 @@ include_once('../Persistencia/conexion.php');
         }
         $_SESSION['trabActividad'] = array();
         
-            echo  utf8_encode($actividades ."[BRK]". $predecesora . "[BRK]" . "0");
+            echo  utf8_decode($actividades ."[BRK]". $predecesora . "[BRK]" . "0");
         $conexion->cerrarConexion();
 
 ?>

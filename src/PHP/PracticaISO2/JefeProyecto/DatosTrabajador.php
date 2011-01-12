@@ -49,7 +49,7 @@ include_once('../Persistencia/conexion.php');
         
         
         $rol = $rol ."<br/><center><input type='button' value='A&ntilde;adir' onclick=\"Anadir(".$porc.")\"></center>";
-        echo utf8_encode($rol);
+        echo utf8_decode($rol);
         $conexion->cerrarConexion();
 
 ?>

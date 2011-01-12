@@ -33,7 +33,7 @@ include_once('../Persistencia/conexion.php');
        $salida = $salida . "</p>";
 
                 $conexion->cerrarConexion();
-        echo utf8_encode($salida);
+        echo utf8_decode($salida);
 
 
 

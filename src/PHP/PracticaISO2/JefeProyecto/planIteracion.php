@@ -221,7 +221,7 @@ else{$_SESSION['proyectoEscogido'] = $_GET['idP'];
 
 <head>
 
-<title><?php echo $nombreP ?></title>
+    <title><?php echo utf8_decode($nombreP) ?></title>
 
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
@@ -559,10 +559,10 @@ function cerrarD(){
 	<h1>SIGESTPROSO</h1>
 <p><br /></p>
 
-	<p><a href="#"><?php echo $nombreP ?></a> - <?php echo $descripcionP ?></p><br/>
+	<p><a href="#"><?php echo utf8_decode($nombreP) ?></a> - <?php echo utf8_decode($descripcionP) ?></p><br/>
         <div id="personalDentro" class="centercontentleft" style="width:auto; height:auto; font-size: 15px; float: right">
             <b>Fase actual:</b>
-            &nbsp; <i><?php echo $nombreFAct?></i>
+            &nbsp; <i><?php echo utf8_decode($nombreFAct)?></i>
             <br/>&nbsp;&nbsp;<small> Duraci&oacute;n estimada (<?php echo $festIFAct ."&nbsp;&nbsp;al&nbsp;&nbsp;". $festFFAct?>)</small><br/>
             <span id="listadoPer" style="display:inline"><br/><b>Iteracion actual:</b> <?php 
             if($faseCero == 1){
@@ -579,7 +579,7 @@ function cerrarD(){
                 echo "<p style='color:black'>Se dispone a planificar la primera iteraci&oacute;n <b>(" . $numeroIAct . ")</b> del proyecto</p>";
         echo "<p>Nombre de la actividad <input type='text' id='actividad'/><br/><br/>";
         echo "Indique una duraci&oacute;n estimada a la actividad <input type='text' id='durEstimada' size='5' maxlength='5'/><small> Horas Hombre</small><br/><br/>";
-        echo "Asocie un rol a la actividad<br/> " .$rolesDisponibles . "<br/>";
+        echo "Asocie un rol a la actividad<br/> " .utf8_decode($rolesDisponibles) . "<br/>";
         echo "</p>";
         echo "<br/><div id='TrabAct' style='display:none'></div>";
         echo "<br><span id='predecesoras' sytle='display:none; border: solid black;'></span>";
@@ -591,13 +591,13 @@ function cerrarD(){
             }else{
                 if($numeroIAct < $iteracionMax && faseCero == 0){
             if($planificado == 1){ echo "<p style=\"color:red;\"> Ya ha planificado la siguiente iteraci&oacute;n, no podr&aacute;
-                planificar mas iteraciones hasta que haya finalizado la iteraci&oacute;n actual</p>" .$LActividades; }else {  ?>
+                planificar mas iteraciones hasta que haya finalizado la iteraci&oacute;n actual</p>" .utf8_decode($LActividades); }else {  ?>
             
                 <?php
         echo "<p style='color:black'>Se dispone a planificar la iteraci&oacute;n <b>(" . $numeroINext . ")</b> de esta misma fase</p>";
         echo "<p>Nombre de la actividad <input type='text' id='actividad'/><br/><br/>";
          echo "Indique una duraci&oacute;n estimada a la actividad <input type='text' id='durEstimada' size='5' maxlength='5'/><small> Horas Hombre</small><br/><br/>";
-        echo "Asocie un rol a la actividad<br/> " .$rolesDisponibles . "<br/>";
+        echo "Asocie un rol a la actividad<br/> " .utf8_decode($rolesDisponibles) . "<br/>";
         echo "</p>";
         echo "<br/><div id='TrabAct' style='display:none'></div>";
         echo "<br><span id='predecesoras' sytle='display:none; border: solid black;'></span>";
@@ -610,9 +610,9 @@ function cerrarD(){
         <?php
                 }}else{
                 if($FNextVacia == 1){// si cambiamos de fase Y no ai iteraciones creadas
-                    echo "<p>La siguiente iteraci&oacute;n pertenece a la fase siguiente <b>(".$faseNext.")</b></p>"
+                    echo "<p>La siguiente iteraci&oacute;n pertenece a la fase siguiente <b>(".utf8_decode($faseNext).")</b></p>"
                         . "<p style='color:red'>A&uacute;n no ha escogido el n&uacute;mero de iteraciones del que constar&aacute; la fase siguiente</p>"
-                        . "<p>Especifique el n&uacute;mero de iteraciones de la fase <b>".$faseNext."</b>"
+                        . "<p>Especifique el n&uacute;mero de iteraciones de la fase <b>".utf8_decode($faseNext)."</b>"
                         . "  <input type='text' id='NIterFNext' size='2' maxlength='2'/>"
                         . "<br/><input type='button' value='Confirmar' onclick='insIterFNext()'/>"
                         . "</p>";
@@ -623,10 +623,10 @@ function cerrarD(){
                     . " planificar mas iteraciones hasta que haya finalizado la iteraci&oacute;n actual</p>" .$LActividades;
                 }else{
 
-        echo "<p style='color:black'>Se dispone a planificar la primera iteraci&oacute;n <b>(1)</b> de la fase siguiente (".$faseNext.")</p>";
+        echo "<p style='color:black'>Se dispone a planificar la primera iteraci&oacute;n <b>(1)</b> de la fase siguiente (".utf8_decode($faseNext).")</p>";
         echo "<p>Nombre de la actividad <input type='text' id='actividad'/><br/><br/>";
          echo "Indique una duraci&oacute;n estimada a la actividad <input type='text' id='durEstimada' size='5' maxlength='5'/><small> Horas Hombre</small><br/><br/>";
-        echo "Asocie un rol a la actividad<br/> " .$rolesDisponibles . "<br/>";
+        echo "Asocie un rol a la actividad<br/> " .utf8_decode($rolesDisponibles) . "<br/>";
         echo "</p>";
         echo "<br/><div id='TrabAct' style='display:none'></div>";
         echo "<br><span id='predecesoras' sytle='display:none; border: solid black;'></span>";

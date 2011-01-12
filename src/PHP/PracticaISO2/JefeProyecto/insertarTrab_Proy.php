@@ -61,7 +61,7 @@ include_once('../Persistencia/conexion.php');
         while ($rowEmp3 = mysql_fetch_assoc($result3)) {
                $personal = $personal ."[BRK]". $rowEmp3['nombre']." ".$rowEmp3['apellidos']." (".$nombreRol . ")";
             }
-            echo  utf8_encode($personal);
+            echo  utf8_decode($personal);
         $conexion->cerrarConexion();
 
 ?>

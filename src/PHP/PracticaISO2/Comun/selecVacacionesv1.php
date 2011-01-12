@@ -207,7 +207,7 @@ function validar(){
 
 	<div align="left">
 		<ul class="BLUE">
-			<li><a href="selecProyecto.php">Selecionar proyecto</a></li>
+			<li><a href="selecProyecto.php">Seleccionar proyecto</a></li>e
 			<li><a href="selecVacaciones.php">Escoger vacaciones</a></li>
 		</ul>
 	</div>

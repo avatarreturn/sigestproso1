@@ -52,7 +52,7 @@ if ($login != "T") {
 
                         if ($totEmp5 >0) {
                         for ($i = 1; $i <= $totEmp5; $i++) {
-                        $result6 = mysql_query("DELETE FROM trabajadorproyecto WHERE Proyecto_idProyecto = \"".$rowEmp['idProyecto']."\"");
+                        $result6 = mysql_query("DELETE FROM TrabajadorProyecto WHERE Proyecto_idProyecto = \"".$rowEmp['idProyecto']."\"");
                         }
                         }
                 }
@@ -76,7 +76,7 @@ if ($login != "T") {
                     . "style='width: auto; height: 12px;'/>&nbsp;&nbsp;".$rowEmp['nombre']."</a> - ".$rowEmp['descripcion']."<br/>"
                     . "<div id=\"oculto". $cont. "\" style=\"display:none\">";
 
-                    $sql = "SELECT nombre, idActividad FROM actividad WHERE\n"
+                    $sql = "SELECT nombre, idActividad FROM Actividad WHERE\n"
                     . "fechaFin is NULL\n"
                     . "AND\n"
                     . "fechaInicio is NOT NULL\n"
@@ -156,7 +156,7 @@ function ocultarR(x){
 
 	<div align="left">
 		<ul class="BLUE">
-			<li><a href="selecProyecto.php">Selecionar proyecto</a></li>
+			<li><a href="selecProyecto.php">Seleccionar proyecto</a></li>
 			<li><a href="selecVacaciones.php">Escoger vacaciones</a></li>
 		</ul>
 	</div>
@@ -181,16 +181,16 @@ function ocultarR(x){
 
 
 	<h1>SIGESTPROSO</h1>
-	<p><a href="#"><img src= "../images/logo.jpg" alt="#" border="0" style="width: auto; height: 65px;"/></a><br/></p>
+	<br/><br/><br/>
         <div id="selProyecto">
         <h2 style="text-align: center">Seleccione el proyecto sobre el que desea trabajar</h2>
         <div class="centercontentleft" style="width:auto;">
             <?php
             if($jefeProy == ""){}else{
-            echo "<span>Como Jefe de Proyecto:<br/>" .$jefeProy . "</span><br/>";
+            echo utf8_decode("<span>Como Jefe de Proyecto:<br/>" .$jefeProy . "</span><br/>");
             }
             if($desarrProy == ""){}else{
-            echo "<span>Como Desarrollador:<br/>" .$desarrProy . "</span>";
+            echo utf8_decode("<span>Como Desarrollador:<br/>" .$desarrProy . "</span>");
             }
             ?>
             <br/><br/>

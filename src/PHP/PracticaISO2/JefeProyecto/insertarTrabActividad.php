@@ -38,7 +38,7 @@ include_once('../Persistencia/conexion.php');
        $salida = $salida . "</p>";
 
                 $conexion->cerrarConexion();
-        echo utf8_encode($salida) . "[BRK]" . "1";
+        echo utf8_decode($salida) . "[BRK]" . "1";
 
 
 ?>

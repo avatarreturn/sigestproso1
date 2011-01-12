@@ -249,7 +249,7 @@ function Anadir2(){
 	<h1>SIGESTPROSO</h1>
 <p><br /></p>
 
-	<p><a href="#"><?php echo $nombreP ?></a> - <?php echo $descripcionP ?></p><br/>
+	<p><a href="#"><?php echo utf8_decode($nombreP) ?></a> - <?php echo utf8_decode($descripcionP) ?></p><br/>
         
         <div id="Fechas" class="centercontentleft" style="width:auto; height:auto;">
             <div id="Finicio">

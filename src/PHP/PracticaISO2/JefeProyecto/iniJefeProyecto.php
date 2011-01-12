@@ -23,7 +23,7 @@
 
 <head>
 
-<title><?php echo $nombreP ?></title>
+<title><?php echo utf8_decode($nombreP) ?></title>
 
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />  
 
@@ -140,10 +140,10 @@
 	<h1>SIGESTPROSO</h1>
 <p><br /></p>
 
-	<p><a href="#"><?php echo $nombreP ?></a> - <?php echo $descripcionP ?></p><br/>
+	<p><a href="#"><?php echo utf8_decode($nombreP) ?></a> - <?php echo utf8_decode($descripcionP) ?></p><br/>
         <div id="personalDentro" class="centercontentleft" style="width:300px; height:auto; float:right">
             <b>Jefe de proyecto:</b><br/>
-            &nbsp;&nbsp; <i><?php echo $_SESSION['nombre'] ." ". $_SESSION['apellidos']?></i><br/>
+            &nbsp;&nbsp; <i><?php echo utf8_decode($_SESSION['nombre'] ." ". $_SESSION['apellidos'])?></i><br/>
             <span id="listadoPer" style="display:none"><b>Trabajadores asignados:</b></span>
             <span ><br/><br/><small>*Si durante el proceso de definici&oacute;n del proyecto, introduce alg&uacute;n dato erroneo, cierre sesi&oacute;n y vuelva a empezar.</small></span>
             <br/>
@@ -188,7 +188,7 @@
         }
         $personal = $personal ."</select>";
 
-        echo $personal;
+        echo utf8_decode($personal);
         ?>
             </div>
         <div id="datosP"></div>
