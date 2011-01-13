@@ -41,7 +41,7 @@ if ($login != "A") {
                     return 0;
                 }
 
-                if (confirm("Se crear\xFA el nuevo proyecto.")){
+                if (confirm("Se crear\xE1 el nuevo proyecto.")){
                     document.nuevo_proyecto.submit();
                 }
 
@@ -76,7 +76,7 @@ if ($login != "A") {
                         <li><a href="cargarDatos.php">Configurar sistema</a></li>
                     </ul>
                 </div>
-   
+
                 <p><img src= "../images/Logo2.jpg" alt="#" border="0" style="width: 180px; height: auto;"/></p>
                 <img style="padding-top:2px; margin-left:-12px; margin-bottom:-4px;" src="../images/specs_bottom.jpg" alt="" />
 
@@ -103,7 +103,19 @@ if ($login != "A") {
                                 <label for="nombre">Nombre del Proyecto:</label>
                             </div>
                             <div class="campo">
-                                <input name="nombre" type="text" class="validate" />
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <input name="nombre" type="text" class="validate" />
+                                        </td>
+                                        <td><?php
+                                                if ($_GET["proyectoNoCreado"])
+                                                    echo "<label style=\"color: red\";><font size=\"2\">El nombre utilizado para el proyecto ya existe, introduzca uno diferente</font></label>";
+                                                ?>
+                                        </td>
+                                    </tr>
+                                </table>
+
                             </div>
                         </div>
                         <div class="filaFormulario">
@@ -116,13 +128,20 @@ if ($login != "A") {
                                 include_once('../Persistencia/conexion.php');
                                 $conexion = new conexion();
                                 $result = mysql_query('SELECT nombre, apellidos, dni FROM Trabajador WHERE (categoria like "1") and dni not in (SELECT jefeProyecto FROM Proyecto WHERE fechaFin is NULL)');
-                                //$result = mysql_query("select nombre, apellidos, dni from trabajador");
-                                echo '<SELECT NAME="jefeProyecto" size="1">';
-                                echo '<option>Seleccione un Jefe de Proyecto</option>';
-                                while ($rowEmp = mysql_fetch_assoc($result)) {
-                                    echo '<option value="' . $rowEmp['dni'] . '">' . $rowEmp['nombre'] . ' ' . $rowEmp['apellidos'] . '</option>';
+                                $totalResultados = mysql_num_rows($result);
+                                if ($totalResultados > 0) {
+                                    //hay algún resultado
+                                    echo '<SELECT NAME="jefeProyecto" size="1">';
+                                    echo '<option>Seleccione un Jefe de Proyecto</option>';
+                                    while ($rowEmp = mysql_fetch_assoc($result)) {
+                                        echo '<option value="' . $rowEmp['dni'] . '">' . $rowEmp['nombre'] . ' ' . $rowEmp['apellidos'] . '</option>';
+                                    }
+                                    echo '</SELECT>';
+                                } else {
+                                    //no hay jefes de proyecto libres
+                                    echo "<label style=\"color: red\";><font size=\"2\">No existen Jefes de Proyecto libres en este momento</font></label>";
                                 }
-                                echo '</SELECT>';
+
                                 $conexion->cerrarConexion();
                                 ?>
                             </div>
@@ -140,8 +159,8 @@ if ($login != "A") {
                             <input name="crear" value="Crear" type="button" class="submit" onclick="valida_envia()"/>
                             <input name="Limpiar" value="Limpiar" type="reset" class="submit"/>
                             <?php
-                                if ($_GET["creadoProyecto"])
-                                    echo "<label style=\"color: red\";><font size=\"2\">El proyecto se ha creado con &eacute;xito</font></label>";
+                                if ($_GET["proyectoCreado"])
+                                    echo "<label style=\"color: green\";><font size=\"2\">El proyecto se ha creado con &eacute;xito</font></label>";
                             ?>
                         </div>
                     </form>
