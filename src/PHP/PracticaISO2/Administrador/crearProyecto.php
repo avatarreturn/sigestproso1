@@ -10,7 +10,7 @@ if ($login != "A") {
 
     <head>
 
-        <title>Nautica08</title>
+        <title>Crear Proyecto</title>
 
         <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
         <meta name="description" content="studio7designs" />
@@ -25,26 +25,23 @@ if ($login != "A") {
         <link rel="stylesheet" type="text/css" href="../stylesheet.css" media="screen, projection, tv " />
 
         <script language="javascript" type="text/javascript">
+            //valida los datos introducidos por el usuario
             function valida_envia(){
-
                 //comprobamos que no esta vacio el campo nombre
                 if (document.nuevo_proyecto.nombre.value.length==0){
                     alert("Tiene que escribir un nombre para el proyecto.")
                     document.nuevo_proyecto.nombre.focus()
                     return 0;
                 }
-
                 //comprobamos que no esta vacio el campo de jefe de proyecto
                 if (document.nuevo_proyecto.jefeProyecto.value=="Seleccione un Jefe de Proyecto"){
                     alert("Tiene que seleccionar un Jefe de Proyecto.")
                     document.nuevo_proyecto.jefeProyecto.focus()
                     return 0;
                 }
-
                 if (confirm("Se crear\xE1 el nuevo proyecto.")){
                     document.nuevo_proyecto.submit();
                 }
-
             }
         </script>
 
@@ -109,9 +106,9 @@ if ($login != "A") {
                                             <input name="nombre" type="text" class="validate" />
                                         </td>
                                         <td><?php
-                                                if ($_GET["proyectoNoCreado"])
-                                                    echo "<label style=\"color: red\";><font size=\"2\">El nombre utilizado para el proyecto ya existe, introduzca uno diferente</font></label>";
-                                                ?>
+if ($_GET["proyectoNoCreado"])
+    echo "<label style=\"color: red\";><font size=\"2\">El nombre utilizado para el proyecto ya existe, introduzca uno diferente</font></label>";
+?>
                                         </td>
                                     </tr>
                                 </table>

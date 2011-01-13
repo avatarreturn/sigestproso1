@@ -10,7 +10,7 @@ if ($login != "A") {
 
     <head>
 
-        <title>Nautica08</title>
+        <title>Configurar sistema</title>
 
         <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
         <meta name="description" content="studio7designs" />
