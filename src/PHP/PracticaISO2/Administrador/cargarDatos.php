@@ -26,30 +26,6 @@ if ($login != "A") {
         <link rel="stylesheet" type="text/css" href="../stylesheet.css" media="screen, projection, tv " />
 
         <script type="text/javascript" language="javascript">
-
-            //            //crea el select de categorias
-            //            function pintaOptions(maximo){
-            //                //limite del select
-            //                limiteCategoria=maximo;
-            //                var select = document.getElementById("selectCategorias");
-            //                var option = document.createElement('option');
-            //                for (var t, i = 1; i <= limiteCategoria; ++i) {
-            //                    t = document.createTextNode(i);
-            //                    o2 = option.cloneNode(true);
-            //                    o2.setAttribute("value", i);
-            //                    o2.appendChild(t);
-            //                    select.appendChild(o2);
-            //                }
-            //                //document.getElementById("divParaSelect").appendChild(select);
-            //            }
-            //
-            //            //repinta el select de categorias al ser pulsado el boton "Actualizar"
-            //            function modificaMaxCategoria(maximo){
-            //                document.getElementById("selectCategorias").innerHTML="";
-            //                pintaOptions(maximo);
-            //            }
-
-
             //confirma los datos de la nueva relacion antes de almacenarlos
             function valida_envia(){
                 //comprobamos que no esta vacio el campo rol
@@ -68,6 +44,8 @@ if ($login != "A") {
                 miInteger = parseInt(document.carga_datos2.numMaxCategoria.value);
                 if(!isNaN(miInteger)){
                     document.carga_datos2.submit();
+                }else{
+                    alert("Introduzca un número");
                 }
             }
 
@@ -100,7 +78,7 @@ if ($login != "A") {
                 <div align="left">
                     <ul class="BLUE">
                         <li><a href="crearProyecto.php">Crear proyecto</a></li>
-                        <li><a href="cargarDatos.php">Cargar datos</a></li>
+                        <li><a href="cargarDatos.php">Configurar sistema</a></li>
                     </ul>
                 </div>
 
@@ -119,7 +97,7 @@ if ($login != "A") {
                 <div id="formulario">
                     <form id="carga_datos2" action="datosCargados2.php" method="post" name="carga_datos2">
                         <div class="tituloFormulario">
-                            <h2>Configurar proyecto</h2>
+                            <h2>Configurar sistema</h2>
                         </div>
                         <div class="infoFormulario">
 		A trav&eacute;s de esta pantalla el administrador podr&aacute; cargar los datos iniciales del proyecto.

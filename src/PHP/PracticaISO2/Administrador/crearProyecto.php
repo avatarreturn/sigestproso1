@@ -73,7 +73,7 @@ if ($login != "A") {
                 <div align="left">
                     <ul class="BLUE">
                         <li><a href="crearProyecto.php">Crear proyecto</a></li>
-                        <li><a href="cargarDatos.php">Cargar datos</a></li>
+                        <li><a href="cargarDatos.php">Configurar sistema</a></li>
                     </ul>
                 </div>
    
@@ -92,7 +92,7 @@ if ($login != "A") {
                 <div id="formulario">
                     <form  action="proyectoCreado.php" method="POST" name="nuevo_proyecto">
                         <div class="tituloFormulario">
-                            <h2>Alta Proyecto</h2>
+                            <h2>Crear Proyecto</h2>
                         </div>
                         <div class="infoFormulario">
 		A trav&eacute;s de esta pantalla el administrador podr&aacute; crear un nuevo proyecto, asignar el correspondiente responsable y marcar los objetivos del mismo.
