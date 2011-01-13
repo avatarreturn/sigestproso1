@@ -1,4 +1,11 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<?php
+session_start();
+$login = $_SESSION['tipoUsuario'];
+if ($login != "R") {
+    header("location: ../index.php");
+}
+?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 
     <head>
@@ -18,289 +25,162 @@
 
 
         <link rel="stylesheet" type="text/css" href="../stylesheet.css" media="screen, projection, tv " />
+        <link rel="stylesheet" type="text/css" href="estiloTablas.css"/>
+
+        <?php
+        include_once ('../Persistencia/conexion.php');
+        $conexion = new conexion();
+        //Calculamos el lunes de la semana actual
+        $dSemana = date(N);
+        $semana = date("Y-m-d");
+        if ($dSemana != 1) {
+            while ($dSemana != 1) {
+                $semana = date("Y-m-d", strtotime(date("Y-m-d", strtotime($semana)) . " -1 day"));
+                $dSemana = date('N', strtotime($semana));
+            }
+        }
+        //fin calculo del lunes
+        //
+        //Esta es la consulta que tengo que poner
+        //SELECT t.dni, t.nombre, t.apellidos, i.idInformeTareas, ta.idTareaPersonal, ta.horas, c.descripcion FROM trabajador t, informetareas i, tareapersonal ta, catalogotareas c where (i.semana='2011-01-10') AND (t.dni=i.Trabajador_dni) AND (ta.CatalogoTareas_idTareaCatalogo=c.idTareaCatalogo) ORDER BY t.nombre
+        $result = mysql_query('SELECT t.dni, t.nombre, t.apellidos, i.idInformeTareas, ta.idTareaPersonal, ta.horas, c.descripcion FROM trabajador t, informetareas i, tareapersonal ta, catalogotareas c where (i.semana=\'2011-01-10\') AND (t.dni=i.Trabajador_dni) AND (ta.CatalogoTareas_idTareaCatalogo=c.idTareaCatalogo) AND (i.idInformeTareas=ta.InformeTareas_idInformeTareas) ORDER BY t.nombre;');
+        //Probar a meter 2 tareas del mismo tipo para cada trabajador
+        $totTraProy = mysql_num_rows($result);
+        if ($totTraProy > 0) {
+            $trabajador = "";
+            $dniAnterior = "";
+            $cont = 1;
+            $cont2 = 1;
+            $contD[] = 0;   //Array que almacena el numero de veces que aparece cada DNI
+            while ($rowEmp = mysql_fetch_assoc($result)) {
+                $tabla[$cont2] = $rowEmp;
+                if ($rowEmp['dni'] != $dniAnterior) {
+                    array_push($contD, 1);
+                    $dniAnterior = $rowEmp['dni'];
+                } else {
+                    $contD[count($contD) - 1]++;
+                }
+                $cont2++;
+            }
+            for ($i = 1; $i < count($contD); $i++) {
+                $trabajador = $trabajador . "<a href='#' onclick=\"ocultarR('oculto" . $i . "')\">"
+                        . "<img src= '../images/iJefeProyecto.gif' alt='#' border='0' style='width: auto; height: 12px;'/>"
+                        . "&nbsp;&nbsp;" . utf8_encode($tabla[$cont]['nombre']) . " " . utf8_encode($tabla[$cont]['apellidos']) . "     " . $tabla[$cont]['dni'] . "</a>"
+                        . "<br/><div id=\"oculto" . $i . "\" style=\"display:none\">";
+                for ($j = $contD[$i]; $j >= 1; $j--) {
+                    $trabajador = $trabajador . "<a href='#'>&nbsp;&nbsp;&nbsp;&nbsp;<img src='../images/iTarea.png' alt='Actividad' border='0' style='width: auto; height: 12px;'>"
+                            . "</img>&nbsp;&nbsp;&nbsp;&nbsp;<label>" . $tabla[$cont]['descripcion'] . " </label></td><td><label>&nbsp;&nbsp;&nbsp;&nbsp;" . $tabla[$cont]['horas'] . " horas</label></a><br/>";
+                    $cont++;
+                }
+                $trabajador = $trabajador . "</div>";
+            }
+        }
+
+        $conexion->cerrarConexion();
+        ?>
+
+        <script>
+            function ocultarR(x){
+
+                if(document.getElementById(x).style.display=="none"){
+                    document.getElementById(x).style.display="inline";
+                }else{
+                    document.getElementById(x).style.display="none"
+                }
+
+            }
+        </script>
 
     </head>
 
     <body>
-        <!--   script para validar los campos     -->
-<!--        <script language="javascript" type="text/javascript">
-            function valida_envia(){
-
-
-                //           comprobamos que no esta vacio el campo de nombre de usuario
-                if (document.nuevo_usuario.nick.value.length==0){
-                    alert("Tiene que escribir un nombre de usuario")
-                    document.nuevo_usuario.nick.focus()
-                    return 0;
-                }
-
-                //           comprobamos que no esta vacio el campo contraseña
-                if (document.nuevo_usuario.password.value.length==0){
-                    alert("Tiene que escribir una contraseña")
-                    document.nuevo_usuario.password.focus()
-                    return 0;
-                }
-
-                //           comprobamos que no esta vacio el campo repetir contraseña
-                if (document.nuevo_usuario.repassword.value.length==0){
-                    alert("Introduzca la misma contrasña en ambos campos")
-                    document.nuevo_usuario.repassword.focus()
-                    return 0;
-                }
-
-                //           comprobamos que las dos contraseñas introducidas son iguales
-                if (document.nuevo_usuario.repassword.value!=document.nuevo_usuario.password.value){
-                    alert("Introduzca la misma contrasña en ambos campos")
-                    document.nuevo_usuario.password.value=""
-                    document.nuevo_usuario.repassword.value=""
-                    document.nuevo_usuario.password.focus()
-                    return 0;
-                }
-
-                //           comprobamos que se ha escogido una categoria
-                if (document.nuevo_usuario.categoria.value==""){
-                    alert("Debe escoger una categoria para este usuario")
-                    document.nuevo_usuario.categoria.focus()
-                    return 0;
-                }
-
-                document.nuevo_usuario.submit();
-
-            }
-        </script>-->
-
-        <!-- start top menu and blog title-->
 
         <div id="blogtitle">
             <div id="small">Responsable de Personal</div>
-            <div id="small2"><a href="logout.php">Cerrar sesi&oacute;n</a></div>
+            <div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
         </div>
-
-        <div id="topmenu">
-
-
-            <ul class="BLUE">
-                <li><a href="iniResponsablePersonal.php" title="Crear trabajadores"><span>Crear trabajadores</span></a></li>
-                <li><a href="informesResponsablePersonal.php" title="Obtener informes"><span>Obtener informes</span></a></li>
-                <li><a href="seguimientoPersonal.php" title="Seguimiento Personal"><span>Seguimiento Personal</span></a></li>
-            </ul>
-        </div>
-
-        <!-- end top menu and blog title-->
-
-        <!-- start content -->
-
-        <div id="centercontent">
+        <div id="page">
+            <div id="topmenu">
 
 
-            <h1>SIGESTPROSO </h1>
-            <p><br /></p>
-            <p>
-            <div id="formulario">
-                <form action="" method="POST" name="obtenerInformes">
-                    <div class="tituloFormulario">
-                        <h2>Informes de los proyectos</h2>
-                    </div>
-                    <div class="infoFormulario">
+                <ul class="BLUE">
+                    <li><a href="iniResponsablePersonal.php" title="Crear trabajadores"><span>Ultima semana</span></a></li>
+                    <li><a href="informesResponsablePersonal.php" title="Obtener informes"><span>Elegir intervalo</span></a></li>
+                </ul>
+            </div>
+
+            <!-- end top menu and blog title-->
+
+            <div id="leftcontent">
+                <img style="margin-top:-9px; margin-left:-12px;" src="../images/top2.jpg" alt="" />
+
+                <h3 align="left">Men&uacute;</h3>
+
+
+                <div align="left">
+                    <ul class="BLUE">
+                        <li><a href="iniResponsablePersonal.php">Crear trabajadores</a></li>
+                        <li><a href="seguimientoPersonal.php">Seguimiento Personal</a></li>
+                        <li><a href="informesResponsablePersonal.php">Informes</a></li>
+                    </ul>
+                </div>
+
+
+                <p><img src= "../images/Logo2.jpg" alt="#" border="0" style="width: 180px; height: auto;"/></p>
+
+
+                <!-- You have to modify the "padding-top: when you change the content of this div to keep the footer image looking aligned -->
+
+                <img style="padding-top:2px; margin-left:-12px; margin-bottom:-4px;" src="../images/specs_bottom.jpg" alt="" />
+
+
+
+            </div>
+
+            <!-- start content -->
+
+            <div id="centercontent">
+
+
+                <h1>SIGESTPROSO </h1>
+                <p><br /></p>
+                <p>
+                <div id="formulario">
+                    <form action="" method="POST" name="obtenerInformes">
+                        <div class="tituloFormulario">
+                            <h2>Informes de los proyectos</h2>
+                        </div>
+                        <div class="infoFormulario">
 		A trav&eacute;s de esta pantalla el Responsable de Personal podr&aacute; obtener todo tipo de informes.
-                    </div>
-                    <br>
-<!--                    <table>
-                        <tr>
-                            <td>
-                                <label for="Nombre">Nombre:</label>
-                            </td>
-                            <td>
-                                <label for="Apellidos">Apellidos:</label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><div class="filaFormulario">
-                                    <div class="campo">
-                                        <input name="nombre" type="text" class="validate" />
-                                    </div>
-                                </div></td>
-                            <td>
-                                <div class="filaFormulario">
-                                    <div class="campo">
-                                        <input name="apellidos" type="text" class="validate" />
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
+                        </div>
+                        <div id="listaTrabajadores" class="centercontentleft">
+                        <?php
+                        echo $trabajador;
+                        ?>
+                        </div>
+                        <br>
 
-                    <table>
-                        <tr>
-                            <td>
-                                <label for="objetivos">Fecha de nacimiento:</label>
-                            </td>
-                        </tr>
-                    </table>
-                    <table>
-                        <tr>
-                            <td>
-                                <div>
-                                    <?php
-                                    echo '<select name="dias" size="1">';
-                                    echo '<option>D&iacute;a</option>';
-                                    for ($i = 1; $i <= 31; $i++) {
-                                        echo '<option value="1">' . $i . '</option>';
-                                    }
-                                    echo '</select>';
-                                    ?>
-                                </div>
-                            </td>
-                            <td>
-                                <div>
-                                    <select size="1">
-                                        <option value="Mes">Mes</option>
-                                        <option value="Enero">Enero</option>
-                                        <option value="Febrero">Febrero</option>
-                                        <option value="Marzo">Marzo</option>
-                                        <option value="Abril">Abril</option>
-                                        <option value="Mayo">Mayo</option>
-                                        <option value="Junio">Junio</option>
-                                        <option value="Julio">Julio</option>
-                                        <option value="Agosto">Agosto</option>
-                                        <option value="Septiembre">Septiembre</option>
-                                        <option value="Octubre">Octubre</option>
-                                        <option value="Nomviembre">Noviembre</option>
-                                        <option value="Diciembre">Diciembre</option>
-                                    </select>
-                                </div>
-                            </td>
-                            <td
-                                <div>
-                                        <?php
-                                        echo '<select name="dias" size="1">';
-                                        echo '<option>A&ntilde;o</option>';
-                                        $fecha = getdate();
-                                        $anio = $fecha[year] - 18;
-                                        for ($i = 1950; $i <= $anio; $i++) {
-                                            echo '<option value="1">' . $i . '</option>';
-                                        }
-                                        ?>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <br>
-                                <label for="dni">DNI</label>
-                            </td>
-                            <td>
-                                <br>
-                                <input name="dni" type="text" class="campo">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <br>
-                                <label for="Categoría">Categor&iacute;a:</label>
-                            </td>
-                            <td>
-                                <br>
-                                <select size="1" name="categoria">
-                                    <option value="">Escoja categoría</option>
-                                    <option value="jefeProyecto">Jefe de proyecto</option>
-                                    <option value="administrador">Administrador</option>
-                                    <option value="desarrollador">Desarrollador</option>
-                                    <option value="responsablePersonal">Responsable de personal</option>
-                                </select>
-                            </td>
-                        </tr>
-
-                    </table>
+                    </form>
+                </div>
             </div>
-
-            <div class="filaFormulario">
-                <table>
-                    <tr>
-                        <td>
-                            <div class="etiquetaCampo">
-                                <label for="nick">Nombre de usuario:</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="campo">
-                                <input name="nick" type="text" class="validate" />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="etiquetaCampo">
-                                <label for="repassword">Contrase&ntilde;a:</label>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="etiquetaCampo">
-                                <label for="repassword">Repita contrase&ntilde;a:</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="campo">
-                                <input name="password" type="password" class="validate" />
-                            </div>
-                        </td>
-                        <td>
-                            <div class="campo">
-                                <input name="repassword" type="password" class="validate" />
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <br>
-            <div class="boton">
-                <input name="Guardar" value="Crear" type="button" class="submit" onclick="valida_envia()" />
-                <input name="Limpiar" value="Limpiar" type="reset" class="submit"/>
-            </div>-->
-        </form>
-    </div>
-</p>
-
-</div>
+        </div>
 
 
-<!-- end content -->
-<!-- start footer -->
+        <!-- end content -->
+        <!-- start footer -->
 
-<div id="footer">&copy; 2006 Design by <a href="http://www.studio7designs.com">Studio7designs.com</a> | <a href="http://www.arbutusphotography.com">ArbutusPhotography.com</a> | <a href="http://www.opensourcetemplates.org">Opensourcetemplates.org</a>
-
-
-    <!-- start left boxes -->
-
-    <div class="centercontentleftb">
-        <div class="centercontentleftimg">Sample Box for Products</div>
-        <div class="centercontentrightimg">Sample Box for Products</div>
-    </div>
-
-    <!-- endleft boxes -->
-
-    <!-- start right boxes -->
-
-    <div class="centercontentrightb">
-        <div class="centercontentleftimg">Sample Box for Products</div>
-        <div class="centercontentrightimg">Sample Box for Products</div>
-    </div>
-
-    <!-- end right boxes -->
-
-    <!-- end bottom boxes -->
-
-</div>
-
-<!-- end footer -->
+        <div id="footer">&copy; 2006 Design by <a href="http://www.studio7designs.com">Studio7designs.com</a> | <a href="http://www.arbutusphotography.com">ArbutusPhotography.com</a> | <a href="http://www.opensourcetemplates.org">Opensourcetemplates.org</a>
 
 
 
 
-</body>
+        </div>
+
+        <!-- end footer -->
+
+
+
+
+    </body>
 </html>
 

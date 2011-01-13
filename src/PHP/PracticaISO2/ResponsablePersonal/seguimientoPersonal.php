@@ -33,7 +33,7 @@ if ($login != "R") {
         include_once ('../Persistencia/conexion.php');
         $conexion = new conexion();
 //        $result = mysql_query('SELECT t.dni, t.nombre, t.apellidos, tp.Trabajador_dni, tp.Proyecto_idProyecto, tp.porcentaje FROM trabajador t, trabajadorProyecto tp where (t.dni=tp.Trabajador_dni);');
-        $result = mysql_query('SELECT t.dni, t.nombre, t.apellidos, tp.Trabajador_dni, tp.Proyecto_idProyecto, tp.porcentaje, p.idProyecto, p.nombre nombre_proy FROM trabajador t, trabajadorProyecto tp, proyecto p WHERE (p.idProyecto=tp.Proyecto_idProyecto) AND (t.dni=tp.Trabajador_dni) ORDER BY t.dni;');
+        $result = mysql_query('SELECT t.dni, t.nombre, t.apellidos, tp.Trabajador_dni, tp.Proyecto_idProyecto, tp.porcentaje, p.idProyecto, p.nombre nombre_proy FROM Trabajador t, TrabajadorProyecto tp, Proyecto p WHERE (p.idProyecto=tp.Proyecto_idProyecto) AND (t.dni=tp.Trabajador_dni) ORDER BY t.dni;');
         $totTraProy = mysql_num_rows($result);
         if ($totTraProy > 0) {
             $trabajador = "";
@@ -43,16 +43,16 @@ if ($login != "R") {
             while ($rowEmp = mysql_fetch_assoc($result)) {
                 $cont = $cont + 1;
                 if ($rowEmp['Trabajador_dni'] == $dniAnterior) {
-                    $trabajador = $trabajador . "<a href='#'><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;<img src='../images/iActividad4.gif' alt='Actividad' border='0' style='width: auto; height: 12px;'>"
+                    $trabajador = $trabajador . "<a href='#'><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;<img src='../images/iProyecto.png' alt='Actividad' border='0' style='width: auto; height: 12px;'>"
                             . "</img><label> Proyecto: " . $rowEmp['nombre_proy'] . "</label></td><td><label>&nbsp;&nbsp;&nbsp;&nbsp;Dedicación: " . $rowEmp['porcentaje'] . "</label></td></a></tr>";
                 } else {
 
                     if ($cont != 0) {
                         $trabajador = $trabajador . "</table></div>";
                     }
-                    $trabajador = $trabajador . "<a href='#' onclick=\"ocultarR('oculto" . $cont . "')\"><br/><img src= '../images/iJefeProyecto.gif' alt='#' border='0' "
-                            . "style='width: auto; height: auto;'/>&nbsp;&nbsp;" . utf8_encode($rowEmp['nombre']) . " " . utf8_encode($rowEmp['apellidos']) . "     " . $rowEmp['dni'] . "</a>"
-                            . "<div id=\"oculto" . $cont . "\" style=\"display:none\"><a href='#'><table><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;<img src='../images/iActividad4.gif' alt='Actividad' border='0' style='width: auto; height: 12px;'>"
+                    $trabajador = $trabajador . "<a href='#' onclick=\"ocultarR('oculto" . $cont . "')\"><br/><img src= '../images/iJefeProyecto.gif' alt='#' border='0' style='width: auto; height: 12px;'/>"
+                            . "&nbsp;&nbsp;" . utf8_encode($rowEmp['nombre']) . " " . utf8_encode($rowEmp['apellidos']) . "     " . $rowEmp['dni'] . "</a>"
+                            . "<div id=\"oculto" . $cont . "\" style=\"display:none\"><a href='#'><table><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;<img src='../images/iProyecto.png' alt='Actividad' border='0' style='width: auto; height: 12px;'>"
                             . "</img><label> Proyecto: " . $rowEmp['nombre_proy'] . "</label></td><td><label>&nbsp;&nbsp;&nbsp;&nbsp;Dedicación: " . $rowEmp['porcentaje'] . "</label></td></a></tr>";
                 }
 
@@ -62,7 +62,7 @@ if ($login != "R") {
                 $trabajador = $trabajador . "</table></div>";
             }
         }else{
-            $trabajador = "<a href='#'><img src= '../images/iJefeProyecto.gif' alt='#' border='0' style='width: auto; height: auto;'/>NO EXISTE NIGUN TRABAJADOR ASIGNADO A NINGUN PROYECTO</a>";
+            $trabajador = "<a href='#'><img src= '../images/iJefeProyecto.gif' alt='#' border='0' style='width: auto; height: 12px;'/>&nbsp;&nbsp;&nbsp;&nbsp;NO EXISTE NIGUN TRABAJADOR ASIGNADO A NINGUN PROYECTO</a>";
         }
         $conexion->cerrarConexion();
         ?>
@@ -113,6 +113,7 @@ if ($login != "R") {
                     <ul class="BLUE">
                         <li><a href="iniResponsablePersonal.php">Crear trabajadores</a></li>
                         <li><a href="seguimientoPersonal.php">Seguimiento Personal</a></li>
+                        <li><a href="informesResponsablePersonal.php">Informes</a></li>
                     </ul>
                 </div>
 
@@ -143,11 +144,11 @@ if ($login != "R") {
                         <div class="infoFormulario">
 		A trav&eacute;s de esta pantalla el Responsable de Personal podr&aacute; ver la situaci&oacute;n de cada trabajador dentro de la empresa.
                         </div>
-                        <div>
+
                             <?php
                             echo $trabajador;
                             ?>
-                        </div>
+                        
                     </form>
                 </div>
 

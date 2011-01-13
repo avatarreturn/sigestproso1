@@ -129,6 +129,7 @@ if ($login != "R") {
                     <ul class="BLUE">
                         <li><a href="iniResponsablePersonal.php">Crear trabajadores</a></li>
                         <li><a href="seguimientoPersonal.php">Seguimiento Personal</a></li>
+                        <li><a href="informesResponsablePersonal.php">Informes</a></li>
                     </ul>
                 </div>
 
@@ -262,7 +263,7 @@ if ($login != "R") {
                                         <?php
                                             include_once ('../Persistencia/conexion.php');
                                             $conexion = new conexion();
-                                            $result = mysql_query('SELECT `categoriaMaxima`  FROM `configuracion`');
+                                            $result = mysql_query('SELECT `categoriaMaxima`  FROM `Configuracion`');
                                             $row = mysql_fetch_array($result);
                                             $catMax=(int)$row["categoriaMaxima"];
                                             for ($i=1; $i<=$catMax;$i++){

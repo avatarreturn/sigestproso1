@@ -17,7 +17,7 @@ $fechanac = $_POST['anio']."-".$_POST['mes']."-".$_POST['dias'];
 $date = getdate();
 $fecha = $date['year'] . "-" . $date["mon"] . "-" . $date[mday];
 
-$result = mysql_query('SELECT login FROM usuario;');
+$result = mysql_query('SELECT login FROM Usuario;');
 $existe = true;
 while ($row = mysql_fetch_array($result)) {
     if ($row['login'] == $usuario) {
@@ -29,7 +29,7 @@ while ($row = mysql_fetch_array($result)) {
     }
 }
 
-    $result = mysql_query('SELECT dni FROM trabajador;');
+    $result = mysql_query('SELECT dni FROM Trabajador;');
 $existet = true;
 while ($row = mysql_fetch_array($result)) {
     if ($row['dni'] == $dni) {
@@ -43,8 +43,8 @@ while ($row = mysql_fetch_array($result)) {
 }
 
 if ($existe && $existet) {
-    $result = mysql_query("INSERT INTO `grupo01`.`usuario` (`login`, `password`, `tipoUsuario`) VALUES ('" . $usuario . "' , '" . $contrasena . "', 'T');");
-    $result = mysql_query("INSERT INTO `grupo01`.`trabajador` (`dni`, `nombre`, `apellidos`, `fechaNac`, `categoria` , `Usuario_login`) VALUES ('".$dni."', '" . $nombre . "' , '" . $apellidos . "', '" . $fechanac . "', '" . $categoria . "', '" . $usuario . "');");
+    $result = mysql_query("INSERT INTO `grupo01`.`Usuario` (`login`, `password`, `tipoUsuario`) VALUES ('" . $usuario . "' , '" . $contrasena . "', 'T');");
+    $result = mysql_query("INSERT INTO `grupo01`.`Trabajador` (`dni`, `nombre`, `apellidos`, `fechaNac`, `categoria` , `Usuario_login`) VALUES ('".$dni."', '" . $nombre . "' , '" . $apellidos . "', '" . $fechanac . "', '" . $categoria . "', '" . $usuario . "');");
     echo'<script type="text/javascript">
             document.location.href="iniResponsablePersonal.php?creadoUsuario=true";
             </script>';
