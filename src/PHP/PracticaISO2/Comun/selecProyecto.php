@@ -37,7 +37,7 @@ if ($login != "T") {
     . "(SELECT Proyecto_idProyecto FROM TrabajadorProyecto WHERE \n"
     . "Trabajador_dni = \"".$dniLogueado."\")");
         $totEmp = mysql_num_rows($result);
-
+        $noProyectos= "";
         if ($totEmp >0) {
             $desarrProy = "";
             $jefeProy = "";
@@ -109,6 +109,8 @@ if ($login != "T") {
                      $desarrProy = $desarrProy . "</div>";
                 }
             }
+        }else{
+            $noProyectos = "<p style='color:red'> <b>A&uacute;n no esta asignado a ningun proyecto</b> </p>";
         }
         $conexion->cerrarConexion();
         
@@ -186,11 +188,15 @@ function ocultarR(x){
         <h2 style="text-align: center">Seleccione el proyecto sobre el que desea trabajar</h2>
         <div class="centercontentleft" style="width:auto;">
             <?php
+            if ($noProyectos==""){
             if($jefeProy == ""){}else{
             echo utf8_decode("<span>Como Jefe de Proyecto:<br/>" .$jefeProy . "</span><br/>");
             }
             if($desarrProy == ""){}else{
             echo utf8_decode("<span>Como Desarrollador:<br/>" .$desarrProy . "</span>");
+            }
+            }else{
+                echo $noProyectos;
             }
             ?>
             <br/><br/>

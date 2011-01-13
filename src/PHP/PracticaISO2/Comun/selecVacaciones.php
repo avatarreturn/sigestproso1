@@ -152,7 +152,7 @@ if ($login != "T") {
         }
         $conexion->cerrarConexion();
        // echo "FECHAS =" . $fechas."++";
-        $fechas = "";
+        $fechas = "\"2-21-2009\",";
         $fechasVal = "";
         for($i=0;$i<count($fechasFFin);$i++){
                 $fechas = $fechas . "\"" . $fechasFFin[$i] ."\",";
@@ -240,7 +240,25 @@ function validar(){
         }
     }
     if(Bandera == 0){
-        alert("Fechas Correctas");
+        if (window.XMLHttpRequest){
+      xmlhttp=new XMLHttpRequest();
+      }
+    else{
+      xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+      }
+    xmlhttp.onreadystatechange=function(){
+        if(xmlhttp.readyState==1){
+            //Sucede cuando se esta cargando la pagina
+            document.getElementById("editando").innerHTML = "<p><center>Editando<center><img src='../images/enviando.gif' alt='Editando' width='150px'/></p>";//<-- Aca puede ir una precarga
+        }else if (xmlhttp.readyState==4 && xmlhttp.status==200)
+        {
+//            alert(xmlhttp.responseText);
+            location.href = "selecVacaciones.php"
+        }
+      }
+      xmlhttp.open("GET","insertarVacaciones.php?fechaIni=" + $('#datepicker').val()
+    + "&duracion=" + document.getElementById("Weeks").value,true);
+    xmlhttp.send();
     }
     }else{
         alert("Debe escojer un Lunes como comienzo de vacaciones")
