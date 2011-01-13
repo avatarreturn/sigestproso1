@@ -30,11 +30,19 @@ if ($login != "A") {
             function valida_envia(){
                 //comprobamos que no esta vacio el campo rol
                 if (document.carga_datos.rol.value.length==0){
-                    alert("Tiene que escribir un rol para la relación.")
+                    alert("Tiene que escribir un rol para la relaci\xF3n.")
                     document.carga_datos.rol.focus()
                     return 0;
                 }
-                if (confirm("Se añadirá la siguiente relación:\n ROL:  "+document.getElementById("rol").value+"\n CATEGORÍA:  "+document.getElementById("selectCategorias").value)){
+                //comprobamos que la categoria es un numero
+                if(isNaN(document.carga_datos.selectCategorias.value))
+                {
+                    alert("Seleccione un n\xFAmero");
+                    document.carga_datos.selectCategorias.focus()
+                    return 0;
+                }
+
+                if (confirm("Se añadir\xE1 la siguiente relaci\xF3n:\n ROL:  "+document.getElementById("rol").value+"\n CATEGOR\xCDA:  "+document.getElementById("selectCategorias").value)){
                     document.carga_datos.submit();
                 }
             }
@@ -43,16 +51,40 @@ if ($login != "A") {
             function valida_envia2(){
                 miInteger = parseInt(document.carga_datos2.numMaxCategoria.value);
                 if(!isNaN(miInteger)){
-                    document.carga_datos2.submit();
+                    actualiza_datos();
                 }else{
-                    alert("Introduzca un número");
+                    alert("Introduzca un n\xFAmero");
                 }
             }
 
+            //elimina la confirmacion de la modificacion de la categoria maxima
+            function limpia_confirmacion(){
+                document.getElementById("mensajeMaximaCategoria").innerHTML="";
+            }
+
+            //actualiza la categoria mediante AJAX
+            function actualiza_datos(){
+                // Obtener la instancia del objeto XMLHttpRequest
+                if(window.XMLHttpRequest) {
+                    peticion_http = new XMLHttpRequest();
+                }
+                else if(window.ActiveXObject) {
+                    peticion_http = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                // Preparar la funcion de respuesta
+                peticion_http.onreadystatechange = function(){
+                    if (peticion_http.readyState==4 && peticion_http.status==200)
+                    {
+                        window.location.href = "cargarDatos.php?modificadaMaxCategoria=true";
+                    }
+                }
+                // Realizar peticion HTTP
+                peticion_http.open('GET', 'datosCargados2.php?categoria='+document.getElementById("numMaxCategoria").value, true);
+                peticion_http.send(null);
+            }
+
         </script>
-
     </head>
-
     <body>
 
         <!-- start top menu and blog title-->
@@ -116,14 +148,21 @@ if ($login != "A") {
                                         $result = mysql_query('SELECT categoriaMaxima FROM Configuracion');
                                         $row3 = mysql_fetch_array($result);
                                         $numMaxCategoria = $row3[0];
-                                        echo '<td><input id="numMaxCategoria" name="numMaxCategoria" type="text" class="validate" value="' . $numMaxCategoria . '" onchange="modificaMaxCategoria(document.carga_datos.numMaxCategoria.value)"/></td>';
+                                        echo '<td>
+                                            <input id="numMaxCategoria" name="numMaxCategoria" type="text" class="validate" value="' . $numMaxCategoria . '">
+                                                </td>';
                                         ?>
                                         <td><input name="crear2" type = "button" value = "Modificar" onclick="valida_envia2()"></td>
                                         <td>
-                                            <?php
-                                            if ($_GET["modificadaMaxCategoria"])
-                                                echo "<label style=\"color: red\";><font size=\"2\">La máxima categoría ha sido modificada con éxito</font></label>";
-                                            ?>
+                                            <div id="mensajeMaximaCategoria">
+                                                <?php
+                                                if ($_GET["modificadaMaxCategoria"])
+                                                    echo "<label style=\"color: green\";><font size=\"2\">M&aacute;xima categor&iacute;a modificada</font></label>";
+                                                echo '<script type="text/javascript">
+                                                   window.setTimeout("limpia_confirmacion()", 4000);
+                                                    </script>';
+                                                ?>
+                                            </div>
                                         </td>
                                     </tr>
                                 </table>
@@ -141,23 +180,22 @@ if ($login != "A") {
                                     <tr>
                                         <td><input id="rol" name="rol" type="text" class="validate" value="Escriba un rol:"/></td>
                                         <td>
-                                            <!-- <div id="divParaSelect"><select id="selectCategorias" name="selectCategorias" size="1"><script type="text/javascript">pintaOptions(document.carga_datos2.numMaxCategoria.value);</script></select></div>-->
                                             <?php
-                                            $contador = 1;
-                                            echo '<SELECT id="selectCategorias" NAME="selectCategorias" size="1">';
-                                            echo '<option>Escoja categoria:</option>';
-                                            while ($contador <= $numMaxCategoria) {
-                                                echo '<option value="' . $contador . '">' . $contador . ' </option>';
-                                                $contador++;
-                                            }
-                                            echo '</SELECT>';
+                                                $contador = 1;
+                                                echo '<SELECT id="selectCategorias" NAME="selectCategorias" size="1">';
+                                                echo '<option>Escoja categoria:</option>';
+                                                while ($contador <= $numMaxCategoria) {
+                                                    echo '<option value="' . $contador . '">' . $contador . ' </option>';
+                                                    $contador++;
+                                                }
+                                                echo '</SELECT>';
                                             ?>
-                                        </td>
-                                        <td><input name="crear" type = "button" value = "A&ntilde;adir" onclick="valida_envia()"></td>
-                                        <td>
+                                            </td>
+                                            <td><input name="crear" type = "button" value = "A&ntilde;adir" onclick="valida_envia()"></td>
+                                            <td>
                                             <?php
-                                            if ($_GET["creadoProyecto"])
-                                                echo "<label style=\"color: red\";><font size=\"2\">La relación ha sido añadida con éxito</font></label>";
+                                                if ($_GET["creadoProyecto"])
+                                                    echo "<label style=\"color: red\";><font size=\"2\">La relaci&oacute;n ha sido a&ntilde;adida con &eacute;xito</font></label>";
                                             ?>
                                         </td>
                                     </tr>

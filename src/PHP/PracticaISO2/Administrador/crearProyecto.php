@@ -41,7 +41,7 @@ if ($login != "A") {
                     return 0;
                 }
 
-                if (confirm("Se creará el nuevo proyecto.")){
+                if (confirm("Se crear\xFA el nuevo proyecto.")){
                     document.nuevo_proyecto.submit();
                 }
 
@@ -141,7 +141,7 @@ if ($login != "A") {
                             <input name="Limpiar" value="Limpiar" type="reset" class="submit"/>
                             <?php
                                 if ($_GET["creadoProyecto"])
-                                    echo "<label style=\"color: red\";><font size=\"2\">El proyecto se ha creado con exito</font></label>";
+                                    echo "<label style=\"color: red\";><font size=\"2\">El proyecto se ha creado con &eacute;xito</font></label>";
                             ?>
                         </div>
                     </form>

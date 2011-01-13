@@ -32,6 +32,12 @@
                                     <?php
                                     if ($_GET["usuarioNoExistente"])
                                         echo "<b><label style=\"color: red\";><font size=\"2\">Usuario no existente</font></label></b>";
+
+                                    if ($_GET["noLogin"])
+                                        echo "<b><label style=\"color: red\";><font size=\"2\">Debe especificar un login</font></label></b>";
+
+                                    if($_GET["noLoginNoPassword"])
+                                        echo "<b><label style=\"color: red\";><font size=\"2\">Debe especificar un login</font></label></b>";
                                     ?>
                                 </p>
                             </fieldset>
@@ -43,17 +49,17 @@
                                     <?php
                                     if ($_GET["passwordIncorrecto"])
                                         echo "<b><label style=\"color: red\";><font size=\"2\">Password incorrecto</font></label></b>";
+
+                                    if ($_GET["noPassword"])
+                                        echo "<b><label style=\"color: red\";><font size=\"2\">Debe especificar un password</font></label></b>";
+
+                                    if($_GET["noLoginNoPassword"])
+                                        echo "<b><label style=\"color: red\";><font size=\"2\">Debe especificar un password</font></label></b>";
                                     ?>
                                 </p>
                             </fieldset>
                             <fieldset id="entrar">
                                 <img id="sign-in" name="boton_login" src="images/entrar.gif" alt="Entrar" tabindex="3" onclick="valida_envia()" />
-                                <strong id="resp">
-                                    <?php
-                                    if ($_GET["noPasswordNoLogin"])
-                                        echo "<label style=\"color: red\";><font size=\"2\">Debe especificar un Usuario y una Contrase&ntilde;a</font></label>";
-                                    ?>
-                                </strong>
                             </fieldset>
                         </div>
 

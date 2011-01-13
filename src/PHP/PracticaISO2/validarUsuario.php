@@ -13,8 +13,7 @@ if (trim($_POST['login']) != "" && trim($_POST['password']) != "") {
     $loginIntroducido = $_POST['login'];
     $passwordIntroducido = $_POST['password'];
 
-    //comprobar login y tipo de usuario
-    //el dni solo si es trabajador, no para administrador y responsable de personal
+
     $result = mysql_query("SELECT login FROM Usuario WHERE (login= '" . $loginIntroducido . "')");
 
     if ($row = mysql_fetch_array($result)) {
@@ -75,9 +74,27 @@ if (trim($_POST['login']) != "" && trim($_POST['password']) != "") {
     $conexion->cerrarConexion();
     mysql_free_result($result);
 } else {
-    $conexion->cerrarConexion();
-    echo'<script type="text/javascript">
-            document.location.href="login.php?noPasswordNoLogin=true";
+    //alguno esta vacio
+    if (trim($_POST['login']) == "" && trim($_POST['password']) == "") {
+        //ambos estan vacios
+        $conexion->cerrarConexion();
+        echo'<script type="text/javascript">
+        document.location.href="login.php?noLoginNoPassword=true";
+        </script>';
+    } else {
+        if (trim($_POST['login']) != "") {
+            //login vacio
+            $conexion->cerrarConexion();
+            echo'<script type="text/javascript">
+            document.location.href="login.php?noPassword=true";
             </script>';
+        } else {
+            //password vacio
+            $conexion->cerrarConexion();
+            echo'<script type="text/javascript">
+            document.location.href="login.php?noLogin=true";
+            </script>';
+        }
+    }
 }
 ?>
