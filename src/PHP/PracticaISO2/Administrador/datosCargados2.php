@@ -15,8 +15,4 @@ $categoriaMaxima=mysql_query("UPDATE Configuracion SET categoriaMaxima='".$numMa
 
 //cierre de la conexion
 $conexion->cerrarConexion();
-
-//echo'<script type="text/javascript">
-//        document.location.href="cargarDatos.php?modificadaMaxCategoria=true";
-//    </script>';
 ?>

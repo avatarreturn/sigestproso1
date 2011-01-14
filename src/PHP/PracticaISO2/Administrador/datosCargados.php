@@ -15,8 +15,4 @@ $result = mysql_query("INSERT INTO Rol (`idRol`, `nombre`, `categoria`) VALUES (
 
 //cierre de la conexion
 $conexion->cerrarConexion();
-
-//echo'<script type="text/javascript">
-//        document.location.href="cargarDatos.php?relacionCreada=true";
-//    </script>';
 ?>

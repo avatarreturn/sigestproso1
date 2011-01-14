@@ -25,6 +25,11 @@ if ($login != "A") {
         <link rel="stylesheet" type="text/css" href="../stylesheet.css" media="screen, projection, tv " />
 
         <script language="javascript" type="text/javascript">
+            //elimina las confirmaciones
+            function limpia_confirmacion(id){
+                document.getElementById(id).innerHTML="";
+            }//fin limpia_confirmacion()
+
             //valida los datos introducidos por el usuario
             function valida_envia(){
                 //comprobamos que no esta vacio el campo nombre
@@ -105,14 +110,20 @@ if ($login != "A") {
                                         <td>
                                             <input name="nombre" type="text" class="validate" />
                                         </td>
-                                        <td><?php
-if ($_GET["proyectoNoCreado"])
-    echo "<label style=\"color: red\";><font size=\"2\">El nombre utilizado para el proyecto ya existe, introduzca uno diferente</font></label>";
-?>
+                                        <td>
+                                            <div id="mensajeProyectoNoCreado">
+                                                <?php
+                                                if ($_GET["proyectoNoCreado"]) {
+                                                    echo "<label style=\"color: red\";><font size=\"2\">El nombre utilizado para el proyecto ya existe, introduzca uno diferente</font></label>";
+                                                    echo '<script type="text/javascript">
+                                                        window.setTimeout("limpia_confirmacion(\"mensajeProyectoNoCreado\")", 4000);
+                                                        </script>';
+                                                }
+                                                ?>
+                                            </div>
                                         </td>
                                     </tr>
                                 </table>
-
                             </div>
                         </div>
                         <div class="filaFormulario">
@@ -122,43 +133,49 @@ if ($_GET["proyectoNoCreado"])
                             </div>
                             <div class="campo">
                                 <?php
-                                include_once('../Persistencia/conexion.php');
-                                $conexion = new conexion();
-                                $result = mysql_query('SELECT nombre, apellidos, dni FROM Trabajador WHERE (categoria like "1") and dni not in (SELECT jefeProyecto FROM Proyecto WHERE fechaFin is NULL)');
-                                $totalResultados = mysql_num_rows($result);
-                                if ($totalResultados > 0) {
-                                    //hay algún resultado
-                                    echo '<SELECT NAME="jefeProyecto" size="1">';
-                                    echo '<option>Seleccione un Jefe de Proyecto</option>';
-                                    while ($rowEmp = mysql_fetch_assoc($result)) {
-                                        echo '<option value="' . $rowEmp['dni'] . '">' . $rowEmp['nombre'] . ' ' . $rowEmp['apellidos'] . '</option>';
-                                    }
-                                    echo '</SELECT>';
-                                } else {
-                                    //no hay jefes de proyecto libres
-                                    echo "<label style=\"color: red\";><font size=\"2\">No existen Jefes de Proyecto libres en este momento</font></label>";
-                                }
+                                                include_once('../Persistencia/conexion.php');
+                                                $conexion = new conexion();
+                                                $result = mysql_query('SELECT nombre, apellidos, dni FROM Trabajador WHERE (categoria like "1") and dni not in (SELECT jefeProyecto FROM Proyecto WHERE fechaFin is NULL)');
+                                                $totalResultados = mysql_num_rows($result);
+                                                if ($totalResultados > 0) {
+                                                    //hay algún resultado
+                                                    echo '<SELECT NAME="jefeProyecto" size="1">';
+                                                    echo '<option>Seleccione un Jefe de Proyecto</option>';
+                                                    while ($rowEmp = mysql_fetch_assoc($result)) {
+                                                        echo '<option value="' . $rowEmp['dni'] . '">' . $rowEmp['nombre'] . ' ' . $rowEmp['apellidos'] . '</option>';
+                                                    }
+                                                    echo '</SELECT>';
+                                                } else {
+                                                    //no hay jefes de proyecto libres
+                                                    echo "<label style=\"color: red\";><font size=\"2\">No existen Jefes de Proyecto libres en este momento</font></label>";
+                                                }
 
-                                $conexion->cerrarConexion();
+                                                $conexion->cerrarConexion();
                                 ?>
                             </div>
-                        </div>
-                        <div class="filaFormulario">
-                            <div class="etiquetaCampo">
-                                <br>
-                                <label for="objetivos">Descripci&oacute;n del Proyecto:</label>
+                                        </div>
+                                        <div class="filaFormulario">
+                                            <div class="etiquetaCampo">
+                                                <br>
+                                                <label for="objetivos">Descripci&oacute;n del Proyecto:</label>
+                                            </div>
+                                            <div class="campo">
+                                                <textarea id="textarea_objetivos" name="descripcion" rows="5" cols="50"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="boton">
+                                            <input name="crear" value="Crear" type="button" class="submit" onclick="valida_envia()"/>
+                                            <input name="Limpiar" value="Limpiar" type="reset" class="submit"/>
+                                            <div id="mensajeProyectoCreado">
+                                <?php
+                                                if ($_GET["proyectoCreado"]) {
+                                                    echo "<label style=\"color: green\";><font size=\"2\">El proyecto se ha creado con &eacute;xito</font></label>";
+                                                    echo '<script type="text/javascript">
+                                    window.setTimeout("limpia_confirmacion(\"mensajeProyectoCreado\")", 4000);
+                                    </script>';
+                                                }
+                                ?>
                             </div>
-                            <div class="campo">
-                                <textarea id="textarea_objetivos" name="descripcion" rows="5" cols="50"></textarea>
-                            </div>
-                        </div>
-                        <div class="boton">
-                            <input name="crear" value="Crear" type="button" class="submit" onclick="valida_envia()"/>
-                            <input name="Limpiar" value="Limpiar" type="reset" class="submit"/>
-                            <?php
-                                if ($_GET["proyectoCreado"])
-                                    echo "<label style=\"color: green\";><font size=\"2\">El proyecto se ha creado con &eacute;xito</font></label>";
-                            ?>
                         </div>
                     </form>
                 </div>

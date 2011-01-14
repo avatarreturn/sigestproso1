@@ -26,13 +26,14 @@ if ($login != "A") {
         <link rel="stylesheet" type="text/css" href="../stylesheet.css" media="screen, projection, tv " />
 
         <script type="text/javascript" language="javascript">
+            //elimina las confirmaciones
+            function limpia_confirmacion(id){
+                document.getElementById(id).innerHTML="";
+            }//fin limpia_confirmacion()
+
             ////////////////////////////////////////
             //RELACION CATEGORIA ROL
             ////////////////////////////////////////
-            //elimina la confirmacion de la relacion categoria-rol
-            function limpia_confirmacion(){
-                document.getElementById("mensajeRelacionCreada").innerHTML="";
-            }//fin limpia_configuracion()
 
             //confirma los datos de la nueva relacion antes de almacenarlos
             function valida_envia(){
@@ -75,14 +76,10 @@ if ($login != "A") {
                 peticion_http.send(null);
             }
 
+
             ////////////////////////////////////////
             //CATEGORIA MAXIMA
             ////////////////////////////////////////
-
-            //elimina la confirmacion de la modificacion de la categoria maxima
-            function limpia_confirmacion2(){
-                document.getElementById("mensajeMaximaCategoria").innerHTML="";
-            }//fin limpia_confirmacion2()
 
             //confirma los datos de la categoria maxima antes de almacenarnos
             function valida_envia2(){
@@ -191,8 +188,8 @@ if ($login != "A") {
                                                 if ($_GET["modificadaMaxCategoria"])
                                                     echo "<label style=\"color: green\";><font size=\"2\">M&aacute;xima categor&iacute;a modificada</font></label>";
                                                 echo '<script type="text/javascript">
-                                                   window.setTimeout("limpia_confirmacion2()", 4000);
-                                                    </script>';
+                                                        window.setTimeout("limpia_confirmacion(\"mensajeMaximaCategoria\")", 4000);
+                                                        </script>';
                                                 ?>
                                             </div>
                                         </td>
@@ -223,15 +220,16 @@ if ($login != "A") {
                                                 echo '</SELECT>';
                                             ?>
                                             </td>
-                                            <td><input name="crear" type = "button" value = "A&ntilde;adir" onclick="valida_envia()"></td>
+                                            <td><input name="crear" value = "A&ntilde;adir" type = "button"  onclick="valida_envia()"></td>
                                             <td>
                                                 <div id="mensajeRelacionCreada">
                                                 <?php
-                                                if ($_GET["relacionCreada"])
+                                                if ($_GET["relacionCreada"]) {
                                                     echo "<label style=\"color: green\";><font size=\"2\">La relaci&oacute;n ha sido a&ntilde;adida con &eacute;xito</font></label>";
                                                     echo '<script type="text/javascript">
-                                                        window.setTimeout("limpia_confirmacion()", 4000);
+                                                        window.setTimeout("limpia_confirmacion(\"mensajeRelacionCreada\")", 4000);
                                                         </script>';
+                                                }
                                                 ?>
                                             </div>
                                         </td>

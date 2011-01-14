@@ -16,7 +16,7 @@ $numeroResultados = mysql_num_rows($consulta);
 if ($numeroResultados > 0) {
     //ya existe, dar error
     echo'<script type="text/javascript">
-        document.location.href="crearProyecto.php?proyectoNoCreado=true";
+        window.location.href="crearProyecto.php?proyectoNoCreado=true";
     </script>';
 } else {
     //no existe
@@ -27,7 +27,7 @@ if ($numeroResultados > 0) {
     $conexion->cerrarConexion();
 
     echo'<script type="text/javascript">
-        document.location.href="crearProyecto.php?proyectoCreado=true";
+        window.location.href="crearProyecto.php?proyectoCreado=true";
     </script>';
 }
 ?>
