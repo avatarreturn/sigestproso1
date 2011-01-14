@@ -31,6 +31,8 @@ if ($login != "R") {
 ////        //BORRAR
         $dniLogueado = $_SESSION['dni'];
         include_once ('../Persistencia/conexion.php');
+        include_once("funciones.php");
+
         $conexion = new conexion();
 //        $result = mysql_query('SELECT t.dni, t.nombre, t.apellidos, tp.Trabajador_dni, tp.Proyecto_idProyecto, tp.porcentaje FROM trabajador t, trabajadorProyecto tp where (t.dni=tp.Trabajador_dni);');
         $result = mysql_query('SELECT t.dni, t.nombre, t.apellidos, tp.Trabajador_dni, tp.Proyecto_idProyecto, tp.porcentaje, p.idProyecto, p.nombre nombre_proy FROM Trabajador t, TrabajadorProyecto tp, Proyecto p WHERE (p.idProyecto=tp.Proyecto_idProyecto) AND (t.dni=tp.Trabajador_dni) ORDER BY t.dni;');
@@ -38,22 +40,28 @@ if ($login != "R") {
         if ($totTraProy > 0) {
             $trabajador = "";
             $dniAnterior = "";
+            $arrayDnis[] = "";
             $cont = 0;
             $cont2 = 0;
             while ($rowEmp = mysql_fetch_assoc($result)) {
                 $cont = $cont + 1;
                 if ($rowEmp['Trabajador_dni'] == $dniAnterior) {
                     $trabajador = $trabajador . "<a href='#'><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;<img src='../images/iProyecto.png' alt='Actividad' border='0' style='width: auto; height: 12px;'>"
-                            . "</img><label> Proyecto: " . $rowEmp['nombre_proy'] . "</label></td><td><label>&nbsp;&nbsp;&nbsp;&nbsp;Dedicación: " . $rowEmp['porcentaje'] . "</label></td></a></tr>";
+                            . "</img><label> Proyecto: " . $rowEmp['nombre_proy'] . "</label></td><td><label>&nbsp;&nbsp;&nbsp;&nbsp;Dedicación: " . $rowEmp['porcentaje'] . " %</label></td></a></tr>";
                 } else {
-
+                    array_push($arrayDnis, $rowEmp['dni']);
                     if ($cont != 0) {
                         $trabajador = $trabajador . "</table></div>";
                     }
                     $trabajador = $trabajador . "<a href='#' onclick=\"ocultarR('oculto" . $cont . "')\"><br/><img src= '../images/iJefeProyecto.gif' alt='#' border='0' style='width: auto; height: 12px;'/>"
-                            . "&nbsp;&nbsp;" . utf8_encode($rowEmp['nombre']) . " " . utf8_encode($rowEmp['apellidos']) . "     " . $rowEmp['dni'] . "</a>"
-                            . "<div id=\"oculto" . $cont . "\" style=\"display:none\"><a href='#'><table><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;<img src='../images/iProyecto.png' alt='Actividad' border='0' style='width: auto; height: 12px;'>"
-                            . "</img><label> Proyecto: " . $rowEmp['nombre_proy'] . "</label></td><td><label>&nbsp;&nbsp;&nbsp;&nbsp;Dedicación: " . $rowEmp['porcentaje'] . "</label></td></a></tr>";
+                            . "&nbsp;&nbsp;" . utf8_encode($rowEmp['nombre']) . " " . utf8_encode($rowEmp['apellidos']) . "     " . $rowEmp['dni'] . "</a>";
+                    //Compruebo si el trabajador esta de vacaciones
+                    if (vacacionesSiNo($rowEmp['dni'], date("Y-m-d"))) {
+                        $trabajador = $trabajador . "<a href='#'>&nbsp;&nbsp;<img src= '../images/vacaciones.jpg' alt='#' border='0' style='width: auto; height: 12px;'/></a>";
+                    }
+
+                    $trabajador = $trabajador . "<div id=\"oculto" . $cont . "\" style=\"display:none\"><a href='#'><table><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;<img src='../images/iProyecto.png' alt='Actividad' border='0' style='width: auto; height: 12px;'>"
+                            . "</img><label> Proyecto: " . $rowEmp['nombre_proy'] . "</label></td><td><label>&nbsp;&nbsp;&nbsp;&nbsp;Dedicación: " . $rowEmp['porcentaje'] . " %</label></td></a></tr>";
                 }
 
                 $dniAnterior = $rowEmp['dni'];
@@ -61,9 +69,29 @@ if ($login != "R") {
             if ($trabajador != "") {
                 $trabajador = $trabajador . "</table></div>";
             }
-        }else{
+        } else {
             $trabajador = "<a href='#'><img src= '../images/iJefeProyecto.gif' alt='#' border='0' style='width: auto; height: 12px;'/>&nbsp;&nbsp;&nbsp;&nbsp;NO EXISTE NIGUN TRABAJADOR ASIGNADO A NINGUN PROYECTO</a>";
         }
+
+        //Aqui calculo los trabajadores no asociados a ningun proyecto
+
+        $sql = "select dni, nombre, apellidos from trabajador where";
+        if (count($arrayDnis) > 1) { //si el array de dni encontrados tiene contenido
+            $sql = $sql . " (dni != '" . $arrayDnis[1] . "')"; //excluyo de la consulta el primer dni
+            for ($i = 1; $i < count($arrayDnis); $i++) {    //repito para cada dni
+                $sql = $sql . " and (dni != '" . $arrayDnis[$i] . "')"; //para excluir de la consulta los dni ya encontrados
+            }
+            $sql = $sql . " order by nombre;"; //cierro la consulta sql
+        }
+        $result = mysql_query($sql);
+        $restoTrabaj = "<br/><br/><label>Trabajadores no asociados a ningun proyecto: </label><br/><br/>";
+        while ($rowEmp = mysql_fetch_assoc($result)) {
+            $restoTrabaj = $restoTrabaj . "<a href='#'>"
+                    . "<img src= '../images/iJefeProyecto.gif' alt='#' border='0' style='width: auto; height: 12px;'/>"
+                    . "&nbsp;&nbsp;" . utf8_encode($rowEmp['nombre']) . " " . utf8_encode($rowEmp['apellidos']) . "&nbsp;&nbsp;&nbsp;&nbsp;" . $rowEmp['dni'] . "</a> <br/>";
+        }
+
+
         $conexion->cerrarConexion();
         ?>
 
@@ -144,11 +172,26 @@ if ($login != "R") {
                         <div class="infoFormulario">
 		A trav&eacute;s de esta pantalla el Responsable de Personal podr&aacute; ver la situaci&oacute;n de cada trabajador dentro de la empresa.
                         </div>
-
-                            <?php
-                            echo $trabajador;
-                            ?>
-                        
+                        <table>
+                            <tr>
+                                <td>
+                                    <?php
+                                    echo $trabajador;
+                                    ?>
+                                    
+                                    <?php
+                                    echo $restoTrabaj;
+                                    ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <br/>
+                                    <a href='#'>&nbsp;&nbsp;<img src= '../images/vacaciones.jpg' alt='#' border='0' style='width: auto; height: 12px;'/></a>
+                                    <label>Este trabajador est&aacute; de vacaciones en este momento</label>
+                                </td>
+                            </tr>
+                        </table>
                     </form>
                 </div>
 
@@ -161,7 +204,7 @@ if ($login != "R") {
 
         <div id="footer">&copy; 2006 Design by <a href="http://www.studio7designs.com">Studio7designs.com</a> | <a href="http://www.arbutusphotography.com">ArbutusPhotography.com</a> | <a href="http://www.opensourcetemplates.org">Opensourcetemplates.org</a>
 
-          
+
         </div>
 
         <!-- end footer -->

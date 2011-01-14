@@ -28,6 +28,8 @@ if ($login != "R") {
         <link rel="stylesheet" type="text/css" href="estiloTablas.css"/>
 
         <?php
+        include_once("funciones.php");
+
         include_once ('../Persistencia/conexion.php');
         $conexion = new conexion();
         //Calculamos el lunes de la semana actual
@@ -43,19 +45,22 @@ if ($login != "R") {
         //
         //Esta es la consulta que tengo que poner
         //SELECT t.dni, t.nombre, t.apellidos, i.idInformeTareas, ta.idTareaPersonal, ta.horas, c.descripcion FROM trabajador t, informetareas i, tareapersonal ta, catalogotareas c where (i.semana='2011-01-10') AND (t.dni=i.Trabajador_dni) AND (ta.CatalogoTareas_idTareaCatalogo=c.idTareaCatalogo) ORDER BY t.nombre
-        $result = mysql_query('SELECT t.dni, t.nombre, t.apellidos, i.idInformeTareas, ta.idTareaPersonal, ta.horas, c.descripcion FROM trabajador t, informetareas i, tareapersonal ta, catalogotareas c where (i.semana=\'2011-01-10\') AND (t.dni=i.Trabajador_dni) AND (ta.CatalogoTareas_idTareaCatalogo=c.idTareaCatalogo) AND (i.idInformeTareas=ta.InformeTareas_idInformeTareas) ORDER BY t.nombre;');
-        //Probar a meter 2 tareas del mismo tipo para cada trabajador
+        $result = mysql_query('SELECT t.dni, t.nombre, t.apellidos, i.idInformeTareas, ta.idTareaPersonal, ta.horas, c.descripcion FROM trabajador t, informetareas i, tareapersonal ta, catalogotareas c where (i.semana=\'' . $semana . '\') AND (t.dni=i.Trabajador_dni) AND (ta.CatalogoTareas_idTareaCatalogo=c.idTareaCatalogo) AND (i.idInformeTareas=ta.InformeTareas_idInformeTareas) ORDER BY t.nombre;');
+
         $totTraProy = mysql_num_rows($result);
         if ($totTraProy > 0) {
             $trabajador = "";
             $dniAnterior = "";
+            $arrayDnis[] = "";
             $cont = 1;
             $cont2 = 1;
+            $sumaHoras = 0;
             $contD[] = 0;   //Array que almacena el numero de veces que aparece cada DNI
             while ($rowEmp = mysql_fetch_assoc($result)) {
                 $tabla[$cont2] = $rowEmp;
                 if ($rowEmp['dni'] != $dniAnterior) {
                     array_push($contD, 1);
+                    array_push($arrayDnis, $rowEmp['dni']);
                     $dniAnterior = $rowEmp['dni'];
                 } else {
                     $contD[count($contD) - 1]++;
@@ -63,17 +68,44 @@ if ($login != "R") {
                 $cont2++;
             }
             for ($i = 1; $i < count($contD); $i++) {
+                $sumaHoras = 0;
                 $trabajador = $trabajador . "<a href='#' onclick=\"ocultarR('oculto" . $i . "')\">"
                         . "<img src= '../images/iJefeProyecto.gif' alt='#' border='0' style='width: auto; height: 12px;'/>"
-                        . "&nbsp;&nbsp;" . utf8_encode($tabla[$cont]['nombre']) . " " . utf8_encode($tabla[$cont]['apellidos']) . "     " . $tabla[$cont]['dni'] . "</a>"
+                        . "&nbsp;&nbsp;" . utf8_encode($tabla[$cont]['nombre']) . " " . utf8_encode($tabla[$cont]['apellidos']) . "&nbsp;&nbsp;&nbsp;&nbsp;" . $tabla[$cont]['dni'] . "</a>"
                         . "<br/><div id=\"oculto" . $i . "\" style=\"display:none\">";
-                for ($j = $contD[$i]; $j >= 1; $j--) {
-                    $trabajador = $trabajador . "<a href='#'>&nbsp;&nbsp;&nbsp;&nbsp;<img src='../images/iTarea.png' alt='Actividad' border='0' style='width: auto; height: 12px;'>"
-                            . "</img>&nbsp;&nbsp;&nbsp;&nbsp;<label>" . $tabla[$cont]['descripcion'] . " </label></td><td><label>&nbsp;&nbsp;&nbsp;&nbsp;" . $tabla[$cont]['horas'] . " horas</label></a><br/>";
-                    $cont++;
+                if (vacacionesSiNo($tabla[$cont]['dni'], $semana)) {
+                    $trabajador = $trabajador . "<table class=\"tablaVariable\"><tr><td><label>Esta de vacaciones</label></td></a></tr></table>";
                 }
-                $trabajador = $trabajador . "</div>";
+                for ($j = $contD[$i]; $j >= 1; $j--) {
+                    $trabajador = $trabajador . "<a href='#'><table class=\"tablaVariable\"><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;<img src='../images/iTarea.png' alt='Actividad' border='0' style='width: auto; height: 12px;'>"
+                            . "</img>&nbsp;&nbsp;&nbsp;&nbsp;<label>" . utf8_encode($tabla[$cont]['descripcion']) . " </label></td><td><label>" . $tabla[$cont]['horas'] . " horas</label></td></a></tr></table>";
+                    $cont++;
+                    $sumaHoras = $sumaHoras + $tabla[$cont - 1]['horas'];
+                }
+                $trabajador = $trabajador . "<label>Horas totales: " . $sumaHoras . "</label><br/><br/></div>";
             }
+        }
+
+        //aqui calculo los trabajadores sin informacion de horas trabajadas
+        $sql = "select dni, nombre, apellidos from trabajador where";
+        if (count($arrayDnis) > 1) { //si el array de dni encontrados tiene contenido
+            $sql = $sql . " (dni != '" . $arrayDnis[1] . "')"; //excluyo de la consulta el primer dni
+            for ($i = 1; $i < count($arrayDnis); $i++) {    //repito para cada dni
+                $sql = $sql . " and (dni != '" . $arrayDnis[$i] . "')"; //para excluir de la consulta los dni ya encontrados
+            }
+            $sql = $sql . ";"; //cierro la consulta sql
+        }
+        $result = mysql_query($sql);
+        $restoTrabaj = "";
+        while ($rowEmp = mysql_fetch_assoc($result)) {
+            $restoTrabaj = $restoTrabaj . "<a href='#'>"
+                    . "<img src= '../images/iJefeProyecto.gif' alt='#' border='0' style='width: auto; height: 12px;'/>"
+                    . "&nbsp;&nbsp;" . utf8_encode($rowEmp['nombre']) . " " . utf8_encode($rowEmp['apellidos']) . "&nbsp;&nbsp;&nbsp;&nbsp;" . $rowEmp['dni'] . "</a>";
+            if (vacacionesSiNo($rowEmp['dni'], $semana)) {
+                //$restoTrabaj = $restoTrabaj . "<label style=\"color: red\"> Actualmente de vacaciones</label>";
+                $restoTrabaj = $restoTrabaj . "<a href='#'>&nbsp;&nbsp;<img src= '../images/vacaciones.jpg' alt='#' border='0' style='width: auto; height: 12px;'/></a>";
+            }
+            $restoTrabaj = $restoTrabaj . "<br/>";
         }
 
         $conexion->cerrarConexion();
@@ -145,42 +177,66 @@ if ($login != "R") {
                 <h1>SIGESTPROSO </h1>
                 <p><br /></p>
                 <p>
-                <div id="formulario">
-                    <form action="" method="POST" name="obtenerInformes">
-                        <div class="tituloFormulario">
-                            <h2>Informes de los proyectos</h2>
-                        </div>
-                        <div class="infoFormulario">
+                <table>
+                    <tr>
+                        <td>
+                            <div id="formulario">
+                                <form action="" method="POST" name="obtenerInformes">
+                                    <div class="tituloFormulario">
+                                        <h2>Informes de los proyectos</h2>
+                                    </div>
+                                    <div class="infoFormulario">
 		A trav&eacute;s de esta pantalla el Responsable de Personal podr&aacute; obtener todo tipo de informes.
-                        </div>
-                        <div id="listaTrabajadores" class="centercontentleft">
-                        <?php
-                        echo $trabajador;
-                        ?>
-                        </div>
-                        <br>
+                                    </div>
+                                    <div id="listaTrabajadores" class="centercontentleft">
+                                        <?php
+                                        echo $trabajador;
+                                        ?>
+                                        <br/>
 
-                    </form>
-                </div>
+                                        <label>Trabajadores sin informacion esta semana: </label>
+                                        <br/><br/>
+                                        <?php
+                                        echo $restoTrabaj;
+                                        ?>
+                                    </div>
+
+
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <a href='#'>&nbsp;&nbsp;<img src= '../images/vacaciones.jpg' alt='#' border='0' style='width: auto; height: 12px;'/></a>
+                            <label>Este trabajador est&aacute; de vacaciones en este momento</label>
+                        </td>
+                    </tr>
+                </table>
+
+                <br>
+
+                </form>
             </div>
         </div>
+    </div>
 
 
-        <!-- end content -->
-        <!-- start footer -->
+    <!-- end content -->
+    <!-- start footer -->
 
-        <div id="footer">&copy; 2006 Design by <a href="http://www.studio7designs.com">Studio7designs.com</a> | <a href="http://www.arbutusphotography.com">ArbutusPhotography.com</a> | <a href="http://www.opensourcetemplates.org">Opensourcetemplates.org</a>
-
-
-
-
-        </div>
-
-        <!-- end footer -->
+    <div id="footer">&copy; 2006 Design by <a href="http://www.studio7designs.com">Studio7designs.com</a> | <a href="http://www.arbutusphotography.com">ArbutusPhotography.com</a> | <a href="http://www.opensourcetemplates.org">Opensourcetemplates.org</a>
 
 
 
 
-    </body>
+    </div>
+
+    <!-- end footer -->
+
+
+
+
+</body>
 </html>
 
