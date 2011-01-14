@@ -26,10 +26,18 @@ if ($login != "A") {
         <link rel="stylesheet" type="text/css" href="../stylesheet.css" media="screen, projection, tv " />
 
         <script type="text/javascript" language="javascript">
+            ////////////////////////////////////////
+            //RELACION CATEGORIA ROL
+            ////////////////////////////////////////
+            //elimina la confirmacion de la relacion categoria-rol
+            function limpia_confirmacion(){
+                document.getElementById("mensajeRelacionCreada").innerHTML="";
+            }//fin limpia_configuracion()
+
             //confirma los datos de la nueva relacion antes de almacenarlos
             function valida_envia(){
                 //comprobamos que no esta vacio el campo rol
-                if (document.carga_datos.rol.value.length==0){
+                if ((document.carga_datos.rol.value.length==0)||(document.carga_datos.rol.value=='Escriba un rol:')){
                     alert("Tiene que escribir un rol para la relaci\xF3n.")
                     document.carga_datos.rol.focus()
                     return 0;
@@ -37,33 +45,57 @@ if ($login != "A") {
                 //comprobamos que la categoria es un numero
                 if(isNaN(document.carga_datos.selectCategorias.value))
                 {
-                    alert("Seleccione un n\xFAmero");
+                    alert("Seleccione un n\xFAmero para la categor\xEDa.");
                     document.carga_datos.selectCategorias.focus()
                     return 0;
                 }
-
                 if (confirm("Se añadir\xE1 la siguiente relaci\xF3n:\n ROL:  "+document.getElementById("rol").value+"\n CATEGOR\xCDA:  "+document.getElementById("selectCategorias").value)){
-                    document.carga_datos.submit();
+                    actualiza_datos();
                 }
+            }//fin valida_envia()
+
+            //actualiza la relacion rol-categoira mediante AJAX
+            function actualiza_datos(){
+                // Obtener la instancia del objeto XMLHttpRequest
+                if(window.XMLHttpRequest) {
+                    peticion_http = new XMLHttpRequest();
+                }
+                else if(window.ActiveXObject) {
+                    peticion_http = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                // Preparar la funcion de respuesta
+                peticion_http.onreadystatechange = function(){
+                    if (peticion_http.readyState==4 && peticion_http.status==200)
+                    {
+                        window.location.href = "cargarDatos.php?relacionCreada=true";
+                    }
+                }
+                // Realizar peticion HTTP
+                peticion_http.open('GET', 'datosCargados.php?rol='+document.getElementById("rol").value+'&selectCategorias='+document.getElementById("selectCategorias").value, true);
+                peticion_http.send(null);
             }
+
+            ////////////////////////////////////////
+            //CATEGORIA MAXIMA
+            ////////////////////////////////////////
+
+            //elimina la confirmacion de la modificacion de la categoria maxima
+            function limpia_confirmacion2(){
+                document.getElementById("mensajeMaximaCategoria").innerHTML="";
+            }//fin limpia_confirmacion2()
 
             //confirma los datos de la categoria maxima antes de almacenarnos
             function valida_envia2(){
                 miInteger = parseInt(document.carga_datos2.numMaxCategoria.value);
                 if(!isNaN(miInteger)){
-                    actualiza_datos();
+                    actualiza_datos2();
                 }else{
                     alert("Introduzca un n\xFAmero");
                 }
-            }
-
-            //elimina la confirmacion de la modificacion de la categoria maxima
-            function limpia_confirmacion(){
-                document.getElementById("mensajeMaximaCategoria").innerHTML="";
-            }
+            }//fin valida_envia2()
 
             //actualiza la categoria mediante AJAX
-            function actualiza_datos(){
+            function actualiza_datos2(){
                 // Obtener la instancia del objeto XMLHttpRequest
                 if(window.XMLHttpRequest) {
                     peticion_http = new XMLHttpRequest();
@@ -159,7 +191,7 @@ if ($login != "A") {
                                                 if ($_GET["modificadaMaxCategoria"])
                                                     echo "<label style=\"color: green\";><font size=\"2\">M&aacute;xima categor&iacute;a modificada</font></label>";
                                                 echo '<script type="text/javascript">
-                                                   window.setTimeout("limpia_confirmacion()", 4000);
+                                                   window.setTimeout("limpia_confirmacion2()", 4000);
                                                     </script>';
                                                 ?>
                                             </div>
@@ -193,10 +225,15 @@ if ($login != "A") {
                                             </td>
                                             <td><input name="crear" type = "button" value = "A&ntilde;adir" onclick="valida_envia()"></td>
                                             <td>
-                                            <?php
-                                                if ($_GET["creadoProyecto"])
-                                                    echo "<label style=\"color: red\";><font size=\"2\">La relaci&oacute;n ha sido a&ntilde;adida con &eacute;xito</font></label>";
-                                            ?>
+                                                <div id="mensajeRelacionCreada">
+                                                <?php
+                                                if ($_GET["relacionCreada"])
+                                                    echo "<label style=\"color: green\";><font size=\"2\">La relaci&oacute;n ha sido a&ntilde;adida con &eacute;xito</font></label>";
+                                                    echo '<script type="text/javascript">
+                                                        window.setTimeout("limpia_confirmacion()", 4000);
+                                                        </script>';
+                                                ?>
+                                            </div>
                                         </td>
                                     </tr>
                                 </table>

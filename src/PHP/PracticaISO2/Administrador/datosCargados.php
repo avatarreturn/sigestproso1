@@ -6,8 +6,8 @@ include_once ('../Persistencia/conexion.php');
 $conexion = new conexion();
 
 //datos recibidos del form
-$rol = $_POST['rol'];
-$categoria = $_POST['selectCategorias'];
+$rol=$_GET['rol'];
+$categoria = $_GET['selectCategorias'];
 
 
 //LA RELACIÓN CATEGORIA-ROL SE ALMACENA EN LA TABLA ROL COMO UN INSERT
@@ -16,7 +16,7 @@ $result = mysql_query("INSERT INTO Rol (`idRol`, `nombre`, `categoria`) VALUES (
 //cierre de la conexion
 $conexion->cerrarConexion();
 
-echo'<script type="text/javascript">
-        document.location.href="cargarDatos.php?creadoProyecto=true";
-    </script>';
+//echo'<script type="text/javascript">
+//        document.location.href="cargarDatos.php?relacionCreada=true";
+//    </script>';
 ?>
