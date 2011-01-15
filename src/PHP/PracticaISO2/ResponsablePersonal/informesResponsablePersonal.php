@@ -43,46 +43,81 @@ if ($login != "R") {
         }
         //fin calculo del lunes
         //
-        //Esta es la consulta que tengo que poner
-        //SELECT t.dni, t.nombre, t.apellidos, i.idInformeTareas, ta.idTareaPersonal, ta.horas, c.descripcion FROM trabajador t, informetareas i, tareapersonal ta, catalogotareas c where (i.semana='2011-01-10') AND (t.dni=i.Trabajador_dni) AND (ta.CatalogoTareas_idTareaCatalogo=c.idTareaCatalogo) ORDER BY t.nombre
-        $result = mysql_query('SELECT t.dni, t.nombre, t.apellidos, i.idInformeTareas, ta.idTareaPersonal, ta.horas, c.descripcion FROM trabajador t, informetareas i, tareapersonal ta, catalogotareas c where (i.semana=\'' . $semana . '\') AND (t.dni=i.Trabajador_dni) AND (ta.CatalogoTareas_idTareaCatalogo=c.idTareaCatalogo) AND (i.idInformeTareas=ta.InformeTareas_idInformeTareas) ORDER BY t.nombre;');
+        /////////////////Esta es la consulta que tengo que poner////////////////////////////
+        //
+        //
+        //SELECT t.dni, t.nombre, t.apellidos, i.idInformeTareas, ta.idTareaPersonal, ta.horas, c.descripcion, p.nombre proyecto
+        //FROM trabajador t, informetareas i, tareapersonal ta, catalogotareas c, actividad a, iteracion it, fase f, proyecto p
+        //WHERE (i.semana='2011-01-10') AND (t.dni=i.Trabajador_dni)
+        //      AND (ta.CatalogoTareas_idTareaCatalogo=c.idTareaCatalogo)
+        //      AND (i.idInformeTareas=ta.InformeTareas_idInformeTareas)
+        //      AND (i.Actividad_idActividad=a.idActividad)
+        //      AND (a.Iteracion_idIteracion=it.idIteracion)
+        //      AND (it.Fase_idFase=f.idFase)
+        //      AND (f.Proyecto_idProyecto=p.idProyecto)
+        //ORDER BY t.nombre
+        /////////////////////////////////////////////////////////////////////////////////////
+
+        $result = mysql_query('SELECT t.dni, t.nombre, t.apellidos, i.idInformeTareas, ta.idTareaPersonal, ta.horas, c.descripcion, p.nombre proyecto FROM trabajador t, informetareas i, tareapersonal ta, catalogotareas c, actividad a, iteracion it, fase f, proyecto p where (i.semana=\'' . $semana . '\') AND (t.dni=i.Trabajador_dni) AND (ta.CatalogoTareas_idTareaCatalogo=c.idTareaCatalogo) AND (i.idInformeTareas=ta.InformeTareas_idInformeTareas) AND (i.Actividad_idActividad=a.idActividad) AND (a.Iteracion_idIteracion=it.idIteracion) AND (it.Fase_idFase=f.idFase) AND (f.Proyecto_idProyecto=p.idProyecto) ORDER BY t.nombre;');
 
         $totTraProy = mysql_num_rows($result);
         if ($totTraProy > 0) {
             $trabajador = "";
             $dniAnterior = "";
+            $proyAnterior = "";
             $arrayDnis[] = "";
+            $arrayProy;
             $cont = 1;
             $cont2 = 1;
             $sumaHoras = 0;
             $contD[] = 0;   //Array que almacena el numero de veces que aparece cada DNI
-            while ($rowEmp = mysql_fetch_assoc($result)) {
+            while ($rowEmp = mysql_fetch_assoc($result)) { //recorro la matriz resultado
                 $tabla[$cont2] = $rowEmp;
-                if ($rowEmp['dni'] != $dniAnterior) {
-                    array_push($contD, 1);
-                    array_push($arrayDnis, $rowEmp['dni']);
-                    $dniAnterior = $rowEmp['dni'];
+                if ($rowEmp['dni'] != $dniAnterior) {       //
+                                                             //
+                    array_push($contD, 1);                  // añado un elemento más al array de contadores por cada dni distinto que aparezca
+                    array_push($arrayDnis, $rowEmp['dni']); // añado un elemento más al array de dni's por cada dni distinto que aparezca
+                    $dniAnterior = $rowEmp['dni'];          //
                 } else {
-                    $contD[count($contD) - 1]++;
+                    $contD[count($contD) - 1]++;            // sumo uno en el elemento correspondiente del array de contadores
                 }
+
+               if ($rowEmp['proyecto'] != $proyAnterior) {
+                        $arrayProy[$rowEmp['proyecto']] = 0;
+                        $proyAnterior = $rowEmp['proyecto'];
+                    }
+
                 $cont2++;
             }
-            for ($i = 1; $i < count($contD); $i++) {
+            for ($i = 1; $i < count($contD); $i++) {    //aqui empiezo a imprimir los resultados
                 $sumaHoras = 0;
                 $trabajador = $trabajador . "<a href='#' onclick=\"ocultarR('oculto" . $i . "')\">"
                         . "<img src= '../images/iJefeProyecto.gif' alt='#' border='0' style='width: auto; height: 12px;'/>"
                         . "&nbsp;&nbsp;" . utf8_encode($tabla[$cont]['nombre']) . " " . utf8_encode($tabla[$cont]['apellidos']) . "&nbsp;&nbsp;&nbsp;&nbsp;" . $tabla[$cont]['dni'] . "</a>"
                         . "<br/><div id=\"oculto" . $i . "\" style=\"display:none\">";
-                if (vacacionesSiNo($tabla[$cont]['dni'], $semana)) {
+                if (vacacionesSiNo($tabla[$cont]['dni'], $semana)) { // si el trabajador esta de vacaciones le pongo un solito al lado
                     $trabajador = $trabajador . "<table class=\"tablaVariable\"><tr><td><label>Esta de vacaciones</label></td></a></tr></table>";
                 }
+
+                $arrayProyCopia=$arrayProy; //Utilizo una copia del original por que el foreach se lia con los punteros internos del array
+
                 for ($j = $contD[$i]; $j >= 1; $j--) {
                     $trabajador = $trabajador . "<a href='#'><table class=\"tablaVariable\"><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;<img src='../images/iTarea.png' alt='Actividad' border='0' style='width: auto; height: 12px;'>"
                             . "</img>&nbsp;&nbsp;&nbsp;&nbsp;<label>" . utf8_encode($tabla[$cont]['descripcion']) . " </label></td><td><label>" . $tabla[$cont]['horas'] . " horas</label></td></a></tr></table>";
                     $cont++;
                     $sumaHoras = $sumaHoras + $tabla[$cont - 1]['horas'];
+                    $arrayProyCopia[$tabla[$cont - 1]['proyecto']] = $arrayProyCopia[$tabla[$cont - 1]['proyecto']] + $tabla[$cont - 1]['horas'];
+
+
+
                 }
-                $trabajador = $trabajador . "<label>Horas totales: " . $sumaHoras . "</label><br/><br/></div>";
+                $trabajador = $trabajador . "<br/>";
+                foreach ($arrayProyCopia as $proy => $horas) {
+                    if ($horas != 0) {
+                        $trabajador = $trabajador . "<label>&nbsp;&nbsp;&nbsp;&nbsp;Proyecto: " . $proy . " Horas: " . $horas . "</label><br/>";
+                    }
+                }
+                $trabajador = $trabajador . "<label>&nbsp;&nbsp;&nbsp;&nbsp;Horas totales: " . $sumaHoras . "</label><br/><br/></div>";
             }
         }
 
