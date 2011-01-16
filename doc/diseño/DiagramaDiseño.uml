@@ -3796,9 +3796,9 @@
 <XPD:OBJ name="OwnedViews[34]" type="UMLClassView" guid="VLWLB2BIP0Wn75jgvNJgEwAA">
 <XPD:ATTR name="LineColor" type="string">clMaroon</XPD:ATTR>
 <XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
-<XPD:ATTR name="Left" type="integer">48</XPD:ATTR>
+<XPD:ATTR name="Left" type="integer">40</XPD:ATTR>
 <XPD:ATTR name="Top" type="integer">388</XPD:ATTR>
-<XPD:ATTR name="Width" type="integer">188</XPD:ATTR>
+<XPD:ATTR name="Width" type="integer">201</XPD:ATTR>
 <XPD:ATTR name="Height" type="integer">82</XPD:ATTR>
 <XPD:REF name="Model">HULkMej1xU2k0nri4jeKjwAA</XPD:REF>
 <XPD:OBJ name="NameCompartment" type="UMLNameCompartmentView" guid="x4GCD6GBLkCcVwpC+y4c6AAA">
@@ -4799,7 +4799,6 @@
 <XPD:OBJ name="Attributes[0]" type="UMLAttribute" guid="2xLo/xgdckGL7fpvpF2pogAA">
 <XPD:ATTR name="Name" type="string">idConfiguracion</XPD:ATTR>
 <XPD:ATTR name="TypeExpression" type="string">Integer</XPD:ATTR>
-<XPD:ATTR name="InitialValue" type="string">4</XPD:ATTR>
 <XPD:REF name="Owner">HULkMej1xU2k0nri4jeKjwAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="Attributes[1]" type="UMLAttribute" guid="H2JxWvb6r0CLqbYkiIey8QAA">
@@ -4810,6 +4809,7 @@
 <XPD:OBJ name="Attributes[2]" type="UMLAttribute" guid="gbBTDCPM8kKLM3tZz6TOnQAA">
 <XPD:ATTR name="Name" type="string">categoriaMaxima</XPD:ATTR>
 <XPD:ATTR name="TypeExpression" type="string">Natural positivo</XPD:ATTR>
+<XPD:ATTR name="InitialValue" type="string">4</XPD:ATTR>
 <XPD:REF name="Owner">HULkMej1xU2k0nri4jeKjwAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
