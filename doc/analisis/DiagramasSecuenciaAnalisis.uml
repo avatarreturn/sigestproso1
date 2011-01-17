@@ -518,7 +518,7 @@
 <XPD:OBJ name="NameCompartment" type="UMLNameCompartmentView" guid="mEDgYAwMNEqTA61OdPejAQAA">
 <XPD:OBJ name="NameLabel" type="LabelView" guid="wdLtNr6pHkWsmHESk1/aNwAA">
 <XPD:ATTR name="FontStyle" type="integer">1</XPD:ATTR>
-<XPD:ATTR name="Text" type="string">Finalizar actividad/etapa/iteracion</XPD:ATTR>
+<XPD:ATTR name="Text" type="string">Finalizar fase/iteracion/actividad</XPD:ATTR>
 </XPD:OBJ>
 <XPD:OBJ name="StereotypeLabel" type="LabelView" guid="67Oweak3MUq/u9nkLcxJRQAA">
 <XPD:ATTR name="Visible" type="boolean">False</XPD:ATTR>
@@ -5225,7 +5225,7 @@ El Administrador del sistema carga las tablas iniciales y añade nuevas relacion
 <XPD:REF name="Associations[1]">hC9tY4Dz20m4THJDQIUF0wAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="OwnedElements[19]" type="UMLUseCase" guid="BHA9QilCE0qURs4lg4xxiAAA">
-<XPD:ATTR name="Name" type="string">Finalizar actividad/etapa/iteracion</XPD:ATTR>
+<XPD:ATTR name="Name" type="string">Finalizar fase/iteracion/actividad</XPD:ATTR>
 <XPD:REF name="Namespace">ATmooh6kKEiY9KJyncG9ywAA</XPD:REF>
 <XPD:ATTR name="#Views" type="integer">4</XPD:ATTR>
 <XPD:REF name="Views[0]">sDs42ASFyUCOT2BwpeVSsAAA</XPD:REF>
@@ -6979,8 +6979,8 @@ que esta ya asignado.
 <XPD:REF name="Participant">dyDj5H+ZYEOCx2qhaRtaNwAA</XPD:REF>
 <XPD:ATTR name="#Views" type="integer">4</XPD:ATTR>
 <XPD:REF name="Views[0]">AA1sez4+CE24H7xfkvtfNQAA</XPD:REF>
-<XPD:REF name="Views[1]">5WjhK94vMUamFztrO6IaaQAA</XPD:REF>
-<XPD:REF name="Views[2]">BW8HrB38LU6XOXNH9gdI2wAA</XPD:REF>
+<XPD:REF name="Views[1]">BW8HrB38LU6XOXNH9gdI2wAA</XPD:REF>
+<XPD:REF name="Views[2]">5WjhK94vMUamFztrO6IaaQAA</XPD:REF>
 <XPD:REF name="Views[3]">+govvXPVc0uHtUyoP1OhNAAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="Connections[1]" type="UMLAssociationEnd" guid="mXlNMHka8UKCTYv6x3ydxgAA">
@@ -6988,8 +6988,8 @@ que esta ya asignado.
 <XPD:REF name="Participant">DWKtbfqtLUe6tSMUu9NEuwAA</XPD:REF>
 <XPD:ATTR name="#Views" type="integer">4</XPD:ATTR>
 <XPD:REF name="Views[0]">OyC2rIpickms5ayTdhiCdgAA</XPD:REF>
-<XPD:REF name="Views[1]">eN67s54CIkO1DjJknYnBJgAA</XPD:REF>
-<XPD:REF name="Views[2]">jXCCxhYvXUCx/l1n7ztEFgAA</XPD:REF>
+<XPD:REF name="Views[1]">jXCCxhYvXUCx/l1n7ztEFgAA</XPD:REF>
+<XPD:REF name="Views[2]">eN67s54CIkO1DjJknYnBJgAA</XPD:REF>
 <XPD:REF name="Views[3]">aaEVk1tafkG/NxikTdcpDwAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
@@ -7017,8 +7017,8 @@ que esta ya asignado.
 <XPD:REF name="Participant">gVO8LTYe7k2ymaMgM8HeBQAA</XPD:REF>
 <XPD:ATTR name="#Views" type="integer">4</XPD:ATTR>
 <XPD:REF name="Views[0]">PkNkYzzhcUKLs+YWJPXLNgAA</XPD:REF>
-<XPD:REF name="Views[1]">pWWCtXNtT0+gi0otXC6IKwAA</XPD:REF>
-<XPD:REF name="Views[2]">l5AWvxfeikal5w2rcAswXgAA</XPD:REF>
+<XPD:REF name="Views[1]">l5AWvxfeikal5w2rcAswXgAA</XPD:REF>
+<XPD:REF name="Views[2]">pWWCtXNtT0+gi0otXC6IKwAA</XPD:REF>
 <XPD:REF name="Views[3]">Qmwe36QNuUezQ8L4LmTFXQAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="Connections[1]" type="UMLAssociationEnd" guid="tJIFfu+r+EOx3uBe0n9iFQAA">
@@ -7026,8 +7026,8 @@ que esta ya asignado.
 <XPD:REF name="Participant">ht/Y23pUNkufrAdQFq6OUAAA</XPD:REF>
 <XPD:ATTR name="#Views" type="integer">4</XPD:ATTR>
 <XPD:REF name="Views[0]">UWBdyiJbHUqR70517waOXgAA</XPD:REF>
-<XPD:REF name="Views[1]">ZwhGjs+EW0SOBFBbW26dKgAA</XPD:REF>
-<XPD:REF name="Views[2]">wHhcUx6/506JZoHngKshrAAA</XPD:REF>
+<XPD:REF name="Views[1]">wHhcUx6/506JZoHngKshrAAA</XPD:REF>
+<XPD:REF name="Views[2]">ZwhGjs+EW0SOBFBbW26dKgAA</XPD:REF>
 <XPD:REF name="Views[3]">jnfDSX6ZfEelzHPu+zg/kQAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
@@ -7044,8 +7044,8 @@ que esta ya asignado.
 <XPD:REF name="Participant">dyDj5H+ZYEOCx2qhaRtaNwAA</XPD:REF>
 <XPD:ATTR name="#Views" type="integer">4</XPD:ATTR>
 <XPD:REF name="Views[0]">L0zL4gSBjESPCfYyCx933gAA</XPD:REF>
-<XPD:REF name="Views[1]">sK0/Z4dL9UCp4g85wDJr1gAA</XPD:REF>
-<XPD:REF name="Views[2]">BkxpopmQ9k6PFAD4Clm6KAAA</XPD:REF>
+<XPD:REF name="Views[1]">BkxpopmQ9k6PFAD4Clm6KAAA</XPD:REF>
+<XPD:REF name="Views[2]">sK0/Z4dL9UCp4g85wDJr1gAA</XPD:REF>
 <XPD:REF name="Views[3]">JVfYrjxEQkC3rFpIgNfFigAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="Connections[1]" type="UMLAssociationEnd" guid="14fOvE9isUSHocSq4gZ6bgAA">
@@ -7053,8 +7053,8 @@ que esta ya asignado.
 <XPD:REF name="Participant">2kypgaADXkenLK/K9hyFlQAA</XPD:REF>
 <XPD:ATTR name="#Views" type="integer">4</XPD:ATTR>
 <XPD:REF name="Views[0]">1AeSfRRekkaAbrjriOepzwAA</XPD:REF>
-<XPD:REF name="Views[1]">dqS51vK1lkeGBAvHPN16EAAA</XPD:REF>
-<XPD:REF name="Views[2]">877NCvkA7ESTgWG804Wn1AAA</XPD:REF>
+<XPD:REF name="Views[1]">877NCvkA7ESTgWG804Wn1AAA</XPD:REF>
+<XPD:REF name="Views[2]">dqS51vK1lkeGBAvHPN16EAAA</XPD:REF>
 <XPD:REF name="Views[3]">JdMlFAix0kCi5CTVDuKCFwAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
