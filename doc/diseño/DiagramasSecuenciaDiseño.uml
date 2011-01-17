@@ -518,7 +518,7 @@
 <XPD:OBJ name="NameCompartment" type="UMLNameCompartmentView" guid="mEDgYAwMNEqTA61OdPejAQAA">
 <XPD:OBJ name="NameLabel" type="LabelView" guid="wdLtNr6pHkWsmHESk1/aNwAA">
 <XPD:ATTR name="FontStyle" type="integer">1</XPD:ATTR>
-<XPD:ATTR name="Text" type="string">Finalizar actividad/etapa/iteracion</XPD:ATTR>
+<XPD:ATTR name="Text" type="string">Finalizar fase/iteracion/actividad</XPD:ATTR>
 </XPD:OBJ>
 <XPD:OBJ name="StereotypeLabel" type="LabelView" guid="67Oweak3MUq/u9nkLcxJRQAA">
 <XPD:ATTR name="Visible" type="boolean">False</XPD:ATTR>
@@ -6784,7 +6784,7 @@ El Administrador del sistema carga las tablas iniciales y añade nuevas relacion
 <XPD:REF name="Associations[1]">hC9tY4Dz20m4THJDQIUF0wAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="OwnedElements[19]" type="UMLUseCase" guid="BHA9QilCE0qURs4lg4xxiAAA">
-<XPD:ATTR name="Name" type="string">Finalizar actividad/etapa/iteracion</XPD:ATTR>
+<XPD:ATTR name="Name" type="string">Finalizar fase/iteracion/actividad</XPD:ATTR>
 <XPD:REF name="Namespace">ATmooh6kKEiY9KJyncG9ywAA</XPD:REF>
 <XPD:ATTR name="#Views" type="integer">4</XPD:ATTR>
 <XPD:REF name="Views[0]">sDs42ASFyUCOT2BwpeVSsAAA</XPD:REF>
@@ -8185,6 +8185,7 @@ El Desarrollador introduce datos temporales para cada tipo de tarea personal en 
 <XPD:ATTR name="#OwnedDiagrams" type="integer">1</XPD:ATTR>
 <XPD:OBJ name="OwnedDiagrams[0]" type="UMLSequenceDiagram" guid="MLMfA9uo90Cypuckid0U8QAA">
 <XPD:ATTR name="Name" type="string">Escoger_vacaciones</XPD:ATTR>
+<XPD:ATTR name="MessageSignature" type="UMLMessageSignatureKind">mskNameOnly</XPD:ATTR>
 <XPD:REF name="DiagramOwner">2UYdQAGPP0Wvj4pP0leacwAA</XPD:REF>
 <XPD:OBJ name="DiagramView" type="UMLSequenceDiagramView" guid="zekGxj0wRU+YVw5Z8y0w6QAA">
 <XPD:REF name="Diagram">MLMfA9uo90Cypuckid0U8QAA</XPD:REF>
