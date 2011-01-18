@@ -6921,7 +6921,7 @@ El Administrador del sistema carga las tablas iniciales y añade nuevas relacion
 <XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
 <XPD:ATTR name="Left" type="integer">700</XPD:ATTR>
 <XPD:ATTR name="Top" type="integer">136</XPD:ATTR>
-<XPD:ATTR name="Width" type="integer">91</XPD:ATTR>
+<XPD:ATTR name="Width" type="integer">95</XPD:ATTR>
 <XPD:ATTR name="Height" type="integer">373</XPD:ATTR>
 <XPD:REF name="Model">xDM1j6VErUmS5M1d/s67wwAA</XPD:REF>
 <XPD:OBJ name="NameCompartment" type="UMLNameCompartmentView" guid="u2WkCMFvIUCqs1CAEm6CIwAA">
@@ -7185,7 +7185,7 @@ El Desarrollador introduce datos temporales para cada tipo de tarea personal en 
 <XPD:ATTR name="LineColor" type="string">clMaroon</XPD:ATTR>
 <XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
 <XPD:ATTR name="LineStyle" type="LineStyleKind">lsRectilinear</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">586,310;738,310</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">586,310;740,310</XPD:ATTR>
 <XPD:REF name="Model">xI6yyseSkEmBjMEAMyHnyQAA</XPD:REF>
 <XPD:REF name="Head">JljejqWT1k6IYepbkbgC4QAA</XPD:REF>
 <XPD:REF name="Tail">cximpL347kysLiIkLtnPXgAA</XPD:REF>
@@ -7211,7 +7211,7 @@ El Desarrollador introduce datos temporales para cada tipo de tarea personal en 
 <XPD:REF name="HostEdge">xk8v5nopAkO+Jw/lkV9mcwAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="Activation" type="UMLActivationView" guid="4hCAd6oNNkqoFxkKuopwnwAA">
-<XPD:ATTR name="Left" type="integer">738</XPD:ATTR>
+<XPD:ATTR name="Left" type="integer">740</XPD:ATTR>
 <XPD:ATTR name="Top" type="integer">310</XPD:ATTR>
 <XPD:ATTR name="Width" type="integer">14</XPD:ATTR>
 <XPD:ATTR name="Height" type="integer">138</XPD:ATTR>
@@ -7221,7 +7221,7 @@ El Desarrollador introduce datos temporales para cada tipo de tarea personal en 
 <XPD:ATTR name="LineColor" type="string">clMaroon</XPD:ATTR>
 <XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
 <XPD:ATTR name="LineStyle" type="LineStyleKind">lsRectilinear</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">751,318;929,318</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">753,318;929,318</XPD:ATTR>
 <XPD:REF name="Model">Fkuush688k+AkREJBLDysAAA</XPD:REF>
 <XPD:REF name="Head">V7hPTny7m0itw5F6L4dt1QAA</XPD:REF>
 <XPD:REF name="Tail">JljejqWT1k6IYepbkbgC4QAA</XPD:REF>
@@ -7257,7 +7257,7 @@ El Desarrollador introduce datos temporales para cada tipo de tarea personal en 
 <XPD:ATTR name="LineColor" type="string">clMaroon</XPD:ATTR>
 <XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
 <XPD:ATTR name="LineStyle" type="LineStyleKind">lsRectilinear</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">929,353;751,353</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">929,353;753,353</XPD:ATTR>
 <XPD:REF name="Model">OKNx2idjk0uFAwuHHNrCyAAA</XPD:REF>
 <XPD:REF name="Head">JljejqWT1k6IYepbkbgC4QAA</XPD:REF>
 <XPD:REF name="Tail">V7hPTny7m0itw5F6L4dt1QAA</XPD:REF>
@@ -7284,7 +7284,7 @@ El Desarrollador introduce datos temporales para cada tipo de tarea personal en 
 </XPD:OBJ>
 <XPD:OBJ name="Activation" type="UMLActivationView" guid="ZibbWFLCd0izvDKpJlq7GQAA">
 <XPD:ATTR name="Visible" type="boolean">False</XPD:ATTR>
-<XPD:ATTR name="Left" type="integer">738</XPD:ATTR>
+<XPD:ATTR name="Left" type="integer">740</XPD:ATTR>
 <XPD:ATTR name="Top" type="integer">353</XPD:ATTR>
 <XPD:ATTR name="Width" type="integer">14</XPD:ATTR>
 <XPD:ATTR name="Height" type="integer">29</XPD:ATTR>
@@ -7294,7 +7294,7 @@ El Desarrollador introduce datos temporales para cada tipo de tarea personal en 
 <XPD:ATTR name="LineColor" type="string">clMaroon</XPD:ATTR>
 <XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
 <XPD:ATTR name="LineStyle" type="LineStyleKind">lsRectilinear</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">751,408;1072,408</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">753,408;1072,408</XPD:ATTR>
 <XPD:REF name="Model">DVAzTyDw6EmXWQnr/sKCYAAA</XPD:REF>
 <XPD:REF name="Head">t4OYBcdyq0SJhcDjyUvcSgAA</XPD:REF>
 <XPD:REF name="Tail">JljejqWT1k6IYepbkbgC4QAA</XPD:REF>
@@ -7330,7 +7330,7 @@ El Desarrollador introduce datos temporales para cada tipo de tarea personal en 
 <XPD:ATTR name="LineColor" type="string">clMaroon</XPD:ATTR>
 <XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
 <XPD:ATTR name="LineStyle" type="LineStyleKind">lsRectilinear</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">1072,427;751,427</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">1072,427;753,427</XPD:ATTR>
 <XPD:REF name="Model">JRELJN2NQkqeqOR1YFx2nAAA</XPD:REF>
 <XPD:REF name="Head">JljejqWT1k6IYepbkbgC4QAA</XPD:REF>
 <XPD:REF name="Tail">t4OYBcdyq0SJhcDjyUvcSgAA</XPD:REF>
@@ -7357,7 +7357,7 @@ El Desarrollador introduce datos temporales para cada tipo de tarea personal en 
 </XPD:OBJ>
 <XPD:OBJ name="Activation" type="UMLActivationView" guid="xQgjHdH9vUC/9OFVcVVTsgAA">
 <XPD:ATTR name="Visible" type="boolean">False</XPD:ATTR>
-<XPD:ATTR name="Left" type="integer">738</XPD:ATTR>
+<XPD:ATTR name="Left" type="integer">740</XPD:ATTR>
 <XPD:ATTR name="Top" type="integer">427</XPD:ATTR>
 <XPD:ATTR name="Width" type="integer">14</XPD:ATTR>
 <XPD:ATTR name="Height" type="integer">29</XPD:ATTR>
@@ -7367,7 +7367,7 @@ El Desarrollador introduce datos temporales para cada tipo de tarea personal en 
 <XPD:ATTR name="LineColor" type="string">clMaroon</XPD:ATTR>
 <XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
 <XPD:ATTR name="LineStyle" type="LineStyleKind">lsRectilinear</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">738,435;586,435</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">740,435;586,435</XPD:ATTR>
 <XPD:REF name="Model">bqKdoua+Jkm/FzvF1mj2pgAA</XPD:REF>
 <XPD:REF name="Head">cximpL347kysLiIkLtnPXgAA</XPD:REF>
 <XPD:REF name="Tail">JljejqWT1k6IYepbkbgC4QAA</XPD:REF>
@@ -8189,7 +8189,7 @@ El Desarrollador introduce datos temporales para cada tipo de tarea personal en 
 <XPD:REF name="DiagramOwner">2UYdQAGPP0Wvj4pP0leacwAA</XPD:REF>
 <XPD:OBJ name="DiagramView" type="UMLSequenceDiagramView" guid="zekGxj0wRU+YVw5Z8y0w6QAA">
 <XPD:REF name="Diagram">MLMfA9uo90Cypuckid0U8QAA</XPD:REF>
-<XPD:ATTR name="#OwnedViews" type="integer">16</XPD:ATTR>
+<XPD:ATTR name="#OwnedViews" type="integer">17</XPD:ATTR>
 <XPD:OBJ name="OwnedViews[0]" type="UMLSeqObjectView" guid="nP6CsmlFkUO1Ly/z+gCV7wAA">
 <XPD:ATTR name="LineColor" type="string">clMaroon</XPD:ATTR>
 <XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
@@ -8686,6 +8686,16 @@ que esta ya asignado.
 <XPD:ATTR name="Width" type="integer">14</XPD:ATTR>
 <XPD:ATTR name="Height" type="integer">29</XPD:ATTR>
 </XPD:OBJ>
+</XPD:OBJ>
+<XPD:OBJ name="OwnedViews[16]" type="UMLNoteView" guid="Xxjqvi2ygU2sXLrrHaPgdQAA">
+<XPD:ATTR name="LineColor" type="string">clMaroon</XPD:ATTR>
+<XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
+<XPD:ATTR name="Left" type="integer">296</XPD:ATTR>
+<XPD:ATTR name="Top" type="integer">476</XPD:ATTR>
+<XPD:ATTR name="Width" type="integer">292</XPD:ATTR>
+<XPD:ATTR name="Height" type="integer">30</XPD:ATTR>
+<XPD:ATTR name="Text" type="string">ese setVacaciones no será un create?
+</XPD:ATTR>
 </XPD:OBJ>
 </XPD:OBJ>
 </XPD:OBJ>
