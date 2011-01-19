@@ -62,12 +62,6 @@
                                 <img id="sign-in" name="boton_login" src="images/entrar.gif" alt="Entrar" tabindex="3" onclick="valida_envia()" />
                             </fieldset>
                         </div>
-
-                        <div id="forgot-password" style="display: none;">
-                            <input name="commit" value="Email me my password" type="submit" />
-                            <label>Just kidding <a href="#" onclick="remember(); return false;">I remember now</a></label>
-                        </div>
-
                     </form>
                 </div><!-- /main -->
             </div><!-- /content -->
