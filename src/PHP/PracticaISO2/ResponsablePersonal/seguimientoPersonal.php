@@ -34,6 +34,10 @@ if ($login != "R") {
         include_once("funciones.php");
 
         $conexion = new conexion();
+
+        //Calculo del lunes de la semana actual
+        $semana = semanaActual();
+        //fin calculo del lunes
 //        $result = mysql_query('SELECT t.dni, t.nombre, t.apellidos, tp.Trabajador_dni, tp.Proyecto_idProyecto, tp.porcentaje FROM trabajador t, trabajadorProyecto tp where (t.dni=tp.Trabajador_dni);');
         $result = mysql_query('SELECT t.dni, t.nombre, t.apellidos, tp.Trabajador_dni, tp.Proyecto_idProyecto, tp.porcentaje, p.idProyecto, p.nombre nombre_proy FROM Trabajador t, TrabajadorProyecto tp, Proyecto p WHERE (p.idProyecto=tp.Proyecto_idProyecto) AND (t.dni=tp.Trabajador_dni) ORDER BY t.dni;');
         $totTraProy = mysql_num_rows($result);
@@ -57,11 +61,17 @@ if ($login != "R") {
                             . "&nbsp;&nbsp;" . utf8_encode($rowEmp['nombre']) . " " . utf8_encode($rowEmp['apellidos']) . "     " . $rowEmp['dni'] . "</a>";
                     //Compruebo si el trabajador esta de vacaciones
                     if (vacacionesSiNo($rowEmp['dni'], date("Y-m-d"))) {
-                        $trabajador = $trabajador . "<a href='#'>&nbsp;&nbsp;<img src= '../images/vacaciones.jpg' alt='#' border='0' style='width: auto; height: 12px;'/></a>";
-                    }
+                        $intervVaca = vacacionesPeriodo($rowEmp['dni'], $semana);
+                        $trabajador = $trabajador . "<a href='#'>&nbsp;&nbsp;<img src= '../images/vacaciones.jpg' alt='#' border='0' style='width: auto; height: 12px;'/></a>"
+                                . "<div id=\"oculto" . $cont . "\" style=\"display:none\"><br/><label>Est&aacute; de vacaciones desde el dia " . $intervVaca['fechaInicio'] . " hasta el dia " . $intervVaca['fechaFin'] . "</label>"
+                                . "<a href='#'><table><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;<img src='../images/iProyecto.png' alt='Actividad' border='0' style='width: auto; height: 12px;'>"
+                                . "</img><label> Proyecto: " . $rowEmp['nombre_proy'] . "</label></td><td><label>&nbsp;&nbsp;&nbsp;&nbsp;Dedicación: " . $rowEmp['porcentaje'] . " %</label></td></a></tr>";
+                    } else {
 
-                    $trabajador = $trabajador . "<div id=\"oculto" . $cont . "\" style=\"display:none\"><a href='#'><table><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;<img src='../images/iProyecto.png' alt='Actividad' border='0' style='width: auto; height: 12px;'>"
-                            . "</img><label> Proyecto: " . $rowEmp['nombre_proy'] . "</label></td><td><label>&nbsp;&nbsp;&nbsp;&nbsp;Dedicación: " . $rowEmp['porcentaje'] . " %</label></td></a></tr>";
+                        $trabajador = $trabajador . "<div id=\"oculto" . $cont . "\" style=\"display:none\"><br/>"
+                                . "<a href='#'><table><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;<img src='../images/iProyecto.png' alt='Actividad' border='0' style='width: auto; height: 12px;'>"
+                                . "</img><label> Proyecto: " . $rowEmp['nombre_proy'] . "</label></td><td><label>&nbsp;&nbsp;&nbsp;&nbsp;Dedicación: " . $rowEmp['porcentaje'] . " %</label></td></a></tr>";
+                    }
                 }
 
                 $dniAnterior = $rowEmp['dni'];
@@ -86,9 +96,16 @@ if ($login != "R") {
         $result = mysql_query($sql);
         $restoTrabaj = "<br/><br/><label>Trabajadores no asociados a ningun proyecto: </label><br/><br/>";
         while ($rowEmp = mysql_fetch_assoc($result)) {
-            $restoTrabaj = $restoTrabaj . "<a href='#'>"
+            $restoTrabaj = $restoTrabaj . "<a href='#' onclick=\"ocultarR('oculto" . $rowEmp['dni'] . "')\">"
                     . "<img src= '../images/iJefeProyecto.gif' alt='#' border='0' style='width: auto; height: 12px;'/>"
-                    . "&nbsp;&nbsp;" . utf8_encode($rowEmp['nombre']) . " " . utf8_encode($rowEmp['apellidos']) . "&nbsp;&nbsp;&nbsp;&nbsp;" . $rowEmp['dni'] . "</a> <br/>";
+                    . "&nbsp;&nbsp;" . utf8_encode($rowEmp['nombre']) . " " . utf8_encode($rowEmp['apellidos']) . "&nbsp;&nbsp;&nbsp;&nbsp;" . $rowEmp['dni'] . "</a>";
+
+            if (vacacionesSiNo($rowEmp['dni'], $semana)) {
+                $intervVaca = vacacionesPeriodo($rowEmp['dni'], $semana);
+                $restoTrabaj = $restoTrabaj . "<a href='#'>&nbsp;&nbsp;<img src= '../images/vacaciones.jpg' alt='#' border='0' style='width: auto; height: 12px;'/></a>"
+                        . "<div id=\"oculto" . $rowEmp['dni'] . "\" style=\"display:none\"><br/><label>Est&aacute; de vacaciones desde el dia " . $intervVaca['fechaInicio'] . " hasta el dia " . $intervVaca['fechaFin'] . "</label></div>";
+            }
+            $restoTrabaj = $restoTrabaj . "<br/>";
         }
 
 
@@ -175,13 +192,13 @@ if ($login != "R") {
                         <table>
                             <tr>
                                 <td>
-                                    <?php
-                                    echo $trabajador;
-                                    ?>
-                                    
-                                    <?php
-                                    echo $restoTrabaj;
-                                    ?>
+<?php
+        echo $trabajador;
+?>
+
+<?php
+        echo $restoTrabaj;
+?>
                                 </td>
                             </tr>
                             <tr>

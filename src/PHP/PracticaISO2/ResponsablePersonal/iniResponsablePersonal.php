@@ -235,7 +235,7 @@ if ($login != "R") {
                                             $fecha = getdate();
                                             $anio = $fecha[year] - 18;
                                             for ($i = 1950; $i <= $anio; $i++) {
-                                                echo '<option value="1">' . $i . '</option>';
+                                                echo '<option value="'.$i.'">' . $i . '</option>';
                                             }
                                             ?>
                                     </div>

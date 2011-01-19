@@ -10,7 +10,7 @@ if ($login != "R") {
 
     <head>
 
-        <title>Nautica08</title>
+        <title>[SIGESTPROSO] Seguimiento Integrado de la GESTi&oacute;n Temporal de PROyectos de Software</title>
 
         <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
         <meta name="description" content="studio7designs" />
@@ -32,17 +32,14 @@ if ($login != "R") {
 
         include_once ('../Persistencia/conexion.php');
         $conexion = new conexion();
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////// INICIO INFORMES DE LA ULTIMA SEMANA ///////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //Calculamos el lunes de la semana actual
-        $dSemana = date(N);
-        $semana = date("Y-m-d");
-        if ($dSemana != 1) {
-            while ($dSemana != 1) {
-                $semana = date("Y-m-d", strtotime(date("Y-m-d", strtotime($semana)) . " -1 day"));
-                $dSemana = date('N', strtotime($semana));
-            }
-        }
-        //fin calculo del lunes
-        //
+        $semana = semanaActual();
+
+
         /////////////////Esta es la consulta que tengo que poner////////////////////////////
         //
         //
@@ -58,7 +55,7 @@ if ($login != "R") {
         //ORDER BY t.nombre
         /////////////////////////////////////////////////////////////////////////////////////
 
-        $result = mysql_query('SELECT t.dni, t.nombre, t.apellidos, i.idInformeTareas, ta.idTareaPersonal, ta.horas, c.descripcion, p.nombre proyecto FROM trabajador t, informetareas i, tareapersonal ta, catalogotareas c, actividad a, iteracion it, fase f, proyecto p where (i.semana=\'' . $semana . '\') AND (t.dni=i.Trabajador_dni) AND (ta.CatalogoTareas_idTareaCatalogo=c.idTareaCatalogo) AND (i.idInformeTareas=ta.InformeTareas_idInformeTareas) AND (i.Actividad_idActividad=a.idActividad) AND (a.Iteracion_idIteracion=it.idIteracion) AND (it.Fase_idFase=f.idFase) AND (f.Proyecto_idProyecto=p.idProyecto) ORDER BY t.nombre;');
+        $result = mysql_query('SELECT t.dni, t.nombre, t.apellidos, i.idInformeTareas, ta.idTareaPersonal, ta.horas, c.descripcion, p.idProyecto, p.nombre proyecto FROM trabajador t, informetareas i, tareapersonal ta, catalogotareas c, actividad a, iteracion it, fase f, proyecto p where (i.semana=\'' . $semana . '\') AND (t.dni=i.Trabajador_dni) AND (ta.CatalogoTareas_idTareaCatalogo=c.idTareaCatalogo) AND (i.idInformeTareas=ta.InformeTareas_idInformeTareas) AND (i.Actividad_idActividad=a.idActividad) AND (a.Iteracion_idIteracion=it.idIteracion) AND (it.Fase_idFase=f.idFase) AND (f.Proyecto_idProyecto=p.idProyecto) ORDER BY t.nombre;');
 
         $totTraProy = mysql_num_rows($result);
         if ($totTraProy > 0) {
@@ -74,7 +71,7 @@ if ($login != "R") {
             while ($rowEmp = mysql_fetch_assoc($result)) { //recorro la matriz resultado
                 $tabla[$cont2] = $rowEmp;
                 if ($rowEmp['dni'] != $dniAnterior) {       //
-                                                             //
+                    //
                     array_push($contD, 1);                  // añado un elemento más al array de contadores por cada dni distinto que aparezca
                     array_push($arrayDnis, $rowEmp['dni']); // añado un elemento más al array de dni's por cada dni distinto que aparezca
                     $dniAnterior = $rowEmp['dni'];          //
@@ -82,15 +79,16 @@ if ($login != "R") {
                     $contD[count($contD) - 1]++;            // sumo uno en el elemento correspondiente del array de contadores
                 }
 
-               if ($rowEmp['proyecto'] != $proyAnterior) {
-                        $arrayProy[$rowEmp['proyecto']] = 0;
-                        $proyAnterior = $rowEmp['proyecto'];
-                    }
+                if ($rowEmp['proyecto'] != $proyAnterior) {
+                    $arrayProy[$rowEmp['proyecto']] = 0;
+                    $proyAnterior = $rowEmp['proyecto'];
+                }
 
                 $cont2++;
             }
             for ($i = 1; $i < count($contD); $i++) {    //aqui empiezo a imprimir los resultados
                 $sumaHoras = 0;
+                $dni=$tabla[$cont]['dni'];
                 $trabajador = $trabajador . "<a href='#' onclick=\"ocultarR('oculto" . $i . "')\">"
                         . "<img src= '../images/iJefeProyecto.gif' alt='#' border='0' style='width: auto; height: 12px;'/>"
                         . "&nbsp;&nbsp;" . utf8_encode($tabla[$cont]['nombre']) . " " . utf8_encode($tabla[$cont]['apellidos']) . "&nbsp;&nbsp;&nbsp;&nbsp;" . $tabla[$cont]['dni'] . "</a>"
@@ -99,49 +97,85 @@ if ($login != "R") {
                     $trabajador = $trabajador . "<table class=\"tablaVariable\"><tr><td><label>Esta de vacaciones</label></td></a></tr></table>";
                 }
 
-                $arrayProyCopia=$arrayProy; //Utilizo una copia del original por que el foreach se lia con los punteros internos del array
+                $arrayProyCopia = $arrayProy; //Utilizo una copia del original por que el foreach se lia con los punteros internos del array
 
                 for ($j = $contD[$i]; $j >= 1; $j--) {
-                    $trabajador = $trabajador . "<a href='#'><table class=\"tablaVariable\"><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;<img src='../images/iTarea.png' alt='Actividad' border='0' style='width: auto; height: 12px;'>"
-                            . "</img>&nbsp;&nbsp;&nbsp;&nbsp;<label>" . utf8_encode($tabla[$cont]['descripcion']) . " </label></td><td><label>" . $tabla[$cont]['horas'] . " horas</label></td></a></tr></table>";
+//                    $trabajador = $trabajador . "<a href='#'><table class=\"tablaVariable\"><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;<img src='../images/iTarea.png' alt='Actividad' border='0' style='width: auto; height: 12px;'>"
+//                            . "</img>&nbsp;&nbsp;&nbsp;&nbsp;<label>" . utf8_encode($tabla[$cont]['descripcion']) . " </label></td><td><label>" . $tabla[$cont]['horas'] . " horas</label></td></a></tr></table>";
+
                     $cont++;
                     $sumaHoras = $sumaHoras + $tabla[$cont - 1]['horas'];
                     $arrayProyCopia[$tabla[$cont - 1]['proyecto']] = $arrayProyCopia[$tabla[$cont - 1]['proyecto']] + $tabla[$cont - 1]['horas'];
-
-
-
                 }
-                $trabajador = $trabajador . "<br/>";
+                $trabajador = $trabajador . "<table>";
                 foreach ($arrayProyCopia as $proy => $horas) {
                     if ($horas != 0) {
-                        $trabajador = $trabajador . "<label>&nbsp;&nbsp;&nbsp;&nbsp;Proyecto: " . $proy . " Horas: " . $horas . "</label><br/>";
+                        //consulta para la participacion en el proyecto
+                        $resPar=mysql_query('SELECT porcentaje  FROM trabajadorproyecto WHERE Trabajador_dni = \''.$dni.'\' AND Proyecto_idProyecto=(select idProyecto from proyecto where nombre=\''.$proy.'\')');
+                        $rowPar=mysql_fetch_assoc($resPar);
+                        //fin consulta participacion
+                        $trabajador = $trabajador . "<tr><td><a><label>Proyecto: " . $proy . "</label></a></td><td><a><label>&nbsp;&nbsp;&nbsp;&nbsp;Participaci&oacute;n: ".$rowPar[porcentaje]."%<label></a></td><td><a><label>&nbsp;&nbsp;&nbsp;&nbsp;Horas: " . $horas . "</label></a></td></tr>";
                     }
                 }
-                $trabajador = $trabajador . "<label>&nbsp;&nbsp;&nbsp;&nbsp;Horas totales: " . $sumaHoras . "</label><br/><br/></div>";
+                $trabajador = $trabajador . "<tr><td><a><label>Horas totales: " . $sumaHoras . "</label></a></td></tr></table><br/></div>";
+            }
+
+            //aqui calculo los trabajadores sin informacion de horas trabajadas
+            $sql = "select dni, nombre, apellidos from trabajador where";
+            if (count($arrayDnis) > 1) { //si el array de dni encontrados tiene contenido
+                $sql = $sql . " (dni != '" . $arrayDnis[1] . "')"; //excluyo de la consulta el primer dni
+                for ($i = 1; $i < count($arrayDnis); $i++) {    //repito para cada dni
+                    $sql = $sql . " and (dni != '" . $arrayDnis[$i] . "')"; //para excluir de la consulta los dni ya encontrados
+                }
+                $sql = $sql . ";"; //cierro la consulta sql
+            }
+            $result = mysql_query($sql);
+            $restoTrabaj = "";
+            while ($rowEmp = mysql_fetch_assoc($result)) {
+                $restoTrabaj = $restoTrabaj . "<a href='#' onclick=\"ocultarR('oculto" . $rowEmp['dni'] . "')\">"
+                        . "<img src= '../images/iJefeProyecto.gif' alt='#' border='0' style='width: auto; height: 12px;'/>"
+                        . "&nbsp;&nbsp;" . utf8_encode($rowEmp['nombre']) . " " . utf8_encode($rowEmp['apellidos']) . "&nbsp;&nbsp;&nbsp;&nbsp;" . $rowEmp['dni'] . "</a>";
+
+
+                if (vacacionesSiNo($rowEmp['dni'], $semana)) {
+                    $intervVaca = vacacionesPeriodo($rowEmp['dni'], $semana);
+                    $restoTrabaj = $restoTrabaj . "<a href='#'>&nbsp;&nbsp;<img src= '../images/vacaciones.jpg' alt='#' border='0' style='width: auto; height: 12px;'/></a>"
+                            . "<div id=\"oculto" . $rowEmp['dni'] . "\" style=\"display:none\"><br/><a><label>Est&aacute; de vacaciones desde el dia " . $intervVaca['fechaInicio'] . " hasta el dia " . $intervVaca['fechaFin'] . "</label></a></div>";
+                }
+                $restoTrabaj = $restoTrabaj . "<br/>";
+            }
+        } else {        ///si no hay ningun trabajador con datos de tareas realizadas para esta semana
+            $sql = "select dni, nombre, apellidos from trabajador;";
+            $result = mysql_query($sql);
+            while ($rowEmp = mysql_fetch_assoc($result)) {
+                $restoTrabaj = $restoTrabaj . "<a href='#' onclick=\"ocultarR('oculto" . $rowEmp['dni'] . "')\">"
+                        . "<img src= '../images/iJefeProyecto.gif' alt='#' border='0' style='width: auto; height: 12px;'/>"
+                        . "&nbsp;&nbsp;" . utf8_encode($rowEmp['nombre']) . " " . utf8_encode($rowEmp['apellidos']) . "&nbsp;&nbsp;&nbsp;&nbsp;" . $rowEmp['dni'] . "</a>";
+
+
+                if (vacacionesSiNo($rowEmp['dni'], $semana)) {
+                    $intervVaca = vacacionesPeriodo($rowEmp['dni'], $semana);
+                    $restoTrabaj = $restoTrabaj . "<a href='#'>&nbsp;&nbsp;<img src= '../images/vacaciones.jpg' alt='#' border='0' style='width: auto; height: 12px;'/></a>"
+                            . "<div id=\"oculto" . $rowEmp['dni'] . "\" style=\"display:none\"><br/><a><label>Est&aacute; de vacaciones desde el dia " . $intervVaca['fechaInicio'] . " hasta el dia " . $intervVaca['fechaFin'] . "</label></a></div>";
+                }
+                $restoTrabaj = $restoTrabaj . "<br/>";
             }
         }
 
-        //aqui calculo los trabajadores sin informacion de horas trabajadas
-        $sql = "select dni, nombre, apellidos from trabajador where";
-        if (count($arrayDnis) > 1) { //si el array de dni encontrados tiene contenido
-            $sql = $sql . " (dni != '" . $arrayDnis[1] . "')"; //excluyo de la consulta el primer dni
-            for ($i = 1; $i < count($arrayDnis); $i++) {    //repito para cada dni
-                $sql = $sql . " and (dni != '" . $arrayDnis[$i] . "')"; //para excluir de la consulta los dni ya encontrados
-            }
-            $sql = $sql . ";"; //cierro la consulta sql
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////// FIN INFORMES DE LA ULTIMA SEMANA ///////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////// INICIO INFORMES POR INTERVALO DE TIEMPO ////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function informeTrabajador() {
+//    $fechaIni =
         }
-        $result = mysql_query($sql);
-        $restoTrabaj = "";
-        while ($rowEmp = mysql_fetch_assoc($result)) {
-            $restoTrabaj = $restoTrabaj . "<a href='#'>"
-                    . "<img src= '../images/iJefeProyecto.gif' alt='#' border='0' style='width: auto; height: 12px;'/>"
-                    . "&nbsp;&nbsp;" . utf8_encode($rowEmp['nombre']) . " " . utf8_encode($rowEmp['apellidos']) . "&nbsp;&nbsp;&nbsp;&nbsp;" . $rowEmp['dni'] . "</a>";
-            if (vacacionesSiNo($rowEmp['dni'], $semana)) {
-                //$restoTrabaj = $restoTrabaj . "<label style=\"color: red\"> Actualmente de vacaciones</label>";
-                $restoTrabaj = $restoTrabaj . "<a href='#'>&nbsp;&nbsp;<img src= '../images/vacaciones.jpg' alt='#' border='0' style='width: auto; height: 12px;'/></a>";
-            }
-            $restoTrabaj = $restoTrabaj . "<br/>";
-        }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////// FIN INFORMES POR INTERVALO DE TIEMPO ////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         $conexion->cerrarConexion();
         ?>
@@ -155,6 +189,50 @@ if ($login != "R") {
                     document.getElementById(x).style.display="none"
                 }
 
+            }
+            function conmutar(x){
+
+                if (x=="listaTrabajadores"){
+                    document.getElementById(x).style.display="inline";
+                    document.getElementById("listaTrabajadoresIntervalo").style.display="none";
+                }
+                if (x=="listaTrabajadoresIntervalo"){
+                    document.getElementById(x).style.display="inline";
+                    document.getElementById("listaTrabajadores").style.display="none";
+                }
+            }
+
+            function recarga(){
+                //alert(document.getElementById("trabajador").value);
+                // formar fecha
+                var fechaI;var fechaF; //coger los datos del formulario y hacer el string para cada fecha
+                fechaI=document.obtenerInformes.anioi.value+"-"+document.obtenerInformes.mesi.value+"-"+document.obtenerInformes.diasi.value
+
+                fechaF=document.obtenerInformes.aniof.value+"-"+document.obtenerInformes.mesf.value+"-"+document.obtenerInformes.diasf.value
+
+                //..........
+                if (window.XMLHttpRequest){
+                    xmlhttp=new XMLHttpRequest();
+                }
+                else{
+                    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                xmlhttp.onreadystatechange=function(){
+                    if(xmlhttp.readyState==1){
+                        //Sucede cuando se esta cargando la pagina
+                        //
+                        //mete la imagen de cargando
+                        //            document.getElementById("enviando").innerHTML = "<p><center>Enviando<center><img src='../images/enviando.gif' alt='Enviando' width='150px'/></p>";//<-- Aca puede ir una precarga
+                    }else if (xmlhttp.readyState==4 && xmlhttp.status==200)
+                    {
+                        //alert(xmlhttp.responseText);
+                        document.getElementById("listaRegargable").innerHTML = xmlhttp.responseText;
+                    }
+                }
+                xmlhttp.open("GET","informesPersIntervalo.php?dni=" + document.getElementById("trabajador").value
+                    + "&fechaI=" + fechaI
+                    + "&fechaF=" + fechaF,true);
+                xmlhttp.send();
             }
         </script>
 
@@ -171,8 +249,8 @@ if ($login != "R") {
 
 
                 <ul class="BLUE">
-                    <li><a href="iniResponsablePersonal.php" title="Crear trabajadores"><span>Ultima semana</span></a></li>
-                    <li><a href="informesResponsablePersonal.php" title="Obtener informes"><span>Elegir intervalo</span></a></li>
+                    <li><a href="#" onclick="conmutar('listaTrabajadores')" title="Informes ultima semana"><span>Ultima semana</span></a></li>
+                    <li><a href="#" onclick="conmutar('listaTrabajadoresIntervalo')" title="Informes intervalo de tiempo"><span>Elegir intervalo</span></a></li>
                 </ul>
             </div>
 
@@ -229,49 +307,179 @@ if ($login != "R") {
                                         ?>
                                         <br/>
 
-                                        <label>Trabajadores sin informacion esta semana: </label>
+                                        <a href="#"><label>Trabajadores sin informacion esta semana: </label></a>
                                         <br/><br/>
                                         <?php
                                         echo $restoTrabaj;
                                         ?>
                                     </div>
+                                    <div id="listaTrabajadoresIntervalo" style="display: none">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <div>
+                                                        <select id="trabajador" name="mes" size="1">
+                                                            <option value="0">Seleccione un trabajador</option>
+                                                            <?php
+                                                            $conexion = new conexion();
+                                                            $result = mysql_query('select nombre, apellidos, dni from trabajador order by nombre;');
+                                                            while ($rowEmp = mysql_fetch_assoc($result)) {
+                                                                echo "<option value=\"" . $rowEmp['dni'] . "\">" . $rowEmp['nombre'] . " " . $rowEmp['apellidos'] . " " . $rowEmp['dni'] . "</option>";
+                                                            }
+                                                            $conexion->cerrarConexion();
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <label>Desede el d&iacute;a:</label>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <?php
+                                                            echo '<select id="diasi" name="diasi" size="1">';
+                                                            echo '<option value="0">D&iacute;a</option>';
+                                                            for ($i = 1; $i <= 31; $i++) {
+                                                                echo '<option value="'.$i.'">' . $i . '</option>';
+                                                            }
+                                                            echo '</select>';
+                                                        ?>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div>
+                                                            <select name="mesi" size="1">
+                                                                <option value="0">Mes</option>
+                                                                <option value="1">Enero</option>
+                                                                <option value="2">Febrero</option>
+                                                                <option value="3">Marzo</option>
+                                                                <option value="4">Abril</option>
+                                                                <option value="5">Mayo</option>
+                                                                <option value="6">Junio</option>
+                                                                <option value="7">Julio</option>
+                                                                <option value="8">Agosto</option>
+                                                                <option value="9">Septiembre</option>
+                                                                <option value="10">Octubre</option>
+                                                                <option value="11">Noviembre</option>
+                                                                <option value="12">Diciembre</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                    <td
+                                                        <div>
+                                                            <?php
+                                                            echo '<select name="anioi" size="1">';
+                                                            echo '<option value="0">A&ntilde;o</option>';
+                                                            $fecha = getdate();
+                                                            $anio = $fecha[year];
+                                                            for ($i = 2000; $i <= $anio; $i++) {
+                                                                echo '<option value="' . $i . '">' . $i . '</option>';
+                                                            }
+                                                            ?>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label>Hasta el d&iacute;a:</label>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <?php
+                                                            echo '<select name="diasf" size="1">';
+                                                            echo '<option value="0">D&iacute;a</option>';
+                                                            for ($i = 1; $i <= 31; $i++) {
+                                                                echo '<option value="'.$i.'">' . $i . '</option>';
+                                                            }
+                                                            echo '</select>';
+                                                        ?>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div>
+                                                            <select name="mesf" size="1">
+                                                                <option value="0">Mes</option>
+                                                                <option value="1">Enero</option>
+                                                                <option value="2">Febrero</option>
+                                                                <option value="3">Marzo</option>
+                                                                <option value="4">Abril</option>
+                                                                <option value="5">Mayo</option>
+                                                                <option value="6">Junio</option>
+                                                                <option value="7">Julio</option>
+                                                                <option value="8">Agosto</option>
+                                                                <option value="9">Septiembre</option>
+                                                                <option value="10">Octubre</option>
+                                                                <option value="11">Noviembre</option>
+                                                                <option value="12">Diciembre</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                    <td
+                                                        <div>
+                                                            <?php
+                                                            echo '<select name="aniof" size="1">';
+                                                            echo '<option value="0">A&ntilde;o</option>';
+                                                            $fecha = getdate();
+                                                            $anio = $fecha[year];
+                                                            for ($i = 2000; $i <= $anio; $i++) {
+                                                                echo '<option value="' . $i . '">' . $i . '</option>';
+                                                            }
+                                                            ?>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input name="ver_informe" value="Ver" type="button" class="submit" onclick="recarga()" />
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <div id="listaRegargable">                                        
+
+
+                                        </div>
+                                    </div>
+
+
+                                    </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <a href='#'>&nbsp;&nbsp;<img src= '../images/vacaciones.jpg' alt='#' border='0' style='width: auto; height: 12px;'/></a>
+                                            <label>Este trabajador est&aacute; de vacaciones en este momento</label>
+                                        </td>
+                                    </tr>
+                                    </table>
+
+                            </div>
+                            <br>
+
+                            </form>
+                            </div>
+                            </div>
+                            </div>
+
+
+                            <!-- end content -->
+                            <!-- start footer -->
+
+                            <div id="footer">&copy; 2006 Design by <a href="http://www.studio7designs.com">Studio7designs.com</a> | <a href="http://www.arbutusphotography.com">ArbutusPhotography.com</a> | <a href="http://www.opensourcetemplates.org">Opensourcetemplates.org</a>
+
+
 
 
                             </div>
-                        </td>
-                    </tr>
 
-                    <tr>
-                        <td>
-                            <a href='#'>&nbsp;&nbsp;<img src= '../images/vacaciones.jpg' alt='#' border='0' style='width: auto; height: 12px;'/></a>
-                            <label>Este trabajador est&aacute; de vacaciones en este momento</label>
-                        </td>
-                    </tr>
-                </table>
-
-                <br>
-
-                </form>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- end content -->
-    <!-- start footer -->
-
-    <div id="footer">&copy; 2006 Design by <a href="http://www.studio7designs.com">Studio7designs.com</a> | <a href="http://www.arbutusphotography.com">ArbutusPhotography.com</a> | <a href="http://www.opensourcetemplates.org">Opensourcetemplates.org</a>
+                            <!-- end footer -->
 
 
 
 
-    </div>
-
-    <!-- end footer -->
-
-
-
-
-</body>
-</html>
+                            </body>
+                            </html>
 
