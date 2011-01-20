@@ -47,7 +47,7 @@ if ($totTareas > 0) {
         }
         $cont++;
     }
-    $informe = '<div class="centercontentleft"><a href="#">' . $nombre . ' ' . $apellidos . '&nbsp;&nbsp;&nbsp;&nbsp;</td><td>' . $dni . "<br/></a>";
+    $informe = '<a href="#">' . $nombre . ' ' . $apellidos . '&nbsp;&nbsp;&nbsp;&nbsp;</td><td>' . $dni . "<br/></a>";
 
 //////////////////////////////////calculo de los periodos de vacaciones dentro del intrevalo///////////////////////////
 
@@ -164,7 +164,7 @@ if ($totTareas > 0) {
             $informe = $informe . "<tr><td><a href='#'><label>Proyecto: " . $proy . "</label></a></td><td><a href='#'><label>&nbsp;&nbsp;&nbsp;&nbsp;Participaci&oacute;n: " . $rowPar[porcentaje] . "%<label></a></td><td><a href='#'><label>&nbsp;&nbsp;&nbsp;&nbsp;Horas: " . $horasP . "</label></a></td></tr>";
         }
     }
-    $informe = $informe . '<a href="#"></table><label>Horas trabajadas durante este periodo: ' . $horas . '</label></a></div>';
+    $informe = $informe . '<a href="#"></table><label>Horas trabajadas durante este periodo: ' . $horas . '</label></a>';
 } else {
     $result = mysql_query('select nombre, apellidos from trabajador where (dni=\'' . $dni . '\')');
     $rowEmp = mysql_fetch_array($result);

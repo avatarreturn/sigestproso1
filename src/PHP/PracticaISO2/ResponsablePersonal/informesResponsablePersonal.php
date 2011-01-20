@@ -459,7 +459,7 @@ if ($login != "R") {
                                                 </td>
                                             </tr>
                                         </table>
-                                        <div id="listaRegargable">                                        
+                                        <div class="centercontentleft" id="listaRegargable">
 
 
                                         </div>

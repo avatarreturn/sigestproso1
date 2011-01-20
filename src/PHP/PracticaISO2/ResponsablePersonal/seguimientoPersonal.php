@@ -40,6 +40,8 @@ if ($login != "R") {
         //fin calculo del lunes
 //        $result = mysql_query('SELECT t.dni, t.nombre, t.apellidos, tp.Trabajador_dni, tp.Proyecto_idProyecto, tp.porcentaje FROM trabajador t, trabajadorProyecto tp where (t.dni=tp.Trabajador_dni);');
         $result = mysql_query('SELECT t.dni, t.nombre, t.apellidos, tp.Trabajador_dni, tp.Proyecto_idProyecto, tp.porcentaje, p.idProyecto, p.nombre nombre_proy FROM Trabajador t, TrabajadorProyecto tp, Proyecto p WHERE (p.idProyecto=tp.Proyecto_idProyecto) AND (t.dni=tp.Trabajador_dni) ORDER BY t.dni;');
+        //Esta cosulta esta mal (No hay ninguna comprobacion de tiempo para que solo saque los datos de esta semana)
+
         $totTraProy = mysql_num_rows($result);
         if ($totTraProy > 0) {
             $trabajador = "";
