@@ -35,6 +35,11 @@
                                         <td><input type="text" name="numMaxProyect" size="10" maxlength="20" /></td>
                                     </tr>
                                     <tr>
+                                        <td>
+                                            <br></br>
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <td align="center"><input type="button" value="Enviar" onclick="valida_envia()" /></td>
                                         <td align="center"><input type="reset" value="Limpiar" /></td>
                                     </tr>
