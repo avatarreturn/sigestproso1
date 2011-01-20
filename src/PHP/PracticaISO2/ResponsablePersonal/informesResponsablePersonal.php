@@ -28,7 +28,7 @@ if ($login != "R") {
         <link rel="stylesheet" type="text/css" href="estiloTablas.css"/>
 
         <?php
-        include_once("funciones.php");
+        include_once("../Utiles/funciones.php");
 
         include_once ('../Persistencia/conexion.php');
         $conexion = new conexion();
@@ -88,7 +88,7 @@ if ($login != "R") {
             }
             for ($i = 1; $i < count($contD); $i++) {    //aqui empiezo a imprimir los resultados
                 $sumaHoras = 0;
-                $dni=$tabla[$cont]['dni'];
+                $dni = $tabla[$cont]['dni'];
                 $trabajador = $trabajador . "<a href='#' onclick=\"ocultarR('oculto" . $i . "')\">"
                         . "<img src= '../images/iJefeProyecto.gif' alt='#' border='0' style='width: auto; height: 12px;'/>"
                         . "&nbsp;&nbsp;" . utf8_encode($tabla[$cont]['nombre']) . " " . utf8_encode($tabla[$cont]['apellidos']) . "&nbsp;&nbsp;&nbsp;&nbsp;" . $tabla[$cont]['dni'] . "</a>"
@@ -111,10 +111,10 @@ if ($login != "R") {
                 foreach ($arrayProyCopia as $proy => $horas) {
                     if ($horas != 0) {
                         //consulta para la participacion en el proyecto
-                        $resPar=mysql_query('SELECT porcentaje  FROM trabajadorproyecto WHERE Trabajador_dni = \''.$dni.'\' AND Proyecto_idProyecto=(select idProyecto from proyecto where nombre=\''.$proy.'\')');
-                        $rowPar=mysql_fetch_assoc($resPar);
+                        $resPar = mysql_query('SELECT porcentaje  FROM trabajadorproyecto WHERE Trabajador_dni = \'' . $dni . '\' AND Proyecto_idProyecto=(select idProyecto from proyecto where nombre=\'' . $proy . '\')');
+                        $rowPar = mysql_fetch_assoc($resPar);
                         //fin consulta participacion
-                        $trabajador = $trabajador . "<tr><td><a><label>Proyecto: " . $proy . "</label></a></td><td><a><label>&nbsp;&nbsp;&nbsp;&nbsp;Participaci&oacute;n: ".$rowPar[porcentaje]."%<label></a></td><td><a><label>&nbsp;&nbsp;&nbsp;&nbsp;Horas: " . $horas . "</label></a></td></tr>";
+                        $trabajador = $trabajador . "<tr><td><a><label>Proyecto: " . $proy . "</label></a></td><td><a><label>&nbsp;&nbsp;&nbsp;&nbsp;Participaci&oacute;n: " . $rowPar[porcentaje] . "%<label></a></td><td><a><label>&nbsp;&nbsp;&nbsp;&nbsp;Horas: " . $horas . "</label></a></td></tr>";
                     }
                 }
                 $trabajador = $trabajador . "<tr><td><a><label>Horas totales: " . $sumaHoras . "</label></a></td></tr></table><br/></div>";
@@ -161,18 +161,20 @@ if ($login != "R") {
                 $restoTrabaj = $restoTrabaj . "<br/>";
             }
         }
-
+//        require('../Utiles/fpdf.php');
+//        $pdf = new FPDF();
+//        $pdf->AddPage();
+//        $pdf->SetFont('Arial', 'B', 16);
+//        for ($i = 1; $i <= count($tabla); $i++) {
+//            $pdf->Cell(40, 10, $tabla[$i]['nombre']." ".$tabla[$i]['apellidos']." ".$tabla[$i]['proyecto']);
+//        }
+//        $pdf->Output();
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////// FIN INFORMES DE LA ULTIMA SEMANA ///////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////// INICIO INFORMES POR INTERVALO DE TIEMPO ////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        function informeTrabajador() {
-//    $fechaIni =
-        }
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////// FIN INFORMES POR INTERVALO DE TIEMPO ////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -203,6 +205,7 @@ if ($login != "R") {
             }
 
             function recarga(){
+
                 //alert(document.getElementById("trabajador").value);
                 // formar fecha
                 var fechaI;var fechaF; //coger los datos del formulario y hacer el string para cada fecha
@@ -211,6 +214,24 @@ if ($login != "R") {
                 fechaF=document.obtenerInformes.aniof.value+"-"+document.obtenerInformes.mesf.value+"-"+document.obtenerInformes.diasf.value
 
                 //..........
+                var FechaVal = new Date();
+                FechaVal.setTime(Date.parse(fechaF));
+                //alert(disabledDaysVal[i]);
+                var FechaVal2 = new Date();
+                FechaVal2.setTime(Date.parse("<?php echo date("Y-m-d")?>"))
+
+                var FvalF = FechaVal.getTime();
+                var Hoy = FechaVal2.getTime();
+
+//                alert(FechaVal+" "+FechaVal2);
+
+                if (FvalF > Hoy){
+                   alert("Fecha final mayor que hoy");
+                   return 0
+                }
+
+        
+
                 if (window.XMLHttpRequest){
                     xmlhttp=new XMLHttpRequest();
                 }
@@ -344,7 +365,7 @@ if ($login != "R") {
                                                             echo '<select id="diasi" name="diasi" size="1">';
                                                             echo '<option value="0">D&iacute;a</option>';
                                                             for ($i = 1; $i <= 31; $i++) {
-                                                                echo '<option value="'.$i.'">' . $i . '</option>';
+                                                                echo '<option value="' . $i . '">' . $i . '</option>';
                                                             }
                                                             echo '</select>';
                                                         ?>
@@ -393,7 +414,7 @@ if ($login != "R") {
                                                             echo '<select name="diasf" size="1">';
                                                             echo '<option value="0">D&iacute;a</option>';
                                                             for ($i = 1; $i <= 31; $i++) {
-                                                                echo '<option value="'.$i.'">' . $i . '</option>';
+                                                                echo '<option value="' . $i . '">' . $i . '</option>';
                                                             }
                                                             echo '</select>';
                                                         ?>

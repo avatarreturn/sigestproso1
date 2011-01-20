@@ -31,7 +31,7 @@ if ($login != "R") {
 ////        //BORRAR
         $dniLogueado = $_SESSION['dni'];
         include_once ('../Persistencia/conexion.php');
-        include_once("funciones.php");
+        include_once("../Utiles/funciones.php");
 
         $conexion = new conexion();
 

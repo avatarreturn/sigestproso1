@@ -5,7 +5,7 @@ $fechaInicio = $_GET["fechaI"];
 $fechaFin = $_GET["fechaF"];
 $informe = "";
 
-include_once("funciones.php");
+include_once("../Utiles/funciones.php");
 
 include_once ('../Persistencia/conexion.php');
 $conexion = new conexion();
@@ -117,6 +117,7 @@ if ($totTareas > 0) {
             $cont++;
         }
         $cont = 0;
+        $informe = $informe . "<a><label>Horas trabajadas por semana y proyecto:</label></a>";
         for ($i = 1; $i < count($contS); $i++) {    //aqui empiezo a imprimir los resultados
             $sumaHoras = 0;
             $semana = $tabInf[$i]['semana'];
@@ -129,13 +130,14 @@ if ($totTareas > 0) {
                 $sumaHoras = $sumaHoras + $tabInf[$cont]['horas'];
                 $arrayProyCopia[$tabInf[$cont]['proyecto']] = $arrayProyCopia[$tabInf[$cont]['proyecto']] + $tabInf[$cont]['horas'];
             }
-            $informe = $informe . "<a><label>Horas trabajadas por semana y proyecto:</label></a><table>";
+
+            $informe = $informe . "<table>";
             foreach ($arrayProyCopia as $proy => $horasS) {
                     if ($horasS != 0) {
                         $informe = $informe . "<tr><td><label>Semana: " . $semana . "</label></td><td><label>&nbsp;&nbsp;&nbsp;&nbsp;Proyecto: " . $proy . "</label></td><td><label>&nbsp;&nbsp;&nbsp;&nbsp;Horas: " . $horasS . "</label></td></tr>";
                     }
                 }
-                $informe = $informe."</table><br/>";
+                $informe = $informe."</table>";
         }
     } else {
         $informe = $informe . "<label>No hay informes de tareas para este periodo y este </label>";

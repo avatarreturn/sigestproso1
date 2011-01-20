@@ -32,4 +32,13 @@ function semanaActual() {
     return $lunes=$semana;
 }
 
+function mayorQueHoy($fecha){
+    $hoy=date("Y-m-d");
+    if ($fecha>$hoy){
+        echo "true";
+    }else{
+        echo "false";
+    }
+}
+
 ?>
