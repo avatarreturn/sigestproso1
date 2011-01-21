@@ -317,7 +317,7 @@ if ($login != "R") {
                             <div id="formulario">
                                 <form action="" method="POST" name="obtenerInformes">
                                     <div class="tituloFormulario">
-                                        <h2>Informes de los proyectos</h2>
+                                        <h2>Informes</h2>
                                     </div>
                                     <div class="infoFormulario">
 		A trav&eacute;s de esta pantalla el Responsable de Personal podr&aacute; obtener todo tipo de informes.
