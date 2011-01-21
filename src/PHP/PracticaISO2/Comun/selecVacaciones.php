@@ -329,7 +329,7 @@ function validar(){
 
 
 	<h1>SIGESTPROSO</h1>
-	<p><a href="http://www.studio7designs.com"><img src= "../images/logo3.png" alt="#" border="2" style="width: 500px; height: 65px;"/></a><br/></p>
+	<p><img src= "../images/logo3.png" alt="#" border="2" style="width: 500px; height: 65px;"/><br/></p>
         <div id="vacaciones">
         <h2 style="text-align: center">Escoja su periodo vacacional</h2>
         <div class="centercontentleft">
