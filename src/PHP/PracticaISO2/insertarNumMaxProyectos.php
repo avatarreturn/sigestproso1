@@ -31,7 +31,7 @@
                             <fieldset id="user-email">
                                 <table align="center" valign="middle">
                                     <tr>
-                                        <td align="center">N&uacute;mero m&aacute;ximo de proyectos:</td>
+                                        <td align="center">Inserte el n&uacute;mero m&aacute;ximo de proyectos:</td>
                                         <td><input type="text" name="numMaxProyect" size="10" maxlength="20" /></td>
                                     </tr>
                                     <tr>
