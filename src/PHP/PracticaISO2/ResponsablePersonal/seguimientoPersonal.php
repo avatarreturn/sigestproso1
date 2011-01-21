@@ -186,7 +186,7 @@ if ($login != "R") {
                     <!--                <form  action="crearUsuario.php" method="post">-->
                     <form method="POST" name="nuevo_usuario">
                         <div class="tituloFormulario">
-                            <h2>Seguimiento del personal</h2>
+                            <h2>Seguimiento Personal</h2>
                         </div>
                         <div class="infoFormulario">
 		A trav&eacute;s de esta pantalla el Responsable de Personal podr&aacute; ver la situaci&oacute;n de cada trabajador dentro de la empresa.
