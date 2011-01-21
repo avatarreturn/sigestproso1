@@ -134,7 +134,7 @@ if ($login != "A") {
 
             <div id="leftcontent" style="display:inline">
                 <img style="margin-top:-9px; margin-left:-12px;" src="../images/top2.jpg" alt="" />
-                <h3 align="left">Main Menu</h3>
+                <h3 align="left">Menú</h3>
 
                 <div align="left">
                     <ul class="BLUE">
