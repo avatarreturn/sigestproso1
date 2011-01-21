@@ -51,7 +51,9 @@ include_once('../Persistencia/conexion.php');
         if ($totEmp >0) {
 
             while ($rowEmp = mysql_fetch_assoc($result)) {
-                $nombreVac = $rowEmp['nombre'] . " ". $rowEmp['apellidos'];
+                $nombreVac = "Aqu&iacute; puede visualizar las fechas de vacaciones del trabajador:<br/><b>"
+                . $rowEmp['nombre'] . " ". $rowEmp['apellidos'] ."</b>, con el fin de no escoger"
+                . " un trabajador cuyas vacaciones interfieran en el desarrollo de la actividad.";
             }
         }
 

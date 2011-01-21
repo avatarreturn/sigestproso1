@@ -11,15 +11,61 @@ $esPrimera = $_GET['esPrimera'];
 if ($primeraI != -1){
     $IterNext = $primeraI;
 }
+$IdAcPred = explode("[BRK]", $predec);
+        $tamano = count($IdAcPred)-1;
+
 include_once('../Persistencia/conexion.php');
         $conexion = new conexion();
 
         if($esPrimera==0 || $predec!= ""){
+            //sacamos la fecha en la que empieza de manera estimada
+            // si es la primera tieracion
+            if($predec!= ""){
+                 $i= 0;
+                 $predecesorasF = "";
+                while ( $i < $tamano) {
+                        if($predecesorasF == ""){
+                         $predecesorasF = $predecesorasF . $IdAcPred[$i];
+                        }else{
+                            $predecesorasF = $predecesorasF .",". $IdAcPred[$i];
+                        }
+                    $i++;
+                }
+                $result= mysql_query("SELECT MAX(fechaFinE) as fecha FROM Actividad WHERE\n"
+                . "idActividad in (".$predecesorasF.")");
+                $totEmp = mysql_num_rows($result);
+                if ($totEmp >0) {
+            while ($rowEmp = mysql_fetch_assoc($result)) {
+                $fechaInicioAct = $rowEmp['fecha'];
+
+            }
+            }
+            }else if($esPrimera==0 && $predec== ""){ // si es de otra iteracion
+
+                 $result= mysql_query("SELECT MAX(fechaFinE) as fecha FROM Actividad WHERE\n"
+                . "Iteracion_idIteracion = '".$_SESSION['IdIterActual']."'");
+                $totEmp = mysql_num_rows($result);
+                if ($totEmp >0) {
+            while ($rowEmp = mysql_fetch_assoc($result)) {
+                $fechaInicioAct = $rowEmp['fecha'];
+            }
+            }
+
+            }
+           
+
+
+            // calculamos la fecha find e la nueva iteracion
+            $can_dias = ceil($duracion/8) ;
+            $fechaFinEst= date("Y-m-d", strtotime("$fechaInicioAct + $can_dias days"));
+
+
         //Insertamos la actividad en cuestion
          $result1= mysql_query("INSERT INTO Actividad VALUES(NULL,'"
                     . $IterNext."','"
                     . utf8_encode($nombre). "','"
-                    . $duracion ."',NULL,NULL,'"
+                    . $duracion ."','"
+                    . $fechaFinEst ."',NULL,NULL,'"
                     . utf8_encode($rol) ."')");
 
      $IdGenerado = mysql_insert_id();
@@ -32,10 +78,14 @@ include_once('../Persistencia/conexion.php');
                 $fechaInicioP= $rowEmp['fechaInicio'];
 
             }}
+            $can_dias = ceil($duracion/8) -1;
+            $fechaFinEst= date("Y-m-d", strtotime("$fechaInicioP + $can_dias days"));
             $result1= mysql_query("INSERT INTO Actividad VALUES(NULL,'"
                     . $IterNext."','"
                     . utf8_encode($nombre). "','"
-                    . $duracion ."','".$fechaInicioP."',NULL,'"
+                    . $duracion ."','"
+                    . $fechaFinEst ."','"
+                    .$fechaInicioP."',NULL,'"
                     . utf8_encode($rol) ."')");
 
      $IdGenerado = mysql_insert_id();
@@ -54,8 +104,7 @@ include_once('../Persistencia/conexion.php');
         }
 
         // Insertamos predecesoras
-        $IdAcPred = explode("[BRK]", $predec);
-        $tamano = count($IdAcPred)-1;
+        
         $i= 0;
         while ( $i < $tamano) {
             $result1= mysql_query("INSERT INTO ActividadPredecesora VALUES('"

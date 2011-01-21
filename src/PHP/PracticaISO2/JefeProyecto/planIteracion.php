@@ -76,6 +76,7 @@ if ($totEmp3 == 1) {
     while ($rowEmp3 = mysql_fetch_assoc($result3)) {
         $numeroIAct = $rowEmp3['numero'];
         $idIAct = $rowEmp3['idIteracion'];
+        $_SESSION['IdIterActual'] = $idIAct;
     }
 } else if ($totEmp3 == 0) {
     $faseCero = 1;
@@ -662,8 +663,7 @@ if ($PrimIter == 1) {
                     ?>
                             <div id = "standout">
                                 <div id="dialog" title="Calendario de vacaciones">
-                                    <center><span id="nomVacas" style="padding-bottom:10px; padding-top:5px; display:block;">Aqu&iacute; puede visualizar las fechas de vacaciones del trabajador <b>Javier Garcia Tomillo</b> con el fin de no escoger
-                                         un trabajador cuyas vacaciones interfieran en el desarrollo de la actividad.</span></center>
+                                    <span id="nomVacas" style="padding-bottom:10px; padding-top:5px; display:block;"></span>
                                     <div type="text" id="datepicker"></div>
                                     <br/><br/><center>&#191;Desea asignar este trabajador a esta actividad&#63;</center>
                                 </div>
