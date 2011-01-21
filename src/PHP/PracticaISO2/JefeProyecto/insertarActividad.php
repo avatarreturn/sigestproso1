@@ -17,6 +17,7 @@ $IdAcPred = explode("[BRK]", $predec);
 include_once('../Persistencia/conexion.php');
         $conexion = new conexion();
 
+        $bandera = 0; // 0 sin conflictos, 1 cuando ai conflictos
         if($esPrimera==0 || $predec!= ""){
             //sacamos la fecha en la que empieza de manera estimada
             // si es la primera tieracion
@@ -59,8 +60,28 @@ include_once('../Persistencia/conexion.php');
             $can_dias = ceil($duracion/8) ;
             $fechaFinEst= date("Y-m-d", strtotime("$fechaInicioAct + $can_dias days"));
 
+            //validamos sobre el calendario de vacaciones
+            for($i=0;$i<count($_SESSION['trabActividad']);$i++){
+             $result = mysql_query("SELECT fechaInicio, fechaFin FROM Vacaciones WHERE\n"
+            . "Trabajador_dni = \"".$_SESSION['trabActividad'][$i]. "\"");
 
+             $totEmp = mysql_num_rows($result);
+                if ($totEmp >0) {
+            while ($rowEmp = mysql_fetch_assoc($result)) {
+
+             if ( strtotime("$fechaInicioAct + 1 days") >= strtotime($rowEmp['fechaInicio']) && strtotime($fechaFinEst) <= strtotime($rowEmp['fechaFin']) // actividad dentro de vacaciones
+                     ||  strtotime($rowEmp['fechaInicio']) >= strtotime("$fechaInicioAct + 1 days") && strtotime($rowEmp['fechaFin']) <= strtotime($fechaFinEst)
+                     ||  strtotime($rowEmp['fechaInicio']) >= strtotime("$fechaInicioAct + 1 days") && strtotime($rowEmp['fechaInicio']) <= strtotime($fechaFinEst)
+                     ||  strtotime($rowEmp['fechaFin']) >= strtotime("$fechaInicioAct + 1 days") && strtotime($rowEmp['fechaFin']) <= strtotime($fechaFinEst)
+                             ){
+                         $bandera=1;
+                         break;
+                    }
+            }// fin while
+             }
+            }// fin for
         //Insertamos la actividad en cuestion
+            if($bandera==0){
          $result1= mysql_query("INSERT INTO Actividad VALUES(NULL,'"
                     . $IterNext."','"
                     . utf8_encode($nombre). "','"
@@ -69,6 +90,7 @@ include_once('../Persistencia/conexion.php');
                     . utf8_encode($rol) ."')");
 
      $IdGenerado = mysql_insert_id();
+            }// fin bandera == 0
         }else if($esPrimera==1 && $predec== ""){
 
             $result= mysql_query("SELECT fechaInicio FROM Proyecto WHERE idProyecto ='".$_SESSION['proyectoEscogido']."'");
@@ -80,6 +102,27 @@ include_once('../Persistencia/conexion.php');
             }}
             $can_dias = ceil($duracion/8) -1;
             $fechaFinEst= date("Y-m-d", strtotime("$fechaInicioP + $can_dias days"));
+            //validamos sobre el calendario de vacaciones
+            for($i=0;$i<count($_SESSION['trabActividad']);$i++){
+             $result = mysql_query("SELECT fechaInicio, fechaFin FROM Vacaciones WHERE\n"
+            . "Trabajador_dni = \"".$_SESSION['trabActividad'][$i]. "\"");
+
+             $totEmp = mysql_num_rows($result);
+                if ($totEmp >0) {
+            while ($rowEmp = mysql_fetch_assoc($result)) {
+
+             if ( strtotime($fechaInicioP) >= strtotime($rowEmp['fechaInicio']) && strtotime($fechaFinEst) <= strtotime($rowEmp['fechaFin']) // actividad dentro de vacaciones
+                     ||  strtotime($rowEmp['fechaInicio']) >= strtotime($fechaInicioP) && strtotime($rowEmp['fechaFin']) <= strtotime($fechaFinEst)
+                     ||  strtotime($rowEmp['fechaInicio']) >= strtotime($fechaInicioP) && strtotime($rowEmp['fechaInicio']) <= strtotime($fechaFinEst)
+                     ||  strtotime($rowEmp['fechaFin']) >= strtotime($fechaInicioP) && strtotime($rowEmp['fechaFin']) <= strtotime($fechaFinEst)
+                             ){
+                         $bandera=1;
+                         break;
+                    }
+            }// fin while
+             }
+            }// fin for
+            if($bandera==0){
             $result1= mysql_query("INSERT INTO Actividad VALUES(NULL,'"
                     . $IterNext."','"
                     . utf8_encode($nombre). "','"
@@ -89,12 +132,13 @@ include_once('../Persistencia/conexion.php');
                     . utf8_encode($rol) ."')");
 
      $IdGenerado = mysql_insert_id();
+            }//fin bandera 0
 
 
 
         }
 
-
+        if($bandera==0){ // si todo es correcto seguimos haciendo inserts
         //************ VALIDAMOS FECHAS TRABAJAdoRES
         // Insertamos trabajadores
         for($i=0;$i<count($_SESSION['trabActividad']);$i++){
@@ -144,8 +188,6 @@ include_once('../Persistencia/conexion.php');
 
 
 
-
-
         // sacamos las predecesoras
      $result= mysql_query("SELECT nombre, idActividad FROM Actividad WHERE\n"
     . "Iteracion_idIteracion =\"".$IterNext."\"");
@@ -161,9 +203,16 @@ include_once('../Persistencia/conexion.php');
             $predecesora = $predecesora . "</p>";
                
         }
+
+        }// Fin de bandera == 0
+
         $_SESSION['trabActividad'] = array();
-        
+
+        if($bandera==0){
             echo  utf8_decode($actividades ."[BRK]". $predecesora . "[BRK]" . "0");
+        }else{
+            echo 1;
+        }
         $conexion->cerrarConexion();
 
 ?>

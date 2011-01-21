@@ -253,6 +253,17 @@ if ($numeroIAct == $iteracionMax && $nombreFAct == "Transicion") {
                     xmlhttp.onreadystatechange=function(){
                         if (xmlhttp.readyState==4 && xmlhttp.status==200)
                         {
+                            if(xmlhttp.responseText== 1){
+                                var frase = "ERROR: ";
+                                alert(frase +"las fechas estimadas de la actividad coinciden con las vacaciones de alguno de los trabajadores asociados a la misma.\n\n--Vuelva a definir esta ultima actividad.");
+                                document.getElementById("durEstimada").value="";
+                                document.getElementById("TrabAct").style.display="none";
+                                document.getElementById("predecesoras").style.display="none";
+                                document.getElementById('RolActividad').disabled=false;
+                                document.getElementById("RolActividad").value="-1";
+                                document.getElementById("terminar").style.display="inline";
+                            }else{
+//                                alert(xmlhttp.responseText);
                             var data = xmlhttp.responseText.split ( "[BRK]" );
                             //        document.getElementById("SelecPers").innerHTML=data[0];
                             document.getElementById("actividad").value="";
@@ -267,6 +278,7 @@ if ($numeroIAct == $iteracionMax && $nombreFAct == "Transicion") {
                             document.getElementById("predecesoras").innerHTML= data[1];
                             trabAsignado = eval(data[2]);
                             contador = contador +1 ;
+                            }
                         }
                     }
                     xmlhttp.open("GET","insertarActividad.php?INext="+
