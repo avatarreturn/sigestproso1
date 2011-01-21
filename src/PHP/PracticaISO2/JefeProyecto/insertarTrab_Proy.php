@@ -17,7 +17,7 @@ include_once('../Persistencia/conexion.php');
                 . "dni in\n"
                 . "(SELECT Trabajador_dni FROM TrabajadorProyecto\n"
                 . "GROUP BY Trabajador_dni\n"
-                . "HAVING COUNT(*) <3\n"
+                . "HAVING COUNT(*) <=".$_SESSION['numMaxProyectos']."\n"
                 . "UNION\n"
                 . "SELECT dni FROM Trabajador WHERE\n"
                 . "dni not in\n"

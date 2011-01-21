@@ -33,9 +33,9 @@ if ($login != "T") {
         include_once('../Persistencia/conexion.php');
         $conexion = new conexion();
         $result = mysql_query("SELECT nombre, descripcion, jefeProyecto, idProyecto, fechaInicio FROM Proyecto WHERE\n"
-    . "jefeProyecto = \"".$dniLogueado."\" or idProyecto in \n"
+    . "(jefeProyecto = \"".$dniLogueado."\" or idProyecto in \n"
     . "(SELECT Proyecto_idProyecto FROM TrabajadorProyecto WHERE \n"
-    . "Trabajador_dni = \"".$dniLogueado."\")");
+    . "Trabajador_dni = \"".$dniLogueado."\")) and fechaFin is NULL");
         $totEmp = mysql_num_rows($result);
         $noProyectos= "";
         if ($totEmp >0) {
