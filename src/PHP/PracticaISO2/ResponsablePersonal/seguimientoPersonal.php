@@ -39,14 +39,15 @@ if ($login != "R") {
         $semana = semanaActual();
         //fin calculo del lunes
 //        $result = mysql_query('SELECT t.dni, t.nombre, t.apellidos, tp.Trabajador_dni, tp.Proyecto_idProyecto, tp.porcentaje FROM trabajador t, trabajadorProyecto tp where (t.dni=tp.Trabajador_dni);');
-        $result = mysql_query('SELECT t.dni, t.nombre, t.apellidos, tp.Trabajador_dni, tp.Proyecto_idProyecto, tp.porcentaje, p.idProyecto, p.nombre nombre_proy FROM Trabajador t, TrabajadorProyecto tp, Proyecto p WHERE (p.idProyecto=tp.Proyecto_idProyecto) AND (t.dni=tp.Trabajador_dni) ORDER BY t.dni;');
+        $result = mysql_query('SELECT t.dni, t.nombre, t.apellidos, tp.Trabajador_dni, tp.Proyecto_idProyecto, tp.porcentaje, p.idProyecto, p.nombre nombre_proy FROM Trabajador t, TrabajadorProyecto tp, Proyecto p WHERE (p.idProyecto=tp.Proyecto_idProyecto) AND (p.fechaFin IS NULL) AND (t.dni=tp.Trabajador_dni) ORDER BY t.dni;');
         //Esta cosulta esta mal (No hay ninguna comprobacion de tiempo para que solo saque los datos de esta semana)
 
         $totTraProy = mysql_num_rows($result);
+        $arrayDnis[] = "";
         if ($totTraProy > 0) {
             $trabajador = "";
             $dniAnterior = "";
-            $arrayDnis[] = "";
+            
             $cont = 0;
             $cont2 = 0;
             while ($rowEmp = mysql_fetch_assoc($result)) {
@@ -60,7 +61,7 @@ if ($login != "R") {
                         $trabajador = $trabajador . "</table></div>";
                     }
                     $trabajador = $trabajador . "<a href='#' onclick=\"ocultarR('oculto" . $cont . "')\"><br/><img src= '../images/iJefeProyecto.gif' alt='#' border='0' style='width: auto; height: 12px;'/>"
-                            . "&nbsp;&nbsp;" . utf8_encode($rowEmp['nombre']) . " " . utf8_encode($rowEmp['apellidos']) . "     " . $rowEmp['dni'] . "</a>";
+                            . "&nbsp;&nbsp;" . $rowEmp['nombre'] . " " . $rowEmp['apellidos'] . "     " . $rowEmp['dni'] . "</a>";
                     //Compruebo si el trabajador esta de vacaciones
                     if (vacacionesSiNo($rowEmp['dni'], date("Y-m-d"))) {
                         $intervVaca = vacacionesPeriodo($rowEmp['dni'], $semana);
@@ -87,13 +88,15 @@ if ($login != "R") {
 
         //Aqui calculo los trabajadores no asociados a ningun proyecto
 
-        $sql = "select dni, nombre, apellidos from trabajador where";
+        $sql = "select dni, nombre, apellidos from Trabajador where";
         if (count($arrayDnis) > 1) { //si el array de dni encontrados tiene contenido
             $sql = $sql . " (dni != '" . $arrayDnis[1] . "')"; //excluyo de la consulta el primer dni
             for ($i = 1; $i < count($arrayDnis); $i++) {    //repito para cada dni
                 $sql = $sql . " and (dni != '" . $arrayDnis[$i] . "')"; //para excluir de la consulta los dni ya encontrados
             }
             $sql = $sql . " order by nombre;"; //cierro la consulta sql
+        }else{
+            $sql="select dni, nombre, apellidos from Trabajador";
         }
         $result = mysql_query($sql);
         $restoTrabaj = "<br/><br/><label>Trabajadores no asociados a ningun proyecto: </label><br/><br/>";

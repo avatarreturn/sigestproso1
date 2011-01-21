@@ -91,7 +91,7 @@ if ($login != "R") {
                 $dni = $tabla[$cont]['dni'];
                 $trabajador = $trabajador . "<a href='#' onclick=\"ocultarR('oculto" . $i . "')\">"
                         . "<img src= '../images/iJefeProyecto.gif' alt='#' border='0' style='width: auto; height: 12px;'/>"
-                        . "&nbsp;&nbsp;" . utf8_encode($tabla[$cont]['nombre']) . " " . utf8_encode($tabla[$cont]['apellidos']) . "&nbsp;&nbsp;&nbsp;&nbsp;" . $tabla[$cont]['dni'] . "</a>"
+                        . "&nbsp;&nbsp;" . $tabla[$cont]['nombre'] . " " . $tabla[$cont]['apellidos'] . "&nbsp;&nbsp;&nbsp;&nbsp;" . $tabla[$cont]['dni'] . "</a>"
                         . "<br/><div id=\"oculto" . $i . "\" style=\"display:none\">";
                 if (vacacionesSiNo($tabla[$cont]['dni'], $semana)) { // si el trabajador esta de vacaciones le pongo un solito al lado
                     $trabajador = $trabajador . "<table class=\"tablaVariable\"><tr><td><label>Esta de vacaciones</label></td></a></tr></table>";
@@ -206,6 +206,12 @@ if ($login != "R") {
 
             function recarga(){
 
+                if (document.obtenerInformes.trabajador.value==0){
+                    alert("Tiene que elegir un tabajador")
+                    document.obtenerInformes.trabajador.focus()
+                    return 0;
+                }
+
                 //alert(document.getElementById("trabajador").value);
                 // formar fecha
                 var fechaI;var fechaF; //coger los datos del formulario y hacer el string para cada fecha
@@ -226,11 +232,10 @@ if ($login != "R") {
 //                alert(FechaVal+" "+FechaVal2);
 
                 if (FvalF > Hoy){
-                   alert("Fecha final mayor que hoy");
+                   alert("La fecha final no puede ser superior a la fecha actual");
+                   document.obtenerInformes.diasf.focus()
                    return 0
                 }
-
-        
 
                 if (window.XMLHttpRequest){
                     xmlhttp=new XMLHttpRequest();
@@ -339,11 +344,11 @@ if ($login != "R") {
                                             <tr>
                                                 <td>
                                                     <div>
-                                                        <select id="trabajador" name="mes" size="1">
+                                                        <select id="trabajador" name="trabajador" size="1">
                                                             <option value="0">Seleccione un trabajador</option>
                                                             <?php
                                                             $conexion = new conexion();
-                                                            $result = mysql_query('select nombre, apellidos, dni from trabajador order by nombre;');
+                                                            $result = mysql_query('select nombre, apellidos, dni from Trabajador order by nombre;');
                                                             while ($rowEmp = mysql_fetch_assoc($result)) {
                                                                 echo "<option value=\"" . $rowEmp['dni'] . "\">" . $rowEmp['nombre'] . " " . $rowEmp['apellidos'] . " " . $rowEmp['dni'] . "</option>";
                                                             }

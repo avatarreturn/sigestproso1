@@ -1,10 +1,10 @@
-//<?php
+<?php
 //session_start();
 //$login = $_SESSION['tipoUsuario'];
 //if ($login != "T") {
 //    header("location: ../index.php");
 //}
-//?>
+?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 
@@ -35,16 +35,7 @@
             <div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
         </div>
         <div id="page">
-            <div id="topmenu">
 
-
-                <ul class="BLUE">
-                    <li><a href="#" onclick="" title="Informes relacionados con Desarrolladores"><span>Desarrolladores</span></a></li>
-                    <li><a href="#" onclick="" title="Informes relacionados con las actividades del proyecto"><span>Actividades</span></a></li>
-                </ul>
-            </div>
-
-            <!-- end top menu and blog title-->
 
             <div id="leftcontent">
                 <img style="margin-top:-9px; margin-left:-12px;" src="../images/top2.jpg" alt="" />
@@ -79,47 +70,91 @@
                 <h1>SIGESTPROSO </h1>
                 <p><br /></p>
                 <p>
-                <table>
-                    <tr>
-                        <td>
-                            <div id="formulario">
-                                <form action="" method="POST" name="obtenerInformes">
+
+                <div id="formulario">
+                    <form action="" method="POST" name="obtenerInformes">
+                        <table>
+                            <tr>
+                                <td>
                                     <div class="tituloFormulario">
-                                        <h2>Informes de los proyectos</h2>
+                                        <h2>Informes del proyecto</h2>
                                     </div>
                                     <div class="infoFormulario">
 		En esta pantalla podr&aacute; escoger el tipo de informe que desea obtener
                                     </div>
+                                    <div class="centercontentleft">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <a>Trabajadores con actividades asignadas (Pasadas)</a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <a>Trabajadores con actividades asignadas (Futuras)</a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <a>Informes de actividad pendientes de recibir</a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <a>Informes de actividad pendientes de aprobar</a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <a>Actividades</a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <a>Estado de actividades</a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <a>Actividades con retraso</a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <a>Actividades pendientes</a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
 
-                                    </td>
-                                    </tr>
-
-                                    
-                                    </table>
-
-                            </div>
-                            <br>
-
-                            </form>
-                            </div>
-                            </div>
-                            </div>
 
 
-                            <!-- end content -->
-                            <!-- start footer -->
+                        <br>
 
-                            <div id="footer">&copy; 2006 Design by <a href="http://www.studio7designs.com">Studio7designs.com</a> | <a href="http://www.arbutusphotography.com">ArbutusPhotography.com</a> | <a href="http://www.opensourcetemplates.org">Opensourcetemplates.org</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- end content -->
+    <!-- start footer -->
+
+    <div id="footer">&copy; 2006 Design by <a href="http://www.studio7designs.com">Studio7designs.com</a> | <a href="http://www.arbutusphotography.com">ArbutusPhotography.com</a> | <a href="http://www.opensourcetemplates.org">Opensourcetemplates.org</a>
 
 
 
 
-                            </div>
+    </div>
 
-                            <!-- end footer -->
-
-
+    <!-- end footer -->
 
 
-                            </body>
-                            </html>
+
+
+</body>
+</html>

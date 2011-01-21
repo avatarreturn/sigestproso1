@@ -27,7 +27,7 @@ $conexion = new conexion();
 //        ORDER BY t.nombre
 //
 
-$result = mysql_query('SELECT t.dni, t.nombre, t.apellidos, i.idInformeTareas, ta.idTareaPersonal, ta.horas, c.descripcion, p.nombre proyecto FROM trabajador t, informetareas i, tareapersonal ta, catalogotareas c, actividad a, iteracion it, fase f, proyecto p where (t.dni=\'' . $dni . '\') AND (i.semana>=\'' . $fechaInicio . '\') AND (i.semana<=\'' . $fechaFin . '\') AND (t.dni=i.Trabajador_dni) AND (ta.CatalogoTareas_idTareaCatalogo=c.idTareaCatalogo) AND (i.idInformeTareas=ta.InformeTareas_idInformeTareas) AND (i.Actividad_idActividad=a.idActividad) AND (a.Iteracion_idIteracion=it.idIteracion) AND (it.Fase_idFase=f.idFase) AND (f.Proyecto_idProyecto=p.idProyecto) ORDER BY t.nombre;');
+$result = mysql_query('SELECT t.dni, t.nombre, t.apellidos, i.idInformeTareas, ta.idTareaPersonal, ta.horas, c.descripcion, p.nombre proyecto FROM Trabajador t, InformeTareas i, TareaPersonal ta, CatalogoTareas c, Actividad a, Iteracion it, Fase f, Proyecto p where (t.dni=\'' . $dni . '\') AND (i.semana>=\'' . $fechaInicio . '\') AND (i.semana<=\'' . $fechaFin . '\') AND (t.dni=i.Trabajador_dni) AND (ta.CatalogoTareas_idTareaCatalogo=c.idTareaCatalogo) AND (i.idInformeTareas=ta.InformeTareas_idInformeTareas) AND (i.Actividad_idActividad=a.idActividad) AND (a.Iteracion_idIteracion=it.idIteracion) AND (it.Fase_idFase=f.idFase) AND (f.Proyecto_idProyecto=p.idProyecto) ORDER BY t.nombre;');
 $totTareas = mysql_num_rows($result);
 $horas = 0;
 $proyAnterior = "";
@@ -59,7 +59,7 @@ if ($totTareas > 0) {
 //      OR (fechaFin BETWEEN '2011-01-02'
 //      AND '2011-01-23')
 
-    $sql="SELECT s.fechaInicio, s.fechaFin FROM (select `fechaInicio`, `fechaFin` from vacaciones where (`Trabajador_dni`='".$dni."')) s WHERE (fechaInicio BETWEEN '".$fechaInicio."' AND '".$fechaFin."') OR (fechaFin BETWEEN '".$fechaInicio."' AND '".$fechaFin."');";
+    $sql="SELECT s.fechaInicio, s.fechaFin FROM (select `fechaInicio`, `fechaFin` from Vacaciones where (`Trabajador_dni`='".$dni."')) s WHERE (fechaInicio BETWEEN '".$fechaInicio."' AND '".$fechaFin."') OR (fechaFin BETWEEN '".$fechaInicio."' AND '".$fechaFin."');";
     $resVac = mysql_query($sql);
     $totVac = mysql_num_rows($resVac);
     if ($totVac > 0) {
@@ -89,10 +89,11 @@ if ($totTareas > 0) {
 //          AND (i.semana>='2011-01-02')
 //      ORDER BY p.nombre
 
-    $sql="SELECT i.semana, ta.horas, p.nombre proyecto FROM tareapersonal ta, informetareas i, actividad a, iteracion it, fase f, proyecto p WHERE (i.idInformeTareas=ta.InformeTareas_idInformeTareas) AND (i.Actividad_idActividad=a.idActividad) AND (a.Iteracion_idIteracion=it.idIteracion) AND (it.Fase_idFase=f.idFase) AND (f.Proyecto_idProyecto=p.idProyecto) AND (i.Trabajador_dni='".$dni."') AND (i.semana<='".$fechaFin."') AND (i.semana>='".$fechaInicio."') ORDER BY i.semana";
+    $sql="SELECT i.semana, ta.horas, p.nombre proyecto FROM TareaPersonal ta, InformeTareas i, Actividad a, Iteracion it, Fase f, Proyecto p WHERE (i.idInformeTareas=ta.InformeTareas_idInformeTareas) AND (i.Actividad_idActividad=a.idActividad) AND (a.Iteracion_idIteracion=it.idIteracion) AND (it.Fase_idFase=f.idFase) AND (f.Proyecto_idProyecto=p.idProyecto) AND (i.Trabajador_dni='".$dni."') AND (i.semana<='".$fechaFin."') AND (i.semana>='".$fechaInicio."') ORDER BY i.semana;";
 
     $resInf = mysql_query($sql);
     $totInf = mysql_num_rows($resInf);
+    echo'<script type="text/javascript"> alert("numero de informe: '.$totInf.'"); </script>';
     $cont = 1;
     $semanaAnterior = "";
     $arraySemanas[] = "";
@@ -140,7 +141,7 @@ if ($totTareas > 0) {
                 $informe = $informe."</table>";
         }
     } else {
-        $informe = $informe . "<label>No hay informes de tareas para este periodo y este </label>";
+        $informe = $informe . "<label>No hay informes de tareas para este periodo y este trabajador</label>";
             //hay que defir el else**********************************
     }
 
@@ -158,7 +159,7 @@ if ($totTareas > 0) {
     foreach ($arrayProyCopia as $proy => $horasP) {
         if ($horasP != 0) {
             //consulta para la participacion en el proyecto
-            $resPar = mysql_query('SELECT porcentaje  FROM trabajadorproyecto WHERE Trabajador_dni = \'' . $dni . '\' AND Proyecto_idProyecto=(select idProyecto from proyecto where nombre=\'' . $proy . '\')');
+            $resPar = mysql_query('SELECT porcentaje  FROM TrabajadorProyecto WHERE Trabajador_dni = \'' . $dni . '\' AND Proyecto_idProyecto=(select idProyecto from proyecto where nombre=\'' . $proy . '\');');
             $rowPar = mysql_fetch_assoc($resPar);
             //fin consulta participacion
             $informe = $informe . "<tr><td><a href='#'><label>Proyecto: " . $proy . "</label></a></td><td><a href='#'><label>&nbsp;&nbsp;&nbsp;&nbsp;Participaci&oacute;n: " . $rowPar[porcentaje] . "%<label></a></td><td><a href='#'><label>&nbsp;&nbsp;&nbsp;&nbsp;Horas: " . $horasP . "</label></a></td></tr>";
@@ -166,12 +167,12 @@ if ($totTareas > 0) {
     }
     $informe = $informe . '<a href="#"></table><label>Horas trabajadas durante este periodo: ' . $horas . '</label></a>';
 } else {
-    $result = mysql_query('select nombre, apellidos from trabajador where (dni=\'' . $dni . '\')');
+    $result = mysql_query('select nombre, apellidos from Trabajador where (dni=\'' . $dni . '\');');
     $rowEmp = mysql_fetch_array($result);
     $nombre = $rowEmp['nombre'];
     $apellidos = $rowEmp['apellidos'];
 
-    $informe = "<div class='centercontentleft'><a href='#'>" . $nombre . " " . $apellidos . "&nbsp;&nbsp;&nbsp;&nbsp;" . $dni . "<br/>Sin informacion para este intervalo</a></div>";
+    $informe = "<a href='#'>" . $nombre . " " . $apellidos . "&nbsp;&nbsp;&nbsp;&nbsp;" . $dni . "<br/>Sin informacion para este intervalo</a>";
 }
 
 
