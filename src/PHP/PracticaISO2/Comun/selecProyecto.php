@@ -32,6 +32,7 @@ if ($login != "T") {
         $dniLogueado = $_SESSION['dni'];
         include_once('../Persistencia/conexion.php');
         $conexion = new conexion();
+        // Lista de proyectos
         $result = mysql_query("SELECT nombre, descripcion, jefeProyecto, idProyecto, fechaInicio FROM Proyecto WHERE\n"
     . "(jefeProyecto = \"".$dniLogueado."\" or idProyecto in \n"
     . "(SELECT Proyecto_idProyecto FROM TrabajadorProyecto WHERE \n"
@@ -45,6 +46,7 @@ if ($login != "T") {
             while ($rowEmp = mysql_fetch_assoc($result)) {
                 // comprobacion de robustez si fechaI = Null & tiene trabajadores, se borran
                 if($rowEmp['fechaInicio'] == ""){
+                        // Lista de trabajadores en dicho proyecto
                         $result5 = mysql_query("SELECT Trabajador_dni FROM TrabajadorProyecto WHERE\n"
                         . "Proyecto_idProyecto = \"".$rowEmp['idProyecto']."\"");
 
