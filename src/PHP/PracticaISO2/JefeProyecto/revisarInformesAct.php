@@ -47,9 +47,8 @@
                  if ($totEmp2 >0) {
                      $artefacto = True;
                      while ($rowEmp2 = mysql_fetch_assoc($result2)) {
-                         ///////////////////////////////////////////////// METER EL ENLACE A LA PAGINA DEL ARTEFACTO!!
                          $listado = $listado
-                        . "&nbsp;&nbsp;&nbsp;&nbsp;<a href='verArtefacto.php?idAct=".$rowEmp['idActividad']."'>&nbsp;&nbsp;&nbsp;<img src= '../images/iActividad4.gif' alt='Artefacto' border='0'"
+                        . "&nbsp;&nbsp;&nbsp;&nbsp;<a href='verArtefacto.php?idAct=".$rowEmp['idActividad']."&idP=".$_SESSION['proyectoEscogido']."'>&nbsp;&nbsp;&nbsp;<img src= '../images/iActividad4.gif' alt='Artefacto' border='0'"
                         . "style='width: auto; height: 12px;'/>"
                         . "&nbsp;&nbsp;&nbsp;&nbsp;Artefacto:&nbsp;&nbsp;".$rowEmp2['nombre']
                         . "</a><br/>";
@@ -129,17 +128,14 @@
                         . "<center><input type='button' id='bTerminar' value='Terminar' name='Terminar' alt='Terminar la actividad' onclick='terminar("
                         . $rowEmp['idActividad'].")'/></center>";
                     } else {
-                        // horas ok artefacto no
                         $mensajeterminar = $mensajeterminar."El artefacto correspondiente no ha sido depositado a&uacute;n";
                     }
                 } else {
                     $mensajeterminar = $mensajeterminar."El n&uacute;mero de horas trabajadas es menor "
                                        ."a la estimaci&oacute;n de esfuerzo inicial <br/>";
                     if ($artefacto == True) {
-                        // horas mal y artefacto ok
                         $mensajeterminar = $mensajeterminar."El artefacto correspondiente ha sido depositado";
                     } else {
-                        // horas y artefacto mal
                         $mensajeterminar = $mensajeterminar."El artefacto correspondiente no ha sido depositado a&uacute;n";
                     }
                 }

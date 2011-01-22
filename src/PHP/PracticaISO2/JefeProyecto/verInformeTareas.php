@@ -1,25 +1,9 @@
 <?php session_start();
 
-    $_SESSION['Actividad'] = $_GET['idAct'];
-    $_SESSION['proyectoEscogido'] = $_GET['idP'];
-
     include_once('../Persistencia/conexion.php');
     $conexion = new conexion();
 
-    $result = mysql_query("SELECT * FROM Artefacto WHERE\n"
-            . "Actividad_idActividad = \"".$_SESSION['Actividad']."\"");
-    $totEmp = mysql_num_rows($result);
-
-    if ($totEmp == 1) { // existe ya un artefacto
-                while ($rowEmp = mysql_fetch_assoc($result)) {
-                $nomArtefacto = $rowEmp['nombre'];
-                $desArtefacto = $rowEmp['url'];
-                $commArtefacto = $rowEmp['comentarios'];
-                }
-            }
-
 ?>
-
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "Http://www.w3.org/TR/html4/strict.dtd">
 <html>
     <head>
@@ -41,12 +25,8 @@
         <link rel="stylesheet" type="text/css" href="../stylesheet.css" media="screen, projection, tv " />
 
         <script type="text/javascript">
-            
-            function volver(){
-                location.href = "revisarInformesAct.php?idP=" + "<?php echo $_SESSION['proyectoEscogido']?>";
-            }
-            
-        </script>
+        
+    </script>
 
     </head>
     <body>
@@ -106,30 +86,26 @@
         <div id="selProyecto">
         <h2 style="text-align: center">Ver artefacto</h2>
         <div class="centercontentleft" style="width:auto;">
+        
+            <div id="DTareas">
 
-        <div id="DArtefacto">
-                <p><b>Artefacto correspondiente a la actividad actual</b></p>
-                <table style="padding-left:10px;">
-                    <tr>
-                    <td>Nombre:</td>
-                    <td><input type="text" disabled="disabled" id="nomArt" value="<?php echo utf8_decode($nomArtefacto) ?>" size="75" /></td>
-                    </tr>
-                    <tr>
-                    <td>URL:</td>
-                    <td><input type="text" disabled="disabled" id="urlArt" size="75" value="<?php echo utf8_decode($desArtefacto) ?>" /></td>
-                    </tr>
-                </table>
-
-                <p>Comentarios: <br> <textarea cols="70" disabled="disabled" id="commArt" rows="8"><?php echo utf8_decode($commArtefacto) ?></textarea></p>
-                <span id="editando" >
-            <center><input type="button" value="Volver" name="Volver" onclick="volver()"/></center>
+            <?php
+            echo "<p style='color:black'>Informe de tareas correspondiente a la semana <b>".$semana."</b></p>";
+            if($estadoInf!= ""){
+                    echo $estadoInf;
+                    }
+                    if($estadoInf== "" || $cancelado==1 || $pendiente==1){
+                      echo "<p>Su m&aacute;ximo de horas esta semana para esta actividad es de <b>". $maxHoras." Horas</b> </p>" ;
+                    }
+                echo utf8_decode($Tareas);
+                ?>
+                <?php if($estadoInf== "" || $cancelado==1 || $pendiente==1){?>
+            <span id="enviando" >
+            <center><input type="button" value="Enviar" name="Enviar" onclick="enviar()"/></center>
             </span>
-            </div>
+            <?php } ?>
+                </div>
 
-            </div>
-
-
-        </div>
 
 </div>
 </div>
