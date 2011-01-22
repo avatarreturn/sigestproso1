@@ -245,6 +245,7 @@ function validar(){
 
 	<div align="left">
 		<ul class="BLUE">
+                        <li><a href="../JefeProyecto/planIteracion.php">Planificar iteraci&oacute;n</a></li>
 			<li><a href="selecProyecto.php">Seleccionar proyecto</a></li>
 			<li><a href="selecVacaciones.php">Escoger vacaciones</a></li>
 		</ul>

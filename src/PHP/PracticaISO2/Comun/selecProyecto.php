@@ -64,7 +64,7 @@ if ($login != "T") {
                     . "style='width: auto; height: auto;'/>&nbsp;&nbsp;".$rowEmp['nombre']."</a> - "
                     . $rowEmp['descripcion']."<br/>";
                     }else{
-                        $jefeProy = "<a href='../JefeProyecto/planIteracion.php?idP=".$rowEmp['idProyecto']
+                        $jefeProy = "<a href='../JefeProyecto/revisarInformesAct.php?idP=".$rowEmp['idProyecto']
                     ."'><img src= '../images/iJefeProyecto.gif' alt='#' border='0' "
                     . "style='width: auto; height: auto;'/>&nbsp;&nbsp;".$rowEmp['nombre']."</a> - "
                     . $rowEmp['descripcion']."<br/>";
