@@ -77,7 +77,7 @@
                         . "<div id=\"oculto2". $cont2. "\" style=\"display:none\">";
 
                         // Lista de informes pendientes o cancelados de cada trabajador anterior
-                        $result4 = mysql_query("SELECT semana, estado FROM InformeTareas WHERE \n"
+                        $result4 = mysql_query("SELECT semana, estado, idInformeTareas FROM InformeTareas WHERE \n"
                              . "(estado in ('Pendiente', 'Cancelado') and "
                              . "(Trabajador_dni = '".$rowEmp3['dni']."'))");
 
@@ -87,16 +87,13 @@
                             while ($rowEmp4 = mysql_fetch_assoc($result4)) {
 
                                 // Se añade cada informe al listado
-                                ///////////////// PONER ENLACE AL PROPIO INFORME
                                 $listado = $listado
-                                . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"#\">&nbsp;&nbsp;&nbsp;&nbsp;<img src= '../images/iTarea.png' alt='Informe de actividad' border='0'"
+                                . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='verInformeTareas.php?idP=".$_SESSION['proyectoEscogido']."&idInf".$rowEmp4['idInformeTareas']."'>&nbsp;&nbsp;&nbsp;&nbsp;<img src= '../images/iTarea.png' alt='Informe de actividad' border='0'"
                                 . "style='width: auto; height: 12px;'/>"
                                 . "&nbsp;&nbsp;&nbsp;".$rowEmp4['semana']."&nbsp;&nbsp;&nbsp;&nbsp;[".$rowEmp4['estado']
                                 . "]</a><br/>";
                             }
-
-                        }
-                        
+                        }                        
                         
                     }
                     $listado = $listado . "</div>";

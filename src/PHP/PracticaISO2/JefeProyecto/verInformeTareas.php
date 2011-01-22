@@ -1,7 +1,13 @@
 <?php session_start();
 
+    $_SESSION['proyectoEscogido'] = $_GET['idP'];
+    $_SESSION['informeActual'] = $_GET['idInf'];
+
     include_once('../Persistencia/conexion.php');
     $conexion = new conexion();
+
+    $result = mysql_query("SELECT ");
+    $totEmp = mysql_num_rows($result);
 
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "Http://www.w3.org/TR/html4/strict.dtd">
@@ -34,16 +40,7 @@
     <div id="small">Revisi&oacute;n de informes de actividades</div>
 		<div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
 </div>
-<!--
-		<div id="topmenu">
 
-
-		<ul class="BLUE">
-		<li><a href="#" title="Downloads"><span>ISO II</span></a></li>
-		<li><a href="#" title="Vacaciones"><span>Vacaciones</span></a></li>
-		<li><a href="#" title="Links"><span>Santillana</span></a></li>
-		</ul>
-</div>-->
 
 <!-- end top menu and blog title-->
 
