@@ -1,7 +1,9 @@
 <?php session_start();
 
 // CODIGO PHP DE LAS COSAS Q SALEN DE LA BD PARA MOSTRAR POR PANTALLA
-    $_SESSION['ActividadEscogidaJ'] = $_GET['idActJ'];
+
+    //$_SESSION['ActividadEscogidaJ'] = $_GET['idActJ'];
+    $_SESSION['proyectoEscogido'] = $_GET['idP'];
 
     include_once('../Persistencia/conexion.php');
     $conexion = new conexion();
