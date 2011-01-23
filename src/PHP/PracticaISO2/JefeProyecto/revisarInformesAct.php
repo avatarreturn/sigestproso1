@@ -88,7 +88,7 @@
 
                                 // Se añade cada informe al listado
                                 $listado = $listado
-                                . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='verInformeTareas.php?idP=".$_SESSION['proyectoEscogido']."&idInf".$rowEmp4['idInformeTareas']."'>&nbsp;&nbsp;&nbsp;&nbsp;<img src= '../images/iTarea.png' alt='Informe de actividad' border='0'"
+                                . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='verInformeTareas.php?idP=".$_SESSION['proyectoEscogido']."&idInf=".$rowEmp4['idInformeTareas']."'>&nbsp;&nbsp;&nbsp;&nbsp;<img src= '../images/iTarea.png' alt='Informe de actividad' border='0'"
                                 . "style='width: auto; height: 12px;'/>"
                                 . "&nbsp;&nbsp;&nbsp;".$rowEmp4['semana']."&nbsp;&nbsp;&nbsp;&nbsp;[".$rowEmp4['estado']
                                 . "]</a><br/>";
@@ -185,6 +185,7 @@
                    }
                 }
 
+                // Termina la actividad con idActividad=x
                 function terminar(x){
 
                     if (window.XMLHttpRequest) {

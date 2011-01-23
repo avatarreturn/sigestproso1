@@ -11,27 +11,30 @@
             . "idInformeTareas = ".$_SESSION['informeActual']); 
     $totEmp = mysql_num_rows($result);
 
-    $actActual = $rowEmp['Actividad_idActividad'];
-    $trabActual = $rowEmp['Trabajador_dni'];
-    $semana = $rowEmp['semana'];
-
     $estadoInf = "";
     $cancelado=0;
     $pendiente=0;
 
     if ($totEmp ==1) {
         while ($rowEmp = mysql_fetch_assoc($result)) {
+
+            $actActual = $rowEmp['Actividad_idActividad'];
+            $trabActual = $rowEmp['Trabajador_dni'];
+            $semana = $rowEmp['semana'];
+
             if($rowEmp['estado']=="Pendiente"){
-                $estadoInf= "<p style='color:red'>El estado actual del informe es: <b>Pendiente de revisi&oacute;n</b></p>";
+                $estadoInf= "<p style='color:red'> El estado actual del informe es: <b>Pendiente de revisi&oacute;n</b></p>";
                 $pendiente=1;
-            }else if($rowEmp['estado']=="Cancelado"){
-                $estadoInf= "<p style='color:red'>El estado actual del informe es: <b>Cancelado</b><br/>";
+            }else if($rowEmp['estado']=="Aceptado"){
+                $estadoInf= "<p style='color:red'> El estado actual del informe es: <b>Aceptado</b></p>";
+            }else{
+                $estadoInf= "<p style='color:red'> El estado actual del informe es: <b>Cancelado</b><br/>";
                 $cancelado= 1;
             }
         }
     }
     
-    // sacamos nombre de la actividad y proyecto
+    // Sacamos nombre de la actividad y proyecto
     $result2 = mysql_query("SELECT p.nombre as nombreP, p.descripcion as descP, a.nombre as nombreA FROM Proyecto p, Actividad a, Iteracion i, Fase f WHERE\n"
     . "a.idActividad = ".$actActual. " AND\n"
     . "a.Iteracion_idIteracion = i.idIteracion AND\n"
@@ -47,30 +50,34 @@
         }
     }
 
-    $result3 = mysql_query("SELECT * FROM CatalogoTareas ORDER BY descripcion");
+    // Sacamos los datos de cada tarea personal
+    $result3 = mysql_query("SELECT t.horas as Horas, c.descripcion as descripcion FROM TareaPersonal t, CatalogoTareas c WHERE \n"
+    . "t.InformeTareas_idInformeTareas=".$_SESSION['informeActual']." \n"
+    . "AND t.CatalogoTareas_idTareaCatalogo = c.idTareaCatalogo \n"
+    . "ORDER BY c.descripcion");
+
     $totEmp3 = mysql_num_rows($result3);
     $nTareas = $totEmp3;
-    $_SESSION['nTareas'] =$nTareas;
+    $_SESSION['nTareas'] = $nTareas;
 
     if ($totEmp3 >0) {
-            $Tareas =  "<p>N&uacute;mero de horas dedicadas a cada tarea:</p><TABLE cellspacing='12' cellpadding='0'>";
-            $i = 0;
-            while ($rowEmp3 = mysql_fetch_assoc($result3)) {
-                $Tareas = $Tareas ."<TR>"
-                ."<TD><img src= '../images/iTarea2.png' alt='#' border='0' style='width: auto; height: 12px;'/>&nbsp;".$rowEmp3['descripcion']."</TD>"
-                ."<TD><input type='text' id='tarea".$i."' value='0' size='2' maxlength='2'> </TD>"
-                ."<TD><small>horas</small></TD>"
-                ."</TR>";
-                $i++;
-            }
-            $Tareas = $Tareas ."</TABLE>";
+        $Tareas =  "<p>N&uacute;mero de horas dedicadas a cada tarea:</p><TABLE cellspacing='12' cellpadding='0'>";
+        $i = 0;
+        while ($rowEmp3 = mysql_fetch_assoc($result3)) {
+            $Tareas = $Tareas ."<TR>"
+            ."<TD><img src= '../images/iTarea2.png' alt='#' border='0' style='width: auto; height: 12px;'/>&nbsp;".$rowEmp3['descripcion']."</TD>"
+            ."<TD><input type='text' disabled='disabled' id='tarea".$i."' value='".$rowEmp3['Horas']."' size='2' maxlength='2'> </TD>"
+            ."<TD><small>horas</small></TD>"
+            ."</TR>";
+            $i++;
+        }
+        $Tareas = $Tareas ."</TABLE>";
     }
 
     // Sacamos el porcentaje de participacion del proyecto
-
     $result4 = mysql_query("SELECT porcentaje FROM TrabajadorProyecto WHERE "
             ."Proyecto_idProyecto=".$_SESSION['proyectoEscogido']." AND "
-            ."Trabajador_dni=".$trabActual);
+            ."Trabajador_dni='".$trabActual."'");
     $totEmp4 = mysql_num_rows($result4);
 
     if ($totEmp4 ==1) {
@@ -103,6 +110,33 @@
         <link rel="stylesheet" type="text/css" href="../stylesheet.css" media="screen, projection, tv " />
 
         <script type="text/javascript">
+
+            // Evalúa un informe como aceptado (x=0) o como denegado (x=1)
+            function evaluarInforme(x){
+                if (window.XMLHttpRequest) {
+                        xmlhttp=new XMLHttpRequest();
+                    } else {
+                        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+                    }
+                    xmlhttp.onreadystatechange=function() {
+                        if(xmlhttp.readyState==1){
+                            //2- Sucede cuando se esta cargando la pagina
+                            document.getElementById("enviando").innerHTML = "<p><center>Evaluando informe...<center><img src='../images/enviando.gif' alt='Evaluando' width='150px'/></p>";
+                        } else if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+                            //3- AQUI VA LA RESPUESTA, DESPUES DE Q EL SERVIDOR HAGA LO Q SEA
+                            //alert(xmlhttp.responseText);  ES LA VARIABLE A LA Q VAN LOS ECHOS DE LA SERVIDOR ASOCIADA
+                            location.href = "verInformeTareas.php?idP=" + "<?php echo $_SESSION['proyectoEscogido']?>" + "&idInf=" + "<?php echo $_SESSION['informeActual']?>";
+                        }
+                    }
+
+                    //1- LO Q LE MANDAS AL SERVIDOR
+                    xmlhttp.open("GET","evaluarInforme.php?idInf=" + "<?php echo $_SESSION['informeActual']?>" + "&e=" + x,true);
+                    xmlhttp.send();
+            }
+
+            function volver(){
+                location.href = "revisarInformesAct.php?idP=" + "<?php echo $_SESSION['proyectoEscogido']?>";
+            }
         
         </script>
 
@@ -151,7 +185,7 @@
                         <div id="DTareas">
 
                             <?php
-                                echo "<p style='color:black'>Informe de tareas correspondiente a la semana <b>".$semana."</b></p>";
+                                echo "<p style='color:black'>Informe de tareas correspondiente a la semana <b>".$semana."&nbsp;"."</b></p>";
                                 if($estadoInf!= ""){
                                     echo $estadoInf;
                                 }
@@ -163,9 +197,20 @@
                             
                             <?php if($estadoInf== "" || $cancelado==1 || $pendiente==1){?>
                                 <span id="enviando" >
-                                    <center><input type="button" value="Enviar" name="Enviar" onclick="enviar()"/></center>
+                                    <center>
+                                        <input type="button" value="Aceptar" name="Aceptar" onclick="evaluarInforme(0)"/>
+                                        &nbsp;&nbsp;
+                                        <input type="button" value="Denegar" name="Denegar" onclick="evaluarInforme(1)"/>
+                                        &nbsp;&nbsp;
+                                        <input type="button" value="Volver" name="Volver" onclick="volver()"/>
+                                    </center>
                                 </span>
+                            <?php } else { ?>
+                                <center>
+                                    <input type="button" value="Volver" name="Volver" onclick="volver()"/>
+                                </center>
                             <?php } ?>
+                            <br/>
                             
                         </div>
                     </div>
