@@ -6,16 +6,14 @@
     $conexion = new conexion();
 
          // Lista de actividades activas del proyecto actual
-	 $result = mysql_query("SELECT nombre, idActividad, duracionEstimada FROM Actividad WHERE\n"
-                    . "fechaFin is NULL"
-                    . " AND fechaInicio is NOT NULL"
-                    . " AND Iteracion_IdIteracion in\n"
-                    . "(SELECT idIteracion FROM Iteracion WHERE\n"
-                    . "Fase_idFase in \n"
-                    . "(SELECT idFase FROM Fase WHERE\n"
-                    . "Proyecto_idProyecto = "
-                    . $_SESSION['proyectoEscogido']
-                    ."))");
+	 $result = mysql_query("SELECT a.nombre as nombre, a.idActividad as idActividad, a.duracionEstimada as duracionEstimada, i.idIteracion as idIteracion, i.numero as numIteracion, f.idFase as idFase"
+                ." FROM Actividad a, Iteracion i, Fase f WHERE\n"
+                . "a.fechaFin is NULL"
+                . " AND a.fechaInicio is NOT NULL"
+                . " AND a.Iteracion_IdIteracion=i.idIteracion"
+                . " AND i.Fase_idFase=f.idFase"
+                . " AND f.Proyecto_idProyecto=".$_SESSION['proyectoEscogido']);
+
          $totEmp = mysql_num_rows($result);
          
          if ($totEmp >0) {
@@ -28,6 +26,10 @@
 
              while ($rowEmp = mysql_fetch_assoc($result)) {
                  $cont = $cont + 1;
+
+                 $_SESSION['itActual'] = $rowEmp['idIteracion'];
+                 $_SESSION['faseActual'] = $rowEmp['idFase'];
+                 $_SESSION['numItActual'] = $rowEmp['numIteracion'];
 
                  // Meter cada actividad en el listado
                  $listado = $listado
@@ -81,12 +83,12 @@
 
                         $totEmp4 = mysql_num_rows($result4);
 
-//                        $infPendientes = 0;
+                        $infPendientes = 0;
 
                         if ($totEmp4 > 0) {
                             while ($rowEmp4 = mysql_fetch_assoc($result4)) {
 
-//                                $infPendientes = $infPendientes + 1;
+                                $infPendientes = $infPendientes + 1;
 
                                 // Se añade cada informe al listado
                                 $listado = $listado
@@ -145,7 +147,86 @@
                 $listado = $listado."</div>";
 
              }
-         }
+        }
+
+        // Verificación de si la siguiente iteración está planificada
+
+        $planificado = 0;
+
+        // Calculamos si es la iteracion actual es la ultima de esta fase
+        $result7 = mysql_query("SELECT i.idIteracion as idIteracion, f.nombre as nombre FROM Iteracion i, Fase f WHERE"
+                ." numero = (SELECT MAX(numero) as maximo FROM Iteracion WHERE Fase_idFase=" .$_SESSION['faseActual'].")"
+                ." AND i.Fase_idFase=".$_SESSION['faseActual']
+                ." AND f.idFase=i.Fase_idFase");
+        $totEmp7 = mysql_num_rows($result7);
+        
+        if ($totEmp7 == 1) {
+            while ($rowEmp7 = mysql_fetch_assoc($result7)) {
+                $iteracionMax = $rowEmp7['idIteracion']; // número de la máxima iteración de la fase actual
+                $nomFase = $rowEmp7['nombre'];
+            }
+        }
+
+        // Comprobamos no estar en la ultima iteracion de la ultima fase
+        if ($_SESSION['itActual'] == $iteracionMax && $nomFase == "Transicion") {
+            $planificado = 1;
+        } else {
+
+            // Estamos en la última iteración de la fase actual
+            if ($_SESSION['itActual'] == $iteracionMax) {
+
+                if ($nomFase == "Inicio") {$nomFaseS = "Elaboracion";}
+                else if ($nomFase == "Elaboracion"){$nomFaseS = "Construccion";}
+                else if ($nomFase == "Construccion"){$nomFaseS = "Transicion";}
+
+                $result8 = mysql_query("SELECT idFase FROM Fase"
+                        ." WHERE nombre='".$nomFaseS
+                        ."' AND Proyecto_idProyecto=".$_SESSION['proyectoEscogido']);
+                $totEmp8 = mysql_num_rows($result8);
+
+                if ($totEmp8 == 1){
+                    while ($rowEmp8 = mysql_fetch_assoc($result8)){
+                        $idFaseS = $rowEmp8['idFase'];
+                    }
+                }
+
+                $result9 = mysql_query("SELECT idIteracion FROM Iteracion"
+                        ." WHERE Fase_idFase=".$idFaseS
+                        ." AND numero=1");
+                $totEmp9 = mysql_num_rows($result9);
+
+                if ($totEmp9 == 1){
+                    while ($rowEmp9 = mysql_fetch_assoc($result9)){
+                        $idItS = $rowEmp9['idIteracion'];
+                    }
+                }
+
+            // No estamos en la última iteración de la fase actual
+            } else {
+                
+                $result10 = mysql_query("SELECT idIteracion FROM Iteracion"
+                        ." WHERE numero=".$_SESSION['numItActual']+1);
+                $totEmp10 = mysql_num_rows($result10);
+
+                if ($totEmp10 == 1){
+                    while ($rowEmp10 = mysql_fetch_assoc($result10)){
+                        $idItS = $rowEmp10['idIteracion'];
+                    }
+                }
+            }
+
+            // Comprobamos si la siguiente iteración está planificada
+            $result6 = mysql_query("SELECT nombre FROM Actividad WHERE"
+                            . " Iteracion_idIteracion=".$idItS);
+            $totEmp6 = mysql_num_rows($result6);
+            if ($totEmp6 > 0) {
+                $planificado = 1;
+            } else {
+                $planificado = 0;
+            }
+
+        }
+
 
     ?>
 
@@ -194,7 +275,7 @@
 
                     if (<?php echo $infPendientes ?> != 0) {
                         alert("No puede terminar una actividad con informes pendientes o cancelados, debe aceptarlos primero.");
-                    } else {
+                    } else {                        
 
                         if (window.XMLHttpRequest) {
                             xmlhttp=new XMLHttpRequest();
@@ -209,13 +290,18 @@
                                 //3- AQUI VA LA RESPUESTA, DESPUES DE Q EL SERVIDOR HAGA LO Q SEA
                                 //alert(xmlhttp.responseText);  ES LA VARIABLE A LA Q VAN LOS ECHOS DE LA SERVIDOR ASOCIADA
                                 location.href = "revisarInformesAct.php?idP=" + "<?php echo $_SESSION['proyectoEscogido']?>";
+                                if (xmlhttp.responseText == 0){
+                                    location.href = "revisarInformesAct.php?idP=" + "<?php echo $_SESSION['proyectoEscogido']?>";
+                                } else if (xmlhttp.responseText == 1){
+                                    alert("No puede terminar esta actividad, pues es la ultima de la iteracion actual, hasta que no planifique la siguiente iteracion.");
+                                }
                             }
                         }
 
                         //1- LO Q LE MANDAS AL SERVIDOR
-                        xmlhttp.open("GET","terminarActividad.php?idAct=" + x,true);
+                        xmlhttp.open("GET","terminarActividad.php?idAct=" + x + "&pl=" + "<?php echo $planificado?>",true);
                         xmlhttp.send();
-//                    }
+                    }
 
                 }
             </script>
