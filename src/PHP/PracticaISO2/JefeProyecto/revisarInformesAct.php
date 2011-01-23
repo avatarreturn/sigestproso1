@@ -7,17 +7,15 @@
 
          // Lista de actividades activas del proyecto actual
 	 $result = mysql_query("SELECT nombre, idActividad, duracionEstimada FROM Actividad WHERE\n"
-                    . "fechaFin is NULL\n"
-                    . "AND\n"
-                    . "fechaInicio is NOT NULL\n"
-                    . "AND\n"
-  		    . "(Iteracion_IdIteracion in\n"
+                    . "fechaFin is NULL"
+                    . " AND fechaInicio is NOT NULL"
+                    . " AND Iteracion_IdIteracion in\n"
                     . "(SELECT idIteracion FROM Iteracion WHERE\n"
                     . "Fase_idFase in \n"
                     . "(SELECT idFase FROM Fase WHERE\n"
                     . "Proyecto_idProyecto = "
                     . $_SESSION['proyectoEscogido']
-                    .")))");
+                    ."))");
          $totEmp = mysql_num_rows($result);
          
          if ($totEmp >0) {
@@ -56,7 +54,7 @@
                 }
 
                 // Lista de trabajadores asignados a cada actividad anterior
-                $result3 = mysql_query("SELECT nombre, dni FROM Trabajador WHERE \n"
+                $result3 = mysql_query("SELECT nombre, apellidos, dni FROM Trabajador WHERE \n"
                      . "dni in \n"
                      . "(SELECT Trabajador_dni FROM TrabajadorActividad WHERE \n"
                      . "Actividad_idActividad = "
@@ -64,17 +62,17 @@
                      . ")");
                 $totEmp3 = mysql_num_rows($result3);
 
-                $cont2 = 0;
-
                 if ($totEmp3 > 0) {
+                    $cont2 = 0;
+
                     while ($rowEmp3 = mysql_fetch_assoc($result3)) {
                         $cont2 = $cont2 + 1;
 
                         // Se añade cada trabajador al listado
                         $listado = $listado
-                        ."&nbsp;&nbsp;<a href=\"#\" onclick=\"ocultarT('oculto2".$cont2."')\">&nbsp;&nbsp;&nbsp;&nbsp;<img src= '../images/iJefeProyecto.gif' alt='Desarrollador' border='0'"
-                        . "style='width: auto; height: 12px;'/>&nbsp;&nbsp;".$rowEmp3['nombre']."&nbsp;&nbsp;".$rowEmp3['dni']."</a>"."<br/>"
-                        . "<div id=\"oculto2". $cont2. "\" style=\"display:none\">";
+                        ."&nbsp;&nbsp;<a href=\"#\" onclick=\"ocultarT('ocultoT".$cont2."')\">&nbsp;&nbsp;&nbsp;&nbsp;<img src= '../images/iJefeProyecto.gif' alt='Desarrollador' border='0'"
+                        . "style='width: auto; height: 12px;'/>&nbsp;&nbsp;".$rowEmp3['nombre']."&nbsp;".$rowEmp3['apellidos']."&nbsp;&nbsp;".$rowEmp3['dni']."</a>"."<br/>"
+                        . "<div id=\"ocultoT". $cont2. "\" style=\"display:none\">";
 
                         // Lista de informes pendientes o cancelados de cada trabajador anterior
                         $result4 = mysql_query("SELECT semana, estado, idInformeTareas FROM InformeTareas WHERE \n"
@@ -90,13 +88,14 @@
                                 $listado = $listado
                                 . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='verInformeTareas.php?idP=".$_SESSION['proyectoEscogido']."&idInf=".$rowEmp4['idInformeTareas']."'>&nbsp;&nbsp;&nbsp;&nbsp;<img src= '../images/iTarea.png' alt='Informe de actividad' border='0'"
                                 . "style='width: auto; height: 12px;'/>"
-                                . "&nbsp;&nbsp;&nbsp;".$rowEmp4['semana']."&nbsp;&nbsp;&nbsp;&nbsp;[".$rowEmp4['estado']
+                                . "&nbsp;&nbsp;&nbsp;Semana:&nbsp;".$rowEmp4['semana']."&nbsp;&nbsp;&nbsp;&nbsp;[".$rowEmp4['estado']
                                 . "]</a><br/>";
                             }
-                        }                        
-                        
+                        }
+
+                        $listado = $listado . "</div>";
+                     
                     }
-                    $listado = $listado . "</div>";
                 }
 
                 // Cálculo de si es posible cerrar una actividad o no
@@ -114,7 +113,7 @@
                      }
                 }
 
-                $mensajeterminar = "<br/><div class=\"centercontentleft\" style=\"width:auto;\">";
+                $mensajeterminar = "<div class=\"centercontentleft\" style=\"width:auto;\">";
 
                 if ($numhoras >= $rowEmp['duracionEstimada']){
                     $mensajeterminar = $mensajeterminar."El n&uacute;mero de horas trabajadas es mayor "
@@ -136,11 +135,12 @@
                         $mensajeterminar = $mensajeterminar."El artefacto correspondiente no ha sido depositado a&uacute;n";
                     }
                 }
-                $mensajeterminar = $mensajeterminar . "</div>";
+                $mensajeterminar = $mensajeterminar . "</div><br/><br/>";
                 $listado = $listado.$mensajeterminar;
 
+                $listado = $listado."</div>";
+
              }
-             $listado = $listado."</div>";
          }
 
     ?>
@@ -277,11 +277,9 @@
 //                echo utf8_decode("<span>" .$listado . "</span>");
                 echo $listado;
             ?>
-            <br/><br/>
-
+            <br/>
 
         </div>
-
 
         </div>
 
