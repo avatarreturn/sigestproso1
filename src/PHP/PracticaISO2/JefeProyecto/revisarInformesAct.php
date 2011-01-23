@@ -81,8 +81,12 @@
 
                         $totEmp4 = mysql_num_rows($result4);
 
+//                        $infPendientes = 0;
+
                         if ($totEmp4 > 0) {
                             while ($rowEmp4 = mysql_fetch_assoc($result4)) {
+
+//                                $infPendientes = $infPendientes + 1;
 
                                 // Se añade cada informe al listado
                                 $listado = $listado
@@ -121,7 +125,7 @@
                     if ($artefacto == True) {
                         // horas y artefacto ok
                         $mensajeterminar = $mensajeterminar."El artefacto correspondiente ha sido depositado <br/>"
-                        . "<center><input type='button' id='bTerminar' value='Terminar' name='Terminar' alt='Terminar la actividad' onclick='terminar("
+                        . "<br/><center><input type='button' id='bTerminar' value='Terminar' name='Terminar' alt='Terminar la actividad' onclick='terminar("
                         . $rowEmp['idActividad'].")'/></center>";
                     } else {
                         $mensajeterminar = $mensajeterminar."El artefacto correspondiente no ha sido depositado a&uacute;n";
@@ -188,25 +192,30 @@
                 // Termina la actividad con idActividad=x
                 function terminar(x){
 
-                    if (window.XMLHttpRequest) {
-                        xmlhttp=new XMLHttpRequest();
+                    if (<?php echo $infPendientes ?> != 0) {
+                        alert("No puede terminar una actividad con informes pendientes o cancelados, debe aceptarlos primero.");
                     } else {
-                        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-                    }
-                    xmlhttp.onreadystatechange=function() {
-                        if(xmlhttp.readyState==1){
-                            //2- Sucede cuando se esta cargando la pagina
-                            document.getElementById("bTerminar").innerHTML = "<p><center>Terminando actividad...<center><img src='../images/enviando.gif' alt='Terminando' width='150px'/></p>";
-                        } else if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-                            //3- AQUI VA LA RESPUESTA, DESPUES DE Q EL SERVIDOR HAGA LO Q SEA
-                            //alert(xmlhttp.responseText);  ES LA VARIABLE A LA Q VAN LOS ECHOS DE LA SERVIDOR ASOCIADA
-                            location.href = "revisarInformesAct.php?idP=" + "<?php echo $_SESSION['proyectoEscogido']?>";
-                        }
-                    }
 
-                    //1- LO Q LE MANDAS AL SERVIDOR
-                    xmlhttp.open("GET","terminarActividad.php?idAct=" + x,true);
-                    xmlhttp.send();
+                        if (window.XMLHttpRequest) {
+                            xmlhttp=new XMLHttpRequest();
+                        } else {
+                            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+                        }
+                        xmlhttp.onreadystatechange=function() {
+                            if(xmlhttp.readyState==1){
+                                //2- Sucede cuando se esta cargando la pagina
+                                document.getElementById("bTerminar").innerHTML = "<p><center>Terminando actividad...<center><img src='../images/enviando.gif' alt='Terminando' width='150px'/></p>";
+                            } else if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+                                //3- AQUI VA LA RESPUESTA, DESPUES DE Q EL SERVIDOR HAGA LO Q SEA
+                                //alert(xmlhttp.responseText);  ES LA VARIABLE A LA Q VAN LOS ECHOS DE LA SERVIDOR ASOCIADA
+                                location.href = "revisarInformesAct.php?idP=" + "<?php echo $_SESSION['proyectoEscogido']?>";
+                            }
+                        }
+
+                        //1- LO Q LE MANDAS AL SERVIDOR
+                        xmlhttp.open("GET","terminarActividad.php?idAct=" + x,true);
+                        xmlhttp.send();
+//                    }
 
                 }
             </script>
