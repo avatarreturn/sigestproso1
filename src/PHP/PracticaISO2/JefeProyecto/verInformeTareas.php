@@ -27,6 +27,7 @@
             }else if($rowEmp['estado']=="Cancelado"){
                 $estadoInf= "<p style='color:red'>El estado actual del informe es: <b>Cancelado</b><br/>";
                 $cancelado= 1;
+            }
         }
     }
     
