@@ -27,7 +27,6 @@ if ($totEmp == 1) {
 }
 
 // Calculo si la actividad es la última de la iteracion
-
 $result20 = mysql_query("SELECT idActividad, Iteracion_idIteracion, fechaInicio, fechaFin"
             . " FROM Actividad a \n"
             . " WHERE a.Iteracion_idIteracion=".$idIt
@@ -35,7 +34,7 @@ $result20 = mysql_query("SELECT idActividad, Iteracion_idIteracion, fechaInicio,
 $totEmp20 = mysql_num_rows($result20);
 
 // Sí es la última
-if ($totEmp == 1) {
+if ($totEmp20 == 1) {
     $ultima = 1;
 // No lo es
 } else {
@@ -95,40 +94,50 @@ if (($ultima == 1 && $planificado == 1) || ($ultima == 0)) {
         // ¿Hay que cerrar también la fase? [iteraciones de la fase sin fechafin]
         $result4 = mysql_query("SELECT idIteracion, Fase_idFase, numero, fechaInicio, fechaFin"
                 ." FROM Iteracion"
-                ." WHERE Fase.idFase=".$idFase
+                ." WHERE Fase_idFase=".$idFase
                 ." AND fechaFin IS NULL");
         $totEmp4 = mysql_num_rows($result4);
+
 
         // CASO B: cerrar actividad e iteración. Empezar iteración y sus actividades
         if ($totEmp4 > 0) {
 
-                // Actualizamos $idIt a la nueva iteración actual
+                // Actualizamos $idItS e $numItS a la siguiente iteración
+                $numItS = $numIt + 1;
                 $result13 = mysql_query("SELECT idIteracion"
-                        ." FROM Iteracion WHERE numero=".$numIt+1
+                        ." FROM Iteracion WHERE numero=".$numItS
                         ." AND Fase_idFase=".$idFase);
                 $totEmp13 = mysql_num_rows($result13);
                 if ($totEmp13 == 1) {
                     while ($rowEmp13 = mysql_fetch_assoc($result13)) {
-                        $idIt = $rowEmp13['idIteracion'];
+                        $idItS = $rowEmp13['idIteracion'];
                     }
                 }
 
+                // Empezar iteración siguiente
                 $result12 = mysql_query("UPDATE Iteracion SET fechaInicio='"
                         .$fecha_actual
-                        ." WHERE idIteracion =".$idIt);
+                        ."' WHERE idIteracion =".$idItS);
 
-                $result14 = mysql_query("UPDATE Actividad SET fechaInicio='"
-                        .$fecha_actual
-                        ."' WHERE idActividad IN"
-                        ." (SELECT idActividad FROM Actividad WHERE idActividad NOT IN"
+                // Empezar actividades iniciales de la iteración siguiente
+                $result22 = mysql_query("SELECT idActividad FROM Actividad WHERE idActividad NOT IN"
                         ." (SELECT Actividad_idActividad FROM ActividadPredecesora)"
-                        ." AND Iteracion_idIteracion=".$idIt
-                        .")");
+                        ." AND Iteracion_idIteracion=".$idItS);
+                $totEmp22 = mysql_num_rows($result22);
+
+                if ($totEmp22 > 0) {
+                    while ($rowEmp22 = mysql_fetch_assoc($result22)){
+                        $result14 = mysql_query("UPDATE Actividad SET fechaInicio='"
+                        .$fecha_actual
+                        ."' WHERE idActividad=".$rowEmp22['idActividad']);
+                    }
+                }
 
         // Hay que cerrar también la fase
         } else {
+
             // Terminar fase actual
-            $result10 = mysql_query("UPDATE Fase SET fechaFin='"
+            $result10 = mysql_query("UPDATE Fase SET fechaFinR='"
                 .$fecha_actual
                 ."' WHERE idFase="
                 .$idFase);
@@ -143,47 +152,53 @@ if (($ultima == 1 && $planificado == 1) || ($ultima == 0)) {
             // CASO C: cerrar actividad, iteración y fase. Empezar fase, iteración y sus actividades
             if ($totEmp5 > 0) {
 
-                // Actualizamos $idFase a la nueva fase actual
-                if ($nomFase == 'Inicio') {$nomFase = 'Elaboracion';}
-                else if ($nomFase == 'Elaboracion') {$nomFase = 'Construccion';}
-                else if ($nomFase == 'Construccion') {$nomFase = 'Transicion';}
+                // Actualizamos $idFaseS a la siguiente fase
+                if ($nomFase == 'Inicio') {$nomFaseS = 'Elaboracion';}
+                else if ($nomFase == 'Elaboracion') {$nomFaseS = 'Construccion';}
+                else if ($nomFase == 'Construccion') {$nomFaseS = 'Transicion';}
+
                 $result15 = mysql_query("SELECT idFase"
                         ." FROM Fase"
                         ." WHERE Proyecto_idProyecto=".$idP
-                        ." AND nombre='".$nomFase."'");
+                        ." AND nombre='".$nomFaseS."'");
                 $totEmp15 = mysql_num_rows($result15);
                     if ($totEmp15 == 1) {
-                        while ($rowEmp13 = mysql_fetch_assoc($result13)) {
-                            $idFase = $rowEmp15['idFase'];
+                        while ($rowEmp15 = mysql_fetch_assoc($result15)) {
+                            $idFaseS = $rowEmp15['idFase'];
                         }
                     }
 
-                 $result16 = mysql_query("UPDATE Fase SET fechaInicio='"
+                 $result16 = mysql_query("UPDATE Fase SET fechaInicioR='"
                     .$fecha_actual
-                    ." WHERE idIteracion =".$idFase);
+                    ."' WHERE idFase =".$idFaseS);
 
-                // Actualizamos $idIt a la nueva iteración actual
+                // Actualizamos $idItS a la siguiente iteración
                 $result17 = mysql_query("SELECT idIteracion"
                         ." FROM Iteracion WHERE numero=1"
-                        ." AND Fase_idFase=".$idFase);
+                        ." AND Fase_idFase=".$idFaseS);
                 $totEmp17 = mysql_num_rows($result17);
                 if ($totEmp17 == 1) {
                     while ($rowEmp17 = mysql_fetch_assoc($result17)) {
-                        $idIt = $rowEmp17['idIteracion'];
+                        $idItS = $rowEmp17['idIteracion'];
                     }
                 }
 
                 $result18 = mysql_query("UPDATE Iteracion SET fechaInicio='"
                         .$fecha_actual
-                        ." WHERE idIteracion =".$idIt);
+                        ."' WHERE idIteracion =".$idItS);
 
-                $result19 = mysql_query("UPDATE Actividad SET fechaInicio='"
-                        .$fecha_actual
-                        ."' WHERE idActividad IN"
-                        ." (SELECT idActividad FROM Actividad WHERE idActividad NOT IN"
+                $result21 = mysql_query("SELECT idActividad FROM Actividad WHERE idActividad NOT IN"
                         ." (SELECT Actividad_idActividad FROM ActividadPredecesora)"
-                        ." AND Iteracion_idIteracion=".$idIt
-                        .")");
+                        ." AND Iteracion_idIteracion=".$idItS);
+                $totEmp21 = mysql_num_rows($result21);
+
+                if ($totEmp21 > 0) {
+                    while ($rowEmp21 = mysql_fetch_assoc($result21)){
+                        $result19 = mysql_query("UPDATE Actividad SET fechaInicio='"
+                        .$fecha_actual
+                        ."' WHERE idActividad=".$rowEmp21['idActividad']);
+                    }
+                }                
 
 
             // CASO D: cerrar actividad, iteración, fase y proyecto

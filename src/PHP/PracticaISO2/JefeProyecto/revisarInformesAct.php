@@ -35,7 +35,7 @@
                  $listado = $listado
                     ."&nbsp;&nbsp;<a href=\"#\" onclick=\"ocultarA('oculto".$cont."')\"><img src= '../images/iActividad4.gif' alt='Actividad' border='0'"
                     . "style='width: auto; height: 12px;'/>&nbsp;&nbsp;Actividad:&nbsp;&nbsp;".$rowEmp['nombre']."</a>"."<br/>"
-                    . "<div id=\"oculto". $cont. "\" style=\"display:none\">";
+                    . "<div id=\"oculto". $cont. "\" style=\"display:inline\">";
 
                  // Artefacto de cada actividad anterior
                  $result2 = mysql_query("SELECT nombre FROM Artefacto WHERE \n"
@@ -74,12 +74,13 @@
                         $listado = $listado
                         ."&nbsp;&nbsp;<a href=\"#\" onclick=\"ocultarT('ocultoT".$cont2."')\">&nbsp;&nbsp;&nbsp;&nbsp;<img src= '../images/iJefeProyecto.gif' alt='Desarrollador' border='0'"
                         . "style='width: auto; height: 12px;'/>&nbsp;&nbsp;".$rowEmp3['nombre']."&nbsp;".$rowEmp3['apellidos']."&nbsp;&nbsp;".$rowEmp3['dni']."</a>"."<br/>"
-                        . "<div id=\"ocultoT". $cont2. "\" style=\"display:none\">";
+                        . "<div id=\"ocultoT". $cont2. "\" style=\"display:inline\">";
 
                         // Lista de informes pendientes o cancelados de cada trabajador anterior
-                        $result4 = mysql_query("SELECT semana, estado, idInformeTareas FROM InformeTareas WHERE \n"
-                             . "(estado in ('Pendiente', 'Cancelado') and "
-                             . "(Trabajador_dni = '".$rowEmp3['dni']."'))");
+                        $result4 = mysql_query("SELECT semana, estado, idInformeTareas FROM InformeTareas WHERE"
+                                ." (estado IN ('Pendiente', 'Cancelado')"
+                                ." AND (Trabajador_dni='".$rowEmp3['dni']."')"
+                                ." AND (Actividad_idActividad=".$rowEmp['idActividad']."))");
 
                         $totEmp4 = mysql_num_rows($result4);
 
@@ -141,7 +142,7 @@
                         $mensajeterminar = $mensajeterminar."El artefacto correspondiente no ha sido depositado a&uacute;n";
                     }
                 }
-                $mensajeterminar = $mensajeterminar . "</div><br/><br/>";
+                $mensajeterminar = $mensajeterminar . "</div><br/><br/><br/><br/>";
                 $listado = $listado.$mensajeterminar;
 
                 $listado = $listado."</div>";
@@ -153,9 +154,9 @@
 
         $planificado = 0;
 
-        // Calculamos si es la iteracion actual es la ultima de esta fase
+        // Calculamos si la iteración actual es la última de esta fase
         $result7 = mysql_query("SELECT i.idIteracion as idIteracion, f.nombre as nombre FROM Iteracion i, Fase f WHERE"
-                ." numero = (SELECT MAX(numero) as maximo FROM Iteracion WHERE Fase_idFase=" .$_SESSION['faseActual'].")"
+                ." i.numero = (SELECT MAX(numero) as maximo FROM Iteracion WHERE Fase_idFase=" .$_SESSION['faseActual'].")"
                 ." AND i.Fase_idFase=".$_SESSION['faseActual']
                 ." AND f.idFase=i.Fase_idFase");
         $totEmp7 = mysql_num_rows($result7);
@@ -203,9 +204,10 @@
 
             // No estamos en la última iteración de la fase actual
             } else {
+                $numItS = $_SESSION['numItActual']+1;
                 
                 $result10 = mysql_query("SELECT idIteracion FROM Iteracion"
-                        ." WHERE numero=".$_SESSION['numItActual']+1);
+                        ." WHERE numero=".$numItS);
                 $totEmp10 = mysql_num_rows($result10);
 
                 if ($totEmp10 == 1){
@@ -217,7 +219,7 @@
 
             // Comprobamos si la siguiente iteración está planificada
             $result6 = mysql_query("SELECT nombre FROM Actividad WHERE"
-                            . " Iteracion_idIteracion=".$idItS);
+                            ." Iteracion_idIteracion=".$idItS);
             $totEmp6 = mysql_num_rows($result6);
             if ($totEmp6 > 0) {
                 $planificado = 1;
@@ -288,8 +290,7 @@
                                 document.getElementById("bTerminar").innerHTML = "<p><center>Terminando actividad...<center><img src='../images/enviando.gif' alt='Terminando' width='150px'/></p>";
                             } else if (xmlhttp.readyState==4 && xmlhttp.status==200) {
                                 //3- AQUI VA LA RESPUESTA, DESPUES DE Q EL SERVIDOR HAGA LO Q SEA
-                                //alert(xmlhttp.responseText);  ES LA VARIABLE A LA Q VAN LOS ECHOS DE LA SERVIDOR ASOCIADA
-                                location.href = "revisarInformesAct.php?idP=" + "<?php echo $_SESSION['proyectoEscogido']?>";
+                                //alert(xmlhttp.responseText);  ES LA VARIABLE A LA Q VAN LOS ECHOS DE LA SERVIDOR ASOCIADA                                
                                 if (xmlhttp.responseText == 0){
                                     location.href = "revisarInformesAct.php?idP=" + "<?php echo $_SESSION['proyectoEscogido']?>";
                                 } else if (xmlhttp.responseText == 1){
@@ -338,8 +339,8 @@
 
 	<div align="left">
 		<ul class="BLUE">
-			<li><a href="selecProyecto.php">Seleccionar proyecto</a></li>
-			<li><a href="selecVacaciones.php">Escoger vacaciones</a></li>
+			<li><a href="../Comun/selecProyecto.php">Seleccionar proyecto</a></li>
+			<li><a href="../Comun/selecVacaciones.php">Escoger vacaciones</a></li>
 		</ul>
 	</div>
 
@@ -366,11 +367,12 @@
 	<br/><br/><br/>
         <div id="selProyecto">
         <h2 style="text-align: center">Seleccione el proyecto sobre el que desea trabajar</h2>
-        <div class="centercontentleft" style="width:auto;">
+        <div class="centercontentleft" style="width:553px;">
 
             <?php
-//                echo utf8_decode("<span>" .$listado . "</span>");
-                echo $listado;
+                echo utf8_decode("<span>" .$listado . "</span>");
+                echo ("<br/> ID ITERACION SIGUIENTE: ".$idItS);
+//                echo $listado;
             ?>
             <br/>
 
