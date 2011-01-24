@@ -196,10 +196,24 @@
                         ." AND numero=1");
                 $totEmp9 = mysql_num_rows($result9);
 
-                if ($totEmp9 == 1){
+                if ($totEmp9 == 1){ // La fase siguiente está planificada
                     while ($rowEmp9 = mysql_fetch_assoc($result9)){
                         $idItS = $rowEmp9['idIteracion'];
                     }
+
+                    // Comprobamos si la siguiente iteración está planificada
+                    $result6 = mysql_query("SELECT nombre FROM Actividad WHERE"
+                                    ." Iteracion_idIteracion=".$idItS);
+                    $totEmp6 = mysql_num_rows($result6);
+
+                    if ($totEmp6 > 0) {
+                        $planificado = 1;
+                    } else {
+                        $planificado = 0;
+                    }
+
+                } else { // No está planificada ni siquiera la siguiente fase (no existen iteraciones para idFaseS)
+                    $planificado = 0;
                 }
 
             // No estamos en la última iteración de la fase actual
@@ -207,7 +221,8 @@
                 $numItS = $_SESSION['numItActual']+1;
                 
                 $result10 = mysql_query("SELECT idIteracion FROM Iteracion"
-                        ." WHERE numero=".$numItS);
+                        ." WHERE numero=".$numItS
+                        ." AND Fase_idFase=".$_SESSION['faseActual']);
                 $totEmp10 = mysql_num_rows($result10);
 
                 if ($totEmp10 == 1){
@@ -215,17 +230,19 @@
                         $idItS = $rowEmp10['idIteracion'];
                     }
                 }
+
+                // Comprobamos si la siguiente iteración está planificada
+                $result6 = mysql_query("SELECT nombre FROM Actividad WHERE"
+                                ." Iteracion_idIteracion=".$idItS);
+                $totEmp6 = mysql_num_rows($result6);
+                if ($totEmp6 > 0) {
+                    $planificado = 1;
+                } else {
+                    $planificado = 0;
+                }
             }
 
-            // Comprobamos si la siguiente iteración está planificada
-            $result6 = mysql_query("SELECT nombre FROM Actividad WHERE"
-                            ." Iteracion_idIteracion=".$idItS);
-            $totEmp6 = mysql_num_rows($result6);
-            if ($totEmp6 > 0) {
-                $planificado = 1;
-            } else {
-                $planificado = 0;
-            }
+            
 
         }
 
@@ -371,8 +388,6 @@
 
             <?php
                 echo utf8_decode("<span>" .$listado . "</span>");
-                echo ("<br/> ID ITERACION SIGUIENTE: ".$idItS);
-//                echo $listado;
             ?>
             <br/>
 
