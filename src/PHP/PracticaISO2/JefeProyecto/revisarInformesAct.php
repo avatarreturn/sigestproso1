@@ -5,6 +5,39 @@
     include_once('../Persistencia/conexion.php');
     $conexion = new conexion();
 
+    $result12 = mysql_query("SELECT i.idIteracion as idIteracion, i.numero as numero"
+            ." FROM Iteracion i, Fase f, Proyecto p"
+            ." WHERE i.fechaInicio IS NOT NULL"
+            ." AND i.fechaFin IS NULL"
+            ." AND i.Fase_idFase=f.idFase"
+            ." AND f.Proyecto_idProyecto=".$_SESSION['proyectoEscogido']);
+    $totEmp12 = mysql_num_rows($result12);
+
+    if ($totEmp12 > 0){
+        while ($rowEmp12 = mysql_fetch_assoc($result12)) {
+            $idIt = $rowEmp12['idIteracion'];
+            $numIt = $rowEmp12['numero'];
+        }
+
+    }
+
+    $result11 = mysql_query("SELECT p.nombre as nombre, p.descripcion as descripcion, f.nombre as nombreF"
+            ." FROM Proyecto p, Fase f, Iteracion i"
+            ." WHERE i.idIteracion=".$idIt
+            ." AND f.idFase=i.Fase_idFase"
+            ." AND f.Proyecto_idProyecto=p.idProyecto");
+    $totEmp11 = mysql_num_rows($result11);
+
+
+    if ($totEmp11 == 1){
+        while ($rowEmp11 = mysql_fetch_assoc($result11)) {
+            $nombreP = $rowEmp11['nombre'];
+            $descripcionP = $rowEmp11['descripcion'];
+            $nombreF = $rowEmp11['nombreF'];
+        }
+
+    }
+
          // Lista de actividades activas del proyecto actual
 	 $result = mysql_query("SELECT a.nombre as nombre, a.idActividad as idActividad, a.duracionEstimada as duracionEstimada, i.idIteracion as idIteracion, i.numero as numIteracion, f.idFase as idFase"
                 ." FROM Actividad a, Iteracion i, Fase f WHERE\n"
@@ -18,10 +51,11 @@
          
          if ($totEmp >0) {
              $cont=0;
+             $cont2 = 0;
              $listado="";
 
              $numhoras = 0;         // número de horas en informes aceptados
-             $artefacto = False;    // existe artefacto para la actividad
+             $artefacto = 0;    // existe artefacto para la actividad
              $mensajeterminar = '';
 
              while ($rowEmp = mysql_fetch_assoc($result)) {
@@ -30,8 +64,6 @@
                  $_SESSION['itActual'] = $rowEmp['idIteracion'];
                  $_SESSION['faseActual'] = $rowEmp['idFase'];
                  $_SESSION['numItActual'] = $rowEmp['numIteracion'];
-
-//                 $infPendientes = 0; // número de informes pendientes o cancelados de cada actividad
 
                  // Meter cada actividad en el listado
                  $listado = $listado
@@ -45,9 +77,9 @@
                          . $rowEmp['idActividad']);
                  $totEmp2 = mysql_num_rows($result2);
 
-                 // Si ya hay artefacto se añade al listado y se pone artefacto a true
-                 if ($totEmp2 >0) {
-                     $artefacto = True;
+                 // Si ya hay artefacto se añade al listado y se pone artefacto a 1
+                 if ($totEmp2 == 1) {
+                     $artefacto = 1;
                      while ($rowEmp2 = mysql_fetch_assoc($result2)) {
                          $listado = $listado
                         . "&nbsp;&nbsp;&nbsp;&nbsp;<a href='verArtefacto.php?idAct=".$rowEmp['idActividad']."&idP=".$_SESSION['proyectoEscogido']."'>&nbsp;&nbsp;&nbsp;<img src= '../images/iActividad4.gif' alt='Artefacto' border='0'"
@@ -55,6 +87,8 @@
                         . "&nbsp;&nbsp;&nbsp;&nbsp;Artefacto:&nbsp;&nbsp;".$rowEmp2['nombre']
                         . "</a><br/>";
                      }
+                } else {
+                    $artefacto = 0;
                 }
 
                 // Lista de trabajadores asignados a cada actividad anterior
@@ -67,8 +101,7 @@
                 $totEmp3 = mysql_num_rows($result3);
 
                 if ($totEmp3 > 0) {
-                    $cont2 = 0;
-
+                    
                     while ($rowEmp3 = mysql_fetch_assoc($result3)) {
                         $cont2 = $cont2 + 1;
 
@@ -88,8 +121,6 @@
 
                         if ($totEmp4 > 0) {
                             while ($rowEmp4 = mysql_fetch_assoc($result4)) {
-
-//                                $infPendientes = $infPendientes + 1;
 
                                 // Se añade cada informe al listado
                                 $listado = $listado
@@ -120,32 +151,31 @@
                      }
                 }
 
-                $mensajeterminar = "<div class=\"centercontentleft\" style=\"width:auto;\">";
+                $mensajeterminar = "<div class=\"centercontentleft\" style=\"width:480px; margin-left:25px; \">";
 
                 if ($numhoras >= $rowEmp['duracionEstimada']){
-                    $mensajeterminar = $mensajeterminar."El n&uacute;mero de horas trabajadas es mayor "
-                                       ."o igual a la estimaci&oacute;n de esfuerzo inicial <br/>";
-                    if ($artefacto == True) {
-                        // horas y artefacto ok
-                        $mensajeterminar = $mensajeterminar."El artefacto correspondiente ha sido depositado <br/>"
+                    $mensajeterminar = $mensajeterminar."El n&uacute;mero de horas trabajadas en informes aceptados es mayor "
+                                       ."o igual a la estimaci&oacute;n de esfuerzo inicial. <br/>";
+                    if ($artefacto == 1) {
+                        $mensajeterminar = $mensajeterminar."El artefacto correspondiente ha sido depositado. <br/>"
                         . "<br/><center><input type='button' id='bTerminar' value='Terminar' name='Terminar' alt='Terminar la actividad' onclick='terminar("
                         . $rowEmp['idActividad'].")'/></center>";
                     } else {
-                        $mensajeterminar = $mensajeterminar."El artefacto correspondiente no ha sido depositado a&uacute;n";
+                        $mensajeterminar = $mensajeterminar."El artefacto correspondiente no ha sido depositado a&uacute;n.";
                     }
                 } else {
-                    $mensajeterminar = $mensajeterminar."El n&uacute;mero de horas trabajadas es menor "
-                                       ."a la estimaci&oacute;n de esfuerzo inicial <br/>";
-                    if ($artefacto == True) {
-                        $mensajeterminar = $mensajeterminar."El artefacto correspondiente ha sido depositado";
+                    $mensajeterminar = $mensajeterminar."El n&uacute;mero de horas trabajadas en informes aceptados es menor "
+                                       ."a la estimaci&oacute;n de esfuerzo inicial. <br/>";
+                    if ($artefacto == 1) {
+                        $mensajeterminar = $mensajeterminar."El artefacto correspondiente ha sido depositado.";
                     } else {
-                        $mensajeterminar = $mensajeterminar."El artefacto correspondiente no ha sido depositado a&uacute;n";
+                        $mensajeterminar = $mensajeterminar."El artefacto correspondiente no ha sido depositado a&uacute;n.";
                     }
                 }
-                $mensajeterminar = $mensajeterminar . "</div><br/><br/><br/><br/>";
+                $mensajeterminar = $mensajeterminar . "</div>";
                 $listado = $listado.$mensajeterminar;
 
-                $listado = $listado."</div>";
+                $listado = $listado."<br/><br/><br/><br/><br/></div>";
 
              }
         }
@@ -378,10 +408,14 @@
 
 
 	<h1>SIGESTPROSO</h1>
-	<br/><br/><br/>
+	<p><br/></p>
+
+        <p><a href="#"><?php echo utf8_decode($nombreP) ?></a> - <?php echo utf8_decode($descripcionP) ?></p>
+
         <div id="selProyecto">
-        <h2 style="text-align: center">Seleccione el proyecto sobre el que desea trabajar</h2>
-        <div class="centercontentleft" style="width:553px;">
+            <h2 style="text-align: center">Fase&nbsp;<i style="color:blue"><?php echo utf8_decode($nombreF) ?></i>
+                &nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;Iteraci&oacute;n&nbsp;<i style="color:blue"><?php echo utf8_decode($numIt) ?></i></h2>
+        <div class="centercontentleft" style="width:550px;">
 
             <?php
                 echo utf8_decode("<span>" .$listado . "</span>");
