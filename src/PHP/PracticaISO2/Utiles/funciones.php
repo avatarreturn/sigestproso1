@@ -31,14 +31,21 @@ function semanaActual() {
     }
     return $lunes=$semana;
 }
-
-function mayorQueHoy($fecha){
-    $hoy=date("Y-m-d");
-    if ($fecha>$hoy){
-        echo "true";
-    }else{
-        echo "false";
+function calculaLunes($fecha){
+    $dSemana = date(N);
+//    $semana = date("Y-m-d");
+    if ($dSemana != 1) {
+        while ($dSemana != 1) {
+            $fecha = date("Y-m-d", strtotime(date("Y-m-d", strtotime($fecha)) . " -1 day"));
+            $dSemana = date('N', strtotime($fecha));
+        }
     }
+    return $lunes=$fecha;
+}
+
+function sumaDia($fecha,$dia)
+{	list($year,$mon,$day) = explode('-',$fecha);
+	return date('Y-m-d',mktime(0,0,0,$mon,$day+$dia,$year));		
 }
 
 ?>

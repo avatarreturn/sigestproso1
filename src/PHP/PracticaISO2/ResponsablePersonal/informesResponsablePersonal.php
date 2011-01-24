@@ -325,7 +325,7 @@ if ($login != "R") {
                                         <h2>Informes</h2>
                                     </div>
                                     <div class="infoFormulario">
-		A trav&eacute;s de esta pantalla el Responsable de Personal podr&aacute; obtener todo tipo de informes.
+		A trav&eacute;s de esta pantalla el Responsable de Personal podr&aacute; obtener informacion acerca de la participaci&oacute;n en proyectos y las vacaciones de cada trabajador.
                                     </div>
                                     <div id="listaTrabajadores" class="centercontentleft">
                                         <?php

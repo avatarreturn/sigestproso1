@@ -26,13 +26,12 @@
 
         <link rel="stylesheet" type="text/css" href="../stylesheet.css" media="screen, projection, tv " />
 
-
     </head>
 
     <body>
         <!--        <form name="formulario" action="" enctype="text/plain">-->
         <div id="blogtitle">
-            <div id="small">Jefe de Proyecto - Informes</div>
+            <div id="small">Jefe de Proyecto - Informes - Trabajadores con actividades asignadas (Pasadas)</div>
             <div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
         </div>
         <div id="page">
@@ -81,51 +80,11 @@
                                         <h2>Informes del proyecto</h2>
                                     </div>
                                     <div class="infoFormulario">
-		En esta pantalla podr&aacute; escoger el tipo de informe que desea obtener
+		Relación de trabajadores con alguna actividad asignada durante un periodo determinado.
                                     </div>
+
                                     <div class="centercontentleft">
-                                        <table>
-                                            <tr>
-                                                <td>
-                                                    <a href="Informe1.php">Trabajadores con actividades asignadas (Pasadas)</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <a>Trabajadores con actividades asignadas (Futuras)</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <a href="Informe3.php">Informes de actividad pendientes de recibir</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <a href="Informe4.php">Informes de actividad pendientes de aprobar</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <a>Actividades</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <a>Estado de actividades</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <a>Actividades con retraso</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <a>Actividades pendientes</a>
-                                                </td>
-                                            </tr>
-                                        </table>
+                                        
                                     </div>
                                 </td>
                             </tr>

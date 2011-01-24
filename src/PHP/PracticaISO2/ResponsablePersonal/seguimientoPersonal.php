@@ -40,7 +40,7 @@ if ($login != "R") {
         //fin calculo del lunes
 //        $result = mysql_query('SELECT t.dni, t.nombre, t.apellidos, tp.Trabajador_dni, tp.Proyecto_idProyecto, tp.porcentaje FROM trabajador t, trabajadorProyecto tp where (t.dni=tp.Trabajador_dni);');
         $result = mysql_query('SELECT t.dni, t.nombre, t.apellidos, tp.Trabajador_dni, tp.Proyecto_idProyecto, tp.porcentaje, p.idProyecto, p.nombre nombre_proy FROM Trabajador t, TrabajadorProyecto tp, Proyecto p WHERE (p.idProyecto=tp.Proyecto_idProyecto) AND (p.fechaFin IS NULL) AND (t.dni=tp.Trabajador_dni) ORDER BY t.dni;');
-        //Esta cosulta esta mal (No hay ninguna comprobacion de tiempo para que solo saque los datos de esta semana)
+
 
         $totTraProy = mysql_num_rows($result);
         $arrayDnis[] = "";
@@ -61,7 +61,7 @@ if ($login != "R") {
                         $trabajador = $trabajador . "</table></div>";
                     }
                     $trabajador = $trabajador . "<a href='#' onclick=\"ocultarR('oculto" . $cont . "')\"><br/><img src= '../images/iJefeProyecto.gif' alt='#' border='0' style='width: auto; height: 12px;'/>"
-                            . "&nbsp;&nbsp;" . $rowEmp['nombre'] . " " . $rowEmp['apellidos'] . "     " . $rowEmp['dni'] . "</a>";
+                            . "&nbsp;&nbsp;" . utf8_encode($rowEmp['nombre']) . " " . utf8_encode($rowEmp['apellidos']) . "     " . $rowEmp['dni'] . "</a>";
                     //Compruebo si el trabajador esta de vacaciones
                     if (vacacionesSiNo($rowEmp['dni'], date("Y-m-d"))) {
                         $intervVaca = vacacionesPeriodo($rowEmp['dni'], $semana);
