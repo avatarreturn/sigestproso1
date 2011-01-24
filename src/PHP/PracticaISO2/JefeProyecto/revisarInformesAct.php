@@ -31,6 +31,8 @@
                  $_SESSION['faseActual'] = $rowEmp['idFase'];
                  $_SESSION['numItActual'] = $rowEmp['numIteracion'];
 
+//                 $infPendientes = 0; // número de informes pendientes o cancelados de cada actividad
+
                  // Meter cada actividad en el listado
                  $listado = $listado
                     ."&nbsp;&nbsp;<a href=\"#\" onclick=\"ocultarA('oculto".$cont."')\"><img src= '../images/iActividad4.gif' alt='Actividad' border='0'"
@@ -84,12 +86,10 @@
 
                         $totEmp4 = mysql_num_rows($result4);
 
-                        $infPendientes = 0;
-
                         if ($totEmp4 > 0) {
                             while ($rowEmp4 = mysql_fetch_assoc($result4)) {
 
-                                $infPendientes = $infPendientes + 1;
+//                                $infPendientes = $infPendientes + 1;
 
                                 // Se añade cada informe al listado
                                 $listado = $listado
@@ -292,34 +292,31 @@
                 // Termina la actividad con idActividad=x
                 function terminar(x){
 
-                    if (<?php echo $infPendientes ?> != 0) {
-                        alert("No puede terminar una actividad con informes pendientes o cancelados, debe aceptarlos primero.");
-                    } else {                        
-
-                        if (window.XMLHttpRequest) {
-                            xmlhttp=new XMLHttpRequest();
-                        } else {
-                            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-                        }
-                        xmlhttp.onreadystatechange=function() {
-                            if(xmlhttp.readyState==1){
-                                //2- Sucede cuando se esta cargando la pagina
-                                document.getElementById("bTerminar").innerHTML = "<p><center>Terminando actividad...<center><img src='../images/enviando.gif' alt='Terminando' width='150px'/></p>";
-                            } else if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-                                //3- AQUI VA LA RESPUESTA, DESPUES DE Q EL SERVIDOR HAGA LO Q SEA
-                                //alert(xmlhttp.responseText);  ES LA VARIABLE A LA Q VAN LOS ECHOS DE LA SERVIDOR ASOCIADA                                
-                                if (xmlhttp.responseText == 0){
-                                    location.href = "revisarInformesAct.php?idP=" + "<?php echo $_SESSION['proyectoEscogido']?>";
-                                } else if (xmlhttp.responseText == 1){
-                                    alert("No puede terminar esta actividad, pues es la ultima de la iteracion actual, hasta que no planifique la siguiente iteracion.");
-                                }
+                    if (window.XMLHttpRequest) {
+                        xmlhttp=new XMLHttpRequest();
+                    } else {
+                        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+                    }
+                    xmlhttp.onreadystatechange=function() {
+                        if(xmlhttp.readyState==1){
+                            //2- Sucede cuando se esta cargando la pagina
+                            document.getElementById("bTerminar").innerHTML = "<p><center>Terminando actividad...<center><img src='../images/enviando.gif' alt='Terminando' width='150px'/></p>";
+                        } else if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+                            //3- AQUI VA LA RESPUESTA, DESPUES DE Q EL SERVIDOR HAGA LO Q SEA
+                            //alert(xmlhttp.responseText);  ES LA VARIABLE A LA Q VAN LOS ECHOS DE LA SERVIDOR ASOCIADA
+                            if (xmlhttp.responseText == 0){
+                                location.href = "revisarInformesAct.php?idP=" + "<?php echo $_SESSION['proyectoEscogido']?>";
+                            } else if (xmlhttp.responseText == 1){
+                                alert("No puede terminar esta actividad, pues es la ultima de la iteracion actual, hasta que no planifique la siguiente iteracion.");
+                            } else if (xmlhttp.responseText == 2){
+                                alert("No puede terminar una actividad con informes pendientes o cancelados, debe aceptarlos primero.");
                             }
                         }
-
-                        //1- LO Q LE MANDAS AL SERVIDOR
-                        xmlhttp.open("GET","terminarActividad.php?idAct=" + x + "&pl=" + "<?php echo $planificado?>",true);
-                        xmlhttp.send();
                     }
+
+                    //1- LO Q LE MANDAS AL SERVIDOR
+                    xmlhttp.open("GET","terminarActividad.php?idAct=" + x + "&pl=" + "<?php echo $planificado?>",true);
+                    xmlhttp.send();
 
                 }
             </script>
