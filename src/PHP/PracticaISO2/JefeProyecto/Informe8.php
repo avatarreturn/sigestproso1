@@ -29,12 +29,16 @@
         <?php
         include_once ('../Persistencia/conexion.php');
         $conexion = new conexion();
-        $proyecto = 3; //esta variable tiene que se de sesion
+        $proyecto = 5; //esta variable tiene que se de sesion
 //        $pryecto=$_SESSION['proyecto'];
-        $sql = "select fechaInicio from Proyecto where idProyecto=" . $proyecto . ";";
+        $sql = "SELECT MAX(a.fechaInicio) fechaMayor
+                FROM Actividad a, Iteracion it, Fase f
+                WHERE (a.Iteracion_idIteracion=it.idIteracion)
+                    AND (it.Fase_idFase=f.idFase)
+                    AND (f.Proyecto_idProyecto=".$proyecto.");";
         $result = mysql_query($sql);
         $row = mysql_fetch_assoc($result);
-        $fechaInicioP = $row['fechaInicio'];
+        $fechaMayor = $row['fechaMayor'];
         $conexion->cerrarConexion();
         ?>
         <script>
@@ -51,37 +55,31 @@
                 if (document.obtenerInformes.diasi.value==0){
                     alert("Elija una fecha inicial correcta")
                     document.obtenerInformes.diasi.focus()
-                    document.obtenerInformes.listarecargable.style.display=="none"
                     return 0;
                 }
                 if (document.obtenerInformes.mesi.value==0){
                     alert("Elija una fecha inicial correcta")
                     document.obtenerInformes.mesi.focus()
-                    document.obtenerInformes.listarecargable.style.display=="none"
                     return 0;
                 }
                 if (document.obtenerInformes.anioi.value==0){
                     alert("Elija una fecha inicial correcta")
                     document.obtenerInformes.anioi.focus()
-                    document.obtenerInformes.listarecargable.style.display=="none"
                     return 0;
                 }
                 if (document.obtenerInformes.diasf.value==0){
                     alert("Elija una fecha final correcta")
                     document.obtenerInformes.diasf.focus()
-                    document.obtenerInformes.listarecargable.style.display=="none"
                     return 0;
                 }
                 if (document.obtenerInformes.mesf.value==0){
                     alert("Elija una fecha final correcta")
                     document.obtenerInformes.mesf.focus()
-                    document.obtenerInformes.listarecargable.style.display=="none"
                     return 0;
                 }
                 if (document.obtenerInformes.aniof.value==0){
                     alert("Elija una fecha final correcta")
                     document.obtenerInformes.aniof.focus()
-                    document.obtenerInformes.listarecargable.style.display=="none"
                     return 0;
                 }
 
@@ -100,32 +98,21 @@
                 FechaValF.setTime(Date.parse(fechaF));
                 var FechaValP = new Date();
                 FechaValP.setTime(Date.parse("<?php echo $fechaInicioP; ?>"))
-                var FechaValH = new Date();
-                FechaValH.setTime(Date.parse("<?php echo date('Y-m-d'); ?>"))
                 //
                 var FvalI = FechaValI.getTime();
                 var FvalF = FechaValF.getTime();
                 var IniP = FechaValP.getTime();
-                var HOY = FechaValH.getTime();
                 //
 //                alert(FechaValI+" "+FechaValF);
                 //
                 if (IniP > FvalI){
                     alert("La fecha inicial no puede ser anterior a la fecha de inicio del proyecto");
                     document.obtenerInformes.diasf.focus()
-                    document.obtenerInformes.listarecargable.style.display=="none"
                     return 0
                 }
                 if (FvalF < FvalI){
                     alert("La fecha final no puede ser anterior a la fecha inicial");
                     document.obtenerInformes.diasf.focus()
-                    document.obtenerInformes.listarecargable.style.display=="none"
-                    return 0
-                }
-                if (FvalF > HOY){
-                    alert("La fecha final no puede ser posterior a la actual");
-                    document.obtenerInformes.diasf.focus()
-                    document.obtenerInformes.listarecargable.style.display=="none"
                     return 0
                 }
 
@@ -148,7 +135,7 @@
                     }
                 }
                 proyecto="<?php echo $proyecto; ?>";
-                xmlhttp.open("GET","Informe2R.php?proyecto="+proyecto
+                xmlhttp.open("GET","Informe8R.php?proyecto="+proyecto
                     + "&fechaI=" + fechaI
                     + "&fechaF=" + fechaF, true);
                 xmlhttp.send();
@@ -160,7 +147,7 @@
     <body>
         <!--        <form name="formulario" action="" enctype="text/plain">-->
         <div id="blogtitle">
-            <div id="small">Jefe de Proyecto - Informes - Trabajadores y sus actividades</div>
+            <div id="small">Jefe de Proyecto - Informes - Actividades pendientes</div>
             <div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
         </div>
         <div id="page">
@@ -209,60 +196,11 @@
                                         <h2>Informes del proyecto</h2>
                                     </div>
                                     <div class="infoFormulario">
-		Relación de trabajadores y sus actividades asignadas durante un periodo determinado.
+		Actividades a realizar, as&iacute; como los recursos asignados, durante un periodo de tiempo determinado posterior a la fecha actual.
                                     </div>
                                     <div>
                                         <br/>
-                                        <table>
-                                            <tr>
-                                                <td>
-                                                    <label>Desede el d&iacute;a:</label>
-                                                </td>
-                                                <td>
-                                                    <div>
-                                                        <?php
-                                                            echo '<select id="diasi" name="diasi" size="1">';
-                                                            echo '<option value="0">D&iacute;a</option>';
-                                                            for ($i = 1; $i <= 31; $i++) {
-                                                                echo '<option value="' . $i . '">' . $i . '</option>';
-                                                            }
-                                                            echo '</select>';
-                                                        ?>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div>
-                                                            <select name="mesi" size="1">
-                                                                <option value="0">Mes</option>
-                                                                <option value="1">Enero</option>
-                                                                <option value="2">Febrero</option>
-                                                                <option value="3">Marzo</option>
-                                                                <option value="4">Abril</option>
-                                                                <option value="5">Mayo</option>
-                                                                <option value="6">Junio</option>
-                                                                <option value="7">Julio</option>
-                                                                <option value="8">Agosto</option>
-                                                                <option value="9">Septiembre</option>
-                                                                <option value="10">Octubre</option>
-                                                                <option value="11">Noviembre</option>
-                                                                <option value="12">Diciembre</option>
-                                                            </select>
-                                                        </div>
-                                                    </td>
-                                                    <td
-                                                        <div>
-                                                            <?php
-                                                            echo '<select name="anioi" size="1">';
-                                                            echo '<option value="0">A&ntilde;o</option>';
-                                                            $fecha = getdate();
-                                                            $anio = $fecha[year];
-                                                            for ($i = 2000; $i <= $anio; $i++) {
-                                                                echo '<option value="' . $i . '">' . $i . '</option>';
-                                                            }
-                                                            ?>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                        <table>                                            
                                             <tr>
                                                 <td>
                                                     <label>Hasta el d&iacute;a:</label>
@@ -327,10 +265,9 @@
                                         <tr><td>
                                                 <div><h3>Condiciones:</h3>
 
-                                                    <p><img src= "../images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;La fecha 1ª debe ser posterior a la fecha de inicio del proyecto <label style="color: red">(<?php echo $fechaInicioP; ?>)</label>
-                                                        y no posterior a la actual</p>
-                                                    
-                                                    <p><img src= "../images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;La fecha 2ª no debe ser posterior a la fecha actual</p>
+                                                    <p><img src= "../images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;La fecha debe ser posterior a la fecha actual</p>
+                                                    <p><img src= "../images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;Solo podra ver actividades hasta la fecha de inicio
+                                                        de la ultima actividad planificada <label style="color: red">(<?php echo $fechaMayor; ?>)</label></p>
                                                     <br/>
                                                 </div>
                                             </td></tr></table>

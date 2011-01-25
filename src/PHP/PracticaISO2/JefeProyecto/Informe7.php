@@ -62,7 +62,7 @@
         $imprimir = "";
         if ($totAct > 0) {
             $imprimir = "<table>";
-            $imprimir = $imprimir . "<tr><td><a>Actividad&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td><td><a>Esetado</a></td><tr>";
+            $imprimir = $imprimir . "<tr><td><a>Actividad&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td><td><a>Estado</a></td><tr>";
             while ($rowAct = mysql_fetch_assoc($result)) {
                 if ($rowAct['duracionEstimada'] < $rowAct['horas']) {
                     if ($rowAct['fechaFin'] != null) {
@@ -72,7 +72,7 @@
                     }
                 }
             }            
-            if ($imprimir == "<table><tr align=\"center\"><td><a>Actividad</a></td><td><a>Esetado</a></td><tr>") {
+            if ($imprimir == "<table><tr><td><a>Actividad&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td><td><a>Estado</a></td><tr>") {
                 $imprimir = "<a>No existen actividades con consumo de tiempo superior al estimado</a>";
             }else{
                 $imprimir = $imprimir . "</table>";

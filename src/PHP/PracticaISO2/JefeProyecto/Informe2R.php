@@ -30,7 +30,8 @@ $sql = "SELECT a.idActividad, a.nombre actividad, a.fechaInicio, a.fechaFin, t.n
            AND (a.Iteracion_idIteracion=it.idIteracion)
            AND (it.Fase_idFase=f.idFase)
            AND (f.Proyecto_idProyecto=" . $proyecto . ")
-        GROUP BY a.idActividad, t.nombre;";
+        GROUP BY a.idActividad, t.nombre
+        ORDER BY t.nombre;";
 $result = mysql_query($sql);
 $totTra = mysql_num_rows($result);
 $imprimir = "";
@@ -44,10 +45,10 @@ if ($totTra > 0) {
                 $imprimr=$imprimir."<table>";
             }
             $imprimir = $imprimir . "<tr><td><a href='#' onclick=\"ocultarR('oculto" . $rowTra['dni'] . "')\"><img src='../images/iJefeProyecto.gif' alt='Actividad' border='0' style='width: auto; height: 12px;'>&nbsp;&nbsp;&nbsp;&nbsp;" . $rowTra['nombre'] . " " . $rowTra['apellidos'] . "<br/></img></a>"
-            ."<div id=\"oculto" . $rowTra['dni'] . "\" style=\"display:none\">&nbsp;&nbsp;&nbsp;&nbsp;<img src='../images/iActividad4.gif' alt='Actividad' border='0' style='width: auto; height: 12px;'>&nbsp;&nbsp;&nbsp;&nbsp;Actividad: ".$rowTra['actividad'];
+            ."<div id=\"oculto" . $rowTra['dni'] . "\" style=\"display:none\">&nbsp;&nbsp;&nbsp;&nbsp;<img src='../images/iActividad4.gif' alt='Actividad' border='0' style='width: auto; height: 12px;'>&nbsp;&nbsp;&nbsp;&nbsp;Actividad: ".$rowTra['actividad']."<br/>";
             $dniAnterior=$rowTra['dni'];
         }else{
-            $imprimir=$imprimir."Actividad: ".$rowTra['actividad']."<br/>";
+            $imprimir=$imprimir."&nbsp;&nbsp;&nbsp;&nbsp;<img src='../images/iActividad4.gif' alt='Actividad' border='0' style='width: auto; height: 12px;'>&nbsp;&nbsp;&nbsp;&nbsp;Actividad: ".$rowTra['actividad']."<br/>";
         }
     }
 
