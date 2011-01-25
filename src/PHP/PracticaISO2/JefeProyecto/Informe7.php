@@ -62,20 +62,24 @@
         $imprimir = "";
         if ($totAct > 0) {
             $imprimir = "<table>";
-            $imprimir = $imprimir . "<tr align=\"center\"><td><a>Actividad</a></td><td><a>Esetado</a></td><tr>";
+            $imprimir = $imprimir . "<tr><td><a>Actividad&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td><td><a>Esetado</a></td><tr>";
             while ($rowAct = mysql_fetch_assoc($result)) {
                 if ($rowAct['duracionEstimada'] < $rowAct['horas']) {
-                    if ($rowAct['fechaFin'] == null) {
-                        $imprimir = $imprimir . "<tr><td><a>" . $rowAct['actividad'] . "</a></td><td><a>Finalizada</a></td><tr>";
+                    if ($rowAct['fechaFin'] != null) {
+                        $imprimir = $imprimir . "<tr><td>" . $rowAct['actividad'] . "</td><td>Finalizada</td><tr>";
                     } else {
-                        $imprimir = $imprimir . "<tr><td><a>" . $rowAct['actividad'] . "</a></td><td><a>Activa</a></td><tr>";
+                        $imprimir = $imprimir . "<tr><td>" . $rowAct['actividad'] . "</td><td>Activa</td><tr>";
                     }
                 }
+            }            
+            if ($imprimir == "<table><tr align=\"center\"><td><a>Actividad</a></td><td><a>Esetado</a></td><tr>") {
+                $imprimir = "<a>No existen actividades con consumo de tiempo superior al estimado</a>";
+            }else{
+                $imprimir = $imprimir . "</table>";
             }
-            $imprimir=$imprimir="";
         }
 
-        
+
         $conexion->cerrarConexion();
         ?>
         <script>
@@ -144,7 +148,7 @@
                                         <h2>Informes del proyecto</h2>
                                     </div>
                                     <div class="infoFormulario">
-		Relación de actividades que han consumido o están consumiendo m&aacute;acutes tiempo del planificado.
+		Relación de actividades que han consumido o están consumiendo m&aacute;s tiempo del planificado.
                                     </div>
 
                                     <div class="centercontentleft">
