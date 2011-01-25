@@ -1,6 +1,8 @@
 <?php session_start();
-
-    $_SESSION['proyectoEscogido'] = $_GET['idP'];
+    if($_GET['idP']==""){        
+    }else{
+        $_SESSION['proyectoEscogido'] = $_GET['idP'];
+    }
 
     include_once('../Persistencia/conexion.php');
     $conexion = new conexion();
