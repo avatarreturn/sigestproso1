@@ -57,7 +57,8 @@ include_once('../Persistencia/conexion.php');
 
 
             // calculamos la fecha find e la nueva iteracion
-            $can_dias = ceil($duracion/8) ;
+            $can_dias = ceil($duracion/(8*count($_SESSION['trabActividad'])));
+            $fechaInicioEst= date("Y-m-d", strtotime("$fechaInicioAct + 1 days"));
             $fechaFinEst= date("Y-m-d", strtotime("$fechaInicioAct + $can_dias days"));
 
             //validamos sobre el calendario de vacaciones
@@ -86,6 +87,7 @@ include_once('../Persistencia/conexion.php');
                     . $IterNext."','"
                     . utf8_encode($nombre). "','"
                     . $duracion ."','"
+                    . $fechaInicioEst ."','"
                     . $fechaFinEst ."',NULL,NULL,'"
                     . utf8_encode($rol) ."')");
 
@@ -100,7 +102,8 @@ include_once('../Persistencia/conexion.php');
                 $fechaInicioP= $rowEmp['fechaInicio'];
 
             }}
-            $can_dias = ceil($duracion/8) -1;
+            $can_dias = ceil($duracion/(8*count($_SESSION['trabActividad']))) -1;
+            $fechaInicioEst= date("Y-m-d", strtotime($fechaInicioP));
             $fechaFinEst= date("Y-m-d", strtotime("$fechaInicioP + $can_dias days"));
             //validamos sobre el calendario de vacaciones
             for($i=0;$i<count($_SESSION['trabActividad']);$i++){
@@ -127,6 +130,7 @@ include_once('../Persistencia/conexion.php');
                     . $IterNext."','"
                     . utf8_encode($nombre). "','"
                     . $duracion ."','"
+                    . $fechaInicioEst ."','"
                     . $fechaFinEst ."','"
                     .$fechaInicioP."',NULL,'"
                     . utf8_encode($rol) ."')");

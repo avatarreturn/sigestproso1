@@ -57,7 +57,7 @@ if ($login != "T") {
 
         //---------------------------
 
-        $result = mysql_query("SELECT duracionEstimada, fechaFinE, idActividad FROM Actividad WHERE\n"
+        $result = mysql_query("SELECT fechaInicioE, fechaFinE, idActividad FROM Actividad WHERE\n"
                             . "fechaFin is NULL \n"
                             . "AND \n"
                             . "idActividad in \n"
@@ -73,8 +73,7 @@ if ($login != "T") {
 
                 // sacamos la de inciio a partir de la Fin estimada - duracion
                 $fechaFinestimada = $rowEmp['fechaFinE'];
-                $diasHH = ceil($rowEmp['duracionEstimada'] / 8);
-                $fechaInicio= date("Y-m-d", strtotime("$fechaFinestimada - $diasHH days"));
+                $fechaInicio= date("Y-m-d", strtotime($rowEmp['fechaInicioE']));
                     // Extraer las dos fechas
                 // Generar las fechas de por medio e ir metiendolas en un array
                 if (in_array($fechaInicio, $fechasF1)) {

@@ -653,7 +653,7 @@ if ($PrimIter == 1) {
                                     . "<p style='color:red'>A&uacute;n no ha escogido el n&uacute;mero de iteraciones del que constar&aacute; la fase siguiente</p>"
                                     . "<p>Especifique el n&uacute;mero de iteraciones de la fase <b>" . utf8_decode($faseNext) . "</b>"
                                     . "  <input type='text' id='NIterFNext' size='2' maxlength='2'/>"
-                                    . "<br/><input type='button' value='Confirmar' onclick='insIterFNext()'/>"
+                                    . "<br/><br/><input type='button' value='Confirmar' onclick='insIterFNext()'/>"
                                     . "</p>";
                                 } else {
 

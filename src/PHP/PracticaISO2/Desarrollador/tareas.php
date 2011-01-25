@@ -246,7 +246,7 @@
     }}
 
 
-
+<?php if($nTareas!= ""){?>
 function enviar(){
     var bandera = 0;
     var contador = 0;
@@ -287,7 +287,7 @@ function enviar(){
     + "&prueba=OK",true);
     xmlhttp.send();
     }}
-
+<?php }?>
 
 function cambio(x){
     if(x==1){
