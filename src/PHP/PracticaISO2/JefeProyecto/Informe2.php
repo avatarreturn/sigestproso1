@@ -29,7 +29,7 @@
         <?php
         include_once ('../Persistencia/conexion.php');
         $conexion = new conexion();
-        $proyecto = 5; //esta variable tiene que se de sesion
+        $proyecto = 3; //esta variable tiene que se de sesion
 //        $pryecto=$_SESSION['proyecto'];
         $sql = "select fechaInicio from Proyecto where idProyecto=" . $proyecto . ";";
         $result = mysql_query($sql);
@@ -131,7 +131,7 @@
                     }
                 }
                 proyecto="<?php echo $proyecto; ?>";
-                xmlhttp.open("GET","Informe1R.php?proyecto="+proyecto
+                xmlhttp.open("GET","Informe2R.php?proyecto="+proyecto
                     + "&fechaI=" + fechaI
                     + "&fechaF=" + fechaF, true);
                 xmlhttp.send();
@@ -143,7 +143,7 @@
     <body>
         <!--        <form name="formulario" action="" enctype="text/plain">-->
         <div id="blogtitle">
-            <div id="small">Jefe de Proyecto - Informes - Trabajadores con actividades asignadas</div>
+            <div id="small">Jefe de Proyecto - Informes - Trabajadores y sus actividades</div>
             <div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
         </div>
         <div id="page">
@@ -192,7 +192,7 @@
                                         <h2>Informes del proyecto</h2>
                                     </div>
                                     <div class="infoFormulario">
-		Relación de trabajadores con alguna actividad asignada durante un periodo determinado.
+		Relación de trabajadores y sus actividades asignadas durante un periodo determinado.
                                     </div>
                                     <div>
                                         <br/>

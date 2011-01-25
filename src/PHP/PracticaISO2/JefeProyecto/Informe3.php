@@ -50,6 +50,7 @@
 
 
         $proyecto = 5;    //esta variable tiene que se de sesion
+//        $proyecto=$_SESSION['proyecto'];
         $estaSemana = semanaActual();
         $hoy = date('Y-m-d');
         $arrayActividades;
@@ -109,7 +110,7 @@
                 "<br/><div id='oculto".$informe['trabajador']."' style=\"display:none\"><table class=\"tablaVariable\"><tr><td><img src='../images/iProyecto.png' alt='Actividad' border='0' style='width: auto; height: 12px;'>&nbsp;&nbsp;&nbsp;&nbsp;Actividad: ".$informe['actividad']."</img></td><td>Semana: ".$informe['semana']."</td></tr>";
                 $traAnterior=$informe['trabajador'];
             } else {
-                $imprimir=$imprimir."<tr><td>Actividad: ".$informe['actividad']."</td><td>Semana: ".$informe['semana']."</td></tr>";
+                $imprimir=$imprimir."<tr><td><img src='../images/iProyecto.png' alt='Actividad' border='0' style='width: auto; height: 12px;'>&nbsp;&nbsp;&nbsp;&nbsp;Actividad: ".$informe['actividad']."</td><td>Semana: ".$informe['semana']."</td></tr>";
                 $traAnterior=$informe['trabajador'];
             }
         }

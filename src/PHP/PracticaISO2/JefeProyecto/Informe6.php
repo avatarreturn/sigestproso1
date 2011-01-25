@@ -27,7 +27,15 @@
         <link rel="stylesheet" type="text/css" href="../stylesheet.css" media="screen, projection, tv " />
         <link rel="stylesheet" type="text/css" href="../ResponsablePersonal/estiloTablas.css" media="screen, projection, tv " />
         <?php
-        $proyecto = 3;    //esta variable tiene que se de sesion
+        include_once ('../Persistencia/conexion.php');
+        $conexion = new conexion();
+        $proyecto = 5; //esta variable tiene que se de sesion
+//        $pryecto=$_SESSION['proyecto'];
+        $sql = "select fechaInicio from Proyecto where idProyecto=" . $proyecto . ";";
+        $result = mysql_query($sql);
+        $row = mysql_fetch_assoc($result);
+        $fechaInicioP = $row['fechaInicio'];
+        $conexion->cerrarConexion();
         ?>
         <script>
             function ocultarR(x){
@@ -39,6 +47,23 @@
                 }
             }
             function recarga(){
+
+                if (document.obtenerInformes.diasi.value==0){
+                    alert("Elija una fecha correcta")
+                    document.obtenerInformes.diasi.focus()
+                    return 0;
+                }
+                if (document.obtenerInformes.mesi.value==0){
+                    alert("Elija una fecha correcta")
+                    document.obtenerInformes.mesi.focus()
+                    return 0;
+                }
+                if (document.obtenerInformes.anioi.value==0){
+                    alert("Elija una fecha correcta")
+                    document.obtenerInformes.anioi.focus()
+                    return 0;
+                }
+
                 document.getElementById("listarecargable").style.display="inline";
                 //alert(document.getElementById("trabajador").value);
                 // formar fecha
@@ -46,22 +71,21 @@
                 fechaI=document.obtenerInformes.anioi.value+"-"+document.obtenerInformes.mesi.value+"-"+document.obtenerInformes.diasi.value
 
                 //..........
-                //                    var FechaVal = new Date();
-                //                    FechaVal.setTime(Date.parse(fechaI));
-                //                    //alert(disabledDaysVal[i]);
-                //                    var FechaVal2 = new Date();
-                //                    FechaVal2.setTime(Date.parse("<?php //echo date("Y-m-d")       ?>"))
+                var FechaVal = new Date();
+                FechaVal.setTime(Date.parse(fechaI));
+                var FechaVal2 = new Date();
+                FechaVal2.setTime(Date.parse("<?php echo $fechaInicioP; ?>"))
                 //
-                //                    var FvalF = FechaVal.getTime();
-                //                    var Hoy = FechaVal2.getTime();
+                var FvalF = FechaVal.getTime();
+                var IniP = FechaVal2.getTime();
                 //
-                //                    //                alert(FechaVal+" "+FechaVal2);
+                //                alert(FechaVal+" "+FechaVal2);
                 //
-                //                    if (FvalF > Hoy){
-                //                        alert("La fecha final no puede ser superior a la fecha actual");
-                //                        document.obtenerInformes.diasf.focus()
-                //                        return 0
-                //                    }
+                if (FvalF < IniP){
+                    alert("La fecha elegida no puede ser inferior a la fecha de inicio del proyecto");
+                    document.obtenerInformes.diasf.focus()
+                    return 0
+                }
 
                 if (window.XMLHttpRequest){
                     xmlhttp=new XMLHttpRequest();
@@ -204,17 +228,19 @@
                                             </tr>
                                         </table>
                                     </div>
-                                    
-                                    <div id="listarecargable" class="centercontentleft" style="display: none">
+                                    <table><tr><td>
+                                                <div id="listarecargable" class="centercontentleft" style="display: none">
 
-                                    </div>
-                                    <div><h3>Condiciones:</h3>
+                                                </div>
+                                            </td></tr>
+                                        <tr><td>
+                                                <div><h3>Condiciones:</h3>
 
-                                        <p><img src= "../images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;Debe elegir una fecha posterior a la fecha de inicio del proyecto "fechaInicio"
-                                            y no posterior a la actual</p>
-                                        <br/>
-                                        
-                                    </div>
+                                                    <p><img src= "../images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;Debe elegir una fecha posterior a la fecha de inicio del proyecto <label style="color: red">(<?php echo $fechaInicioP; ?>)</label>
+                                                        y no posterior a la actual</p>
+                                                    <br/>
+                                                </div>
+                                            </td></tr></table>
                                 </td>
                             </tr>
                         </table>                      

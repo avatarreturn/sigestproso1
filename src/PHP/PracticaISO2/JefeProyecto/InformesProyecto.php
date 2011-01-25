@@ -87,12 +87,12 @@
                                         <table>
                                             <tr>
                                                 <td>
-                                                    <a href="Informe1.php">Trabajadores con actividades asignadas (Pasadas)</a>
+                                                    <a href="Informe1.php">Trabajadores con actividades asignadas</a>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <a>Trabajadores con actividades asignadas (Futuras)</a>
+                                                    <a href="Informe2.php">Trabajadores y sus actividades</a>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -107,17 +107,17 @@
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <a>Actividades</a>
+                                                    <a href="Informe5.php">Actividades activas</a>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <a>Estado de actividades</a>
+                                                    <a href="Informe6.php">Estado de actividades</a>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <a>Actividades con retraso</a>
+                                                    <a href="Informe7.php">Actividades con retraso</a>
                                                 </td>
                                             </tr>
                                             <tr>
