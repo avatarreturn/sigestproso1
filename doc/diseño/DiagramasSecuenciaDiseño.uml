@@ -9126,7 +9126,6 @@ El desarrollador desea consultar las actividades y su duración de la iteración
 </XPD:OBJ>
 <XPD:OBJ name="ParticipatingStimuli[17]" type="UMLStimulus" guid="WMGP2nesYU2mGtiXLbK0bwAA">
 <XPD:ATTR name="Name" type="string">informacion</XPD:ATTR>
-<XPD:ATTR name="Documentation" type="string">	</XPD:ATTR>
 <XPD:REF name="Sender">HVWTFc0G1EWz0ivFSSurfwAA</XPD:REF>
 <XPD:REF name="Receiver">TpJrF3AcDkmZN8SdmWVEDQAA</XPD:REF>
 <XPD:OBJ name="Action" type="UMLReturnAction" guid="9Q9ah2w+wkaYZaasRIVlfAAA">
@@ -11979,7 +11978,7 @@ El diagrama muestra la secuencia de pasos necesaria para definir un proyecto.
 <XPD:REF name="Context">fExHdjYG+0q5c4RxtREZEgAA</XPD:REF>
 <XPD:ATTR name="#OwnedDiagrams" type="integer">1</XPD:ATTR>
 <XPD:OBJ name="OwnedDiagrams[0]" type="UMLSequenceDiagram" guid="iiaNeQodDkKSpZuzpVh94AAA">
-<XPD:ATTR name="Name" type="string">finalizar_fase/iteracion/actividad</XPD:ATTR>
+<XPD:ATTR name="Name" type="string">finalizar_fase_iteracion_actividad</XPD:ATTR>
 <XPD:REF name="DiagramOwner">q6zupGh9XEmTKSjKdoxSHwAA</XPD:REF>
 <XPD:OBJ name="DiagramView" type="UMLSequenceDiagramView" guid="M7jc7IAG0UuwsecuE1XOGQAA">
 <XPD:REF name="Diagram">iiaNeQodDkKSpZuzpVh94AAA</XPD:REF>
