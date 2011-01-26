@@ -8912,7 +8912,7 @@ El diagrama muestra la secuencia de pasos necesaria para definir un proyecto.
 <XPD:REF name="Context">qvXepApxYEeI4PRA+MQkIQAA</XPD:REF>
 <XPD:ATTR name="#OwnedDiagrams" type="integer">1</XPD:ATTR>
 <XPD:OBJ name="OwnedDiagrams[0]" type="UMLSequenceDiagram" guid="sQnb4/gMoUKWbigOoxzrOgAA">
-<XPD:ATTR name="Name" type="string">finalizar_fase/iteracion/actividad</XPD:ATTR>
+<XPD:ATTR name="Name" type="string">finalizar_fase_iteracion_actividad</XPD:ATTR>
 <XPD:REF name="DiagramOwner">Ex1zv7tlckuWYEtfBt0XvAAA</XPD:REF>
 <XPD:OBJ name="DiagramView" type="UMLSequenceDiagramView" guid="R2arjhlgPEaSkNzU3iYI1QAA">
 <XPD:REF name="Diagram">sQnb4/gMoUKWbigOoxzrOgAA</XPD:REF>
@@ -11887,7 +11887,7 @@ Se describe la acción de añadir un artefacto a la actividad.
 <XPD:REF name="Context">AL+0aQj8wk+IasTIyvnURQAA</XPD:REF>
 <XPD:ATTR name="#OwnedDiagrams" type="integer">1</XPD:ATTR>
 <XPD:OBJ name="OwnedDiagrams[0]" type="UMLSequenceDiagram" guid="tElYZzPhMEy/YxNjgz0F6gAA">
-<XPD:ATTR name="Name" type="string">Obtener_informe_seguimiento_temporal</XPD:ATTR>
+<XPD:ATTR name="Name" type="string">Obtener_informe_acumulacion_trabajo</XPD:ATTR>
 <XPD:ATTR name="MessageSignature" type="UMLMessageSignatureKind">mskNameOnly</XPD:ATTR>
 <XPD:REF name="DiagramOwner">YXNYv22xtk2Bx9y2zUrodgAA</XPD:REF>
 <XPD:OBJ name="DiagramView" type="UMLSequenceDiagramView" guid="0KzZBkHIekqmcqLvgqhA3QAA">
