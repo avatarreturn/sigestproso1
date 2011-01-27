@@ -22,7 +22,7 @@ $fechaFin = $_GET['fechaF'];
   GROUP BY a.idActividad, t.nombre
  */
 $sql = "SELECT a.idActividad, a.nombre actividad, a.fechaInicio, a.fechaFin, t.nombre, t.apellidos, t.dni
-        FROM Actividad a, Trabajador t, TrabajadorActividad ta, TareaPersonal tp, Iteracion it, Fase f
+        FROM Actividad a, Trabajador t, TrabajadorActividad ta, Iteracion it, Fase f
         WHERE (a.idActividad=ta.Actividad_idActividad)
            AND (ta.Trabajador_dni=t.dni)
            AND ((a.fechaFin >= '" . $fechaInicio . "') OR (a.fechaFin IS NULL))

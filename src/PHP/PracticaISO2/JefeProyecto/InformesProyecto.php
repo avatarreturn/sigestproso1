@@ -4,6 +4,7 @@
 //if ($login != "T") {
 //    header("location: ../index.php");
 //}
+$proyecto=$_SESSION['proyectoEscogido'];
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
@@ -46,9 +47,15 @@
 
                 <div align="left">
                     <ul class="BLUE">
-                        <li><a href="planIteracion.php">Planificar iteraci&oacute;n</a></li>
-                        <li><a href="../Comun/selecVacaciones.php">Escoger vacaciones</a></li>
-                    </ul>
+                            <li><a href="../Comun/selecProyecto.php">Seleccionar proyecto</a></li>
+                            <li><a href="../JefeProyecto/revisarInformesAct.php">Revisar actividades activas</a></li>
+                            <li><a href="../JefeProyecto/planIteracion.php">Planificar iteraci&oacute;n</a></li>
+<!--                            Quitad el enlace de la pagina en la que se esta(como aqui planificar iteracion)
+                            y añadid el enlace de esta:
+                            href="../JefeProyecto/planIteracion.php" -->
+                            <li><a href="#">Informes</a></li>
+                            <li><a href="../Comun/selecVacaciones.php">Escoger vacaciones</a></li>
+                        </ul>
                 </div>
 
 
@@ -122,7 +129,12 @@
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <a>Actividades pendientes</a>
+                                                    <a href="Informe8.php">Actividades pendientes</a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <a href="Informe9.php">Reparto de actividades pendientes</a>
                                                 </td>
                                             </tr>
                                         </table>

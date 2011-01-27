@@ -1,5 +1,5 @@
 <?php
-//session_start();
+session_start();
 //$login = $_SESSION['tipoUsuario'];
 //if ($login != "T") {
 //    header("location: ../index.php");
@@ -29,8 +29,8 @@
         <?php
         include_once ('../Persistencia/conexion.php');
         $conexion = new conexion();
-        $proyecto = 5; //esta variable tiene que se de sesion
-//        $pryecto=$_SESSION['proyecto'];
+//        $proyecto = 5; //esta variable tiene que se de sesion
+        $proyecto = $_SESSION['proyectoEscogido'];
         $sql = "select fechaInicio from Proyecto where idProyecto=" . $proyecto . ";";
         $result = mysql_query($sql);
         $row = mysql_fetch_assoc($result);
@@ -99,7 +99,7 @@
                 var FvalF = FechaValF.getTime();
                 var IniP = FechaValP.getTime();
                 //
-//                alert(FechaValI+" "+FechaValF);
+                //                alert(FechaValI+" "+FechaValF);
                 //
                 if (IniP > FvalI){
                     alert("La fecha inicial no puede ser anterior a la fecha de inicio del proyecto");
@@ -157,7 +157,13 @@
 
                 <div align="left">
                     <ul class="BLUE">
-                        <li><a href="planIteracion.php">Planificar iteraci&oacute;n</a></li>
+                        <li><a href="../Comun/selecProyecto.php">Seleccionar proyecto</a></li>
+                        <li><a href="../JefeProyecto/revisarInformesAct.php">Revisar actividades activas</a></li>
+                        <li><a href="../JefeProyecto/planIteracion.php">Planificar iteraci&oacute;n</a></li>
+                        <!--                            Quitad el enlace de la pagina en la que se esta(como aqui planificar iteracion)
+                                                    y añadid el enlace de esta:
+                                                    href="../JefeProyecto/planIteracion.php" -->
+                        <li><a href="../JefeProyecto/InformesProyecto.php">Informes</a></li>
                         <li><a href="../Comun/selecVacaciones.php">Escoger vacaciones</a></li>
                     </ul>
                 </div>
@@ -204,36 +210,36 @@
                                                 <td>
                                                     <div>
                                                         <?php
-                                                            echo '<select id="diasi" name="diasi" size="1">';
-                                                            echo '<option value="0">D&iacute;a</option>';
-                                                            for ($i = 1; $i <= 31; $i++) {
-                                                                echo '<option value="' . $i . '">' . $i . '</option>';
-                                                            }
-                                                            echo '</select>';
+                                                        echo '<select id="diasi" name="diasi" size="1">';
+                                                        echo '<option value="0">D&iacute;a</option>';
+                                                        for ($i = 1; $i <= 31; $i++) {
+                                                            echo '<option value="' . $i . '">' . $i . '</option>';
+                                                        }
+                                                        echo '</select>';
                                                         ?>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div>
-                                                            <select name="mesi" size="1">
-                                                                <option value="0">Mes</option>
-                                                                <option value="1">Enero</option>
-                                                                <option value="2">Febrero</option>
-                                                                <option value="3">Marzo</option>
-                                                                <option value="4">Abril</option>
-                                                                <option value="5">Mayo</option>
-                                                                <option value="6">Junio</option>
-                                                                <option value="7">Julio</option>
-                                                                <option value="8">Agosto</option>
-                                                                <option value="9">Septiembre</option>
-                                                                <option value="10">Octubre</option>
-                                                                <option value="11">Noviembre</option>
-                                                                <option value="12">Diciembre</option>
-                                                            </select>
-                                                        </div>
-                                                    </td>
-                                                    <td
-                                                        <div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <select name="mesi" size="1">
+                                                            <option value="0">Mes</option>
+                                                            <option value="1">Enero</option>
+                                                            <option value="2">Febrero</option>
+                                                            <option value="3">Marzo</option>
+                                                            <option value="4">Abril</option>
+                                                            <option value="5">Mayo</option>
+                                                            <option value="6">Junio</option>
+                                                            <option value="7">Julio</option>
+                                                            <option value="8">Agosto</option>
+                                                            <option value="9">Septiembre</option>
+                                                            <option value="10">Octubre</option>
+                                                            <option value="11">Noviembre</option>
+                                                            <option value="12">Diciembre</option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                                <td
+                                                    <div>
                                                             <?php
                                                             echo '<select name="anioi" size="1">';
                                                             echo '<option value="0">A&ntilde;o</option>';

@@ -1,5 +1,5 @@
 <?php
-//session_start();
+session_start();
 //$login = $_SESSION['tipoUsuario'];
 //if ($login != "T") {
 //    header("location: ../index.php");
@@ -29,8 +29,8 @@
         <?php
         include_once ('../Persistencia/conexion.php');
         $conexion = new conexion();
-        $proyecto = 3; //esta variable tiene que se de sesion
-//        $pryecto=$_SESSION['proyecto'];
+//        $proyecto = 3; //esta variable tiene que se de sesion
+        $proyecto=$_SESSION['proyectoEscogido'];
         $sql = "select fechaInicio from Proyecto where idProyecto=" . $proyecto . ";";
         $result = mysql_query($sql);
         $row = mysql_fetch_assoc($result);
@@ -157,7 +157,13 @@
 
                 <div align="left">
                     <ul class="BLUE">
-                        <li><a href="planIteracion.php">Planificar iteraci&oacute;n</a></li>
+                        <li><a href="../Comun/selecProyecto.php">Seleccionar proyecto</a></li>
+                        <li><a href="../JefeProyecto/revisarInformesAct.php">Revisar actividades activas</a></li>
+                        <li><a href="../JefeProyecto/planIteracion.php">Planificar iteraci&oacute;n</a></li>
+                        <!--                            Quitad el enlace de la pagina en la que se esta(como aqui planificar iteracion)
+                                                    y añadid el enlace de esta:
+                                                    href="../JefeProyecto/planIteracion.php" -->
+                        <li><a href="../JefeProyecto/InformesProyecto.php">Informes</a></li>
                         <li><a href="../Comun/selecVacaciones.php">Escoger vacaciones</a></li>
                     </ul>
                 </div>

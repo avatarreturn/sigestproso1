@@ -115,7 +115,7 @@ session_start();
                     }
                 }
                 proyecto="<?php echo $proyecto; ?>";
-                xmlhttp.open("GET","Informe8R.php?proyecto="+proyecto
+                xmlhttp.open("GET","Informe9R.php?proyecto="+proyecto
                     + "&fechaF=" + fechaF, true);
                 xmlhttp.send();
             }
@@ -126,7 +126,7 @@ session_start();
     <body>
         <!--        <form name="formulario" action="" enctype="text/plain">-->
         <div id="blogtitle">
-            <div id="small">Jefe de Proyecto - Informes - Actividades pendientes</div>
+            <div id="small">Jefe de Proyecto - Informes - Reparto de actividades pendientes</div>
             <div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
         </div>
         <div id="page">
@@ -174,14 +174,14 @@ session_start();
 
                 <div id="formulario">
                     <form action="" method="POST" name="obtenerInformes">
-                        <table>
+                        <table class="tablaVariable2">
                             <tr>
                                 <td>
                                     <div class="tituloFormulario">
                                         <h2>Informes del proyecto</h2>
                                     </div>
                                     <div class="infoFormulario">
-		Actividades a realizar, as&iacute; como los recursos asignados, durante un periodo de tiempo determinado posterior a la fecha actual.
+		Relación de personas, con las actividades asignadas y los tiempos de trabajo para cada una de ellas para un periodo de tiempo posterior a la fecha actual
                                     </div>
                                     <div>
                                         <br/>
@@ -251,7 +251,7 @@ session_start();
                                                 <div><h3>Condiciones:</h3>
 
                                                     <p><img src= "../images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;La fecha debe ser posterior a la fecha actual</p>
-                                                    <p><img src= "../images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;Solo podra ver actividades hasta la fecha de inicio estimada 
+                                                    <p><img src= "../images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;Solo podra ver el reparto de trabajo hasta la fecha de inicio estimada
                                                         de la ultima actividad planificada <label style="color: red">(<?php echo $fechaMayor; ?>)</label></p>
                                                     <br/>
                                                 </div>

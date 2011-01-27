@@ -1,5 +1,5 @@
 <?php
-//session_start();
+session_start();
 //$login = $_SESSION['tipoUsuario'];
 //if ($login != "T") {
 //    header("location: ../index.php");
@@ -31,8 +31,8 @@
         include_once ('../Persistencia/conexion.php');
         $conexion = new conexion();
 
-        $proyecto = 5;    //esta variable tiene que se de sesion
-//        $proyecto=$_SESSION['proyecto'];
+//        $proyecto = 5;    //esta variable tiene que se de sesion
+        $proyecto=$_SESSION['proyectoEscogido'];
         $estaSemana = semanaActual();
         $hoy = date('Y-m-d');
 
@@ -58,7 +58,7 @@
             AND (i.Trabajador_dni=t.dni)
             AND (i.Actividad_idActividad=a.idActividad)
             AND (tp.Trabajador_dni=t.dni)
-            AND (tp.Proyecto_idProyecto=5)
+            AND (tp.Proyecto_idProyecto=".$proyecto.")
             AND (i.estado!='Aceptado')
         ORDER BY t.nombre;";
         $result = mysql_query($sql);
@@ -82,6 +82,8 @@
             if ($imprimir != "") {
                 $imprimir = $imprimir . "</table></div>";
             }
+        }else{
+            $imprimir="<a href='#'>NO HAY INFORMES DE ACTIVIDAD PERNDIENTES DE APROBAR</a>";
         }
 
         $conexion->cerrarConexion();
@@ -120,7 +122,13 @@
 
                 <div align="left">
                     <ul class="BLUE">
-                        <li><a href="planIteracion.php">Planificar iteraci&oacute;n</a></li>
+                        <li><a href="../Comun/selecProyecto.php">Seleccionar proyecto</a></li>
+                        <li><a href="../JefeProyecto/revisarInformesAct.php">Revisar actividades activas</a></li>
+                        <li><a href="../JefeProyecto/planIteracion.php">Planificar iteraci&oacute;n</a></li>
+                        <!--                            Quitad el enlace de la pagina en la que se esta(como aqui planificar iteracion)
+                                                    y añadid el enlace de esta:
+                                                    href="../JefeProyecto/planIteracion.php" -->
+                        <li><a href="../JefeProyecto/InformesProyecto.php">Informes</a></li>
                         <li><a href="../Comun/selecVacaciones.php">Escoger vacaciones</a></li>
                     </ul>
                 </div>

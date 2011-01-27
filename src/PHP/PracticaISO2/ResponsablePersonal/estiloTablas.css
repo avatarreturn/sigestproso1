@@ -21,3 +21,8 @@ table.tablaVariable{
     border-width: medium;
     border-color: red;
 }
+table.tablaVariable2{
+    width: 300px;
+    text-align:left;
+    border-width: medium;
+}
