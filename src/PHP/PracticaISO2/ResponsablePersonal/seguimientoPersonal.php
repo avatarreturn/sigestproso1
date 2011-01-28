@@ -61,7 +61,7 @@ if ($login != "R") {
                         $trabajador = $trabajador . "</table></div>";
                     }
                     $trabajador = $trabajador . "<a href='#' onclick=\"ocultarR('oculto" . $cont . "')\"><br/><img src= '../images/iJefeProyecto.gif' alt='#' border='0' style='width: auto; height: 12px;'/>"
-                            . "&nbsp;&nbsp;" . utf8_decode($rowEmp['nombre']) . " " . utf8_decode($rowEmp['apellidos']) . "     " . $rowEmp['dni'] . "</a>";
+                            . "&nbsp;&nbsp;" . $rowEmp['nombre'] . " " . $rowEmp['apellidos'] . "     " . $rowEmp['dni'] . "</a>";
                     //Compruebo si el trabajador esta de vacaciones
                     if (vacacionesSiNo($rowEmp['dni'], date("Y-m-d"))) {
                         $intervVaca = vacacionesPeriodo($rowEmp['dni'], $semana);
@@ -103,7 +103,7 @@ if ($login != "R") {
         while ($rowEmp = mysql_fetch_assoc($result)) {
             $restoTrabaj = $restoTrabaj . "<a href='#' onclick=\"ocultarR('oculto" . $rowEmp['dni'] . "')\">"
                     . "<img src= '../images/iJefeProyecto.gif' alt='#' border='0' style='width: auto; height: 12px;'/>"
-                    . "&nbsp;&nbsp;" . utf8_encode($rowEmp['nombre']) . " " . utf8_encode($rowEmp['apellidos']) . "&nbsp;&nbsp;&nbsp;&nbsp;" . $rowEmp['dni'] . "</a>";
+                    . "&nbsp;&nbsp;" . $rowEmp['nombre'] . " " . $rowEmp['apellidos'] . "&nbsp;&nbsp;&nbsp;&nbsp;" . $rowEmp['dni'] . "</a>";
 
             if (vacacionesSiNo($rowEmp['dni'], $semana)) {
                 $intervVaca = vacacionesPeriodo($rowEmp['dni'], $semana);
@@ -198,11 +198,11 @@ if ($login != "R") {
                             <tr>
                                 <td>
 <?php
-        echo $trabajador;
+        echo utf8_decode($trabajador);
 ?>
 
 <?php
-        echo $restoTrabaj;
+        echo utf8_decode($restoTrabaj);
 ?>
                                 </td>
                             </tr>
