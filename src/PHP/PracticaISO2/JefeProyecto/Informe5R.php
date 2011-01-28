@@ -46,5 +46,5 @@ if ($totAct > 0) {
 }
 
 $conexion->cerrarConexion();
-echo $imprimir;
+echo utf8_decode($imprimir);
 ?>

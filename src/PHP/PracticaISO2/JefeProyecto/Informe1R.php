@@ -42,5 +42,5 @@ if ($totTra>0){
 }
 
 $conexion->cerrarConexion();
-echo $imprimir;
+echo utf8_decode($imprimir);
 ?>
