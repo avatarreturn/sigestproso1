@@ -21,7 +21,7 @@ if ($numeroResultados > 0) {
 } else {
     //no existe
     //insertar en la base de datos
-    $result = mysql_query("INSERT INTO Proyecto (idProyecto, nombre, fechaInicio, fechaFin, descripcion, jefeProyecto) VALUES (NULL, '" . $nombre . "' , NULL, NULL, '" . $descripcion . "', '" . $jefeProyecto . "') ");
+    $result = mysql_query("INSERT INTO Proyecto (idProyecto, nombre, fechaInicio, fechaFin, descripcion, jefeProyecto) VALUES (NULL, '" . utf8_encode($nombre) . "' , NULL, NULL, '" . utf8_encode($descripcion) . "', '" . utf8_encode($jefeProyecto) . "') ");
 
     //cierre de la conexion
     $conexion->cerrarConexion();

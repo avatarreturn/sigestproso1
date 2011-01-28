@@ -142,7 +142,7 @@ if ($login != "A") {
                                                     echo '<SELECT NAME="jefeProyecto" size="1">';
                                                     echo '<option>Seleccione un Jefe de Proyecto</option>';
                                                     while ($rowEmp = mysql_fetch_assoc($result)) {
-                                                        echo '<option value="' . $rowEmp['dni'] . '">' . $rowEmp['nombre'] . ' ' . $rowEmp['apellidos'] . '</option>';
+                                                        echo '<option value="' . $rowEmp['dni'] . '">' . utf8_decode($rowEmp['nombre']) . ' ' . utf8_decode($rowEmp['apellidos']) . '</option>';
                                                     }
                                                     echo '</SELECT>';
                                                 } else {

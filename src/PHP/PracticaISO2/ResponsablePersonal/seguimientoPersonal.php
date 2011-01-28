@@ -54,7 +54,7 @@ if ($login != "R") {
                 $cont = $cont + 1;
                 if ($rowEmp['Trabajador_dni'] == $dniAnterior) {
                     $trabajador = $trabajador . "<a href='#'><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;<img src='../images/iProyecto.png' alt='Actividad' border='0' style='width: auto; height: 12px;'>"
-                            . "</img><label> Proyecto: " . $rowEmp['nombre_proy'] . "</label></td><td><label>&nbsp;&nbsp;&nbsp;&nbsp;Dedicación: " . $rowEmp['porcentaje'] . " %</label></td></a></tr>";
+                            . "</img><label> Proyecto: " . $rowEmp['nombre_proy'] . "</label></td><td><label>&nbsp;&nbsp;&nbsp;&nbsp;Dedicaci&oacute;n: " . $rowEmp['porcentaje'] . " %</label></td></a></tr>";
                 } else {
                     array_push($arrayDnis, $rowEmp['dni']);
                     if ($cont != 0) {
@@ -68,12 +68,12 @@ if ($login != "R") {
                         $trabajador = $trabajador . "<a href='#'>&nbsp;&nbsp;<img src= '../images/vacaciones.jpg' alt='#' border='0' style='width: auto; height: 12px;'/></a>"
                                 . "<div id=\"oculto" . $cont . "\" style=\"display:none\"><br/><label>Est&aacute; de vacaciones desde el dia " . $intervVaca['fechaInicio'] . " hasta el dia " . $intervVaca['fechaFin'] . "</label>"
                                 . "<a href='#'><table><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;<img src='../images/iProyecto.png' alt='Actividad' border='0' style='width: auto; height: 12px;'>"
-                                . "</img><label> Proyecto: " . $rowEmp['nombre_proy'] . "</label></td><td><label>&nbsp;&nbsp;&nbsp;&nbsp;Dedicación: " . $rowEmp['porcentaje'] . " %</label></td></a></tr>";
+                                . "</img><label> Proyecto: " . $rowEmp['nombre_proy'] . "</label></td><td><label>&nbsp;&nbsp;&nbsp;&nbsp;Dedicaci&oacute;n: " . $rowEmp['porcentaje'] . " %</label></td></a></tr>";
                     } else {
 
                         $trabajador = $trabajador . "<div id=\"oculto" . $cont . "\" style=\"display:none\"><br/>"
                                 . "<a href='#'><table><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;<img src='../images/iProyecto.png' alt='Actividad' border='0' style='width: auto; height: 12px;'>"
-                                . "</img><label> Proyecto: " . $rowEmp['nombre_proy'] . "</label></td><td><label>&nbsp;&nbsp;&nbsp;&nbsp;Dedicación: " . $rowEmp['porcentaje'] . " %</label></td></a></tr>";
+                                . "</img><label> Proyecto: " . $rowEmp['nombre_proy'] . "</label></td><td><label>&nbsp;&nbsp;&nbsp;&nbsp;Dedicaci&oacute;n: " . $rowEmp['porcentaje'] . " %</label></td></a></tr>";
                     }
                 }
 
