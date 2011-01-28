@@ -10,7 +10,7 @@ if ($login != "T") {
 
 <head>
 
-    <title>Selecci&oacute;n de proyecto</title>
+    <title>[SIGESTPROSO]-Seguimiento Integrado de la GEStion Temporal de PROyectos de SOftware</title>
 
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />  
 <meta name="description" content="studio7designs" />
@@ -162,6 +162,7 @@ function ocultarR(x){
 		<ul class="BLUE">
 			<li><a href="selecProyecto.php">Seleccionar proyecto</a></li>
 			<li><a href="selecVacaciones.php">Escoger vacaciones</a></li>
+                        <li><a href="#">Informes proyectos finalizados</a></li>
 		</ul>
 	</div>
 

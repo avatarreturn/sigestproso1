@@ -4,7 +4,7 @@
     <head>
 
 
-        <title>[SIGESTPROSO] Seguimiento Integrado de la GESTi&oacute;n Temporal de PROyectos de Software</title>
+        <title>[SIGESTPROSO]-Seguimiento Integrado de la GEStion Temporal de PROyectos de SOftware</title>
 
         <link rel="stylesheet" type="text/css" href="login.css" />
         <script language="javascript" type="text/javascript">

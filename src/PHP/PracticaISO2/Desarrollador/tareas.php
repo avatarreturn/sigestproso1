@@ -201,7 +201,7 @@
 
 <head>
 
-    <title>Formulario de tareas</title>
+    <title>[SIGESTPROSO]-Seguimiento Integrado de la GEStion Temporal de PROyectos de SOftware</title>
 
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <meta name="description" content="studio7designs" />

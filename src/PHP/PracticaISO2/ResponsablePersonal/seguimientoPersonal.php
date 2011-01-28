@@ -10,7 +10,7 @@ if ($login != "R") {
 
     <head>
 
-        <title>[SIGESTPROSO] Seguimiento Integrado de la GESTi&oacute;n Temporal de PROyectos de Software</title>
+        <title>[SIGESTPROSO]-Seguimiento Integrado de la GEStion Temporal de PROyectos de SOftware</title>
 
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
         <meta name="description" content="studio7designs" />
@@ -61,7 +61,7 @@ if ($login != "R") {
                         $trabajador = $trabajador . "</table></div>";
                     }
                     $trabajador = $trabajador . "<a href='#' onclick=\"ocultarR('oculto" . $cont . "')\"><br/><img src= '../images/iJefeProyecto.gif' alt='#' border='0' style='width: auto; height: 12px;'/>"
-                            . "&nbsp;&nbsp;" . utf8_encode($rowEmp['nombre']) . " " . utf8_encode($rowEmp['apellidos']) . "     " . $rowEmp['dni'] . "</a>";
+                            . "&nbsp;&nbsp;" . utf8_decode($rowEmp['nombre']) . " " . utf8_decode($rowEmp['apellidos']) . "     " . $rowEmp['dni'] . "</a>";
                     //Compruebo si el trabajador esta de vacaciones
                     if (vacacionesSiNo($rowEmp['dni'], date("Y-m-d"))) {
                         $intervVaca = vacacionesPeriodo($rowEmp['dni'], $semana);

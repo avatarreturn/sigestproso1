@@ -23,7 +23,7 @@
 
 <head>
 
-<title><?php echo $nombreP ?></title>
+<title>[SIGESTPROSO]-Seguimiento Integrado de la GEStion Temporal de PROyectos de SOftware</title>
 
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
