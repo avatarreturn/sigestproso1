@@ -172,7 +172,7 @@ session_start();
                                         <h2>Informes del proyecto</h2>
                                     </div>
                                     <div class="infoFormulario">
-		Relación de actividades finalizadas y activas con el tiempo planificado y el utilizado realmente en cada una.
+		Relación de actividades finalizadas y activas en una fecha dada con el tiempo planificado y el utilizado realmente en cada una.
                                     </div>
                                     <div>
                                         <br/>

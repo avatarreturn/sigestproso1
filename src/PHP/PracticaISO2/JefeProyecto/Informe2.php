@@ -333,10 +333,10 @@ session_start();
                                         <tr><td>
                                                 <div><h3>Condiciones:</h3>
 
-                                                    <p><img src= "../images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;La fecha 1ª debe ser posterior a la fecha de inicio del proyecto <label style="color: red">(<?php echo $fechaInicioP; ?>)</label>
+                                                    <p><img src= "../images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;La fecha inicial debe ser posterior a la fecha de inicio del proyecto <label style="color: red">(<?php echo $fechaInicioP; ?>)</label>
                                                         y no posterior a la actual</p>
 
-                                                    <p><img src= "../images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;La fecha 2ª no debe ser posterior a la fecha actual</p>
+                                                    <p><img src= "../images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;La fecha final no debe ser posterior a la fecha actual</p>
                                                     <br/>
                                                 </div>
                                             </td></tr></table>

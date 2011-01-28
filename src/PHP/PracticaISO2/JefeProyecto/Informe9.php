@@ -251,8 +251,8 @@ session_start();
                                                 <div><h3>Condiciones:</h3>
 
                                                     <p><img src= "../images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;La fecha debe ser posterior a la fecha actual</p>
-                                                    <p><img src= "../images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;Solo podra ver el reparto de trabajo hasta la fecha de inicio estimada
-                                                        de la ultima actividad planificada <label style="color: red">(<?php echo $fechaMayor; ?>)</label></p>
+                                                    <p><img src= "../images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;Solo podr&aacute; ver el reparto de trabajo hasta la fecha de inicio estimada
+                                                        de la &uacute;ltima actividad planificada <label style="color: red">(<?php echo $fechaMayor; ?>)</label></p>
                                                     <br/>
                                                 </div>
                                             </td></tr></table>
