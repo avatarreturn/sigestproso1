@@ -198,7 +198,7 @@ session_start();
                                         <h2>Informes del proyecto</h2>
                                     </div>
                                     <div class="infoFormulario">
-		Relación de trabajadores con alguna actividad asignada durante un periodo determinado.
+		Relaci&oacute;n de trabajadores con alguna actividad asignada durante un periodo determinado.
                                     </div>
                                     <div>
                                         <br/>

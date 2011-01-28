@@ -174,7 +174,7 @@ session_start();
 
                 <div id="formulario">
                     <form action="" method="POST" name="obtenerInformes">
-                        <table class="tablaVariable2">
+                        <table>
                             <tr>
                                 <td>
                                     <div class="tituloFormulario">

@@ -11,7 +11,7 @@ $categoria = $_GET['selectCategorias'];
 
 
 //LA RELACIÓN CATEGORIA-ROL SE ALMACENA EN LA TABLA ROL COMO UN INSERT
-$result = mysql_query("INSERT INTO Rol (`idRol`, `nombre`, `categoria`) VALUES (NULL, '".$rol."','".$categoria."');");
+$result = mysql_query("INSERT INTO Rol (`idRol`, `nombre`, `categoria`) VALUES (NULL, '".utf8_encode($rol)."','".$categoria."');");
 
 //cierre de la conexion
 $conexion->cerrarConexion();
