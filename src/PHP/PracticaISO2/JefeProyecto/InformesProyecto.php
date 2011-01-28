@@ -13,7 +13,7 @@ $proyecto=$_SESSION['proyectoEscogido'];
 
         <title>[SIGESTPROSO] Seguimiento Integrado de la GESTi&oacute;n Temporal de PROyectos de Software</title>
 
-        <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
         <meta name="description" content="studio7designs" />
         <meta name="keywords" content="#" />
         <meta name="googlebot" content="index, follow" />

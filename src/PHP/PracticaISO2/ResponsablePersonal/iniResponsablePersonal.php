@@ -12,7 +12,7 @@ if ($login != "R") {
 
         <title>[SIGESTPROSO] Seguimiento Integrado de la GESTi&oacute;n Temporal de PROyectos de Software</title>
 
-        <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
         <meta name="description" content="studio7designs" />
         <meta name="keywords" content="#" />
         <meta name="googlebot" content="index, follow" />
@@ -79,7 +79,7 @@ if ($login != "R") {
 
                 //           comprobamos que las dos contraseñas introducidas son iguales
                 if (document.nuevo_usuario.repassword.value!=document.nuevo_usuario.password.value){
-                    alert("Introduzca la misma contraseña en ambos campos")
+                    alert("Introduzca la misma contrase\xF1a en ambos campos")
                     document.nuevo_usuario.password.value=""
                     document.nuevo_usuario.repassword.value=""
                     document.nuevo_usuario.password.focus()
@@ -93,7 +93,7 @@ if ($login != "R") {
                     return 0;
                 }
 
-                if (confirm("Se creará el nuevo usuario")){
+                if (confirm("Se crear\xE1 el nuevo usuario")){
                     document.nuevo_usuario.submit();
                 }
                 
@@ -259,7 +259,7 @@ if ($login != "R") {
                                 <td>
                                     <br>
                                     <select size="1" name="categoria">
-                                        <option value="">Escoja categoría</option>
+                                        <option value="">Escoja categor&iacute;a</option>
                                         <?php
                                             include_once ('../Persistencia/conexion.php');
                                             $conexion = new conexion();

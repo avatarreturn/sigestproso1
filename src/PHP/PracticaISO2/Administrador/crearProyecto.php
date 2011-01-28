@@ -12,7 +12,7 @@ if ($login != "A") {
 
         <title>Crear Proyecto</title>
 
-        <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
         <meta name="description" content="studio7designs" />
         <meta name="keywords" content="#" />
         <meta name="googlebot" content="index, follow" />
@@ -70,7 +70,7 @@ if ($login != "A") {
             <!-- start left box-->
             <div id="leftcontent" style="display:inline">
                 <img style="margin-top:-9px; margin-left:-12px;" src="../images/top2.jpg" alt="" />
-                <h3 align="left">Menú</h3>
+                <h3 align="left">Men&uacute;</h3>
 
                 <div align="left">
                     <ul class="BLUE">
