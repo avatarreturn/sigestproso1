@@ -198,7 +198,7 @@ session_start();
                                         <h2>Informes del proyecto</h2>
                                     </div>
                                     <div class="infoFormulario">
-		Relación de actividades activas en una fecha o periodo de tiempo. Se incluye el tiempo planificado y el tiempo realizado de cada una de ellas.
+		Relaci&oacute;n de actividades activas en una fecha o periodo de tiempo. Se incluye el tiempo planificado y el tiempo realizado de cada una de ellas.
                                     </div>
                                     <div>
                                         <br/>

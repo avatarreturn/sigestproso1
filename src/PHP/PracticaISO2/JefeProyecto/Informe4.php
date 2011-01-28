@@ -163,7 +163,7 @@ session_start();
                                         <h2>Informes del proyecto</h2>
                                     </div>
                                     <div class="infoFormulario">
-		Relación de trabajadores con informes de actividad pendientes de aprobación y fechas de los mismos.
+		Relaci&oacute;n de trabajadores con informes de actividad pendientes de aprobación y fechas de los mismos.
                                     </div>
 
                                     <div class="centercontentleft">

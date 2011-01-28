@@ -156,7 +156,7 @@ session_start();
                                         <h2>Informes del proyecto</h2>
                                     </div>
                                     <div class="infoFormulario">
-		Relación de actividades que han consumido o están consumiendo m&aacute;s tiempo del planificado.
+		Relaci&oacute;n de actividades que han consumido o están consumiendo m&aacute;s tiempo del planificado.
                                     </div>
 
                                     <div class="centercontentleft">
