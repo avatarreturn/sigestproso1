@@ -344,7 +344,7 @@ if ($login != "R") {
                                                             $conexion = new conexion();
                                                             $result = mysql_query('select nombre, apellidos, dni from Trabajador order by nombre;');
                                                             while ($rowEmp = mysql_fetch_assoc($result)) {
-                                                                echo "<option value=\"" . $rowEmp['dni'] . "\">" . $rowEmp['nombre'] . " " . $rowEmp['apellidos'] . " " . $rowEmp['dni'] . "</option>";
+                                                                echo "<option value=\"" . $rowEmp['dni'] . "\">" . utf8_decode($rowEmp['nombre']) . " " . utf8_decode($rowEmp['apellidos']) . " " . $rowEmp['dni'] . "</option>";
                                                             }
                                                             $conexion->cerrarConexion();
                                                             ?>
