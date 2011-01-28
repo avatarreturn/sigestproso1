@@ -134,7 +134,7 @@ if ($login != "R") {
             while ($rowEmp = mysql_fetch_assoc($result)) {
                 $restoTrabaj = $restoTrabaj . "<a href='#' onclick=\"ocultarR('oculto" . $rowEmp['dni'] . "')\">"
                         . "<img src= '../images/iJefeProyecto.gif' alt='#' border='0' style='width: auto; height: 12px;'/>"
-                        . "&nbsp;&nbsp;" . utf8_encode($rowEmp['nombre']) . " " . utf8_encode($rowEmp['apellidos']) . "&nbsp;&nbsp;&nbsp;&nbsp;" . $rowEmp['dni'] . "</a>";
+                        . "&nbsp;&nbsp;" . $rowEmp['nombre'] . " " . $rowEmp['apellidos'] . "&nbsp;&nbsp;&nbsp;&nbsp;" . $rowEmp['dni'] . "</a>";
 
 
                 if (vacacionesSiNo($rowEmp['dni'], $semana)) {
@@ -150,7 +150,7 @@ if ($login != "R") {
             while ($rowEmp = mysql_fetch_assoc($result)) {
                 $restoTrabaj = $restoTrabaj . "<a href='#' onclick=\"ocultarR('oculto" . $rowEmp['dni'] . "')\">"
                         . "<img src= '../images/iJefeProyecto.gif' alt='#' border='0' style='width: auto; height: 12px;'/>"
-                        . "&nbsp;&nbsp;" . utf8_encode($rowEmp['nombre']) . " " . utf8_encode($rowEmp['apellidos']) . "&nbsp;&nbsp;&nbsp;&nbsp;" . $rowEmp['dni'] . "</a>";
+                        . "&nbsp;&nbsp;" . $rowEmp['nombre'] . " " . $rowEmp['apellidos'] . "&nbsp;&nbsp;&nbsp;&nbsp;" . $rowEmp['dni'] . "</a>";
 
 
                 if (vacacionesSiNo($rowEmp['dni'], $semana)) {
@@ -330,7 +330,7 @@ if ($login != "R") {
                                         <a href="#"><label>Trabajadores sin informacion esta semana: </label></a>
                                         <br/><br/>
                                         <?php
-                                        echo $restoTrabaj;
+                                        echo utf8_decode($restoTrabaj);
                                         ?>
                                     </div>
                                     <div id="listaTrabajadoresIntervalo" style="display: none">
