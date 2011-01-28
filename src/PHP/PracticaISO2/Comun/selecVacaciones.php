@@ -287,16 +287,16 @@ function validar(){
             if($varSemansaLibres == 0){
                 echo "No dispone de mas semanas de vacaciones actualmente";
             }else if($varSemansaLibres == 1){
-                echo "<SELECT ID='Weeks' NAME='SemanasVacaciones' SIZE=1 onChange='javascript:alert();'>
+                echo "<SELECT ID='Weeks' NAME='SemanasVacaciones' SIZE=1>
                     <OPTION VALUE='1'>1</OPTION></SELECT>";
             }else if($varSemansaLibres == 2){
-                echo "<SELECT ID='Weeks' NAME='SemanasVacaciones' SIZE=1 onChange='javascript:alert();'>
+                echo "<SELECT ID='Weeks' NAME='SemanasVacaciones' SIZE=1>
                     <OPTION VALUE='1'>1</OPTION><OPTION VALUE='2'>2</OPTION></SELECT>";
             }else if($varSemansaLibres == 3){
-                echo "<SELECT ID='Weeks' NAME='SemanasVacaciones' SIZE=1 onChange='javascript:alert();'>
+                echo "<SELECT ID='Weeks' NAME='SemanasVacaciones' SIZE=1>
                     <OPTION VALUE='1'>1</OPTION><OPTION VALUE='2'>2</OPTION><OPTION VALUE='3'>3</OPTION></SELECT>";
             }else if($varSemansaLibres == 4){
-                echo "<SELECT ID='Weeks' NAME='SemanasVacaciones' SIZE=1 onChange='javascript:alert();'>
+                echo "<SELECT ID='Weeks' NAME='SemanasVacaciones' SIZE=1>
                     <OPTION VALUE='1'>1</OPTION><OPTION VALUE='2'>2</OPTION><OPTION VALUE='3'>3</OPTION><OPTION VALUE='4'>4</OPTION></SELECT>";
             }
 
