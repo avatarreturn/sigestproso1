@@ -156,9 +156,9 @@ jQuery(document).ready(function() {
 
 function validar(){
     var FechaIni = new Date();
-    FechaIni.setTime(Date.parse(($('#datepicker').val())));
+    FechaIni.setTime($.datepicker.parseDate('yy-mm-dd',$('#datepicker').val()));
     var FechaFin = new Date();
-    FechaFin.setTime(Date.parse(($('#datepicker').val())));
+    FechaFin.setTime($.datepicker.parseDate('yy-mm-dd',$('#datepicker').val()));
     var week = parseInt(($('#Weeks').val())) * 7;
     if(FechaIni.getDay()== 1){
 
