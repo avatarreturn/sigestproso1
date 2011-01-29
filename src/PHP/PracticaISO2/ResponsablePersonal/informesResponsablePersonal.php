@@ -261,7 +261,7 @@ if ($login != "R") {
     <body>
 
         <div id="blogtitle">
-            <div id="small">Responsable de Personal</div>
+            <div id="small">Responsable de Personal (<?php echo $_SESSION['login'];?>) - Informes</div>
             <div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
         </div>
         <div id="page">
