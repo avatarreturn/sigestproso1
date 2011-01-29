@@ -103,7 +103,7 @@ if ($login != "R") {
         <!-- start top menu and blog title-->
 
         <div id="blogtitle">
-            <div id="small">Responsable de Personal</div>
+            <div id="small">Responsable de Personal (<?php echo $_SESSION['login'];?>) - Crear trabajador</div>
             <div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
         </div>
 
@@ -127,7 +127,7 @@ if ($login != "R") {
 
                 <div align="left">
                     <ul class="BLUE">
-                        <li><a href="iniResponsablePersonal.php">Crear trabajadores</a></li>
+                        <li><a href="iniResponsablePersonal.php">Crear trabajador</a></li>
                         <li><a href="seguimientoPersonal.php">Seguimiento Personal</a></li>
                         <li><a href="informesResponsablePersonal.php">Informes</a></li>
                     </ul>
@@ -156,7 +156,7 @@ if ($login != "R") {
                     <!--                <form  action="crearUsuario.php" method="post">-->
                     <form action="crearUsuario.php" method="POST" name="nuevo_usuario">
                         <div class="tituloFormulario">
-                            <h2>Registro de nuevo usuario</h2>
+                            <h2>Crear trabajador</h2>
                         </div>
                         <div class="infoFormulario">
 		A trav&eacute;s de esta pantalla el Responsable de Personal podr&aacute; registrar un nuevo usuario y asignarle una categor&iacute;a dentro de la empresa.
