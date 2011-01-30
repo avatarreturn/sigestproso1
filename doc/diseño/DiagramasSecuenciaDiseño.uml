@@ -17548,7 +17548,7 @@ El Jefe de Proyecto añade las actividades oportunas a una iteración.
 <XPD:OBJ name="NameLabel" type="EdgeLabelView" guid="PaBIuTFM2k6L5KW+Ss8IVQAA">
 <XPD:ATTR name="Alpha" type="real">1,5707963267949</XPD:ATTR>
 <XPD:ATTR name="Distance" type="real">10</XPD:ATTR>
-<XPD:ATTR name="Text" type="string">6 : obtieneIteracionActual()</XPD:ATTR>
+<XPD:ATTR name="Text" type="string">6 : obtenerIteracionActual()</XPD:ATTR>
 <XPD:REF name="Model">v6tDBx5FFUmIWzghdXJpmQAA</XPD:REF>
 <XPD:REF name="HostEdge">UqT4p5RRcUCKdiOtlsoI/wAA</XPD:REF>
 </XPD:OBJ>
@@ -18013,7 +18013,7 @@ El Jefe de Proyecto añade las actividades oportunas a una iteración.
 <XPD:REF name="Views[3]">L5ewOQ1nyUmeuQA6slU0uQAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="ParticipatingStimuli[5]" type="UMLStimulus" guid="v6tDBx5FFUmIWzghdXJpmQAA">
-<XPD:ATTR name="Name" type="string">obtieneIteracionActual</XPD:ATTR>
+<XPD:ATTR name="Name" type="string">obtenerIteracionActual</XPD:ATTR>
 <XPD:REF name="Sender">OFnSnk6LbUG4FiiC0ZabAwAA</XPD:REF>
 <XPD:REF name="Receiver">0qGHgZMPzU+HBUre2oGSYwAA</XPD:REF>
 <XPD:OBJ name="Action" type="UMLCallAction" guid="dbYwvlwHREmnESmV32190gAA">
