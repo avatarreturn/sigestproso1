@@ -216,7 +216,10 @@ if ($numeroIAct == $iteracionMax && $nombreFAct == "Transicion") {
         }
     }// Fin estamos en la iteracion maxima
 }// Fin de FinProyecto= 0
-?>
+?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "Http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<head>
         <title>[SIGESTPROSO]-Seguimiento Integrado de la GEStion Temporal de PROyectos de SOftware</title>
 
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
