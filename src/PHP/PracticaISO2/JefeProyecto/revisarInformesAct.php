@@ -63,6 +63,8 @@
              while ($rowEmp = mysql_fetch_assoc($result)) {
                  $cont = $cont + 1;
 
+                 $esfuerzoE = $rowEmp['duracionEstimada'];
+
                  $_SESSION['itActual'] = $rowEmp['idIteracion'];
                  $_SESSION['faseActual'] = $rowEmp['idFase'];
                  $_SESSION['numItActual'] = $rowEmp['numIteracion'];
@@ -84,10 +86,10 @@
                      $artefacto = 1;
                      while ($rowEmp2 = mysql_fetch_assoc($result2)) {
                          $listado = $listado
-                        . "&nbsp;&nbsp;&nbsp;&nbsp;<a href='verArtefacto.php?idAct=".$rowEmp['idActividad']."&idP=".$_SESSION['proyectoEscogido']."'>&nbsp;&nbsp;&nbsp;<img src= '../images/iActividad4.gif' alt='Artefacto' border='0'"
+                        . "&nbsp;&nbsp;&nbsp;&nbsp;<a href='verArtefacto.php?idAct=".$rowEmp['idActividad']."&idP=".$_SESSION['proyectoEscogido']."'>&nbsp;&nbsp;&nbsp;&nbsp;<img src= '../images/recurso.gif' alt='Artefacto' border='0'"
                         . "style='width: auto; height: 12px;'/>"
-                        . "&nbsp;&nbsp;&nbsp;&nbsp;Artefacto:&nbsp;&nbsp;".$rowEmp2['nombre']
-                        . "</a><br/>";
+                        . "&nbsp;&nbsp;&nbsp;Artefacto:&nbsp;&nbsp;".$rowEmp2['nombre']
+                        . "</a>&nbsp;&nbsp;&nbsp;&nbsp;[Esfuerzo estimado: ".$esfuerzoE." horas hombre]<br/>";
                      }
                 } else {
                     $artefacto = 0;
@@ -110,8 +112,10 @@
                         // Se añade cada trabajador al listado
                         $listado = $listado
                         ."&nbsp;&nbsp;<a href=\"#\" onclick=\"ocultarT('ocultoT".$cont2."')\">&nbsp;&nbsp;&nbsp;&nbsp;<img src= '../images/iJefeProyecto.gif' alt='Desarrollador' border='0'"
-                        . "style='width: auto; height: 12px;'/>&nbsp;&nbsp;".$rowEmp3['nombre']."&nbsp;".$rowEmp3['apellidos']."&nbsp;&nbsp;".$rowEmp3['dni']."</a>"."<br/>"
+                        . "style='width: auto; height: 12px;'/>&nbsp;&nbsp;".$rowEmp3['nombre']."&nbsp;".$rowEmp3['apellidos']."</a>"."<br/>"
                         . "<div id=\"ocultoT". $cont2. "\" style=\"display:inline\">";
+
+                        $numInformes = 0;
 
                         // Lista de informes pendientes o cancelados de cada trabajador anterior
                         $result4 = mysql_query("SELECT semana, estado, idInformeTareas FROM InformeTareas WHERE"
@@ -124,13 +128,21 @@
                         if ($totEmp4 > 0) {
                             while ($rowEmp4 = mysql_fetch_assoc($result4)) {
 
+                                $numInformes = $numInformes+1;
+
                                 // Se añade cada informe al listado
                                 $listado = $listado
                                 . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='verInformeTareas.php?idP=".$_SESSION['proyectoEscogido']."&idInf=".$rowEmp4['idInformeTareas']."'>&nbsp;&nbsp;&nbsp;&nbsp;<img src= '../images/iTarea.png' alt='Informe de actividad' border='0'"
                                 . "style='width: auto; height: 12px;'/>"
-                                . "&nbsp;&nbsp;&nbsp;Semana:&nbsp;".$rowEmp4['semana']."&nbsp;&nbsp;&nbsp;&nbsp;[".$rowEmp4['estado']
-                                . "]</a><br/>";
+                                . "&nbsp;&nbsp;&nbsp;Semana:&nbsp;".$rowEmp4['semana']."</a>&nbsp;&nbsp;&nbsp;&nbsp;[".$rowEmp4['estado']
+                                . "]<br/>";
                             }
+                        }
+
+                        if ($numInformes == 0) {
+                            $listado = $listado
+                            . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+                            . "No tiene informes pendientes o cancelados en este momento<br/>";
                         }
 
                         $listado = $listado . "</div>";
@@ -179,6 +191,10 @@
 
                 $listado = $listado."<br/><br/><br/><br/><br/></div>";
 
+             }
+
+             if ($cont == 0){
+                 $listado = $listado."<br/>No existen actividades activas en este momento<br/>";
              }
         }
 
@@ -359,7 +375,7 @@
         <!-- start top menu and blog title-->
 
 <div id="blogtitle">
-    <div id="small">Revisi&oacute;n de informes de actividades pendientes</div>
+    <div id="small">Jefe de proyecto (<u><?php echo $_SESSION['login'] ?></u>) - Revisi&oacute;n de actividades activas</div>
 		<div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
 </div>
 <!--

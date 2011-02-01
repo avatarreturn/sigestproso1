@@ -56,7 +56,7 @@ if ($login != "A") {
         <!-- start top menu and blog title-->
 
         <div id="blogtitle">
-            <div id="small">Administrador (<?php echo $_SESSION['login'];?>) - Crear proyecto</div>
+            <div id="small">Administrador (<u><?php echo $_SESSION['login'] ?></u>) - Crear proyecto</div>
             <div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
         </div>
 

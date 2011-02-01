@@ -144,7 +144,7 @@
 
     <body>
         <div id="blogtitle">
-            <div id="small">Revisi&oacute;n de informes de actividades</div>
+            <div id="small">Jefe de proyecto (<u><?php echo $_SESSION['login'] ?></u>) - Revisi&oacute;n de informes de actividades pendientes</div>
             <div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
         </div>
         <!-- end top menu and blog title-->

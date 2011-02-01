@@ -136,7 +136,7 @@ if ($login != "R") {
         <!-- start top menu and blog title-->
 
         <div id="blogtitle">
-            <div id="small">Responsable de Personal (<?php echo $_SESSION['login'];?>) - Seguimiento personal</div>
+            <div id="small">Responsable de Personal (<u><?php echo $_SESSION['login'] ?></u>) - Seguimiento personal</div>
             <div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
         </div>
 

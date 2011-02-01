@@ -18,6 +18,27 @@
                 }
             }
 
+    $result2 = mysql_query("SELECT nombre, descripcion FROM Proyecto"
+            ." WHERE idProyecto=".$_SESSION['proyectoEscogido']);
+    $totEmp2 = mysql_num_rows($result2);
+
+    if ($totEmp2 == 1){
+        while ($rowEmp2 = mysql_fetch_assoc($result2)){
+            $nombreP = $rowEmp2['nombre'];
+            $descripcionP = $rowEmp2['descripcion'];
+        }
+    }
+
+    $result3 = mysql_query("SELECT nombre FROM Actividad"
+            ." WHERE idActividad=".$_SESSION['Actividad']);
+    $totEmp3 = mysql_num_rows($result3);
+
+    if ($totEmp3 == 1){
+        while ($rowEmp3 = mysql_fetch_assoc($result3)){
+            $nombreA = $rowEmp3['nombre'];
+        }
+    }
+
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "Http://www.w3.org/TR/html4/strict.dtd">
@@ -51,7 +72,7 @@
     </head>
     <body>
         <div id="blogtitle">
-    <div id="small">Revisi&oacute;n de informes de actividades</div>
+            <div id="small">Jefe de proyecto (<u><?php echo $_SESSION['login'] ?></u>) - Revisi&oacute;n de artefactos</div>
 		<div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
 </div>
 <!--
@@ -109,12 +130,16 @@
 
 	<h1>SIGESTPROSO</h1>
 	<br/><br/><br/>
+
+        <p><a href="#"><?php echo utf8_decode($nombreP) ?></a> - <?php echo utf8_decode($descripcionP) ?></p>
+
+
         <div id="selProyecto">
-        <h2 style="text-align: center">Ver artefacto</h2>
+        <h2 style="text-align: center">Actividad&nbsp;<i style="color:blue"><?php echo utf8_decode($nombreA) ?></i></h2>
         <div class="centercontentleft" style="width:auto;">
 
         <div id="DArtefacto">
-                <p><b>Artefacto correspondiente a la actividad actual</b></p>
+                <p><b>Artefacto</b></p>
                 <table style="padding-left:10px;">
                     <tr>
                     <td>Nombre:</td>

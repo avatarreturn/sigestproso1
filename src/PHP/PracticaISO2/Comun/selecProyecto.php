@@ -189,7 +189,7 @@ function ocultarR(x){
 	<br/><br/><br/>
         <div id="selProyecto">
         <h2 style="text-align: center">Seleccione el proyecto sobre el que desea trabajar</h2>
-        <div class="centercontentleft" style="width:auto;">
+        <div class="centercontentleft" style="width:550px;">
             <?php
             if ($noProyectos==""){
             if($jefeProy == ""){}else{
