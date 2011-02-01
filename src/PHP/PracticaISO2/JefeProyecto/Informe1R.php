@@ -29,7 +29,7 @@ $sql="SELECT a.idActividad, a.nombre actividad, a.fechaInicio, a.fechaFin, t.nom
            AND (f.Proyecto_idProyecto=".$proyecto.")
            AND (ta.Actividad_idActividad=a.idActividad)
            AND (t.dni=ta.Trabajador_dni)
-        GROUP BY t.nombre,a.idActividad
+        GROUP BY t.nombre
         ORDER BY t.nombre";
 $result=mysql_query($sql);
 $totTra=mysql_num_rows($result);

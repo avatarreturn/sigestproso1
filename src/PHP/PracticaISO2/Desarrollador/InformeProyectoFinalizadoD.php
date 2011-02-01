@@ -46,19 +46,26 @@ session_start();
 //////////////////////////////////////////////////////////////////////////////////////////////     
 
 
-//        $proyecto = 5;    //esta variable tiene que se de sesion
-//        $proyecto=$_SESSION['proyectoEscogido'];
+
         $proyecto = $_GET['idP'];
 
+//////////////// nombre del proyecto y del jefe de proyecto //////////////////////
         $sql = "SELECT p.nombre proyecto, p.descripcion, t.nombre, t.apellidos
                 FROM Trabajador t, Proyecto p
                 WHERE (t.dni = p.jefeProyecto)
-                    AND (a.Iteracion_idIteracion=it.idIteracion)
-                    AND (it.Fase_idFase=f.idFase)
-                    AND (f.Proyecto_idProyecto=".$proyecto.")
-                    AND (i.idInformeTareas=tp.InformeTareas_idInformeTareas)
-                GROUP BY a.idActividad;";
+                    AND (p.idProyecto=".$proyecto.");";
         $result = mysql_query($sql);
+
+/////////////////// nombre apellidos y dni de los trabajadores ///////////////////
+        $sql2 = "SELECT p.nombre proyecto, p.descripcion, t.nombre, t.apellidos
+                FROM Trabajador t, Proyecto p
+                WHERE (t.dni = p.jefeProyecto)
+                    AND (p.idProyecto=".$proyecto.");";
+        $result = mysql_query($sql);
+
+
+
+
         $totAct = mysql_num_rows($result);
         $imprimir = "";
         if ($totAct > 0) {
