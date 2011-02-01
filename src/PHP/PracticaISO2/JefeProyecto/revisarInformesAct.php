@@ -7,6 +7,15 @@
     include_once('../Persistencia/conexion.php');
     $conexion = new conexion();
 
+    $result13 = mysql_query("select curdate() as fecha");
+    $totEmp13 = mysql_num_rows($result13);
+
+    if ($totEmp13 == 1){
+        while ($rowEmp13 = mysql_fetch_assoc($result13)) {
+            $fecha = $rowEmp13['fecha'];
+        }
+    }
+
     $result12 = mysql_query("SELECT i.idIteracion as idIteracion, i.numero as numero"
             ." FROM Iteracion i, Fase f, Proyecto p"
             ." WHERE i.fechaInicio IS NOT NULL"
@@ -23,7 +32,7 @@
 
     }
 
-    $result11 = mysql_query("SELECT p.nombre as nombre, p.descripcion as descripcion, f.nombre as nombreF"
+    $result11 = mysql_query("SELECT p.nombre as nombre, p.descripcion as descripcion, p.fechaInicio as fechaInicio, f.nombre as nombreF"
             ." FROM Proyecto p, Fase f, Iteracion i"
             ." WHERE i.idIteracion=".$idIt
             ." AND f.idFase=i.Fase_idFase"
@@ -35,17 +44,35 @@
         while ($rowEmp11 = mysql_fetch_assoc($result11)) {
             $nombreP = $rowEmp11['nombre'];
             $descripcionP = $rowEmp11['descripcion'];
+            $fechaIniP = $rowEmp11['fechaInicio'];
             $nombreF = $rowEmp11['nombreF'];
         }
-
     }
+
+    // ¿Está planificada la primera iteración del proyecto?
+    $result14 = mysql_query("SELECT nombre FROM Actividad"
+        ." WHERE Iteracion_idIteracion=".$idIt);
+    $totEmp14 = mysql_num_rows($result14);
+
+    if ($totEmp14 > 0) {
+        $empezado = 2;
+    }
+    
+    // ¿Ha comenzado el proyecto?
+    if ($fechaIniP <= $fecha) {
+        $empezado = 1;
+    } else {
+        $empezado = 0;
+    }
+    
+    if ($empezado == 1) {
 
          // Lista de actividades activas del proyecto actual
 	 $result = mysql_query("SELECT a.nombre as nombre, a.idActividad as idActividad, a.duracionEstimada as duracionEstimada, i.idIteracion as idIteracion, i.numero as numIteracion, f.idFase as idFase"
                 ." FROM Actividad a, Iteracion i, Fase f WHERE"
                 . " a.fechaFin is NULL"
                 . " AND a.fechaInicio is NOT NULL"
-                . " AND a.fechaInicio <= (select curdate())"
+//                . " AND a.fechaInicio <= (select curdate())"
                 . " AND a.Iteracion_IdIteracion=i.idIteracion"
                 . " AND i.Fase_idFase=f.idFase"
                 . " AND f.Proyecto_idProyecto=".$_SESSION['proyectoEscogido']);
@@ -300,6 +327,7 @@
             
 
         }
+    }
 
 
     ?>
@@ -368,7 +396,7 @@
                             if (xmlhttp.responseText == 0){
                                 location.href = "revisarInformesAct.php?idP=" + "<?php echo $_SESSION['proyectoEscogido']?>";
                             } else if (xmlhttp.responseText == 1){
-                                alert("No puede terminar esta actividad, pues es la \xF9ltima de la iteraci\xF3on actual, hasta que no planifique la siguiente iteraci\xF3n.");
+                                alert("No puede terminar esta actividad, pues es la \xFAltima de la iteraci\xF3n actual, hasta que no planifique la siguiente iteraci\xF3n.");
                             } else if (xmlhttp.responseText == 2){
                                 alert("No puede terminar una actividad con informes pendientes o cancelados, debe aceptarlos primero.");
                             }
@@ -450,16 +478,39 @@
         <p><a href="#"><?php echo utf8_decode($nombreP) ?></a> - <?php echo utf8_decode($descripcionP) ?></p>
 
         <div id="selProyecto">
-            <h2 style="text-align: center">Fase&nbsp;<i style="color:blue"><?php echo utf8_decode($nombreF) ?></i>
-                &nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;Iteraci&oacute;n&nbsp;<i style="color:blue"><?php echo utf8_decode($numIt) ?></i></h2>
-        <div class="centercontentleft" style="width:550px;">
+            
+            <?php if ($empezado == 1) { ?>
+                <h2 style="text-align: center">Fase&nbsp;<i style="color:blue"><?php echo utf8_decode($nombreF) ?></i>
+                    &nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;Iteraci&oacute;n&nbsp;<i style="color:blue"><?php echo utf8_decode($numIt) ?></i></h2>
+                <div class="centercontentleft" style="width:550px;">
 
-            <?php
-                echo utf8_decode("<span>" .$listado . "</span>");
-            ?>
-            <br/>
+                <?php
+                    echo utf8_decode("<span>" .$listado . "</span>");
+                ?>
+                <br/>
 
-        </div>
+                </div>
+
+            <?php } else { ?>
+
+                <div class="centercontentleft" style="width:550px; height: 70px;">
+
+                    <?php if ($empezado == 0) { ?>
+
+                            <span><br/>No existen actividades, iteraciones o fases activas, ya que la fecha de inicio del proyecto es posterior a la actual</span>
+
+                    <?php } else { ?>
+
+                            <span><br/>A&uacute;n no ha planificado la primera iteraci&oacute;n. Vaya a 'Planificar iteraci&oacute;n' del men&uacute; y planif&iacute;quela</span>
+
+                    <?php } ?>
+
+                    <br/>
+
+                </div>
+
+
+            <?php } ?>
 
         </div>
 
