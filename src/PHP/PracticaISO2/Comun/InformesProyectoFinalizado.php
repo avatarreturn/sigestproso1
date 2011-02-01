@@ -48,7 +48,7 @@ $proyecto = $_SESSION['proyectoEscogido'];
     <body>
         <!--        <form name="formulario" action="" enctype="text/plain">-->
         <div id="blogtitle">
-            <div id="small">Jefe de Proyecto - Informes</div>
+            <div id="small">Jefe de proyecto (<u><?php echo $_SESSION['login'] ?></u>) - Informes de proyectos finalizados</div>
             <div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
         </div>
         <div id="page">
@@ -103,7 +103,7 @@ $proyecto = $_SESSION['proyectoEscogido'];
                                         <h2>Informes del proyecto</h2>
                                     </div>
                                     <div class="infoFormulario">
-		Acontinuaci&oacute;n se muestra la lista de proyectos finlizados por orden cronol&oacute;gico.
+		A continuaci&oacute;n se muestra la lista de proyectos finlizados por orden cronol&oacute;gico.
                                     </div>
                                     <div class="centercontentleft">
                                         <?php

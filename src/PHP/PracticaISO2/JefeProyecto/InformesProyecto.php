@@ -33,7 +33,7 @@ $proyecto=$_SESSION['proyectoEscogido'];
     <body>
         <!--        <form name="formulario" action="" enctype="text/plain">-->
         <div id="blogtitle">
-            <div id="small">Jefe de Proyecto - Informes</div>
+            <div id="small">Jefe de proyecto (<u><?php echo $_SESSION['login'] ?></u>) - Informes</div>
             <div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
         </div>
         <div id="page">

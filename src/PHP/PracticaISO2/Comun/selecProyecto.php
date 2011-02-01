@@ -152,7 +152,7 @@ if ($login != "T") {
                 }
             }
         }else{
-            $noProyectos = "<p style='color:red'> <b>A&uacute;n no esta asignado a ningun proyecto</b> </p>";
+            $noProyectos = "<p><span>A&uacute;n no est&aacute; asignado a ning&uacute;n proyecto</span> </p>";
         }
         $conexion->cerrarConexion();
         

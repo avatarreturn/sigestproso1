@@ -392,7 +392,7 @@ jQuery("#dialog").ready(function() {
 <!-- start top menu and blog title-->
 
 <div id="blogtitle">
-		<div id="small">Jefe de Proyecto - Planificaci&oacute;n de iteraciones</div>
+		<div id="small">Jefe de proyecto (<u><?php echo $_SESSION['login'] ?></u>) - Planificaci&oacute;n de iteraciones</div>
 		<div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
 </div>
 

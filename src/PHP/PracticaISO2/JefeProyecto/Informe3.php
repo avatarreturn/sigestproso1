@@ -139,7 +139,7 @@ session_start();
     <body>
         <!--        <form name="formulario" action="" enctype="text/plain">-->
         <div id="blogtitle">
-            <div id="small">Jefe de Proyecto -(<?php echo $_SESSION['login'];?>)- Informes - Informes de actividad pendientes de recibir</div>
+            <div id="small">Jefe de proyecto (<u><?php echo $_SESSION['login'] ?></u>) - Informes - Informes de actividad pendientes de recibir</div>
             <div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
         </div>
         <div id="page">

@@ -199,7 +199,7 @@
                      }
                 }
 
-                $mensajeterminar = "<div class=\"centercontentleft\" style=\"width:480px; margin-left:25px; \">";
+                $mensajeterminar = "<div class=\"centercontentleft\" style=\"width:auto; margin-left:25px; \">";
 
                 if ($numhoras >= $rowEmp['duracionEstimada']){
                     $mensajeterminar = $mensajeterminar."El n&uacute;mero de horas trabajadas en informes aceptados es mayor "
@@ -223,7 +223,7 @@
                 $mensajeterminar = $mensajeterminar . "</div>";
                 $listado = $listado.$mensajeterminar;
 
-                $listado = $listado."<br/><br/><br/><br/><br/></div>";
+                $listado = $listado."<br/><br/></div>";
 
              }
 

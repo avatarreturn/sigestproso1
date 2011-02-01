@@ -135,7 +135,7 @@ $proyecto = 2;                //por variables de sesion
     <body>
         <!--        <form name="formulario" action="" enctype="text/plain">-->
         <div id="blogtitle">
-            <div id="small">Desarrollador - Informes de actividad</div>
+            <div id="small">Desarrollador (<u><?php echo $_SESSION['login'] ?></u>) - Informes de actividad</div>
             <div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
         </div>
         <div id="page">
