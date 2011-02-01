@@ -15,7 +15,7 @@ if($rowJef['jefeProyecto']==$dni){
             </script>';
 }else{
     echo'<script type="text/javascript">
-            alert("esto no está hecho todavia");
+            document.location.href="../Desarrollador/InformeProyectoFinalizadoD.php";
             </script>';
 }
 

@@ -47,7 +47,7 @@ session_start();
 
 
 
-        $proyecto = $_GET['idP'];
+        $proyecto = $_SESSION['proyectoFinalizado'];
 
 //////////////// nombre del proyecto y del jefe de proyecto, fecha de inicio y fecha de fin //////////////////////
         $sql = "SELECT p.nombre proyecto, p.descripcion, p.fechaInicio, p.fechaFin, t.nombre, t.apellidos
