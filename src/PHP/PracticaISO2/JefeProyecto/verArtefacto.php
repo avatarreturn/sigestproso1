@@ -135,7 +135,7 @@
 
 
         <div id="selProyecto">
-        <h2 style="text-align: center">Actividad&nbsp;<i style="color:blue"><?php echo utf8_decode($nombreA) ?></i></h2>
+        <h2 style="text-align: center; width: 620px">Actividad&nbsp;<i style="color:blue"><?php echo utf8_decode($nombreA) ?></i></h2>
         <div class="centercontentleft" style="width:auto;">
 
         <div id="DArtefacto">
