@@ -667,7 +667,7 @@ if ($PrimIter == 1) {
 
                                     if ($planificado == 1) {
                                         echo "<p style=\"color:red;\"> Ya ha planificado la siguiente iteraci&oacute;n, no podr&aacute;"
-                                        . " planificar mas iteraciones hasta que haya finalizado la iteraci&oacute;n actual</p>" . $LActividades;
+                                        . " planificar m&aacute;s iteraciones hasta que haya finalizado la iteraci&oacute;n actual</p>" . utf8_decode($LActividades);
                                     } else {
 
                                         echo "<p style='color:black'>Se dispone a planificar la primera iteraci&oacute;n <b>(1)</b> de la fase siguiente (" . utf8_decode($faseNext) . ")</p>";
