@@ -40,7 +40,9 @@ function calculaLunes($fecha){
             $dSemana = date('N', strtotime($fecha));
         }
     }
-    return $lunes=$fecha;
+    $can_dias=7;
+    return $lunes = date("Y-m-d", strtotime("$fecha + $can_dias days"));
+//    return $lunes=$fecha;
 }
 
 function sumaDia($fecha,$dia)

@@ -28,63 +28,60 @@ session_start();
         <link rel="stylesheet" type="text/css" href="../ResponsablePersonal/estiloTablas.css" media="screen, projection, tv " />
         <?php
         include_once("../Utiles/funciones.php");
+
         include_once ('../Persistencia/conexion.php');
         $conexion = new conexion();
 
-//        $proyecto = 5;    //esta variable tiene que se de sesion
-        $proyecto=$_SESSION['proyectoEscogido'];
-        $estaSemana = semanaActual();
-        $hoy = date('Y-m-d');
-
-//////// consulta que muestra los trabajadores con informes pendientes de aceptacion /////////
-
-        /*      SELECT t.nombre, t.apellidos, i.semana, a.actividad
-         *      FROM Trabajador t, TrabajadorActividad ta, Actividad a, InformeTareas i, TrabajadorProyecto tp
-         *      WHERE (t.dni=ta.Trabajador_dni)
-         *          AND (ta.Actividad_idActividad=a.idActividad)
-         *          AND (i.Trabajador_dni=t.dni)
-         *          AND (i.Actividad_idActividad=a.idActividad)
-         *          AND (tp.Trabajador_dni=t.dni)
-         *          AND (tp.Proyecto_idProyecto=5)
-         *          AND (i.estado!=Aceptado)
-         *      ORDER BY t.nombre;
+//consulta que muestra las actividades que han consumido o estan consumiendo mas tiempo del planificado ///////////
+        /*  SELECT a.idActividad, a.nombre actividad, a.duracionEstimada, sum(tp.horas) horas
+          FROM Actividad a, TareaPersonal tp, Iteracion it, Fase f, InformeTareas i
+          WHERE (a.idActividad=i.Actividad_idActividad)
+          AND (a.Iteracion_idIteracion=it.idIteracion)
+          AND (it.Fase_idFase=f.idFase)
+          AND (f.Proyecto_idProyecto=3)
+          AND (i.idInformeTareas=tp.InformeTareas_idInformeTareas)
+          GROUP BY a.idActividad
+         *
          */
+//////////////////////////////////////////////////////////////////////////////////////////////     
 
-        /* Estas son las actividades activas en la semana actual para el proyecto seleccionado */
-        $sql = "SELECT t.dni, t.nombre, t.apellidos, i.semana, i.idInformeTareas, a.nombre actividad
-        FROM Trabajador t, TrabajadorActividad ta, Actividad a, InformeTareas i, TrabajadorProyecto tp
-        WHERE (t.dni=ta.Trabajador_dni)
-            AND (ta.Actividad_idActividad=a.idActividad)
-            AND (i.Trabajador_dni=t.dni)
-            AND (i.Actividad_idActividad=a.idActividad)
-            AND (tp.Trabajador_dni=t.dni)
-            AND (tp.Proyecto_idProyecto=".$proyecto.")
-            AND (i.estado!='Aceptado')
-        ORDER BY t.nombre;";
+
+//        $proyecto = 5;    //esta variable tiene que se de sesion
+//        $proyecto=$_SESSION['proyectoEscogido'];
+        $proyecto = $_GET['idP'];
+
+        $sql = "SELECT p.nombre proyecto, p.descripcion, t.nombre, t.apellidos
+                FROM Trabajador t, Proyecto p
+                WHERE (t.dni = p.jefeProyecto)
+                    AND (a.Iteracion_idIteracion=it.idIteracion)
+                    AND (it.Fase_idFase=f.idFase)
+                    AND (f.Proyecto_idProyecto=".$proyecto.")
+                    AND (i.idInformeTareas=tp.InformeTareas_idInformeTareas)
+                GROUP BY a.idActividad;";
         $result = mysql_query($sql);
-        $totInf = mysql_num_rows($result);
-        $dniAnterior = "";
+        $totAct = mysql_num_rows($result);
         $imprimir = "";
-        if ($totInf > 0) {
-            while ($rowInf = mysql_fetch_assoc($result)) {
-                if ($rowInf['dni'] != $dniAnterior) {
-                    if ($dniAnterior != "") {
-                        $imprimir = $imprimir . "</table></div>";
+        if ($totAct > 0) {
+            $imprimir = "<table>";
+            $imprimir = $imprimir . "<tr><td><a>Actividad&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td><td><a>Estado</a></td><tr>";
+            while ($rowAct = mysql_fetch_assoc($result)) {
+                if ($rowAct['duracionEstimada'] < $rowAct['horas']) {
+                    if ($rowAct['fechaFin'] != null) {
+                        $imprimir = $imprimir . "<tr><td>" . $rowAct['actividad'] . "</td><td>Finalizada</td><tr>";
+                    } else {
+                        $imprimir = $imprimir . "<tr><td>" . $rowAct['actividad'] . "</td><td>Activa</td><tr>";
                     }
-                    $imprimir = $imprimir . "<a href='#' onclick=\"ocultarR('oculto" . $rowInf['dni'] . "')\"><img src= '../images/iJefeProyecto.gif' alt='#' border='0' style='width: auto; height: 12px;'/>&nbsp;&nbsp;" . $rowInf['nombre'] . " " . $rowInf['apellidos'] . "</img></a>" .
-                            "<br/><div id='oculto" . $rowInf['dni'] . "' style=\"display:none\"><table class=\"tablaVariable\"><tr><td><img src='../images/iProyecto.png' alt='Actividad' border='0' style='width: auto; height: 12px;'>&nbsp;&nbsp;&nbsp;&nbsp;Actividad: " . $rowInf['actividad'] . "</img></td><td>Semana: " . $rowInf['semana'] . "</td><td><a  onclick=\"verInfTar(". $rowInf['idInformeTareas'].")\">Ver aqu&iacute;</a></td></tr>";
-                    $dniAnterior = $rowInf['dni'];
-                } else {
-                    $imprimir = $imprimir . "<tr><td><img src='../images/iProyecto.png' alt='Actividad' border='0' style='width: auto; height: 12px;'>&nbsp;&nbsp;&nbsp;&nbsp;Actividad: " . $rowInf['actividad'] . "</td><td>Semana: " . $rowInf['semana'] . "</td><td><a  onclick=\"verInfTar(". $rowInf['idInformeTareas'].")\">Ver aqu&iacute;</a></td></tr>";
-                    $dniAnterior = $rowInf['dni'];
                 }
-            }
-            if ($imprimir != "") {
-                $imprimir = $imprimir . "</table></div>";
+            }            
+            if ($imprimir == "<table><tr><td><a>Actividad&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td><td><a>Estado</a></td><tr>") {
+                $imprimir = "<a>No existen actividades con consumo de tiempo superior al estimado</a>";
+            }else{
+                $imprimir = $imprimir . "</table>";
             }
         }else{
-            $imprimir="<a href='#'>NO HAY INFORMES DE ACTIVIDAD PERNDIENTES DE APROBAR</a>";
+            $imprimr="<a href='#'>NO EXISTEN ACTIVIDADES CON MAYOR CONSUMO DE TIEMPO DEL PLANIFICADO</a>";
         }
+
 
         $conexion->cerrarConexion();
         ?>
@@ -98,9 +95,6 @@ session_start();
                 }
 
             }
-            function verInfTar(idInf){
-                location.href="verInformeTareas.php?idP=<?php echo $proyecto; ?>"+"&idInf="+idInf
-            }
         </script>
 
     </head>
@@ -108,7 +102,7 @@ session_start();
     <body>
         <!--        <form name="formulario" action="" enctype="text/plain">-->
         <div id="blogtitle">
-            <div id="small">Jefe de Proyecto -(<?php echo $_SESSION['login'];?>)- Informes - Trabajadores con informes pendientes de envio</div>
+            <div id="small">Jefe de Proyecto -(<?php echo $_SESSION['login'];?>)- Informes - Actividades con retraso</div>
             <div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
         </div>
         <div id="page">
@@ -163,7 +157,7 @@ session_start();
                                         <h2>Informes del proyecto</h2>
                                     </div>
                                     <div class="infoFormulario">
-		Relaci&oacute;n de trabajadores con informes de actividad pendientes de aprobaci&oacute;n y fechas de los mismos.
+		Relaci&oacute;n de actividades que han consumido o est&aacute;n consumiendo m&aacute;s tiempo del planificado.
                                     </div>
 
                                     <div class="centercontentleft">

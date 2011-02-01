@@ -30,7 +30,7 @@ session_start();
         include_once ('../Persistencia/conexion.php');
         $conexion = new conexion();
 //        $proyecto = 5; //esta variable tiene que se de sesion
-        $proyecto=$_SESSION['proyectoEscogido'];
+        $proyecto = $_SESSION['proyectoEscogido'];
         $sql = "select fechaInicio from Proyecto where idProyecto=" . $proyecto . ";";
         $result = mysql_query($sql);
         $row = mysql_fetch_assoc($result);
@@ -48,23 +48,27 @@ session_start();
             }
             function recarga(){
 
+                var bandera = 0;
+
                 if (document.obtenerInformes.diasi.value==0){
                     alert("Elija una fecha correcta")
                     document.obtenerInformes.diasi.focus()
-                    return 0;
+                    document.getElementById("listarecargable").style.display="none";
+                    bandera = 1;
                 }
                 if (document.obtenerInformes.mesi.value==0){
                     alert("Elija una fecha correcta")
                     document.obtenerInformes.mesi.focus()
-                    return 0;
+                    document.getElementById("listarecargable").style.display="none";
+                    bandera = 1;
                 }
                 if (document.obtenerInformes.anioi.value==0){
                     alert("Elija una fecha correcta")
                     document.obtenerInformes.anioi.focus()
-                    return 0;
+                    document.getElementById("listarecargable").style.display="none";
+                    bandera = 1;
                 }
 
-                document.getElementById("listarecargable").style.display="inline";
                 //alert(document.getElementById("trabajador").value);
                 // formar fecha
                 var fechaI; //coger los datos del formulario y hacer el string para cada fecha
@@ -75,40 +79,53 @@ session_start();
                 FechaVal.setTime(Date.parse(fechaI));
                 var FechaVal2 = new Date();
                 FechaVal2.setTime(Date.parse("<?php echo $fechaInicioP; ?>"))
+                var FechaValH = new Date();
+                FechaValH.setTime(Date.parse("<?php echo date('Y-m-d'); ?>"))
                 //
                 var FvalF = FechaVal.getTime();
                 var IniP = FechaVal2.getTime();
+                var Hoy = FechaValH.getTime();
                 //
                 //                alert(FechaVal+" "+FechaVal2);
                 //
                 if (FvalF < IniP){
                     alert("La fecha elegida no puede ser inferior a la fecha de inicio del proyecto");
                     document.obtenerInformes.diasf.focus()
-                    return 0
+                    document.getElementById("listarecargable").style.display="none";
+                    bandera = 1;
+                }
+                if (FvalF > Hoy){
+                    alert("La fecha final no puede ser posterior a la fecha de hoy");
+                    document.obtenerInformes.diasf.focus()
+                    document.getElementById("listarecargable").style.display="none";
+                    bandera = 1;
                 }
 
-                if (window.XMLHttpRequest){
-                    xmlhttp=new XMLHttpRequest();
-                }
-                else{
-                    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-                }
-                xmlhttp.onreadystatechange=function(){
-                    if(xmlhttp.readyState==1){
-                        //Sucede cuando se esta cargando la pagina
-                        //
-                        //mete la imagen de cargando
-                        //            document.getElementById("enviando").innerHTML = "<p><center>Enviando<center><img src='../images/enviando.gif' alt='Enviando' width='150px'/></p>";//<-- Aca puede ir una precarga
-                    }else if (xmlhttp.readyState==4 && xmlhttp.status==200)
-                    {
-                        //alert(xmlhttp.responseText);
-                        document.getElementById("listarecargable").innerHTML = xmlhttp.responseText;
+                if (bandera == 0){
+                    document.getElementById("listarecargable").style.display="inline";
+                    if (window.XMLHttpRequest){
+                        xmlhttp=new XMLHttpRequest();
                     }
+                    else{
+                        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+                    }
+                    xmlhttp.onreadystatechange=function(){
+                        if(xmlhttp.readyState==1){
+                            //Sucede cuando se esta cargando la pagina
+                            //
+                            //mete la imagen de cargando
+                            //            document.getElementById("enviando").innerHTML = "<p><center>Enviando<center><img src='../images/enviando.gif' alt='Enviando' width='150px'/></p>";//<-- Aca puede ir una precarga
+                        }else if (xmlhttp.readyState==4 && xmlhttp.status==200)
+                        {
+                            //alert(xmlhttp.responseText);
+                            document.getElementById("listarecargable").innerHTML = xmlhttp.responseText;
+                        }
+                    }
+                    proyecto="<?php echo $proyecto; ?>";
+                    xmlhttp.open("GET","Informe6R.php?proyecto="+proyecto
+                        + "&fechaI=" + fechaI, true);
+                    xmlhttp.send();
                 }
-                proyecto="<?php echo $proyecto; ?>";
-                xmlhttp.open("GET","Informe6R.php?proyecto="+proyecto
-                    + "&fechaI=" + fechaI, true);
-                xmlhttp.send();
             }
         </script>
 
@@ -117,7 +134,7 @@ session_start();
     <body>
         <!--        <form name="formulario" action="" enctype="text/plain">-->
         <div id="blogtitle">
-            <div id="small">Jefe de Proyecto - Informes - Estado de actividades</div>
+            <div id="small">Jefe de Proyecto -(<?php echo $_SESSION['login'];?>)- Informes - Estado de actividades</div>
             <div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
         </div>
         <div id="page">
@@ -178,9 +195,7 @@ session_start();
                                         <br/>
                                         <table>
                                             <tr>
-                                                <td>
-                                                    <label>Desede el d&iacute;a:</label>
-                                                </td>
+                                                
                                                 <td>
                                                     <div>
                                                         <?php

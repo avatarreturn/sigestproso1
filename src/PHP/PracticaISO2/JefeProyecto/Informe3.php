@@ -46,11 +46,9 @@ session_start();
 //              Sumo una semana mas.                                                        //
 //          }                                                                               //
 //      }                                                                                   //
-//////////////////////////////////////////////////////////////////////////////////////////////     
-
-
+//////////////////////////////////////////////////////////////////////////////////////////////
 //        $proyecto = 5;    //esta variable tiene que se de sesion
-        $proyecto=$_SESSION['proyectoEscogido'];
+        $proyecto = $_SESSION['proyectoEscogido'];
         $estaSemana = semanaActual();
         $hoy = date('Y-m-d');
         $arrayActividades;
@@ -100,23 +98,27 @@ session_start();
 
         /* En el array $informesPendientes tengo todos los datos. Ahora los imprimo */
         $traAnterior = "";
-        $imprimir = "";
-        foreach ($informesPendientes as $informe) {
-            if ($informe['trabajador'] != $traAnterior) {
-                if($traAnterior != ""){
-                    $imprimir=$imprimir."</table></div>";
+        $imprimir = "<div class=\"centercontentleft\">";
+        if ($informesPendientes != null) {
+            foreach ($informesPendientes as $informe) {
+                if ($informe['trabajador'] != $traAnterior) {
+                    if ($traAnterior != "") {
+                        $imprimir = $imprimir . "</table></div>";
+                    }
+                    $imprimir = $imprimir . "<a href='#' onclick=\"ocultarR('oculto" . $informe['trabajador'] . "')\">" . $informe['nombre'] . " " . $informe['apellidos'] . "</a>" .
+                            "<br/><div id='oculto" . $informe['trabajador'] . "' style=\"display:none\"><table class=\"tablaVariable\"><tr><td><img src='../images/iProyecto.png' alt='Actividad' border='0' style='width: auto; height: 12px;'>&nbsp;&nbsp;&nbsp;&nbsp;Actividad: " . $informe['actividad'] . "</img></td><td>Semana: " . $informe['semana'] . "</td></tr>";
+                    $traAnterior = $informe['trabajador'];
+                } else {
+                    $imprimir = $imprimir . "<tr><td><img src='../images/iProyecto.png' alt='Actividad' border='0' style='width: auto; height: 12px;'>&nbsp;&nbsp;&nbsp;&nbsp;Actividad: " . $informe['actividad'] . "</td><td>Semana: " . $informe['semana'] . "</td></tr>";
+                    $traAnterior = $informe['trabajador'];
                 }
-                $imprimir=$imprimir."<a href='#' onclick=\"ocultarR('oculto".$informe['trabajador']."')\">".$informe['nombre']." ".$informe['apellidos']."</a>".
-                "<br/><div id='oculto".$informe['trabajador']."' style=\"display:none\"><table class=\"tablaVariable\"><tr><td><img src='../images/iProyecto.png' alt='Actividad' border='0' style='width: auto; height: 12px;'>&nbsp;&nbsp;&nbsp;&nbsp;Actividad: ".$informe['actividad']."</img></td><td>Semana: ".$informe['semana']."</td></tr>";
-                $traAnterior=$informe['trabajador'];
-            } else {
-                $imprimir=$imprimir."<tr><td><img src='../images/iProyecto.png' alt='Actividad' border='0' style='width: auto; height: 12px;'>&nbsp;&nbsp;&nbsp;&nbsp;Actividad: ".$informe['actividad']."</td><td>Semana: ".$informe['semana']."</td></tr>";
-                $traAnterior=$informe['trabajador'];
             }
         }
-        if($imprimir != ""){
-                    $imprimir=$imprimir."</table></div>";
-                }
+        if ($imprimir != "<div class=\"centercontentleft\">") {
+            $imprimir = $imprimir . "</table></div></div>";
+        }else{
+            $imprimir="<div class=\"centercontentleft\"><a>No hay trabajadores con informes de actividad pendientes</a></div>";
+        }
 
         $conexion->cerrarConexion();
         ?>
@@ -137,7 +139,7 @@ session_start();
     <body>
         <!--        <form name="formulario" action="" enctype="text/plain">-->
         <div id="blogtitle">
-            <div id="small">Jefe de Proyecto - Informes - Trabajadores con actividades asignadas (Pasadas)</div>
+            <div id="small">Jefe de Proyecto -(<?php echo $_SESSION['login'];?>)- Informes - Informes de actividad pendientes de recibir</div>
             <div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
         </div>
         <div id="page">
@@ -195,11 +197,11 @@ session_start();
 		Relaci&oacute;n de trabajadores con informes de actividad pendientes de env&iacute;o y fechas de los mismos.
                                     </div>
 
-                                    <div class="centercontentleft">
-                                        <?php
-                                        echo $imprimir;
-                                        ?>
-                                    </div>
+<!--                                    <div class="centercontentleft" style="display: none">-->
+<?php
+        echo $imprimir;
+?>
+<!--                                    </div>-->
                                 </td>
                             </tr>
                         </table>
@@ -214,20 +216,20 @@ session_start();
         </div>
 
 
-    <!-- end content -->
-    <!-- start footer -->
+        <!-- end content -->
+        <!-- start footer -->
 
-    <div id="footer">&copy; 2006 Design by <a href="http://www.studio7designs.com">Studio7designs.com</a> | <a href="http://www.arbutusphotography.com">ArbutusPhotography.com</a> | <a href="http://www.opensourcetemplates.org">Opensourcetemplates.org</a>
-
-
-
-
-    </div>
-
-    <!-- end footer -->
+        <div id="footer">&copy; 2006 Design by <a href="http://www.studio7designs.com">Studio7designs.com</a> | <a href="http://www.arbutusphotography.com">ArbutusPhotography.com</a> | <a href="http://www.opensourcetemplates.org">Opensourcetemplates.org</a>
 
 
 
 
-</body>
+        </div>
+
+        <!-- end footer -->
+
+
+
+
+    </body>
 </html>

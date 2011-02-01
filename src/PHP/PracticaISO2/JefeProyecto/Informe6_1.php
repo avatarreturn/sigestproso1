@@ -30,11 +30,13 @@ session_start();
         include_once ('../Persistencia/conexion.php');
         $conexion = new conexion();
 //        $proyecto = 5; //esta variable tiene que se de sesion
-        $proyecto = $_SESSION['proyectoEscogido'];
-        $sql = "select fechaInicio from Proyecto where idProyecto=" . $proyecto . ";";
+//        $proyecto = $_SESSION['proyectoEscogido'];
+        $proyecto = $_GET['idP'];
+        $sql = "select fechaInicio, fechaFin from Proyecto where idProyecto=" . $proyecto . ";";
         $result = mysql_query($sql);
         $row = mysql_fetch_assoc($result);
         $fechaInicioP = $row['fechaInicio'];
+        $fechaFinP = $row['fechaFin'];
         $conexion->cerrarConexion();
         ?>
         <script>
@@ -51,104 +53,80 @@ session_start();
                 var bandera = 0;
 
                 if (document.obtenerInformes.diasi.value==0){
-                    alert("Elija una fecha inicial correcta")
+                    alert("Elija una fecha correcta")
                     document.obtenerInformes.diasi.focus()
+                    document.getElementById("listarecargable").style.display="none";
                     bandera = 1;
                 }
                 if (document.obtenerInformes.mesi.value==0){
-                    alert("Elija una fecha inicial correcta")
+                    alert("Elija una fecha correcta")
                     document.obtenerInformes.mesi.focus()
+                    document.getElementById("listarecargable").style.display="none";
                     bandera = 1;
                 }
                 if (document.obtenerInformes.anioi.value==0){
-                    alert("Elija una fecha inicial correcta")
+                    alert("Elija una fecha correcta")
                     document.obtenerInformes.anioi.focus()
-                   bandera = 1;
-                }
-                if (document.obtenerInformes.diasf.value==0){
-                    alert("Elija una fecha final correcta")
-                    document.obtenerInformes.diasf.focus()
-                    bandera = 1;
-                }
-                if (document.obtenerInformes.mesf.value==0){
-                    alert("Elija una fecha final correcta")
-                    document.obtenerInformes.mesf.focus()
-                    bandera = 1;
-                }
-                if (document.obtenerInformes.aniof.value==0){
-                    alert("Elija una fecha final correcta")
-                    document.obtenerInformes.aniof.focus()
+                    document.getElementById("listarecargable").style.display="none";
                     bandera = 1;
                 }
 
-               
                 //alert(document.getElementById("trabajador").value);
                 // formar fecha
                 var fechaI; //coger los datos del formulario y hacer el string para cada fecha
                 fechaI=document.obtenerInformes.anioi.value+"-"+document.obtenerInformes.mesi.value+"-"+document.obtenerInformes.diasi.value
-                var fechaF;
-                fechaF=document.obtenerInformes.aniof.value+"-"+document.obtenerInformes.mesf.value+"-"+document.obtenerInformes.diasf.value
 
                 //..........
-                var FechaValI = new Date();
-                FechaValI.setTime(Date.parse(fechaI));
-                var FechaValF = new Date();
-                FechaValF.setTime(Date.parse(fechaF));
-                var FechaValP = new Date();
-                FechaValP.setTime(Date.parse("<?php echo $fechaInicioP; ?>"))
+                var FechaVal = new Date();
+                FechaVal.setTime(Date.parse(fechaI));
+                var FechaVal2 = new Date();
+                FechaVal2.setTime(Date.parse("<?php echo $fechaInicioP; ?>"))
                 var FechaValH = new Date();
                 FechaValH.setTime(Date.parse("<?php echo date('Y-m-d'); ?>"))
                 //
-                var FvalI = FechaValI.getTime();
-                var FvalF = FechaValF.getTime();
-                var IniP = FechaValP.getTime();
+                var FvalF = FechaVal.getTime();
+                var IniP = FechaVal2.getTime();
                 var Hoy = FechaValH.getTime();
                 //
-                //                alert(FechaValI+" "+FechaValF);
+                //                alert(FechaVal+" "+FechaVal2);
                 //
-                if (IniP > FvalI){
-                    alert("La fecha inicial no puede ser anterior a la fecha de inicio del proyecto");
+                if (FvalF < IniP){
+                    alert("La fecha elegida no puede ser inferior a la fecha de inicio del proyecto");
                     document.obtenerInformes.diasf.focus()
-                    bandera = 1;
-                }
-                if (FvalF < FvalI){
-                    alert("La fecha final no puede ser anterior a la fecha inicial");
-                    document.obtenerInformes.diasf.focus()
+                    document.getElementById("listarecargable").style.display="none";
                     bandera = 1;
                 }
                 if (FvalF > Hoy){
                     alert("La fecha final no puede ser posterior a la fecha de hoy");
                     document.obtenerInformes.diasf.focus()
+                    document.getElementById("listarecargable").style.display="none";
                     bandera = 1;
                 }
 
-
-                if(bandera == 0){
-                document.getElementById("listarecargable").style.display="inline";
-
-                if (window.XMLHttpRequest){
-                    xmlhttp=new XMLHttpRequest();
-                }
-                else{
-                    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-                }
-                xmlhttp.onreadystatechange=function(){
-                    if(xmlhttp.readyState==1){
-                        //Sucede cuando se esta cargando la pagina
-                        //
-                        //mete la imagen de cargando
-                        //            document.getElementById("enviando").innerHTML = "<p><center>Enviando<center><img src='../images/enviando.gif' alt='Enviando' width='150px'/></p>";//<-- Aca puede ir una precarga
-                    }else if (xmlhttp.readyState==4 && xmlhttp.status==200)
-                    {
-                        //alert(xmlhttp.responseText);
-                        document.getElementById("listarecargable").innerHTML = xmlhttp.responseText;
+                if (bandera == 0){
+                    document.getElementById("listarecargable").style.display="inline";
+                    if (window.XMLHttpRequest){
+                        xmlhttp=new XMLHttpRequest();
                     }
-                }
-                proyecto="<?php echo $proyecto; ?>";
-                xmlhttp.open("GET","Informe1R.php?proyecto="+proyecto
-                    + "&fechaI=" + fechaI
-                    + "&fechaF=" + fechaF, true);
-                xmlhttp.send();
+                    else{
+                        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+                    }
+                    xmlhttp.onreadystatechange=function(){
+                        if(xmlhttp.readyState==1){
+                            //Sucede cuando se esta cargando la pagina
+                            //
+                            //mete la imagen de cargando
+                            //            document.getElementById("enviando").innerHTML = "<p><center>Enviando<center><img src='../images/enviando.gif' alt='Enviando' width='150px'/></p>";//<-- Aca puede ir una precarga
+                        }else if (xmlhttp.readyState==4 && xmlhttp.status==200)
+                        {
+                            //alert(xmlhttp.responseText);
+                            document.getElementById("listarecargable").innerHTML = xmlhttp.responseText;
+                        }
+                    }
+                    proyecto="<?php echo $proyecto; ?>";
+                    xmlhttp.open("GET","Informe6R.php?proyecto="+proyecto
+                        + "&fechaI=" + fechaI, true);
+                    xmlhttp.send();
                 }
             }
         </script>
@@ -158,7 +136,7 @@ session_start();
     <body>
         <!--        <form name="formulario" action="" enctype="text/plain">-->
         <div id="blogtitle">
-            <div id="small">Jefe de Proyecto -(<?php echo $_SESSION['login'];?>)- Informes - Trabajadores con actividades asignadas</div>
+            <div id="small">Jefe de Proyecto -(<?php echo $_SESSION['login']; ?>)- Informes - Estado de actividades</div>
             <div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
         </div>
         <div id="page">
@@ -213,15 +191,13 @@ session_start();
                                         <h2>Informes del proyecto</h2>
                                     </div>
                                     <div class="infoFormulario">
-		Relaci&oacute;n de trabajadores con alguna actividad asignada durante un periodo determinado.
+		Relaci&oacute;n de actividades finalizadas y activas en una fecha dada con el tiempo planificado y el utilizado realmente en cada una.
                                     </div>
                                     <div>
                                         <br/>
                                         <table>
                                             <tr>
-                                                <td>
-                                                    <label>Desede el d&iacute;a:</label>
-                                                </td>
+
                                                 <td>
                                                     <div>
                                                         <?php
@@ -266,60 +242,12 @@ session_start();
                                                             ?>
                                                     </div>
                                                 </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label>Hasta el d&iacute;a:</label>
-                                                </td>
-                                                <td>
-                                                    <div>
-                                                        <?php
-                                                            echo '<select name="diasf" size="1">';
-                                                            echo '<option value="0">D&iacute;a</option>';
-                                                            for ($i = 1; $i <= 31; $i++) {
-                                                                echo '<option value="' . $i . '">' . $i . '</option>';
-                                                            }
-                                                            echo '</select>';
-                                                        ?>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div>
-                                                            <select name="mesf" size="1">
-                                                                <option value="0">Mes</option>
-                                                                <option value="1">Enero</option>
-                                                                <option value="2">Febrero</option>
-                                                                <option value="3">Marzo</option>
-                                                                <option value="4">Abril</option>
-                                                                <option value="5">Mayo</option>
-                                                                <option value="6">Junio</option>
-                                                                <option value="7">Julio</option>
-                                                                <option value="8">Agosto</option>
-                                                                <option value="9">Septiembre</option>
-                                                                <option value="10">Octubre</option>
-                                                                <option value="11">Noviembre</option>
-                                                                <option value="12">Diciembre</option>
-                                                            </select>
-                                                        </div>
-                                                    </td>
-                                                    <td
-                                                        <div>
-                                                            <?php
-                                                            echo '<select name="aniof" size="1">';
-                                                            echo '<option value="0">A&ntilde;o</option>';
-                                                            $fecha = getdate();
-                                                            $anio = $fecha[year];
-                                                            for ($i = 2000; $i <= $anio; $i++) {
-                                                                echo '<option value="' . $i . '">' . $i . '</option>';
-                                                            }
-                                                            ?>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
                                                 <td>
                                                     <input name="ver_informe" value="Ver" type="button" class="submit" onclick="recarga()" />
                                                 </td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
                                             </tr>
                                         </table>
                                     </div>
@@ -331,8 +259,8 @@ session_start();
                                         <tr><td>
                                                 <div><h3>Condiciones:</h3>
 
-                                                    <p><img src= "../images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;La primera fecha debe ser posterior a la fecha de inicio del proyecto <label style="color: red">(<?php echo $fechaInicioP; ?>)</label>
-                                                        y no posterior a la actual</p>
+                                                    <p><img src= "../images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;Debe elegir una fecha posterior a la fecha de inicio del proyecto <label style="color: red">(<?php echo $fechaInicioP; ?>)</label>
+                                                        y no posterior a la de final del proyecto <label style="color: red">(<?php echo $fechaFinP; ?>)</label></p>
                                                     <br/>
                                                 </div>
                                             </td></tr></table>

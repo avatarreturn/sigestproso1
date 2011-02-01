@@ -29,12 +29,14 @@ session_start();
         <?php
         include_once ('../Persistencia/conexion.php');
         $conexion = new conexion();
-//        $proyecto = 5; //esta variable tiene que se de sesion
-        $proyecto = $_SESSION['proyectoEscogido'];
-        $sql = "select fechaInicio from Proyecto where idProyecto=" . $proyecto . ";";
+//        $proyecto = 3; //esta variable tiene que se de sesion
+//        $proyecto = $_SESSION['proyectoEscogido'];
+        $proyecto = $_GET['idP'];
+        $sql = "select fechaInicio, fechaFin from Proyecto where idProyecto=" . $proyecto . ";";
         $result = mysql_query($sql);
         $row = mysql_fetch_assoc($result);
         $fechaInicioP = $row['fechaInicio'];
+        $fechaFinP = $row['fechaFin'];
         $conexion->cerrarConexion();
         ?>
         <script>
@@ -53,35 +55,43 @@ session_start();
                 if (document.obtenerInformes.diasi.value==0){
                     alert("Elija una fecha inicial correcta")
                     document.obtenerInformes.diasi.focus()
+                    document.getElementById("listarecargable").style.display="none";
                     bandera = 1;
+
                 }
                 if (document.obtenerInformes.mesi.value==0){
                     alert("Elija una fecha inicial correcta")
                     document.obtenerInformes.mesi.focus()
+                    document.getElementById("listarecargable").style.display="none";
                     bandera = 1;
                 }
                 if (document.obtenerInformes.anioi.value==0){
                     alert("Elija una fecha inicial correcta")
                     document.obtenerInformes.anioi.focus()
-                   bandera = 1;
+                    document.getElementById("listarecargable").style.display="none";
+                    bandera = 1;
                 }
                 if (document.obtenerInformes.diasf.value==0){
                     alert("Elija una fecha final correcta")
                     document.obtenerInformes.diasf.focus()
+                    document.getElementById("listarecargable").style.display="none";
                     bandera = 1;
                 }
                 if (document.obtenerInformes.mesf.value==0){
                     alert("Elija una fecha final correcta")
                     document.obtenerInformes.mesf.focus()
+                    document.getElementById("listarecargable").style.display="none";
                     bandera = 1;
                 }
                 if (document.obtenerInformes.aniof.value==0){
                     alert("Elija una fecha final correcta")
                     document.obtenerInformes.aniof.focus()
+                    document.getElementById("listarecargable").style.display="none";
                     bandera = 1;
                 }
+                
 
-               
+                    
                 //alert(document.getElementById("trabajador").value);
                 // formar fecha
                 var fechaI; //coger los datos del formulario y hacer el string para cada fecha
@@ -96,13 +106,10 @@ session_start();
                 FechaValF.setTime(Date.parse(fechaF));
                 var FechaValP = new Date();
                 FechaValP.setTime(Date.parse("<?php echo $fechaInicioP; ?>"))
-                var FechaValH = new Date();
-                FechaValH.setTime(Date.parse("<?php echo date('Y-m-d'); ?>"))
                 //
                 var FvalI = FechaValI.getTime();
                 var FvalF = FechaValF.getTime();
                 var IniP = FechaValP.getTime();
-                var Hoy = FechaValH.getTime();
                 //
                 //                alert(FechaValI+" "+FechaValF);
                 //
@@ -116,39 +123,32 @@ session_start();
                     document.obtenerInformes.diasf.focus()
                     bandera = 1;
                 }
-                if (FvalF > Hoy){
-                    alert("La fecha final no puede ser posterior a la fecha de hoy");
-                    document.obtenerInformes.diasf.focus()
-                    bandera = 1;
-                }
+                if (bandera == 0){
+                    document.getElementById("listarecargable").style.display="inline";
 
-
-                if(bandera == 0){
-                document.getElementById("listarecargable").style.display="inline";
-
-                if (window.XMLHttpRequest){
-                    xmlhttp=new XMLHttpRequest();
-                }
-                else{
-                    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-                }
-                xmlhttp.onreadystatechange=function(){
-                    if(xmlhttp.readyState==1){
-                        //Sucede cuando se esta cargando la pagina
-                        //
-                        //mete la imagen de cargando
-                        //            document.getElementById("enviando").innerHTML = "<p><center>Enviando<center><img src='../images/enviando.gif' alt='Enviando' width='150px'/></p>";//<-- Aca puede ir una precarga
-                    }else if (xmlhttp.readyState==4 && xmlhttp.status==200)
-                    {
-                        //alert(xmlhttp.responseText);
-                        document.getElementById("listarecargable").innerHTML = xmlhttp.responseText;
+                    if (window.XMLHttpRequest){
+                        xmlhttp=new XMLHttpRequest();
                     }
-                }
-                proyecto="<?php echo $proyecto; ?>";
-                xmlhttp.open("GET","Informe1R.php?proyecto="+proyecto
-                    + "&fechaI=" + fechaI
-                    + "&fechaF=" + fechaF, true);
-                xmlhttp.send();
+                    else{
+                        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+                    }
+                    xmlhttp.onreadystatechange=function(){
+                        if(xmlhttp.readyState==1){
+                            //Sucede cuando se esta cargando la pagina
+                            //
+                            //mete la imagen de cargando
+                            //            document.getElementById("enviando").innerHTML = "<p><center>Enviando<center><img src='../images/enviando.gif' alt='Enviando' width='150px'/></p>";//<-- Aca puede ir una precarga
+                        }else if (xmlhttp.readyState==4 && xmlhttp.status==200)
+                        {
+                            //alert(xmlhttp.responseText);
+                            document.getElementById("listarecargable").innerHTML = xmlhttp.responseText;
+                        }
+                    }
+                    proyecto="<?php echo $proyecto; ?>";
+                    xmlhttp.open("GET","Informe5R.php?proyecto="+proyecto
+                        + "&fechaI=" + fechaI
+                        + "&fechaF=" + fechaF, true);
+                    xmlhttp.send();
                 }
             }
         </script>
@@ -158,7 +158,7 @@ session_start();
     <body>
         <!--        <form name="formulario" action="" enctype="text/plain">-->
         <div id="blogtitle">
-            <div id="small">Jefe de Proyecto -(<?php echo $_SESSION['login'];?>)- Informes - Trabajadores con actividades asignadas</div>
+            <div id="small">Jefe de Proyecto -(<?php echo $_SESSION['login']; ?>)- Informes - Actividades activas</div>
             <div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
         </div>
         <div id="page">
@@ -213,7 +213,7 @@ session_start();
                                         <h2>Informes del proyecto</h2>
                                     </div>
                                     <div class="infoFormulario">
-		Relaci&oacute;n de trabajadores con alguna actividad asignada durante un periodo determinado.
+		Relaci&oacute;n de actividades activas en una fecha o periodo de tiempo. Se incluye el tiempo planificado y el tiempo realizado de cada una de ellas.
                                     </div>
                                     <div>
                                         <br/>
@@ -324,15 +324,17 @@ session_start();
                                         </table>
                                     </div>
                                     <table><tr><td>
-                                                <div id="listarecargable" class="centercontentleft" style="display: none">
+                                                <div id="listarecargable" name="listarecargable" class="centercontentleft" style="display: none">
 
                                                 </div>
                                             </td></tr>
                                         <tr><td>
                                                 <div><h3>Condiciones:</h3>
 
-                                                    <p><img src= "../images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;La primera fecha debe ser posterior a la fecha de inicio del proyecto <label style="color: red">(<?php echo $fechaInicioP; ?>)</label>
-                                                        y no posterior a la actual</p>
+                                                    <p><img src= "../images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;La fecha inicial debe ser posterior a la fecha de inicio del proyecto <label style="color: red">(<?php echo $fechaInicioP; ?>)</label>
+                                                        y no posterior a la de fin del proyecto</p>
+
+                                                    <p><img src= "../images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;La fecha final no debe ser posterior a la fecha de fin del proyecto <label style="color: red">(<?php echo $fechaFinP; ?>)</label></p>
                                                     <br/>
                                                 </div>
                                             </td></tr></table>

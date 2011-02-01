@@ -52,24 +52,28 @@ session_start();
                 }
             }
             function recarga(){
-                
+
+                var bandera = 0;
                 if (document.obtenerInformes.diasf.value==0){
                     alert("Elija una fecha final correcta")
                     document.obtenerInformes.diasf.focus()
-                    return 0;
+                    document.getElementById("listarecargable").style.display="none";
+                    bandera = 1;
                 }
                 if (document.obtenerInformes.mesf.value==0){
                     alert("Elija una fecha final correcta")
                     document.obtenerInformes.mesf.focus()
-                    return 0;
+                    document.getElementById("listarecargable").style.display="none";
+                    bandera = 1;
                 }
                 if (document.obtenerInformes.aniof.value==0){
                     alert("Elija una fecha final correcta")
                     document.obtenerInformes.aniof.focus()
-                    return 0;
+                    document.getElementById("listarecargable").style.display="none";
+                    bandera = 1;
                 }
 
-                document.getElementById("listarecargable").style.display="inline";
+                
                 //alert(document.getElementById("trabajador").value);
                 // formar fecha
                 
@@ -93,9 +97,12 @@ session_start();
                 if (FvalF < HOY){
                     alert("La fecha escogida no puede ser anterior a la fecha actual");
                     document.obtenerInformes.diasf.focus()
-                    return 0
+                    document.getElementById("listarecargable").style.display="none";
+                    bandera = 1;
                 }
 
+                if (bandera == 0){
+                document.getElementById("listarecargable").style.display="inline";
                 if (window.XMLHttpRequest){
                     xmlhttp=new XMLHttpRequest();
                 }
@@ -118,6 +125,7 @@ session_start();
                 xmlhttp.open("GET","Informe9R.php?proyecto="+proyecto
                     + "&fechaF=" + fechaF, true);
                 xmlhttp.send();
+                }
             }
         </script>
 
@@ -126,7 +134,7 @@ session_start();
     <body>
         <!--        <form name="formulario" action="" enctype="text/plain">-->
         <div id="blogtitle">
-            <div id="small">Jefe de Proyecto - Informes - Reparto de actividades pendientes</div>
+            <div id="small">Jefe de Proyecto -(<?php echo $_SESSION['login'];?>)- Informes - Reparto de actividades pendientes</div>
             <div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
         </div>
         <div id="page">

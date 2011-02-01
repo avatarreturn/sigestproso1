@@ -218,17 +218,17 @@ if ($login != "R") {
                 FechaVal.setTime(Date.parse(fechaF));
                 //alert(disabledDaysVal[i]);
                 var FechaVal2 = new Date();
-                FechaVal2.setTime(Date.parse("<?php echo date("Y-m-d")?>"))
+                FechaVal2.setTime(Date.parse("<?php echo date("Y-m-d") ?>"))
 
                 var FvalF = FechaVal.getTime();
                 var Hoy = FechaVal2.getTime();
 
-//                alert(FechaVal+" "+FechaVal2);
+                //                alert(FechaVal+" "+FechaVal2);
 
                 if (FvalF > Hoy){
-                   alert("La fecha final no puede ser superior a la fecha actual");
-                   document.obtenerInformes.diasf.focus()
-                   return 0
+                    alert("La fecha final no puede ser superior a la fecha actual");
+                    document.obtenerInformes.diasf.focus()
+                    return 0
                 }
 
                 if (window.XMLHttpRequest){
@@ -237,6 +237,7 @@ if ($login != "R") {
                 else{
                     xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
                 }
+                document.getElementById("listaRegargable").style.display="inline";
                 xmlhttp.onreadystatechange=function(){
                     if(xmlhttp.readyState==1){
                         //Sucede cuando se esta cargando la pagina
@@ -322,16 +323,23 @@ if ($login != "R") {
 		A trav&eacute;s de esta pantalla el Responsable de Personal podr&aacute; obtener informacion acerca de la participaci&oacute;n en proyectos y las vacaciones de cada trabajador.
                                     </div>
                                     <div id="listaTrabajadores" class="centercontentleft">
-                                        <?php
-                                        echo $trabajador;
-                                        ?>
-                                        <br/>
+                                        <div>
+                                            <?php
+                                            echo utf8_decode($trabajador);
+                                            ?>
+                                            <br/>
 
-                                        <a href="#"><label>Trabajadores sin informacion esta semana: </label></a>
-                                        <br/><br/>
-                                        <?php
-                                        echo utf8_decode($restoTrabaj);
-                                        ?>
+                                            <a href="#"><label>Trabajadores sin informacion esta semana: </label></a>
+                                            <br/><br/>
+                                            <?php
+                                            echo utf8_decode($restoTrabaj);
+                                            ?>
+                                        </div>
+                                        <div>
+                                            <br/>
+                                            <a href='#'>&nbsp;&nbsp;<img src= '../images/vacaciones.jpg' alt='#' border='0' style='width: auto; height: 12px;'/></a>
+                                            <label>Este trabajador est&aacute; de vacaciones en este momento</label>
+                                        </div>
                                     </div>
                                     <div id="listaTrabajadoresIntervalo" style="display: none">
                                         <table>
@@ -458,7 +466,7 @@ if ($login != "R") {
                                                 </td>
                                             </tr>
                                         </table>
-                                        <div class="centercontentleft" id="listaRegargable">
+                                        <div class="centercontentleft" id="listaRegargable" style="display: none">
 
 
                                         </div>
@@ -468,12 +476,12 @@ if ($login != "R") {
                                     </td>
                                     </tr>
 
-                                    <tr>
+<!--                                    <tr>
                                         <td>
                                             <a href='#'>&nbsp;&nbsp;<img src= '../images/vacaciones.jpg' alt='#' border='0' style='width: auto; height: 12px;'/></a>
                                             <label>Este trabajador est&aacute; de vacaciones en este momento</label>
                                         </td>
-                                    </tr>
+                                    </tr>-->
                                     </table>
 
                             </div>

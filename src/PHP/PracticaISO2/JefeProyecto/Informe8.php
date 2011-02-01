@@ -30,13 +30,13 @@ session_start();
         include_once ('../Persistencia/conexion.php');
         $conexion = new conexion();
 //        $proyecto = 5; //esta variable tiene que se de sesion
-        $proyecto=$_SESSION['proyectoEscogido'];
+        $proyecto = $_SESSION['proyectoEscogido'];
         $sql = "SELECT MAX(a.fechaInicioE) fechaMayor
                 FROM Actividad a, TrabajadorActividad ta, Trabajador t, TrabajadorProyecto tp
                 WHERE (ta.Actividad_idActividad=a.idActividad)
                     AND (t.dni=ta.Trabajador_dni)
                     AND (tp.Trabajador_dni=t.dni)
-                    AND (tp.Proyecto_idProyecto=".$proyecto.");";
+                    AND (tp.Proyecto_idProyecto=" . $proyecto . ");";
         $result = mysql_query($sql);
         $row = mysql_fetch_assoc($result);
         $fechaMayor = $row['fechaMayor'];
@@ -52,24 +52,28 @@ session_start();
                 }
             }
             function recarga(){
-                
+
+                var bandera = 0;
                 if (document.obtenerInformes.diasf.value==0){
                     alert("Elija una fecha final correcta")
                     document.obtenerInformes.diasf.focus()
-                    return 0;
+                    document.getElementById("listarecargable").style.display="none";
+                    bandera = 1;
                 }
                 if (document.obtenerInformes.mesf.value==0){
                     alert("Elija una fecha final correcta")
                     document.obtenerInformes.mesf.focus()
-                    return 0;
+                    document.getElementById("listarecargable").style.display="none";
+                    bandera = 1;
                 }
                 if (document.obtenerInformes.aniof.value==0){
                     alert("Elija una fecha final correcta")
                     document.obtenerInformes.aniof.focus()
-                    return 0;
+                    document.getElementById("listarecargable").style.display="none";
+                    bandera = 1;
                 }
 
-                document.getElementById("listarecargable").style.display="inline";
+                
                 //alert(document.getElementById("trabajador").value);
                 // formar fecha
                 
@@ -80,44 +84,49 @@ session_start();
                 var FechaValF = new Date();
                 FechaValF.setTime(Date.parse(fechaF));
                 var FechaValH = new Date();
-                FechaValH.setTime(Date.parse("<?php echo date("Y-m-d");?>"));
+                FechaValH.setTime(Date.parse("<?php echo date("Y-m-d"); ?>"));
                 //
                 var FvalF = FechaValF.getTime();
                 var HOY = FechaValH.getTime();
 
-//                if (IniP > FvalI){
-//                    alert("La fecha inicial no puede ser anterior a la fecha de inicio del proyecto");
-//                    document.obtenerInformes.diasf.focus()
-//                    return 0
-//                }
+                //                if (IniP > FvalI){
+                //                    alert("La fecha inicial no puede ser anterior a la fecha de inicio del proyecto");
+                //                    document.obtenerInformes.diasf.focus()
+                //                    return 0
+                //                }
                 if (FvalF < HOY){
                     alert("La fecha escogida no puede ser anterior a la fecha actual");
                     document.obtenerInformes.diasf.focus()
-                    return 0
+                    document.getElementById("listarecargable").style.display="none";
+                    bandera = 1;
                 }
 
-                if (window.XMLHttpRequest){
-                    xmlhttp=new XMLHttpRequest();
-                }
-                else{
-                    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-                }
-                xmlhttp.onreadystatechange=function(){
-                    if(xmlhttp.readyState==1){
-                        //Sucede cuando se esta cargando la pagina
-                        //
-                        //mete la imagen de cargando
-                        //            document.getElementById("enviando").innerHTML = "<p><center>Enviando<center><img src='../images/enviando.gif' alt='Enviando' width='150px'/></p>";//<-- Aca puede ir una precarga
-                    }else if (xmlhttp.readyState==4 && xmlhttp.status==200)
-                    {
-                        //alert(xmlhttp.responseText);
-                        document.getElementById("listarecargable").innerHTML = xmlhttp.responseText;
+
+                if (bandera == 0){
+                    document.getElementById("listarecargable").style.display="inline";
+                    if (window.XMLHttpRequest){
+                        xmlhttp=new XMLHttpRequest();
                     }
+                    else{
+                        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+                    }
+                    xmlhttp.onreadystatechange=function(){
+                        if(xmlhttp.readyState==1){
+                            //Sucede cuando se esta cargando la pagina
+                            //
+                            //mete la imagen de cargando
+                            //            document.getElementById("enviando").innerHTML = "<p><center>Enviando<center><img src='../images/enviando.gif' alt='Enviando' width='150px'/></p>";//<-- Aca puede ir una precarga
+                        }else if (xmlhttp.readyState==4 && xmlhttp.status==200)
+                        {
+                            //alert(xmlhttp.responseText);
+                            document.getElementById("listarecargable").innerHTML = xmlhttp.responseText;
+                        }
+                    }
+                    proyecto="<?php echo $proyecto; ?>";
+                    xmlhttp.open("GET","Informe8R.php?proyecto="+proyecto
+                        + "&fechaF=" + fechaF, true);
+                    xmlhttp.send();
                 }
-                proyecto="<?php echo $proyecto; ?>";
-                xmlhttp.open("GET","Informe8R.php?proyecto="+proyecto
-                    + "&fechaF=" + fechaF, true);
-                xmlhttp.send();
             }
         </script>
 
@@ -126,7 +135,7 @@ session_start();
     <body>
         <!--        <form name="formulario" action="" enctype="text/plain">-->
         <div id="blogtitle">
-            <div id="small">Jefe de Proyecto - Informes - Actividades pendientes</div>
+            <div id="small">Jefe de Proyecto -(<?php echo $_SESSION['login'];?>)- Informes - Actividades pendientes</div>
             <div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
         </div>
         <div id="page">
@@ -193,42 +202,42 @@ session_start();
                                                 <td>
                                                     <div>
                                                         <?php
-                                                            echo '<select name="diasf" size="1">';
-                                                            echo '<option value="0">D&iacute;a</option>';
-                                                            for ($i = 1; $i <= 31; $i++) {
-                                                                echo '<option value="' . $i . '">' . $i . '</option>';
-                                                            }
-                                                            echo '</select>';
+                                                        echo '<select name="diasf" size="1">';
+                                                        echo '<option value="0">D&iacute;a</option>';
+                                                        for ($i = 1; $i <= 31; $i++) {
+                                                            echo '<option value="' . $i . '">' . $i . '</option>';
+                                                        }
+                                                        echo '</select>';
                                                         ?>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div>
-                                                            <select name="mesf" size="1">
-                                                                <option value="0">Mes</option>
-                                                                <option value="1">Enero</option>
-                                                                <option value="2">Febrero</option>
-                                                                <option value="3">Marzo</option>
-                                                                <option value="4">Abril</option>
-                                                                <option value="5">Mayo</option>
-                                                                <option value="6">Junio</option>
-                                                                <option value="7">Julio</option>
-                                                                <option value="8">Agosto</option>
-                                                                <option value="9">Septiembre</option>
-                                                                <option value="10">Octubre</option>
-                                                                <option value="11">Noviembre</option>
-                                                                <option value="12">Diciembre</option>
-                                                            </select>
-                                                        </div>
-                                                    </td>
-                                                    <td
-                                                        <div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <select name="mesf" size="1">
+                                                            <option value="0">Mes</option>
+                                                            <option value="1">Enero</option>
+                                                            <option value="2">Febrero</option>
+                                                            <option value="3">Marzo</option>
+                                                            <option value="4">Abril</option>
+                                                            <option value="5">Mayo</option>
+                                                            <option value="6">Junio</option>
+                                                            <option value="7">Julio</option>
+                                                            <option value="8">Agosto</option>
+                                                            <option value="9">Septiembre</option>
+                                                            <option value="10">Octubre</option>
+                                                            <option value="11">Noviembre</option>
+                                                            <option value="12">Diciembre</option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                                <td
+                                                    <div>
                                                             <?php
                                                             echo '<select name="aniof" size="1">';
                                                             echo '<option value="0">A&ntilde;o</option>';
                                                             $fecha = getdate();
                                                             $anio = $fecha[year];
-                                                            for ($i = $anio; $i < $anio+10; $i++) {
+                                                            for ($i = $anio; $i < $anio + 10; $i++) {
                                                                 echo '<option value="' . $i . '">' . $i . '</option>';
                                                             }
                                                             ?>

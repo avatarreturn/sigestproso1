@@ -29,12 +29,13 @@ session_start();
         <?php
         include_once ('../Persistencia/conexion.php');
         $conexion = new conexion();
-//        $proyecto = 5; //esta variable tiene que se de sesion
-        $proyecto = $_SESSION['proyectoEscogido'];
-        $sql = "select fechaInicio from Proyecto where idProyecto=" . $proyecto . ";";
+//        $proyecto=$_SESSION['proyectoEscogido'];
+        $proyecto = $_GET['idP'];
+        $sql = "select fechaInicio, fechaFin from Proyecto where idProyecto=" . $proyecto . ";";
         $result = mysql_query($sql);
         $row = mysql_fetch_assoc($result);
         $fechaInicioP = $row['fechaInicio'];
+        $fechaFinP = $row['fechaFin'];
         $conexion->cerrarConexion();
         ?>
         <script>
@@ -48,40 +49,44 @@ session_start();
             }
             function recarga(){
 
-                var bandera = 0;
-
                 if (document.obtenerInformes.diasi.value==0){
                     alert("Elija una fecha inicial correcta")
                     document.obtenerInformes.diasi.focus()
-                    bandera = 1;
+                    document.obtenerInformes.listarecargable.style.display=="none"
+                    return 0;
                 }
                 if (document.obtenerInformes.mesi.value==0){
                     alert("Elija una fecha inicial correcta")
                     document.obtenerInformes.mesi.focus()
-                    bandera = 1;
+                    document.obtenerInformes.listarecargable.style.display=="none"
+                    return 0;
                 }
                 if (document.obtenerInformes.anioi.value==0){
                     alert("Elija una fecha inicial correcta")
                     document.obtenerInformes.anioi.focus()
-                   bandera = 1;
+                    document.obtenerInformes.listarecargable.style.display=="none"
+                    return 0;
                 }
                 if (document.obtenerInformes.diasf.value==0){
                     alert("Elija una fecha final correcta")
                     document.obtenerInformes.diasf.focus()
-                    bandera = 1;
+                    document.obtenerInformes.listarecargable.style.display=="none"
+                    return 0;
                 }
                 if (document.obtenerInformes.mesf.value==0){
                     alert("Elija una fecha final correcta")
                     document.obtenerInformes.mesf.focus()
-                    bandera = 1;
+                    document.obtenerInformes.listarecargable.style.display=="none"
+                    return 0;
                 }
                 if (document.obtenerInformes.aniof.value==0){
                     alert("Elija una fecha final correcta")
                     document.obtenerInformes.aniof.focus()
-                    bandera = 1;
+                    document.obtenerInformes.listarecargable.style.display=="none"
+                    return 0;
                 }
 
-               
+                document.getElementById("listarecargable").style.display="inline";
                 //alert(document.getElementById("trabajador").value);
                 // formar fecha
                 var fechaI; //coger los datos del formulario y hacer el string para cada fecha
@@ -97,34 +102,33 @@ session_start();
                 var FechaValP = new Date();
                 FechaValP.setTime(Date.parse("<?php echo $fechaInicioP; ?>"))
                 var FechaValH = new Date();
-                FechaValH.setTime(Date.parse("<?php echo date('Y-m-d'); ?>"))
+                FechaValH.setTime(Date.parse("<?php echo $fechaFinP; ?>"))
                 //
                 var FvalI = FechaValI.getTime();
                 var FvalF = FechaValF.getTime();
                 var IniP = FechaValP.getTime();
-                var Hoy = FechaValH.getTime();
+                var HOY = FechaValH.getTime();
                 //
                 //                alert(FechaValI+" "+FechaValF);
                 //
                 if (IniP > FvalI){
                     alert("La fecha inicial no puede ser anterior a la fecha de inicio del proyecto");
                     document.obtenerInformes.diasf.focus()
-                    bandera = 1;
+                    document.obtenerInformes.listarecargable.style.display=="none"
+                    return 0
                 }
                 if (FvalF < FvalI){
                     alert("La fecha final no puede ser anterior a la fecha inicial");
                     document.obtenerInformes.diasf.focus()
-                    bandera = 1;
+                    document.obtenerInformes.listarecargable.style.display=="none"
+                    return 0
                 }
-                if (FvalF > Hoy){
-                    alert("La fecha final no puede ser posterior a la fecha de hoy");
+                if (FvalF > HOY){
+                    alert("La fecha final no puede ser posterior a la de final del proyecto");
                     document.obtenerInformes.diasf.focus()
-                    bandera = 1;
+                    document.obtenerInformes.listarecargable.style.display=="none"
+                    return 0
                 }
-
-
-                if(bandera == 0){
-                document.getElementById("listarecargable").style.display="inline";
 
                 if (window.XMLHttpRequest){
                     xmlhttp=new XMLHttpRequest();
@@ -145,11 +149,10 @@ session_start();
                     }
                 }
                 proyecto="<?php echo $proyecto; ?>";
-                xmlhttp.open("GET","Informe1R.php?proyecto="+proyecto
+                xmlhttp.open("GET","Informe2R.php?proyecto="+proyecto
                     + "&fechaI=" + fechaI
                     + "&fechaF=" + fechaF, true);
                 xmlhttp.send();
-                }
             }
         </script>
 
@@ -158,7 +161,7 @@ session_start();
     <body>
         <!--        <form name="formulario" action="" enctype="text/plain">-->
         <div id="blogtitle">
-            <div id="small">Jefe de Proyecto -(<?php echo $_SESSION['login'];?>)- Informes - Trabajadores con actividades asignadas</div>
+            <div id="small">Jefe de Proyecto -(<?php echo $_SESSION['login'];?>)- Informes - Trabajadores y sus actividades</div>
             <div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
         </div>
         <div id="page">
@@ -213,7 +216,7 @@ session_start();
                                         <h2>Informes del proyecto</h2>
                                     </div>
                                     <div class="infoFormulario">
-		Relaci&oacute;n de trabajadores con alguna actividad asignada durante un periodo determinado.
+		Relaci&oacute;n de trabajadores y sus actividades asignadas durante un periodo determinado.
                                     </div>
                                     <div>
                                         <br/>
@@ -331,8 +334,10 @@ session_start();
                                         <tr><td>
                                                 <div><h3>Condiciones:</h3>
 
-                                                    <p><img src= "../images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;La primera fecha debe ser posterior a la fecha de inicio del proyecto <label style="color: red">(<?php echo $fechaInicioP; ?>)</label>
-                                                        y no posterior a la actual</p>
+                                                    <p><img src= "../images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;La fecha inicial debe ser posterior a la fecha de inicio del proyecto <label style="color: red">(<?php echo $fechaInicioP; ?>)</label>
+                                                        y no posterior a la de fin del proyecto</p>
+
+                                                    <p><img src= "../images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;La fecha final no debe ser posterior a la fecha de fin del proyecto <label style="color: red">(<?php echo $fechaFinP; ?>)</label></p>
                                                     <br/>
                                                 </div>
                                             </td></tr></table>

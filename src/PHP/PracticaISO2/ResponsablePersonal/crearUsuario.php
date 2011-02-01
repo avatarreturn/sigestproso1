@@ -43,8 +43,8 @@ while ($row = mysql_fetch_array($result)) {
 }
 
 if ($existe && $existet) {
-    $result = mysql_query("INSERT INTO `grupo01`.`Usuario` (`login`, `password`, `tipoUsuario`) VALUES ('" . $usuario . "' , '" . $contrasena . "', 'T');");
-    $result = mysql_query("INSERT INTO `grupo01`.`Trabajador` (`dni`, `nombre`, `apellidos`, `fechaNac`, `categoria` , `Usuario_login`) VALUES ('".$dni."', '" . $nombre . "' , '" . $apellidos . "', '" . $fechanac . "', '" . $categoria . "', '" . $usuario . "');");
+    $result = mysql_query("INSERT INTO `grupo01`.`Usuario` (`login`, `password`, `tipoUsuario`) VALUES ('" . utf8_encode($usuario) . "' , '" . utf8_encode($contrasena) . "', 'T');");
+    $result = mysql_query("INSERT INTO `grupo01`.`Trabajador` (`dni`, `nombre`, `apellidos`, `fechaNac`, `categoria` , `Usuario_login`) VALUES ('".utf8_encode($dni)."', '" . utf8_encode($nombre) . "' , '" . utf8_encode($apellidos) . "', '" . $fechanac . "', '" . utf8_encode($categoria) . "', '" . utf8_encode($usuario) . "');");
     echo'<script type="text/javascript">
             document.location.href="iniResponsablePersonal.php?creadoUsuario=true";
             </script>';

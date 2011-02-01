@@ -30,7 +30,7 @@ session_start();
         include_once ('../Persistencia/conexion.php');
         $conexion = new conexion();
 //        $proyecto = 5; //esta variable tiene que se de sesion
-        $proyecto = $_SESSION['proyectoEscogido'];
+        $proyecto = $_GET['idP'];
         $sql = "select fechaInicio from Proyecto where idProyecto=" . $proyecto . ";";
         $result = mysql_query($sql);
         $row = mysql_fetch_assoc($result);
@@ -48,40 +48,38 @@ session_start();
             }
             function recarga(){
 
-                var bandera = 0;
-
                 if (document.obtenerInformes.diasi.value==0){
                     alert("Elija una fecha inicial correcta")
                     document.obtenerInformes.diasi.focus()
-                    bandera = 1;
+                    return 0;
                 }
                 if (document.obtenerInformes.mesi.value==0){
                     alert("Elija una fecha inicial correcta")
                     document.obtenerInformes.mesi.focus()
-                    bandera = 1;
+                    return 0;
                 }
                 if (document.obtenerInformes.anioi.value==0){
                     alert("Elija una fecha inicial correcta")
                     document.obtenerInformes.anioi.focus()
-                   bandera = 1;
+                    return 0;
                 }
                 if (document.obtenerInformes.diasf.value==0){
                     alert("Elija una fecha final correcta")
                     document.obtenerInformes.diasf.focus()
-                    bandera = 1;
+                    return 0;
                 }
                 if (document.obtenerInformes.mesf.value==0){
                     alert("Elija una fecha final correcta")
                     document.obtenerInformes.mesf.focus()
-                    bandera = 1;
+                    return 0;
                 }
                 if (document.obtenerInformes.aniof.value==0){
                     alert("Elija una fecha final correcta")
                     document.obtenerInformes.aniof.focus()
-                    bandera = 1;
+                    return 0;
                 }
 
-               
+                document.getElementById("listarecargable").style.display="inline";
                 //alert(document.getElementById("trabajador").value);
                 // formar fecha
                 var fechaI; //coger los datos del formulario y hacer el string para cada fecha
@@ -96,35 +94,23 @@ session_start();
                 FechaValF.setTime(Date.parse(fechaF));
                 var FechaValP = new Date();
                 FechaValP.setTime(Date.parse("<?php echo $fechaInicioP; ?>"))
-                var FechaValH = new Date();
-                FechaValH.setTime(Date.parse("<?php echo date('Y-m-d'); ?>"))
                 //
                 var FvalI = FechaValI.getTime();
                 var FvalF = FechaValF.getTime();
                 var IniP = FechaValP.getTime();
-                var Hoy = FechaValH.getTime();
                 //
                 //                alert(FechaValI+" "+FechaValF);
                 //
                 if (IniP > FvalI){
                     alert("La fecha inicial no puede ser anterior a la fecha de inicio del proyecto");
                     document.obtenerInformes.diasf.focus()
-                    bandera = 1;
+                    return 0
                 }
                 if (FvalF < FvalI){
                     alert("La fecha final no puede ser anterior a la fecha inicial");
                     document.obtenerInformes.diasf.focus()
-                    bandera = 1;
+                    return 0
                 }
-                if (FvalF > Hoy){
-                    alert("La fecha final no puede ser posterior a la fecha de hoy");
-                    document.obtenerInformes.diasf.focus()
-                    bandera = 1;
-                }
-
-
-                if(bandera == 0){
-                document.getElementById("listarecargable").style.display="inline";
 
                 if (window.XMLHttpRequest){
                     xmlhttp=new XMLHttpRequest();
@@ -149,7 +135,6 @@ session_start();
                     + "&fechaI=" + fechaI
                     + "&fechaF=" + fechaF, true);
                 xmlhttp.send();
-                }
             }
         </script>
 
@@ -158,7 +143,7 @@ session_start();
     <body>
         <!--        <form name="formulario" action="" enctype="text/plain">-->
         <div id="blogtitle">
-            <div id="small">Jefe de Proyecto -(<?php echo $_SESSION['login'];?>)- Informes - Trabajadores con actividades asignadas</div>
+            <div id="small">Jefe de Proyecto - Informes - Trabajadores con actividades asignadas</div>
             <div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
         </div>
         <div id="page">
