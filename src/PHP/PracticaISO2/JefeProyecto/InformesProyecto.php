@@ -54,6 +54,7 @@ $proyecto=$_SESSION['proyectoEscogido'];
                             y añadid el enlace de esta:
                             href="../JefeProyecto/planIteracion.php" -->
                             <li><a href="#">Informes</a></li>
+                            <li><a href="../Comun/InformesProyectoFinalizado.php">Informes proyectos finalizados</a></li>
                             <li><a href="../Comun/selecVacaciones.php">Escoger vacaciones</a></li>
                         </ul>
                 </div>

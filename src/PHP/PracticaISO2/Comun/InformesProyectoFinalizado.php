@@ -4,6 +4,7 @@
 //if ($login != "T") {
 //    header("location: ../index.php");
 //}
+session_start();
 $proyecto = $_SESSION['proyectoEscogido'];
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
@@ -48,7 +49,7 @@ $proyecto = $_SESSION['proyectoEscogido'];
     <body>
         <!--        <form name="formulario" action="" enctype="text/plain">-->
         <div id="blogtitle">
-            <div id="small">Jefe de proyecto (<u><?php echo $_SESSION['login'] ?></u>) - Informes de proyectos finalizados</div>
+            <div id="small">Trabajador (<u><?php echo $_SESSION['login'] ?></u>) - Informes de proyectos finalizados</div>
             <div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
         </div>
         <div id="page">
@@ -62,14 +63,9 @@ $proyecto = $_SESSION['proyectoEscogido'];
 
                 <div align="left">
                     <ul class="BLUE">
-                        <li><a href="../Comun/selecProyecto.php">Seleccionar proyecto</a></li>
-                        <li><a href="../JefeProyecto/revisarInformesAct.php">Revisar actividades activas</a></li>
-                        <li><a href="../JefeProyecto/planIteracion.php">Planificar iteraci&oacute;n</a></li>
-                        <!--                            Quitad el enlace de la pagina en la que se esta(como aqui planificar iteracion)
-                                                    y añadid el enlace de esta:
-                                                    href="../JefeProyecto/planIteracion.php" -->
-                        <li><a href="#">Informes</a></li>
-                        <li><a href="../Comun/selecVacaciones.php">Escoger vacaciones</a></li>
+			<li><a href="selecProyecto.php">Seleccionar proyecto</a></li>
+			<li><a href="selecVacaciones.php">Escoger vacaciones</a></li>
+                        <li><a href="#">Informes proyectos finalizados</a></li>
                     </ul>
                 </div>
 

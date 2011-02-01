@@ -48,15 +48,9 @@ $proyecto=$_SESSION['proyectoFinalizado'];
 
                 <div align="left">
                     <ul class="BLUE">
-                            <li><a href="../Comun/selecProyecto.php">Seleccionar proyecto</a></li>
-                            <li><a href="../JefeProyecto/revisarInformesAct.php">Revisar actividades activas</a></li>
-                            <li><a href="../JefeProyecto/planIteracion.php">Planificar iteraci&oacute;n</a></li>
-<!--                            Quitad el enlace de la pagina en la que se esta(como aqui planificar iteracion)
-                            y añadid el enlace de esta:
-                            href="../JefeProyecto/planIteracion.php" -->
-                            <li><a href="#">Informes</a></li>
-                            <li><a href="../Comun/selecVacaciones.php">Escoger vacaciones</a></li>
-                            <li><a href="InformesProyectoFinalizado.php">Informes proyectos finalizados</a></li>
+			<li><a href="../Comun/selecProyecto.php">Seleccionar proyecto</a></li>
+			<li><a href="../Comun/selecVacaciones.php">Escoger vacaciones</a></li>
+                        <li><a href="../Comun/InformesProyectoFinalizado.php">Informes proyectos finalizados</a></li>
                         </ul>
                 </div>
 
