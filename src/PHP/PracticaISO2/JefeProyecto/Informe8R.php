@@ -51,7 +51,7 @@ if ($totAct > 0) {
                 $imprimir = $imprimir . "</table></div>";
             }
         }else{
-            $imprimir="<a href='#'>NO HAY ACTIVIDADES CON PLANIFICADAS PARA LA FECHA INTRODUCIDA</a>";
+            $imprimir="<a href='#'>No hay actividades planificadas para la fecha introducida.</a>";
         }
 
 $conexion->cerrarConexion();

@@ -56,6 +56,7 @@ $proyecto=$_SESSION['proyectoFinalizado'];
                             href="../JefeProyecto/planIteracion.php" -->
                             <li><a href="#">Informes</a></li>
                             <li><a href="../Comun/selecVacaciones.php">Escoger vacaciones</a></li>
+                            <li><a href="InformesProyectoFinalizado.php">Informes proyectos finalizados</a></li>
                         </ul>
                 </div>
 

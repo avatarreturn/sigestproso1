@@ -83,7 +83,7 @@ session_start();
                 $imprimir = $imprimir . "</table></div>";
             }
         }else{
-            $imprimir="<a href='#'>NO HAY INFORMES DE ACTIVIDAD PERNDIENTES DE APROBAR</a>";
+            $imprimir="<a href='#'>No hay informes de actividad pendientes de aprobar.</a>";
         }
 
         $conexion->cerrarConexion();

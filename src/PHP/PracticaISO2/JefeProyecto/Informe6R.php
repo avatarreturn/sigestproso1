@@ -35,7 +35,7 @@ $totAct = mysql_num_rows($result);
 $imprimir = "";
 $fecha=strtotime($fecha,0);
 if ($totAct > 0) {
-    $imprimir = $imprimir . "<table><tr><a><td><a>Actividad</td><td><a>Fecha de Inicio</a></td><td><a>&nbsp;&nbsp;Fecha de fin</a></td><td><a>&nbsp;&nbsp;Duracion estimada</a></td><td><a>&nbsp;&nbsp;Duracion real</a></td></tr>";
+    $imprimir = $imprimir . "<table><tr><td><a>Actividad</a></td><td><a>Fecha de Inicio</a></td><td><a>&nbsp;&nbsp;Fecha de fin</a></td><td><a>&nbsp;&nbsp;Duracion estimada</a></td><td><a>&nbsp;&nbsp;Duracion real</a></td></tr>";
     while ($rowAct = mysql_fetch_assoc($result)) {
         $fechaAux=strtotime($rowAct['fechaFin'],0);
         if ($rowAct['fechaFin'] == null or $fechaAux > $fecha) {
