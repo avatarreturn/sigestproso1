@@ -52,6 +52,8 @@ if ($totEmp23 == 0){// ok
     // Terminamos solo si no es la última actividad de la iteración o si, siéndolo, la siguiente está planificada
     if (($ultima == 1 && $planificado == 1) || ($ultima == 0)) {
 
+        $finProyecto = 0;
+
         // Terminar actividad actual
         $result2 = mysql_query("UPDATE Actividad SET fechaFin='"
                 .$fecha_actual
@@ -217,16 +219,18 @@ if ($totEmp23 == 0){// ok
                         ."' WHERE idProyecto="
                         .$idP);
 
+                    $finProyecto = 1;
+
                 }
 
             }
         }
-        echo 0; // ok
+        echo 0 ."[BRK]". utf8_decode($finProyecto); // ok
     } else {
-        echo 1; // error por siguiente iteración no planificada
+        echo 1 ."[BRK]". utf8_decode($finProyecto); // error por siguiente iteración no planificada
     }
 } else { // error por informes pendientes
-    echo 2;
+    echo 2 ."[BRK]". utf8_decode($finProyecto);
 }
 
 $conexion->cerrarConexion();
