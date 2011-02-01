@@ -6,6 +6,42 @@
     include_once('../Persistencia/conexion.php');
     $conexion = new conexion();
 
+    $result5 = mysql_query("SELECT nombre, descripcion FROM Proyecto"
+            ." WHERE idProyecto=".$_SESSION['proyectoEscogido']);
+    $totEmp5 = mysql_num_rows($result5);
+
+    if ($totEmp5 == 1) {
+        while ($rowEmp5 = mysql_fetch_assoc($result5)){
+            $nombreP = $rowEmp2['nombre'];
+            $descripcionP = $rowEmp2['descripcion'];
+        }
+    }
+
+    $result6 = mysql_query("SELECT a.nombre as nombre FROM Actividad a, InformeTareas i"
+            ." WHERE i.Actividad_idActividad = a.idActividad"
+            ." AND i.idInformeTareas=".$_SESSION['informeActual']);
+    $totEmp6 = mysql_num_rows($result6);
+
+    if ($totEmp6 == 1){
+        while ($rowEmp6 = mysql_fetch_assoc($result6)){
+            $nombreA = $rowEmp6['nombre'];
+        }
+    }
+    
+
+    $result7 = mysql_query("SELECT t.nombre as nombre, t.apellidos as apellidos, t.dni as dni"
+            ." FROM Trabajador t, InformeTareas i"
+            ." WHERE t.dni = i.Trabajador_dni"
+            ." AND i.idInformeTareas=".$_SESSION['informeActual']);
+    $totEmp7 = mysql_num_rows($result7);
+
+    if ($totEmp7 == 1){
+        while ($rowEmp7 = mysql_fetch_assoc($result7)){
+            $nombreT = $rowEmp7['nombre']." ".$rowEmp7['apellidos'];
+        }
+    }
+
+
     // Obtenemos el InformeTareas
     $result = mysql_query("SELECT Actividad_idActividad, Trabajador_dni, semana, estado FROM InformeTareas WHERE\n"
             . "idInformeTareas = ".$_SESSION['informeActual']); 
@@ -184,8 +220,11 @@
 
                 <h1>SIGESTPROSO</h1>
                 <br/><br/><br/>
+
+                <p><a href="#"><?php echo utf8_decode($nombreP) ?></a> - <?php echo utf8_decode($descripcionP) ?></p>
+
                 <div id="selProyecto">
-                    <h2 style="text-align: center">Revisar informe de actividad</h2>
+                    <h2 style="text-align: center; width: 570px"><i style="color:blue"><?php echo utf8_decode($nombreA) ?></i>&nbsp;&nbsp;-&nbsp;&nbsp;<?php echo utf8_decode($nombreT) ?></h2>
                     <div class="centercontentleft" style="width:auto;">
 
                         <div id="DTareas">
