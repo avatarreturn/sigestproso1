@@ -118,7 +118,7 @@ session_start();
                     <ul class="BLUE">
                             <li><a href="../Comun/selecProyecto.php">Seleccionar proyecto</a></li>
                             <li><a href="../Comun/selecVacaciones.php">Escoger vacaciones</a></li>
-                            <li><a href="#">Informes proyectos finalizados</a></li>
+                            <li><a href="../JefeProyecto/InformesProyectoF.php">Informes proyectos finalizados</a></li>
                     </ul>
                 </div>
 
@@ -157,7 +157,7 @@ session_start();
 
                                     <div class="centercontentleft">
                                         <?php
-                                        echo $imprimir;
+                                        echo utf8_decode($imprimir);
                                         ?>
                                     </div>
                                 </td>
