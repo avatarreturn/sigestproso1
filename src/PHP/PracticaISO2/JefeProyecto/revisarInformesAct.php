@@ -393,11 +393,18 @@
                         } else if (xmlhttp.readyState==4 && xmlhttp.status==200) {
                             //3- AQUI VA LA RESPUESTA, DESPUES DE Q EL SERVIDOR HAGA LO Q SEA
                             //alert(xmlhttp.responseText);  ES LA VARIABLE A LA Q VAN LOS ECHOS DE LA SERVIDOR ASOCIADA
-                            if (xmlhttp.responseText == 0){
-                                location.href = "revisarInformesAct.php?idP=" + "<?php echo $_SESSION['proyectoEscogido']?>";
-                            } else if (xmlhttp.responseText == 1){
+
+                            var data = xmlhttp.responseText.split ( "[BRK]" );
+                            if (data[0] == 0) {
+                                if (data[1] == 1) {
+                                    <?php $_SESSION['proyectoFinalizado'] = $_SESSION['proyectoEscogido'] ?>
+                                    location.href = "InformesProyectoF.php";
+                                } else {
+                                    location.href = "revisarInformesAct.php?idP=" + "<?php echo $_SESSION['proyectoEscogido']?>";
+                                }
+                            } else if (data[0] == 1){
                                 alert("No puede terminar esta actividad, pues es la \xFAltima de la iteraci\xF3n actual, hasta que no planifique la siguiente iteraci\xF3n.");
-                            } else if (xmlhttp.responseText == 2){
+                            } else if (data[0] == 2){
                                 alert("No puede terminar una actividad con informes pendientes o cancelados, debe aceptarlos primero.");
                             }
                         }

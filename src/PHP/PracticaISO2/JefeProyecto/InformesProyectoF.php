@@ -86,7 +86,7 @@ $proyecto=$_SESSION['proyectoFinalizado'];
                             <tr>
                                 <td>
                                     <div class="tituloFormulario">
-                                        <h2>Informes del proyecto</h2>
+                                        <h2>Informes del proyecto finalizado</h2>
                                     </div>
                                     <div class="infoFormulario">
 		En esta pantalla podr&aacute; escoger el tipo de informe que desea obtener

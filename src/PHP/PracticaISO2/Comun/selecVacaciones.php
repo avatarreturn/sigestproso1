@@ -207,7 +207,7 @@ function validar(){
     xmlhttp.send();
     }
     }else{
-        alert("Debe escojer un Lunes como comienzo de vacaciones")
+        alert("Debe escoger un lunes como comienzo de vacaciones")
     }
     //alert("Fecha de fin: "+FechaFin.getDate()+"-"+FechaFin.getMonth()+"-"+FechaFin.getFullYear());
 }
