@@ -49,45 +49,57 @@ session_start();
 
         $proyecto = $_GET['idP'];
 
-//////////////// nombre del proyecto y del jefe de proyecto //////////////////////
-        $sql = "SELECT p.nombre proyecto, p.descripcion, t.nombre, t.apellidos
+//////////////// nombre del proyecto y del jefe de proyecto, fecha de inicio y fecha de fin //////////////////////
+        $sql = "SELECT p.nombre proyecto, p.descripcion, p.fechaInicio, p.fechaFin, t.nombre, t.apellidos
                 FROM Trabajador t, Proyecto p
                 WHERE (t.dni = p.jefeProyecto)
                     AND (p.idProyecto=".$proyecto.");";
         $result = mysql_query($sql);
+        $rowProy=mysql_fetch_assoc($result);
 
 /////////////////// nombre apellidos y dni de los trabajadores ///////////////////
-        $sql2 = "SELECT p.nombre proyecto, p.descripcion, t.nombre, t.apellidos
-                FROM Trabajador t, Proyecto p
-                WHERE (t.dni = p.jefeProyecto)
-                    AND (p.idProyecto=".$proyecto.");";
-        $result = mysql_query($sql);
+        $sql2 = "SELECT t.dni, t.nombre, t.apellidos
+                FROM Trabajador t, TrabajadorProyecto tp
+                WHERE (t.dni = tp.Trabajador_dni)
+                    AND (tp.Proyecto_idProyecto=".$proyecto.");";
+        $result2 = mysql_query($sql2);
+
+///////////
 
 
-
-
-        $totAct = mysql_num_rows($result);
-        $imprimir = "";
-        if ($totAct > 0) {
-            $imprimir = "<table>";
-            $imprimir = $imprimir . "<tr><td><a>Actividad&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td><td><a>Estado</a></td><tr>";
-            while ($rowAct = mysql_fetch_assoc($result)) {
-                if ($rowAct['duracionEstimada'] < $rowAct['horas']) {
-                    if ($rowAct['fechaFin'] != null) {
-                        $imprimir = $imprimir . "<tr><td>" . $rowAct['actividad'] . "</td><td>Finalizada</td><tr>";
-                    } else {
-                        $imprimir = $imprimir . "<tr><td>" . $rowAct['actividad'] . "</td><td>Activa</td><tr>";
-                    }
-                }
-            }            
-            if ($imprimir == "<table><tr><td><a>Actividad&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td><td><a>Estado</a></td><tr>") {
-                $imprimir = "<a>No existen actividades con consumo de tiempo superior al estimado</a>";
-            }else{
-                $imprimir = $imprimir . "</table>";
-            }
-        }else{
-            $imprimr="<a href='#'>NO EXISTEN ACTIVIDADES CON MAYOR CONSUMO DE TIEMPO DEL PLANIFICADO</a>";
+        $imprimir = "<div class=\"centercontentleft\"><table><tr><td><a>Nombre: </a>".$rowProy['proyecto']."<a>&nbsp;&nbsp;&nbsp;&nbsp;Descripcion:</a> ". $rowProy['descripcion']."</td></tr>"
+                    ."<tr><td><a>Jefe de proyecto: </a>".$rowProy['nombre']." ".$rowProy['apellidos']."</td></tr>"
+                    ."<tr><td><a>Fecha de inicio: </a>".$rowProy['fechaInicio']."&nbsp;&nbsp;&nbsp;&nbsp;<a>Fecha de fin: </a>".$rowProy['fechaFin']."</td></tr>";
+        $imprimir = $imprimir . "<tr><td><a>Trabajadores que participaron en el proyecto:</a></td></tr>";
+        while ($rowTra=  mysql_fetch_assoc($result2)){
+            $imprimir = $imprimir . "<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;".$rowTra['nombre']." ".$rowTra['apellidos']." (".$rowTra['dni'].")</td></tr>";
         }
+        $imprimir=$imprimir."</table></div>";
+
+
+
+//        $totAct = mysql_num_rows($result);
+//        $imprimir = "";
+//        if ($totAct > 0) {
+//            $imprimir = "<table>";
+//            $imprimir = $imprimir . "<tr><td><a>Actividad&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td><td><a>Estado</a></td><tr>";
+//            while ($rowAct = mysql_fetch_assoc($result)) {
+//                if ($rowAct['duracionEstimada'] < $rowAct['horas']) {
+//                    if ($rowAct['fechaFin'] != null) {
+//                        $imprimir = $imprimir . "<tr><td>" . $rowAct['actividad'] . "</td><td>Finalizada</td><tr>";
+//                    } else {
+//                        $imprimir = $imprimir . "<tr><td>" . $rowAct['actividad'] . "</td><td>Activa</td><tr>";
+//                    }
+//                }
+//            }
+//            if ($imprimir == "<table><tr><td><a>Actividad&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td><td><a>Estado</a></td><tr>") {
+//                $imprimir = "<a>No existen actividades con consumo de tiempo superior al estimado</a>";
+//            }else{
+//                $imprimir = $imprimir . "</table>";
+//            }
+//        }else{
+//            $imprimr="<a href='#'>NO EXISTEN ACTIVIDADES CON MAYOR CONSUMO DE TIEMPO DEL PLANIFICADO</a>";
+//        }
 
 
         $conexion->cerrarConexion();
@@ -109,7 +121,8 @@ session_start();
     <body>
         <!--        <form name="formulario" action="" enctype="text/plain">-->
         <div id="blogtitle">
-            <div id="small">Jefe de proyecto (<u><?php echo $_SESSION['login'] ?></u>) - Informes - Actividades con retraso</div>
+
+            <div id="small">Resumen proyecto finalizado -(<?php echo $_SESSION['login'];?>)- </div>
             <div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
         </div>
         <div id="page">
@@ -164,12 +177,12 @@ session_start();
                                         <h2>Informes del proyecto</h2>
                                     </div>
                                     <div class="infoFormulario">
-		Relaci&oacute;n de actividades que han consumido o est&aacute;n consumiendo m&aacute;s tiempo del planificado.
+		Principales datos del proyecto finalizado.
                                     </div>
 
-                                    <div class="centercontentleft">
+                                    <div>
                                         <?php
-                                        echo $imprimir;
+                                        echo utf8_decode($imprimir);
                                         ?>
                                     </div>
                                 </td>
