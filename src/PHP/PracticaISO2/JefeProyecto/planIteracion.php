@@ -382,6 +382,10 @@ if ($PrimIter == 1) {
                             draggable: false,
                             resizable: false,
                             zIndex: 500,
+                            beforeClose: function() {
+                                $("#the_lights").fadeTo("slow",0);
+                                document.getElementById("the_lights").style.display="none";
+                            },
                             width: 455
                         });
                     });
