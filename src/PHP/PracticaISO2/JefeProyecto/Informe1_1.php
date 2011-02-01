@@ -205,7 +205,7 @@ session_start();
                                         <table>
                                             <tr>
                                                 <td>
-                                                    <label>Desede el d&iacute;a:</label>
+                                                    <label>Desde el d&iacute;a:</label>
                                                 </td>
                                                 <td>
                                                     <div>

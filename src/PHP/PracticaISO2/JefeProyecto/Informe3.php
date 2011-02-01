@@ -199,7 +199,7 @@ session_start();
 
 <!--                                    <div class="centercontentleft" style="display: none">-->
 <?php
-        echo $imprimir;
+        echo utf8_decode($imprimir);
 ?>
 <!--                                    </div>-->
                                 </td>

@@ -72,7 +72,7 @@ session_start();
                         $imprimir = $imprimir . "</table></div>";
                     }
                     $imprimir = $imprimir . "<a href='#' onclick=\"ocultarR('oculto" . $rowInf['dni'] . "')\"><img src= '../images/iJefeProyecto.gif' alt='#' border='0' style='width: auto; height: 12px;'/>&nbsp;&nbsp;" . $rowInf['nombre'] . " " . $rowInf['apellidos'] . "</img></a>" .
-                            "<br/><div id='oculto" . $rowInf['dni'] . "' style=\"display:none\"><table class=\"tablaVariable\"><tr><td><img src='../images/iProyecto.png' alt='Actividad' border='0' style='width: auto; height: 12px;'>&nbsp;&nbsp;&nbsp;&nbsp;Actividad: " . $rowInf['actividad'] . "</img></td><td>Semana: " . $rowInf['semana'] . "</td><td><a  onclick=\"verInfTar(". $rowInf['idInformeTareas'].")\">Ver aqu&iacute;</a></td></tr>";
+                            "<br/><div id='oculto" . $rowInf['dni'] . "' style=\"display:inline\"><table class=\"tablaVariable\"><tr><td><img src='../images/iProyecto.png' alt='Actividad' border='0' style='width: auto; height: 12px;'>&nbsp;&nbsp;&nbsp;&nbsp;Actividad: " . $rowInf['actividad'] . "</img></td><td>Semana: " . $rowInf['semana'] . "</td><td><a  onclick=\"verInfTar(". $rowInf['idInformeTareas'].")\">Ver aqu&iacute;</a></td></tr>";
                     $dniAnterior = $rowInf['dni'];
                 } else {
                     $imprimir = $imprimir . "<tr><td><img src='../images/iProyecto.png' alt='Actividad' border='0' style='width: auto; height: 12px;'>&nbsp;&nbsp;&nbsp;&nbsp;Actividad: " . $rowInf['actividad'] . "</td><td>Semana: " . $rowInf['semana'] . "</td><td><a  onclick=\"verInfTar(". $rowInf['idInformeTareas'].")\">Ver aqu&iacute;</a></td></tr>";
@@ -168,7 +168,7 @@ session_start();
 
                                     <div class="centercontentleft">
                                         <?php
-                                        echo $imprimir;
+                                        echo utf8_decode($imprimir);
                                         ?>
                                     </div>
                                 </td>
