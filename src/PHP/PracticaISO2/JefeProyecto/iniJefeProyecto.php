@@ -95,7 +95,7 @@
 <!-- start top menu and blog title-->
 
 <div id="blogtitle">
-    <div id="small">Jefe de Proyecto -  Asignaci&oacute;n de personal</div>
+    <div id="small">Jefe de proyecto (<u><?php echo $_SESSION['login'] ?></u>) - Asignar personal</div>
 		<div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
 </div>
 
@@ -145,7 +145,7 @@
             <b>Jefe de proyecto:</b><br/>
             &nbsp;&nbsp; <i><?php echo utf8_decode($_SESSION['nombre'] ." ". $_SESSION['apellidos'])?></i><br/>
             <span id="listadoPer" style="display:none"><b>Trabajadores asignados:</b></span>
-            <span ><br/><br/><small>*Si durante el proceso de definici&oacute;n del proyecto, introduce alg&uacute;n dato erroneo, cierre sesi&oacute;n y vuelva a empezar.</small></span>
+            <span ><br/><br/><small>*Si durante el proceso de definici&oacute;n del proyecto, introduce alg&uacute;n dato err&oacute;neo, cierre sesi&oacute;n y vuelva a empezar.</small></span>
             <br/>
         </div>
         <p>Seleccione el personal deseado para el proyecto</p>
@@ -153,6 +153,13 @@
         <?php
         $result2 = mysql_query(
                 "SELECT nombre, dni, apellidos FROM Trabajador WHERE\n"
+                //---
+
+                . "dni not in \n"
+                . "(SELECT Trabajador_dni FROM Proyecto p, TrabajadorProyecto t WHERE\n"
+                . "t.Trabajador_dni in (SELECT jefeProyecto FROM Proyecto WHERE fechaFin is NULL))\n"
+                                . "and \n"
+                //-----
                 . "dni in\n"
                 . "(SELECT Trabajador_dni FROM TrabajadorProyecto\n"
                 . "GROUP BY Trabajador_dni\n"

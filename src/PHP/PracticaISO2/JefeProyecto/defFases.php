@@ -31,11 +31,11 @@
 <script src="../Utiles/jquery-ui.min.js"></script>
 <script src="../Utiles/jquery.ui.datepicker-es.js"></script>
 <style type="text/css">
-#datepicker1I .ui-datepicker  {
+/*#datepicker1I .ui-datepicker  {
     background: #B0DFA4;
     border: 1px solid #555;
     color: #EEE;
-}
+}*/
 </style>
 <link rel="stylesheet" type="text/css" href="../stylesheet.css" media="screen, projection, tv " />
 <script type="TEXT/JAVASCRIPT">
@@ -212,7 +212,7 @@ function Anadir2(){
 <!-- start top menu and blog title-->
 
 <div id="blogtitle">
-    <div id="small">Jefe de Proyecto - Definici&oacute;n de fases</div>
+    <div id="small">Jefe de proyecto (<u><?php echo $_SESSION['login'] ?></u>) - Definici&oacute;n de fases</div>
 		<div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
 </div>
 <div id="page">
@@ -258,7 +258,7 @@ function Anadir2(){
             <div style="margin-left:290px;"><h3>Condiciones:</h3>
             <p><img src= "../images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;Todas las fases deben empezar en <b>Lunes</b></p>
             <p><img src= "../images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;Las fases deben seguir un orden cronol&oacute;gico<br/>&nbsp;&nbsp;&nbsp;&nbsp; (Inicio->Elaboraci&oacute;n->Construcci&oacute;n->Transici&oacute;n)</p>
-            <p><img src= "../images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;La fecha de inicio de la fase de Incio, se considerar&aacute; la fecha de inicio del proyecto</p>
+            <p><img src= "../images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;La fecha de inicio de la fase de Inicio, se considerar&aacute; la fecha de inicio del proyecto</p>
             <p><img src= "../images/LICondiciones.jpg" alt="#" border="0" style="width: auto; height: 12px;"/>&nbsp;&nbsp;La fecha de fin de una fase ser&aacute; el d&iacute;a anterior a la fecha de inicio de la fase siguiente</p>
            </div>
             </div>

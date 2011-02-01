@@ -14,6 +14,13 @@ include_once('../Persistencia/conexion.php');
                     . $rol ."')");
          $result2 = mysql_query(
                 "SELECT nombre, dni, apellidos FROM Trabajador WHERE\n"
+                  //---
+
+                . "dni not in \n"
+                . "(SELECT Trabajador_dni FROM Proyecto p, TrabajadorProyecto t WHERE\n"
+                . "t.Trabajador_dni in (SELECT jefeProyecto FROM Proyecto WHERE fechaFin is NULL))\n"
+                                . "and \n"
+                //-----
                 . "dni in\n"
                 . "(SELECT Trabajador_dni FROM TrabajadorProyecto\n"
                 . "GROUP BY Trabajador_dni\n"

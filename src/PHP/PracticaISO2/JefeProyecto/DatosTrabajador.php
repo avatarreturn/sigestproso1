@@ -23,8 +23,24 @@ include_once('../Persistencia/conexion.php');
             }
         }
         $rol = $rol ."</select>";
+        //-- miramos si ya es jefe de proyecto
 
-        // Calculamos participacion
+         $result2 = mysql_query(
+                "SELECT jefeProyecto FROM Proyecto WHERE\n"
+                . "jefeProyecto = \"".$dniInsertar ."\"\n"
+                . "AND\n"
+                . "fechaFin is NULL"
+                );
+
+        $totEmp2 = mysql_num_rows($result2);
+
+        if ($totEmp2 >0) { // si k es jefe de proyecto
+            $rol = $rol . "<br/><br/><p>Participaci&oacute;n <input type='text' id='porcentaje' size='3' maxlength='3'> m&aacute;ximo(40%)</p>";
+}
+        else{
+
+
+        // Calculamos participacion estandar
         $result1 = mysql_query(
                 "SELECT SUM(porcentaje) as \"porc\" FROM TrabajadorProyecto WHERE\n"
                 . "Trabajador_dni = \"".$dniInsertar ."\"\n"
@@ -37,7 +53,7 @@ include_once('../Persistencia/conexion.php');
         $totEmp1 = mysql_num_rows($result1);
 
         if ($totEmp1 ==1) {
-            $rol = $rol . "<br/><br/><p>Participaci&oacute;n <input type='text' id='porcentaje' size='3' maxlength='3'> MAX(";
+            $rol = $rol . "<br/><br/><p>Participaci&oacute;n <input type='text' id='porcentaje' size='3' maxlength='3'> m&aacute;ximo(";
             while ($rowEmp1 = mysql_fetch_assoc($result1)) {
                 if($rowEmp1['porc']== "NULL"){
                     $porc= "100";
@@ -45,7 +61,7 @@ include_once('../Persistencia/conexion.php');
                 $rol = $rol . $porc."%)</p>";
             }
         }
-
+        }
         
         
         $rol = $rol ."<br/><center><input type='button' value='A&ntilde;adir' onclick=\"Anadir(".$porc.")\"></center>";

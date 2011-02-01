@@ -219,7 +219,7 @@ function validar(){
 <!-- start top menu and blog title-->
 
 <div id="blogtitle">
-		<div id="small">Vacaciones</div>
+    <div id="small">Trabajador (<u><?php echo $_SESSION['login'] ?></u>) - Seleccionar vacaciones</div>
 		<div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
 </div>
 <!--		<div id="topmenu">

@@ -32,6 +32,39 @@ if ($login != "T") {
         $dniLogueado = $_SESSION['dni'];
         include_once('../Persistencia/conexion.php');
         $conexion = new conexion();
+
+        //prueba de borrar
+        $result = mysql_query("SELECT nombre, descripcion, jefeProyecto, idProyecto, fechaInicio FROM Proyecto WHERE\n"
+    . "(jefeProyecto = \"".$dniLogueado."\" or idProyecto in \n"
+    . "(SELECT Proyecto_idProyecto FROM TrabajadorProyecto WHERE \n"
+    . "Trabajador_dni = \"".$dniLogueado."\")) and fechaFin is NULL");
+        $totEmp = mysql_num_rows($result);
+        $noProyectos= "";
+        if ($totEmp >0) {
+            $desarrProy = "";
+            $jefeProy = "";
+            $cont = 0;
+            while ($rowEmp = mysql_fetch_assoc($result)) {
+                // comprobacion de robustez si fechaI = Null & tiene trabajadores, se borran
+                if($rowEmp['fechaInicio'] == ""){
+                        // Lista de trabajadores en dicho proyecto
+                        $result5 = mysql_query("SELECT Trabajador_dni FROM TrabajadorProyecto WHERE\n"
+                        . "Proyecto_idProyecto = \"".$rowEmp['idProyecto']."\"");
+
+                        $totEmp5 = mysql_num_rows($result5);
+
+                        if ($totEmp5 >0) {
+                        for ($i = 1; $i <= $totEmp5; $i++) {
+                        $result6 = mysql_query("DELETE FROM TrabajadorProyecto WHERE Proyecto_idProyecto = \"".$rowEmp['idProyecto']."\"");
+                        }
+                        }
+
+                }
+            }
+        }
+
+
+
         // Lista de proyectos
         $result = mysql_query("SELECT nombre, descripcion, jefeProyecto, idProyecto, fechaInicio FROM Proyecto WHERE\n"
     . "(jefeProyecto = \"".$dniLogueado."\" or idProyecto in \n"
@@ -57,6 +90,8 @@ if ($login != "T") {
                         $result6 = mysql_query("DELETE FROM TrabajadorProyecto WHERE Proyecto_idProyecto = \"".$rowEmp['idProyecto']."\"");
                         }
                         }
+
+
                 }
 
                 if($rowEmp['jefeProyecto'] == $dniLogueado){
@@ -76,12 +111,14 @@ if ($login != "T") {
                     $cont = $cont+1;
                     $desarrProy = $desarrProy ."&nbsp;&nbsp;<a href=\"#\" onclick=\"ocultarR('oculto".$cont."')\"><img src= '../images/iProyecto.png' alt='#' border='0'"
                     . "style='width: auto; height: 12px;'/>&nbsp;&nbsp;".$rowEmp['nombre']."</a> - ".$rowEmp['descripcion']."<br/>"
-                    . "<div id=\"oculto". $cont. "\" style=\"display:none\">";
+                    . "<div id=\"oculto". $cont. "\" style=\"display:inline\">";
 
                     $sql = "SELECT nombre, idActividad FROM Actividad WHERE\n"
                     . "fechaFin is NULL\n"
                     . "AND\n"
                     . "fechaInicio is NOT NULL\n"
+                    . "AND\n"
+                    . "DATE(fechaInicio) <= CURDATE() \n"
                     . "AND\n"
                     . "idActividad in \n"
                     . "(SELECT Actividad_idActividad FROM TrabajadorActividad WHERE\n"
@@ -107,6 +144,9 @@ if ($login != "T") {
                         . "</a><br/>";
 
                     }
+                     }else{
+                          $desarrProy = $desarrProy
+                        . "&nbsp;&nbsp;&nbsp;&nbsp;No tiene asignadas tareas activas actualmente<br/>";
                      }
                      $desarrProy = $desarrProy . "</div>";
                 }
@@ -134,7 +174,7 @@ function ocultarR(x){
 <!-- start top menu and blog title-->
 
 <div id="blogtitle">
-    <div id="small">Selecci&oacute;n de proyecto</div>
+    <div id="small">Trabajador (<u><?php echo $_SESSION['login'] ?></u>) - Seleccionar proyecto</div>
 		<div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
 </div>
 <!--

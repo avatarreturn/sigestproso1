@@ -315,7 +315,7 @@ if ($numeroIAct == $iteracionMax && $nombreFAct == "Transicion") {
                             document.getElementById("TrabAct").style.display="inline";
                             document.getElementById("predecesoras").style.display="table";
                             document.getElementById("botonAnadir").innerHTML =
-                                "<br/><p>Pulse <b>A&ntilde;adir</b> para a&ntilde;adir la actividad a la iteraci&oacute;n &nbsp;&nbsp;<input style='margin-left:20px;' type='button' value='A&ntilde;adir' onclick=\"anadir('" +
+                                "<br/>Si desea a&ntilde;adir la actividad a la iteraci&oacute;n &nbsp;&nbsp;<input style='margin-left:20px;' type='button' value='A&ntilde;adir' onclick=\"anadir('" +
                                 "<?php
 if ($PrimIter == 1) {
     echo $idIAct;
@@ -341,7 +341,7 @@ if ($PrimIter == 1) {
 }
 ?>"
                                         + "')\"/>" +
-                                        "<br/>Pulse <b>Terminar</b> para terminar de definir las actividades de la iteraci&oacute;n &nbsp;&nbsp;<input style='margin-left:20px; ' id='terminar' type='button' value='Terminar' onclick=\"javascript:location.href = 'planIteracion.php'\"/></p>";
+                                        "<br/>Si desea terminar de planificar la iteraci&oacute;n &nbsp;&nbsp;<input style='margin-left:20px; ' id='terminar' type='button' value='Terminar' onclick=\"javascript:location.href = 'planIteracion.php'\"/></p>";
 
 
                                 }
@@ -432,7 +432,7 @@ if ($PrimIter == 1) {
                             {
                                 //            alert(xmlhttp.responseText);
                                 document.getElementById("botonAnadir").innerHTML =
-                                    "<br/><p>Pulse <b>A&ntilde;adir</b> para a&ntilde;adir la actividad a la iteraci&oacute;n &nbsp;&nbsp;<input style='margin-left:20px;' type='button' value='A&ntilde;adir' onclick=\"anadir('" +
+                                    "<br/>Si desea a&ntilde;adir la actividad a la iteraci&oacute;n &nbsp;&nbsp;<input style='margin-left:20px;' type='button' value='A&ntilde;adir' onclick=\"anadir('" +
                                     "<?php
 if ($PrimIter == 1) {
     echo $idIAct;
@@ -458,7 +458,7 @@ if ($PrimIter == 1) {
 }
 ?>"
                                     + "')\"/>" +
-                                    "<br/>Pulse <b>Terminar</b> para terminar de definir las actividades de la iteraci&oacute;n &nbsp;&nbsp;<input style='margin-left:20px; ' id='terminar' type='button' value='Terminar' onclick=\"javascript:location.href = 'planIteracion.php'\"/></p>";
+                                    "<br/>Si desea terminar de planificar la iteraci&oacute;n &nbsp;&nbsp;<input style='margin-left:20px; ' id='terminar' type='button' value='Terminar' onclick=\"javascript:location.href = 'planIteracion.php'\"/></p>";
                                 var data = xmlhttp.responseText.split ( "[BRK]" );
                                 disabledDays = eval(data[0]);
                                 document.getElementById("nomVacas").innerHTML = data[1];
@@ -539,7 +539,7 @@ if ($PrimIter == 1) {
             <!-- start top menu and blog title-->
 
             <div id="blogtitle">
-                <div id="small">Jefe de Proyecto - Planificaci&oacute;n de iteraciones</div>
+    <div id="small">Jefe de proyecto (<u><?php echo $_SESSION['login'] ?></u>) - Planificar iteraci&oacute;n</div>
                 <div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
             </div>
 
@@ -620,8 +620,8 @@ if ($PrimIter == 1) {
                             echo "<br/><div id='TrabAct' style='display:none'></div>";
                             echo "<br><span id='predecesoras' sytle='display:none; border: solid black;'></span>";
                             echo "<div id='botonAnadir'>";
-                            echo "<br/><p>Pulse <b>A&ntilde;adir</b> para a&ntilde;adir la actividad a la iteraci&oacute;n &nbsp;&nbsp;<input style='margin-left:20px;' type='button' value='A&ntilde;adir' onclick=\"anadir('" . $idIAct . "')\"/>";
-                            echo "<br/>Pulse <b>Terminar</b> para terminar de definir las actividades de la iteraci&oacute;n &nbsp;&nbsp;<input style='margin-left:20px;' id='terminar' type='button' value='Terminar' onclick=\"javascript:location.href = 'planIteracion.php'\"/></p>";
+                            echo "<br/>Si desea a&ntilde;adir la actividad a la iteraci&oacute;n &nbsp;&nbsp;<input style='margin-left:20px;' type='button' value='A&ntilde;adir' onclick=\"anadir('" . $idIAct . "')\"/>";
+                            echo "<br/>Si desea terminar de planificar la iteraci&oacute;n &nbsp;&nbsp;<input style='margin-left:20px;' id='terminar' type='button' value='Terminar' onclick=\"javascript:location.href = 'planIteracion.php'\"/></p>";
                             echo "</div>";
                         } else {
                             if ($numeroIAct < $iteracionMax && faseCero == 0) {
@@ -640,8 +640,8 @@ if ($PrimIter == 1) {
                                     echo "<br/><div id='TrabAct' style='display:none'></div>";
                                     echo "<br><span id='predecesoras' sytle='display:none; border: solid black;'></span>";
                                     echo "<div id='botonAnadir'>";
-                                    echo "<br/><p>Pulse <b>A&ntilde;adir</b> para a&ntilde;adir la actividad a la iteraci&oacute;n &nbsp;&nbsp;<input style='margin-left:20px;' type='button' value='A&ntilde;adir' onclick=\"anadir('-1')\"/>";
-                                    echo "<br/>Pulse <b>Terminar</b> para terminar de definir las actividades de la iteraci&oacute;n &nbsp;&nbsp;<input style='margin-left:20px;'  id='terminar' type='button' value='Terminar' onclick=\"javascript:location.href = 'planIteracion.php'\"/></p>";
+                                    echo "<br/>Si desea a&ntilde;adir la actividad a la iteraci&oacute;n &nbsp;&nbsp;<input style='margin-left:20px;' type='button' value='A&ntilde;adir' onclick=\"anadir('-1')\"/>";
+                                    echo "<br/>Si desea terminar de planificar la iteraci&oacute;n &nbsp;&nbsp;<input style='margin-left:20px;'  id='terminar' type='button' value='Terminar' onclick=\"javascript:location.href = 'planIteracion.php'\"/></p>";
                                     echo "</div>";
                     ?>
 
@@ -670,8 +670,8 @@ if ($PrimIter == 1) {
                                         echo "<br/><div id='TrabAct' style='display:none'></div>";
                                         echo "<br><span id='predecesoras' sytle='display:none; border: solid black;'></span>";
                                         echo "<div id='botonAnadir'>";
-                                        echo "<br/><p>Pulse <b>A&ntilde;adir</b> para a&ntilde;adir la actividad a la iteraci&oacute;n &nbsp;&nbsp;<input style='margin-left:20px;' type='button' value='A&ntilde;adir' onclick=\"anadir('" . $idIFNext . "')\"/>";
-                                        echo "<br/>Pulse <b>Terminar</b> para terminar de definir las actividades de la iteraci&oacute;n &nbsp;&nbsp;<input style='margin-left:20px; '  id='terminar' type='button' value='Terminar' onclick=\"javascript:location.href = 'planIteracion.php'\"/></p>";
+                                        echo "<br/>Si desea a&ntilde;adir la actividad a la iteraci&oacute;n &nbsp;&nbsp;<input style='margin-left:20px;' type='button' value='A&ntilde;adir' onclick=\"anadir('" . $idIFNext . "')\"/>";
+                                        echo "<br/>Si desea terminar de planificar la iteraci&oacute;n &nbsp;&nbsp;<input style='margin-left:20px; '  id='terminar' type='button' value='Terminar' onclick=\"javascript:location.href = 'planIteracion.php'\"/></p>";
                                         echo "</div>";
                                     }
                                 }

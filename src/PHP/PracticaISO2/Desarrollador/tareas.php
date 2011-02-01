@@ -313,7 +313,7 @@ function cambio(x){
 <!-- start top menu and blog title-->
 
 <div id="blogtitle">
-		<div id="small">Desarrollador - Tareas</div>
+    <div id="small">Desarrollador (<u><?php echo $_SESSION['login'] ?></u>) - Informes de tareas</div>
 		<div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
 </div>
 <div id="page">
