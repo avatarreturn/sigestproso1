@@ -1,5 +1,5 @@
 <?php
-//session_start();
+session_start();
 //$login = $_SESSION['tipoUsuario'];
 //if ($login != "T") {
 //    header("location: ../index.php");

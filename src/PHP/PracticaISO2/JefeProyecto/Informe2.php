@@ -182,6 +182,7 @@ session_start();
                                                     y añadid el enlace de esta:
                                                     href="../JefeProyecto/planIteracion.php" -->
                         <li><a href="../JefeProyecto/InformesProyecto.php">Informes</a></li>
+                        <li><a href="../Comun/InformesProyectoFinalizado.php">Informes proyectos finalizados</a></li>
                         <li><a href="../Comun/selecVacaciones.php">Escoger vacaciones</a></li>
                     </ul>
                 </div>
