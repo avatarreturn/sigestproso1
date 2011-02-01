@@ -76,20 +76,26 @@
                     . "<div id=\"oculto". $cont. "\" style=\"display:inline\">";
 
                  // Artefacto de cada actividad anterior
-                 $result2 = mysql_query("SELECT nombre FROM Artefacto WHERE \n"
+                 $result2 = mysql_query("SELECT nombre, url FROM Artefacto WHERE \n"
                          . "Actividad_idActividad = "
                          . $rowEmp['idActividad']);
                  $totEmp2 = mysql_num_rows($result2);
 
                  // Si ya hay artefacto se añade al listado y se pone artefacto a 1
                  if ($totEmp2 == 1) {
-                     $artefacto = 1;
+                     // $artefacto = 1;
                      while ($rowEmp2 = mysql_fetch_assoc($result2)) {
-                         $listado = $listado
-                        . "&nbsp;&nbsp;&nbsp;&nbsp;<a href='verArtefacto.php?idAct=".$rowEmp['idActividad']."&idP=".$_SESSION['proyectoEscogido']."'>&nbsp;&nbsp;&nbsp;&nbsp;<img src= '../images/recurso.gif' alt='Artefacto' border='0'"
-                        . "style='width: auto; height: 12px;'/>"
-                        . "&nbsp;&nbsp;&nbsp;Artefacto:&nbsp;&nbsp;".$rowEmp2['nombre']
-                        . "</a>&nbsp;&nbsp;&nbsp;&nbsp;[Esfuerzo estimado: ".$esfuerzoE." horas hombre]<br/>";
+                         $url = $rowEmp2['url'];
+                         if ($url == ''){
+                             $artefacto = 0;
+                         } else {
+                             $artefacto = 1;
+                             $listado = $listado
+                            . "&nbsp;&nbsp;&nbsp;&nbsp;<a href='verArtefacto.php?idAct=".$rowEmp['idActividad']."&idP=".$_SESSION['proyectoEscogido']."'>&nbsp;&nbsp;&nbsp;&nbsp;<img src= '../images/recurso.gif' alt='Artefacto' border='0'"
+                            . "style='width: auto; height: 12px;'/>"
+                            . "&nbsp;&nbsp;&nbsp;Artefacto:&nbsp;&nbsp;".$rowEmp2['nombre']
+                            . "</a>&nbsp;&nbsp;&nbsp;&nbsp;[Esfuerzo estimado: ".$esfuerzoE." horas hombre]<br/>";
+                         }
                      }
                 } else {
                     $artefacto = 0;
