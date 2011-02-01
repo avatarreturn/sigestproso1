@@ -42,9 +42,10 @@
 
          // Lista de actividades activas del proyecto actual
 	 $result = mysql_query("SELECT a.nombre as nombre, a.idActividad as idActividad, a.duracionEstimada as duracionEstimada, i.idIteracion as idIteracion, i.numero as numIteracion, f.idFase as idFase"
-                ." FROM Actividad a, Iteracion i, Fase f WHERE\n"
-                . "a.fechaFin is NULL"
+                ." FROM Actividad a, Iteracion i, Fase f WHERE"
+                . " a.fechaFin is NULL"
                 . " AND a.fechaInicio is NOT NULL"
+                . " AND a.fechaInicio <= (select curdate())"
                 . " AND a.Iteracion_IdIteracion=i.idIteracion"
                 . " AND i.Fase_idFase=f.idFase"
                 . " AND f.Proyecto_idProyecto=".$_SESSION['proyectoEscogido']);
@@ -178,7 +179,7 @@
                                        ."o igual a la estimaci&oacute;n de esfuerzo inicial. <br/>";
                     if ($artefacto == 1) {
                         $mensajeterminar = $mensajeterminar."El artefacto correspondiente ha sido depositado. <br/>"
-                        . "<br/><center><input type='button' id='bTerminar' value='Terminar' name='Terminar' alt='Terminar la actividad' onclick='terminar("
+                        . "<br/><center><input type='button' id='bTerminar' value='Terminar' name='Terminar' alt='Terminar la actividad' onclick='confirmar("
                         . $rowEmp['idActividad'].")'/></center>";
                     } else {
                         $mensajeterminar = $mensajeterminar."El artefacto correspondiente no ha sido depositado a&uacute;n.";
@@ -343,6 +344,12 @@
                    }
                 }
 
+                function confirmar(x){
+                    if (confirm("\xBFEst\xE1 seguro de que desea finalizar la actividad?")){
+                        terminar(x);
+                    }
+                }
+
                 // Termina la actividad con idActividad=x
                 function terminar(x){
 
@@ -361,7 +368,7 @@
                             if (xmlhttp.responseText == 0){
                                 location.href = "revisarInformesAct.php?idP=" + "<?php echo $_SESSION['proyectoEscogido']?>";
                             } else if (xmlhttp.responseText == 1){
-                                alert("No puede terminar esta actividad, pues es la ultima de la iteracion actual, hasta que no planifique la siguiente iteracion.");
+                                alert("No puede terminar esta actividad, pues es la \xF9ltima de la iteraci\xF3on actual, hasta que no planifique la siguiente iteraci\xF3n.");
                             } else if (xmlhttp.responseText == 2){
                                 alert("No puede terminar una actividad con informes pendientes o cancelados, debe aceptarlos primero.");
                             }
