@@ -19,8 +19,8 @@
 
         <div id="sitewrapper">
             <br/><br/><br/><br/>
-            <img id="sign-in" name="boton_login" src="images/sigestproso.jpg" alt="Sigestproso"/>
-            <br/><br/><br/><br/>
+            <img id="sign-in" name="boton_login" src="images/sigestproso.gif" alt="Sigestproso"/>
+            <br/>
             <div id="content">
                 <div id="main">
                     <h1>Iniciar sesi&oacute;n</h1>
