@@ -178,8 +178,8 @@ function Anadir2(){
         ){
             alert("Revise el orden cronologico de las fechas escogidas")
         }else if(document.getElementById("nIteraciones").value == ""
-            ||document.getElementById("nIteraciones").value < 0){
-            alert("Introduzca un numero correcto de iteraciones para la fase de inicio")
+            ||document.getElementById("nIteraciones").value < 1){
+            alert("Introduzca un numero correcto de iteraciones para la fase de inicio, minimo 1")
         }
         else{
          if (window.XMLHttpRequest){
