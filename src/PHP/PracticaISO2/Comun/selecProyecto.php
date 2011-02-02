@@ -200,9 +200,9 @@ function ocultarR(x){
 
 	<div align="left">
 		<ul class="BLUE">
-			<li><a href="selecProyecto.php">Seleccionar proyecto</a></li>
-			<li><a href="selecVacaciones.php">Escoger vacaciones</a></li>
-                        <li><a href="InformesProyectoFinalizado.php">Informes proyectos finalizados</a></li>
+                    <li><a href="selecProyecto.php">Seleccionar proyecto</a></li>
+                    <li><a href="selecVacaciones.php">Escoger vacaciones</a></li>
+                    <li><a href="InformesProyectoFinalizado.php">Informes proyectos finalizados</a></li>
 		</ul>
 	</div>
 
