@@ -122,7 +122,7 @@ session_start();
         <!--        <form name="formulario" action="" enctype="text/plain">-->
         <div id="blogtitle">
 
-            <div id="small">Resumen proyecto finalizado -(<?php echo $_SESSION['login'];?>)- </div>
+            <div id="small">Desarrollador (<u><?php echo $_SESSION['login'] ?></u>) - Resumen proyecto finalizado</div>
             <div id="small2"><a href="../logout.php">Cerrar sesi&oacute;n</a></div>
         </div>
         <div id="page">
@@ -136,14 +136,9 @@ session_start();
 
                 <div align="left">
                     <ul class="BLUE">
-                        <li><a href="../Comun/selecProyecto.php">Seleccionar proyecto</a></li>
-                        <li><a href="../JefeProyecto/revisarInformesAct.php">Revisar actividades activas</a></li>
-                        <li><a href="../JefeProyecto/planIteracion.php">Planificar iteraci&oacute;n</a></li>
-                        <!--                            Quitad el enlace de la pagina en la que se esta(como aqui planificar iteracion)
-                                                    y añadid el enlace de esta:
-                                                    href="../JefeProyecto/planIteracion.php" -->
-                        <li><a href="../JefeProyecto/InformesProyecto.php">Informes</a></li>
-                        <li><a href="../Comun/selecVacaciones.php">Escoger vacaciones</a></li>
+			<li><a href="../Comun/selecProyecto.php">Seleccionar proyecto</a></li>
+			<li><a href="../Comun/selecVacaciones.php">Escoger vacaciones</a></li>
+                        <li><a href="../Comun/InformesProyectoFinalizado.php">Informes proyectos finalizados</a></li>
                     </ul>
                 </div>
 

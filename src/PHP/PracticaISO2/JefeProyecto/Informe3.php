@@ -56,7 +56,7 @@ session_start();
         /* Estas son las actividades activas en la semana actual para el proyecto seleccionado */
         $sql = "SELECT a.idActividad, a.fechaInicio, a.nombre actividad
             FROM actividad a, Iteracion it, Fase f, Proyecto p 
-            WHERE (a.fechaInicio<='" . $hoy . "')
+            WHERE (DATE(a.fechaInicio)<=CURDATE())
                 AND (a.fechaFin IS NULL)
                 AND (a.Iteracion_idIteracion=it.idIteracion)
                 AND (it.Fase_idFase=f.idFase)
@@ -98,7 +98,7 @@ session_start();
 
         /* En el array $informesPendientes tengo todos los datos. Ahora los imprimo */
         $traAnterior = "";
-        $imprimir = "<div class=\"centercontentleft\">";
+        $imprimir = "<div class=\"centercontentleft\"><table>";
         if ($informesPendientes != null) {
             foreach ($informesPendientes as $informe) {
                 if ($informe['trabajador'] != $traAnterior) {
@@ -114,7 +114,7 @@ session_start();
                 }
             }
         }
-        if ($imprimir != "<div class=\"centercontentleft\">") {
+        if ($imprimir != "<div class=\"centercontentleft\"><table>") {
             $imprimir = $imprimir . "</table></div></div>";
         }else{
             $imprimir="<div class=\"centercontentleft\"><a>No hay trabajadores con informes de actividad pendientes</a></div>";
