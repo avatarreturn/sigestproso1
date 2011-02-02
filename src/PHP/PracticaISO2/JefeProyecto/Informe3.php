@@ -55,8 +55,8 @@ session_start();
         $informesPendientes;
         /* Estas son las actividades activas en la semana actual para el proyecto seleccionado */
         $sql = "SELECT a.idActividad, a.fechaInicio, a.nombre actividad
-            FROM actividad a, Iteracion it, Fase f, Proyecto p 
-            WHERE (DATE(a.fechaInicio)<=CURDATE())
+            FROM Actividad a, Iteracion it, Fase f, Proyecto p
+            WHERE (a.fechaInicio<= (select curdate()))
                 AND (a.fechaFin IS NULL)
                 AND (a.Iteracion_idIteracion=it.idIteracion)
                 AND (it.Fase_idFase=f.idFase)
